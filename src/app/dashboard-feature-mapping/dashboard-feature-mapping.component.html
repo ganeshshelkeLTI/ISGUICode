@@ -1,0 +1,130 @@
+<div class="container-fluid kpi-maintenance" *ngIf="dataLoaded;else other_content">
+    <section class="main-content">
+        <div class="card-header pl-0">
+            <h6 class="text-left text-bold mb-0 pl-0">Dashboard Feature Mapping</h6>
+        </div>
+        <form [formGroup]="dashboadFeatureForm">
+
+            <div class="row mt-3">
+                <div class="col-lg-12">
+                    <div formArrayName="dashboard_feature_mapping_data">
+                        <table class="table table-responsive table-sm table-striped" style="width:100%">
+                            <thead class="thead-blue">
+                                <tr>
+                                    <th>Dashboard</th>
+                                    <th *ngFor="let feature of featureNames">
+                                        {{feature.featureName}}
+                                    </th>
+                                    <th>Created By</th>
+                                    <th>Created Date</th>
+                                    <th>Updated By</th>
+                                    <th>Updated Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of dashboardFeatureMappingPoints.controls; let pointIndex=index;let row of rows" [formGroupName]="pointIndex" [hidden]='rows[pointIndex].isHidden' id={{pointIndex}} [hidden]='pointIndex==0&&!noDataPresend'>
+                                    <td>
+                                        <select [(ngModel)]='rows[pointIndex].selectedDashBoardId'  formControlName="id">
+                                            <option value="NA" hidden>Select</option>
+                                            <option *ngFor='let dashboard of rows[pointIndex].dashboards' [value]="dashboard.dashBoardId">{{dashboard.dashBoardName}}</option>
+                                        </select>
+                                    </td>
+
+                                    <td *ngFor="let feature of featureNames;">
+                                        <label class="container-checkbox font-size-group2">
+                                            <input id="{{feature.featureId}}" type="checkbox"  [checked]=rows[pointIndex][feature.featureName]  (change)="checkBoxValue($event.target.checked,feature,rows[pointIndex])">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        {{rows[pointIndex].selectedcreatedBy}}
+                                        <!-- <span *ngIf="rows[pointIndex].selectedcreatedBy!=null">
+                                            {{rows[pointIndex].selectedCreatedBy}}
+                                        </span>
+                                        <span *ngIf="rows[pointIndex].selectedcreatedBy==null">
+                                            NA
+                                        </span> -->
+                                    </td>
+                                    <td>
+                                        <span *ngIf="rows[pointIndex].selectedcreatedDate!=null || rows[pointIndex].selectedcreatedDate!=''">
+                                            {{rows[pointIndex].selectedCreatedDate | date: 'dd/MM/yyyy'}}
+                                        </span>
+                                        <span *ngIf="rows[pointIndex].selectedCreatedDate==null || rows[pointIndex].selectedCreatedDate==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="rows[pointIndex].selectedModifiedBy!=null || rows[pointIndex].selectedModifiedBy!=''">
+                                            {{rows[pointIndex].selectedModifiedBy}}
+                                        </span>
+                                        <span *ngIf="rows[pointIndex].selectedModifiedBy==null || rows[pointIndex].selectedModifiedBy==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="rows[pointIndex].selectedModifiedDate!=null || rows[pointIndex].selectedModifiedDate!=''">
+                                            {{rows[pointIndex].selectedModifiedDate | date: 'dd/MM/yyyy'}}
+                                        </span>
+                                        <span *ngIf="rows[pointIndex].selectedModifiedDate==null || rows[pointIndex].selectedModifiedDate==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td class="float-right row-actions">
+                                        <a *ngIf="dashboardFeatureMappingPoints.controls.length == pointIndex+1" href="javascript:void(0)" (click)="addData()" class="add-row">
+                                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                                        </a>
+
+                                        <!-- <a href="javascript:void(0)" (click)="deleteData(pointIndex,rows[pointIndex].selectedDashBoardId)" class="delete">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a> -->
+
+                                        <a id="{{rows[pointIndex].selectedDashBoardId}}" *ngIf="rows[pointIndex].selectedDashBoardId!=undefined" href="javascript:void(0)" (click)="resetBtnHandler(pointIndex,rows[pointIndex].selectedDashBoardId)" [ngClass]="[dashboardFeatureMappingPoints.controls.length != pointIndex+1 ? 'delete m-l26' : 'delete']">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                        <a id="pathik" *ngIf="rows[pointIndex].selectedDashBoardId==0 || rows[pointIndex].selectedDashBoardId=='' || rows[pointIndex].selectedDashBoardId==undefined" href="javascript:void(0)" (click)="deleteData(pointIndex,0)" [ngClass]="[dashboardFeatureMappingPoints.controls.length != pointIndex+1 ? 'delete m-l26' : 'delete']">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+
+                                    </td>
+                                    <!-- <td class="d-none">
+                                        <select class="common-select" [(ngModel)]='rows[pointIndex].selectedStatus' formControlName="operation">
+                                            <option value="NA" hidden>Select</option>
+                                            <option value="I">I</option>
+                                            <option value="U">U</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="confirm_box" [ngStyle]="{'display':display_confirmationbox}">
+                    <input id="did" type="hidden" #did [value]="selecteddashboardid"/>
+                    <input id="ind" type="hidden" #ind [value]="selectedindex"/>
+                    <div class="confirm-card">
+                        <div class="col py-3">
+                            Are you sure you want to delete?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="closeModalDialog()">No</button>
+                            <button type="button" class="btn btn-primary" (click)="resetConfirmYes(true)" >Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center mt-1 mb-3">
+                    <button type="button" (click)="saveData()" class="btn btn-primary btn-add" >Save</button>
+                </div>
+            </div>
+
+        </form>
+    </section>
+</div>
+<ng-template #other_content>
+    <div class="loader-icon-container">
+        <div class="loader-icon"></div>
+    </div>
+</ng-template>

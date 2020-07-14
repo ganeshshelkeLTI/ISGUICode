@@ -1,0 +1,31 @@
+<div class="w-100">
+  <header class="bg-blue text-center">
+      <div class="container-fluid">
+        <a class="navbar-brand"></a>
+      </div>
+  </header>
+  <section class="mtb-100">
+      <div class="col-12 col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+        <div class="card custom-card">
+          <div class="card-body pb-3">
+              <div>
+              <form class="loginform">
+            
+                  <div class="form-group d-flex my-2 loginErrorMessage">
+                    <div class="alert alert-danger">
+                      {{errorMessage}} 
+                    </div>
+                  </div><br>
+                  <div class="offset-2" style="margin-left: 40%;">
+                        <button type="submit" class="btn btn-primary btn-login mr-3" (click)="redirectToLogin()">Login</button>
+                    </div>
+                  
+                 
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+</div>

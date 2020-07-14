@@ -1,0 +1,195 @@
+<div class="container-fluid kpi-maintenance" *ngIf='dataLoaded;else other_content'>
+  <div class="row">
+    <div class="col-lg-12 my-2">
+      <div class="row">
+        <div class="col-6 col-md-3">
+          <h2 class="px-0 py-2 my-2">Question Setup</h2>
+        </div>
+        <div class="col-6 ml-auto col-md-3 col-lg-2 col-xl-1 text-right pt-2">
+          <button type="button" [disabled]='!enableSave' class="btn btn-primary save-reset-btn" (click)="saveData()">Save</button>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 pl-0 text-right pt-3">
+          <label for="Select dashboard" class="mr-2">Select Dashboard</label>
+          <select [(ngModel)]='selectedDashBoardItemId' (change)='updateKpidata()'>
+            <option *ngFor='let dashboard of dashBoardList' [value]="dashboard.dashboardID">{{dashboard.dashboardName}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="productForm">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div formArrayName="kpi_maintenance_data">
+          <table class="table table-responsive table-sm table-striped" style="width:100%">
+            <thead class="thead-blue">
+              <tr>
+                <th>DashBoard</th>
+                <th>Description</th>
+                <th>Input Type</th>
+                <th>Input Value</th>
+                <th>Any Dependent Question</th>
+                <th></th>
+                <th>Any Sub-question</th>
+                <th></th>
+                <th>KPI Group</th>
+                <th>Category</th>
+                <th>Sub-Category</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dataPoints.controls; let pointIndex=index" [formGroupName]="pointIndex" [hidden]='rows[pointIndex].isHidden'
+                id={{pointIndex}} [hidden]='pointIndex==0&&!noDataPresend'>
+
+                <td>
+                  <select [(ngModel)]='rows[pointIndex].selectedDashBoardId' (change)='updateKpi(pointIndex);updateCategory(pointIndex);' formControlName="dashboard_id">
+                    <option value="NA" hidden>Select</option>
+                    <option *ngFor='let dashboard of rows[pointIndex].dashboards' [value]="dashboard.dashboardID">{{dashboard.dashboardName}}</option>
+                  </select>
+                </td>
+                <td style="display:none">
+                  <input type="hidden" class="question-input" formControlName="id" />
+                </td>
+                <td style="display:none">
+                    <input type="hidden" class="question-input" [(ngModel)]='rows[pointIndex].selectedQuestion' formControlName="question_id" />
+                  </td>
+                <td style="display:none">
+                  <input type="hidden" class="question-input" [(ngModel)]='rows[pointIndex].dependentParentId' formControlName="dependentOnQuestion" />
+                </td>
+                
+                  <td style="display:none">
+                    <input type="hidden" class="question-input" [(ngModel)]='rows[pointIndex].subQuestionParentId' formControlName="subQuestionOf" />
+                  </td>
+                  <td>
+
+                    <select id="{{rows[pointIndex].selectedQuestion}}" class="common-select" [(ngModel)]='rows[pointIndex].selectedQuestion' (change)='updateRowStatus(pointIndex)' formControlName='desc'
+                      [ngClass]="{ 'is-invalid': submitted && item.controls.desc.errors }">
+                      <option value="NA">Please Select</option>
+                      <option *ngFor='let question of rows[pointIndex].desc' [value]="question.question_Id">{{question.question_Display_Text}}</option>
+                    </select>
+
+                    <div *ngIf="submitted && item.controls.desc.errors" class="invalid-feedback">
+                      <div *ngIf="item.controls.desc.errors.required">Required</div>
+                    </div>
+                  </td>
+
+                  <td>
+                    <select class="common-select" [(ngModel)]='rows[pointIndex].selectedInputType' (change)='updateRowStatus(pointIndex)' formControlName='input_type'>
+                         <option *ngFor='let input of rows[pointIndex].input_type' [value]="input.id">{{input.question_Type}}</option> 
+                    </select>
+
+                    <!-- <input class="question-input" formControlName="input_type" (keyup)='updateRowStatus(pointIndex)' [ngClass]="{ 'is-invalid': submitted && item.controls.input_type.errors }"/> -->
+                    <div *ngIf="submitted && item.controls.input_type.errors" class="invalid-feedback">
+                      <div *ngIf="item.controls.input_type.errors.required">Required</div>
+                    </div>
+                  </td>
+                  <td>
+                    <select class="common-select" [(ngModel)]='rows[pointIndex].selectedInputValue' (change)='updateRowStatus(pointIndex)' formControlName='input_value'>
+                      <option value="#">#</option>
+                      <option value="$">$</option>
+                      <option value="%">%</option>
+                      <option value="text">Text</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select class="common-select" formControlName="any_dependent_question" [(ngModel)]='rows[pointIndex].selectedDependentQuestion'
+                      [ngClass]="{ 'is-invalid': submitted && item.controls.any_dependent_question.errors }" (change)='updateRowStatus(pointIndex);toggleDependentQuestionRow()'>
+                      <option value="Y">Yes</option>
+                      <option value="N">No</option>
+                    </select>
+                    <div *ngIf="submitted && item.controls.any_dependent_question.errors" class="invalid-feedback">
+                      <div *ngIf="item.controls.any_dependent_question.errors.required">Required</div>
+                    </div>
+                  </td>
+
+                  <td class="text-center row-actions" style="max-width:25px">
+                    <a href="javascript:void(0)" *ngIf="rows[pointIndex].selectedDependentQuestion=='Y'" (click)="setParentDependeny(rows[pointIndex].selectedQuestion)" class="add-row">
+                      <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                  
+                  <td>
+                    <select class="common-select" formControlName="any_sub_question" [(ngModel)]='rows[pointIndex].selectedSubQuestion' [ngClass]="{ 'is-invalid': submitted && item.controls.any_sub_question.errors }"
+                      (change)='updateRowStatus(pointIndex);toggleSubQuestionRow()'>
+                      <option value="Y">Yes</option>
+                      <option value="N">No</option>
+                    </select>
+                    <div *ngIf="submitted && item.controls.any_sub_question.errors" class="invalid-feedback">
+                      <div *ngIf="item.controls.any_sub_question.errors.required">Required</div>
+                    </div>
+                  </td>
+                  <td class="text-center row-actions" style="max-width:25px">
+                    <a href="javascript:void(0)" *ngIf="rows[pointIndex].selectedSubQuestion=='Y'" (click)="setSubQuestionParentDependency(rows[pointIndex].selectedQuestion)" class="add-row">
+                      <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                  
+                  <td>
+                    <select class="common-select" formControlName="mapped_kpi_group" [(ngModel)]='rows[pointIndex].selectedKpi' [ngClass]="{ 'is-invalid': submitted && item.controls.mapped_kpi_group.errors }">
+                      <option *ngFor='let kpi of rows[pointIndex].kpidata' [value]="kpi.kpiGroupID">{{kpi.kpiGroupName}}</option>
+                    </select>
+                    <div *ngIf="submitted && item.controls.mapped_kpi_group.errors" class="invalid-feedback">
+                      <div *ngIf="item.controls.mapped_kpi_group.errors.required">Required</div>
+                    </div>
+                  </td>
+                  <td>
+                    <select class="common-select" formControlName="category" [(ngModel)]='rows[pointIndex].selectedCategory' (change)='updateSubCategory(pointIndex)'
+                      [ngClass]="{ 'is-invalid': submitted && item.controls.category.errors }">
+                      <option value="NA">NA</option>
+                      <option *ngFor='let category of rows[pointIndex].category' [value]="category.categoryID">{{category.categoryName}}</option>
+                    </select>
+                    <div *ngIf="submitted && item.controls.category.errors" class="invalid-feedback">
+                      <div *ngIf="item.controls.category.errors.required">Required</div>
+                    </div>
+                  </td>
+                  <td>
+                    <select class="common-select" formControlName="sub_category" [(ngModel)]='rows[pointIndex].selectedSubCategory' [ngClass]="{ 'is-invalid': submitted && item.controls.sub_category.errors }"
+                      (change)='updateSubCategory(pointIndex)'>
+                      <option value="NA">NA</option>
+                      <option *ngFor='let subCategory of rows[pointIndex].subCategory' [value]="subCategory.subCategoryId">{{subCategory.subCategoryName}}</option>
+                    </select>
+                    <div *ngIf="submitted && item.controls.sub_category.errors" class="invalid-feedback">
+                      <div *ngIf="item.controls.sub_category.errors.required">Required</div>
+                    </div>
+                  </td>
+                  <td class="text-center row-actions">
+                    <a href="javascript:void(0)" (click)="addData()" class="add-row">
+                      <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                    </a>
+                    <a href="javascript:void(0)" (click)="deleteData(pointIndex)" class="delete">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
+                    <input type="checkbox" formControlName="is_visible" class="chkbox" [checked]="rows[pointIndex].showEye" (change)="changeRowVisibility(pointIndex);updateRowStatus(pointIndex)"
+                      [ngClass]="(rows[pointIndex].showEye==true)?'showKPI':'hideKPI'">
+                  </td>
+                  <td class="d-none">
+                    <select class="common-select" [(ngModel)]='rows[pointIndex].selectedStatus' formControlName="operation">
+                      <option value="NA" hidden>Select</option>
+                      <option value="I">I</option>
+                      <option value="U">U</option>
+                      <option value="D">D</option>
+                    </select>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center mt-1 mb-3">
+        <button type="button" [disabled]='!enableSave' class="btn btn-primary save-reset-btn" (click)="saveData()">Save</button>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+<ng-template #other_content>
+  <div class="container-fluid">
+    Data is Loading.... Please Wait ..
+  </div>
+</ng-template>

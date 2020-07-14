@@ -1,0 +1,116 @@
+<div class="container-fluid kpi-maintenance"  *ngIf='dataLoaded;else other_content'>
+    <section class="main-content">
+        <div class="card-header pl-0">
+            <h6 class="text-left text-bold mb-0 pl-0">View External User</h6>
+        </div>
+        <form>
+            <div class="form-group row my-2">
+                <label class="offset-sm-4 col-sm-1 col-form-label text-center">User</label>
+                <div class="col-sm-2">
+                    <select  [(ngModel)]='selectedUser' name="User" class="form-control col-4 col-md-2 mx-2 mx-sm-3" (ngModelChange)="getUserDataById()">
+                        <option *ngFor='let user of userData; let i = index;' [value]="user" [selected]="i==0">{{user}}</option>
+                    </select>
+                </div>
+            </div>
+            <div *ngIf="userRelatedData.length > 0" class="row mt-3">
+                <div class="col-lg-12">
+                    <div>
+                        <table class="table table-responsive table-sm table-striped" style="width:100%">
+                            <thead class="thead-blue">
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Project</th>
+                                    <th>Region</th>
+                                    <th>Country</th>
+                                    <th>Created By</th>
+                                    <th>Created Date</th>
+                                    <th>Updated By</th>
+                                    <th>Updated Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of userRelatedData; let i=index;">
+                                    <td >
+                                        {{data.clientName}}
+                                    </td>
+                                    <td>
+                                        {{data.projectName}}
+                                    </td>
+                                    <td>
+                                        {{data.regionName}}
+                                    </td>
+                                    <td>
+                                        {{data.countryName}}
+                                    </td>
+                                    <td>
+                                        <span *ngIf="data.createdBy!=null || data.createdBy!=''">
+                                            {{data.createdBy}}
+                                        </span>
+                                        <span *ngIf="data.createdBy==null || data.createdBy==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="data.createdDate!=null || data.createdDate!=''">
+                                            {{data.createdDate | date:'dd/MM/yyyy'}}
+                                        </span>
+                                        <span *ngIf="data.createdDate==null || data.createdDate==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <!-- {{data.modifiedBy}} -->
+                                        <span *ngIf="data.modifiedBy!=null || data.modifiedBy!=''">
+                                            {{data.modifiedBy}}
+                                        </span>
+                                        <span *ngIf="data.modifiedBy==null || data.modifiedBy==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="data.modifiedDate!=null || data.modifiedDate!=''">
+                                            {{data.modifiedDate | date:'dd/MM/yyyy'}}
+                                        </span>
+                                        <span *ngIf="data.modifiedDate==null || data.modifiedDate==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td class="row-actions text-center">
+                                        <a href="javascript:void(0)" (click)="deletePopup(data.externalUserProjectId)" class="delete">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="confirm_box" [ngStyle]="{'display':display_confirmationbox}">
+                    <input id="pid" type="hidden" #pid [value]="selectedExternalPid"/>
+                    <div class="confirm-card">
+                        <div class="col py-3">
+                            Are you sure you want to delete?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="closeModalDialog()">No</button>
+                            <button type="button" class="btn btn-primary" (click)="deleteRow();" >Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="userRelatedData.length == 0" class="text-center">
+                No data found.
+            </div>
+
+        </form>
+    </section>
+</div>
+
+<ng-template #other_content>
+    <div class="loader-icon-container">
+        <div class="loader-icon"></div>
+    </div>
+</ng-template>

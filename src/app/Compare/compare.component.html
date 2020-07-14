@@ -1,0 +1,150 @@
+<!--
+    /******************************************* ***********/
+    /************** © 2018 ISG - All Rights Reserved     ***********/
+    /******************************************************/
+
+    /*******************************************************/
+    /** File Name:cio-dashboard.component.ts **/
+    /** Description: This file is created to compare data **/
+    /** Created By: 10651227, 10641888, 10650615 Created Date: 28/09/2018 **/
+    /** Update By:  10650919  Update Date:  01/10/2018 **/
+    /** Developed at:  **/
+    /*******************************************************/
+-->
+<!-- Select up to 3 Options to Compare -->
+<div class="modal-header" style="background: #29497b;color:#fff;">
+    <h6 class="modal-title">Select up to Three (3) Options to Compare</h6>
+    <button type="button" style="color:#fff;" class="close" data-dismiss="modal" (click)='close()'>&times;</button>
+</div>
+
+<div class="modal-body compare-option-body">
+    <div class="container">
+        <div class="row comparerow1 compare-option-container">
+            <div class="mb-sm-1 col-md-7 col-lg-7 ">
+                <div class=" col-md-2 col-lg-2"></div>
+
+                <div class=" col-md-12 col-lg-12 checkbarmenu">
+                    <div class="btn btn-isg-toggle " [ngClass]="(showIndustries=='industry')?'active':''" (click)="toggleFilter('industry')">ISG
+                        <br> Industry</div>
+                    <div class="btn btn-isg-toggle isg-industry-toggle" [ngClass]="(showIndustries=='region')?'active':''"
+                        (click)="toggleFilter('region')">Region</div>
+                    <div class="btn btn-isg-toggle isg-industry-toggle" [ngClass]="(showIndustries=='revenue')?'active':''"
+                        (click)="toggleFilter('revenue')">Revenue</div>
+                    <div class="btn btn-isg-toggle " [ngClass]="(showIndustries=='custom_reference')?'active':''"
+                        (click)="toggleFilter('custom_reference')">Custom <br> Reference</div>
+                    <hr class="align:left;">
+                </div>
+
+                <div class="mb-sm-1 col-md-12 col-lg-12 my-3">
+                    <div class="compare-otion-holder" style="max-height:245px;overflow-y: auto;">
+
+
+                        <div class="col-md-12 col-lg-12" *ngIf="showIndustries=='industry'">
+                            <label *ngFor='let industry of selectedIndustries' class="container-checkbox">{{industry.label}}
+                                <input type="checkbox" (change)="change()" [(ngModel)]='industry.value' checked=false>
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+
+                        <div class="col-md-12 col-lg-12" *ngIf="showIndustries=='region'">
+                            <label *ngFor='let region of selectedRegion' class="container-checkbox">{{region.label}}
+                                <input type="checkbox" (change)="change()" [(ngModel)]='region.value' checked=false>
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+
+                        <div class="col-md-12 col-lg-12" *ngIf="showIndustries=='revenue'">
+                            <label *ngFor='let revenue of selectedRevenue' class="container-checkbox">{{revenue.label}}
+                                <input type="checkbox" (change)="change()" [(ngModel)]='revenue.value' checked=false>
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+
+                        <div class="col-md-12 col-lg-12" *ngIf="showIndustries=='custom_reference'">
+                            <label *ngFor='let customRerence of selectedcustomRerence' class="container-checkbox">{{customRerence.label}}
+                                <input type="checkbox" (change)="change()" [(ngModel)]='customRerence.value' checked=false>
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 col-lg-5 checkbarmenu">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12" style="margin-top: 15px;">
+                        <div class="col-md-3 col-lg-3 col-sm-3 my-data-label">
+                            <label class="container-checkbox my-data-w">My Data
+
+                            </label>
+                        </div>
+                        <div class="col-md-9 col-lg-9 col-sm-9 currency-section">
+                            <label for="Select currency" class="my-data-currency">Currency</label>
+                            <select class="currency-dropdown" [(ngModel)]='selectedCurrency' [disabled]='isScenarioNotSelected'>
+
+                                <option *ngFor='let currency of allCurrencyData.currencyExchange' [ngValue]=currency>{{currency.value}}</option>
+                            </select>
+                        </div>
+
+                        <hr>
+                    </div>
+
+                    <div class="col-md-12 col-lg-12 Scenario-Section">
+                        <div class="list-group scenarion-list" style="min-height: 50px;max-height:245px;overflow-y: auto;">
+                            <label *ngFor='let scenario of selectedScanrio' class="container-checkbox font-size-group2">
+                                <div style=" white-space: nowrap;max-width:200px;overflow: hidden;text-overflow: ellipsis;"
+                                    placement="auto" ngbTooltip="{{scenario.name}}" container="body">{{scenario.label}}</div>
+                                <input type="checkbox" [(ngModel)]='scenario.value' (change)="change()" (ngModelChange)="updateScanrioList(scenario)">
+                                <span class="checkmark"></span>
+
+                            </label>
+                        </div>
+
+                        <button id="enterNewScenarioBtn" *ngIf='privilegesObject.enterMyData' data-toggle="modal"
+                             data-backdrop="static" data-keyboard="false" data-target=".modal-select-to-compare"
+                            data-dismiss="modal" class="btn btn-primary my-3 font-size-group2 bgcolor pr-1 btn-wtd"
+                            (click)="setFlagEnterData()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Enter new Scenario
+                        </button>
+                        <button id="editScenarioBtn" *ngIf='privilegesObject.enterMyData' [disabled]='isEditDisabled'
+                            class="btn btn-primary my-3 font-size-group2 bgcolor pr-1 btn-wtd"  data-backdrop="static"
+                            data-keyboard="false" data-target=".modal-select-to-compare" (click)="editAndCompareEventHandler()"
+                            data-toggle="modal" data-dismiss="modal">
+                            <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit Scenario
+                        </button>
+                        <button id="deleteScenarioBtn" class="btn btn-primary font-size-group2 bgcolor pr-1 btn-wtd" (click)="deleteScenario()" *ngIf="privilegesObject.deleteScenario" [disabled]="!isDeleteAllowed">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete Scenario</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div>
+    <hr>
+    <div class="btn-row" style="display: block;width: 100%;text-align: center;">
+        <button [disabled]="disableCompareButton" data-backdrop="static" data-keyboard="false" data-dismiss="modal"
+            class="btn btn-primary btn-positive-isg" (click)="compareData()">Compare</button>
+        <div class="btn btn-primary mx-2 btn-negative-isg " data-dismiss="modal" (click)="close()" style="padding: 7px;">Cancel</div>
+    </div>
+
+    <div class="compare-option-note" [ngStyle]="{color:error_class}" id="uptothree">
+        <b>Note:&nbsp;</b>Maximum three (3) options allowed to compare
+    </div>
+</div>
+
+<div class="confirm_box" *ngIf="confirmBoxDeleteFlag">
+    <div class="confirm-card">
+        <div class="col py-3">
+            Selected scenarios will be deleted. Do you wish to continue?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="deleteConfirmYes(false);">No</button>
+            <button type="button" class="btn btn-primary" (click)="deleteConfirmYes(true);">Yes</button>
+        </div>
+    </div>
+</div>

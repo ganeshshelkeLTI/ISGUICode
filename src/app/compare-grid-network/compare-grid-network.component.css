@@ -1,0 +1,242 @@
+/***********************************************************/
+/************** © 2018 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: compare-grid-network.component.css         **/
+/** Description: This is compare grid network css.        **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10652318  Created Date: 28/09/2018        **/
+/** Update By: 10652318  Update Date: 28/09/2018          **/
+/** Developed at:                 **/
+/***********************************************************/
+
+.compare-grid-tower-scroll
+{
+  height: auto !important;
+}
+
+.compare-grid table tr td {
+  size: 14px;
+  color: #75787b;
+}
+
+.panel-default>.panel-heading {
+  color: #333;
+  background-color: #fff;
+  border-color: #e4e5e7;
+  padding: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border-bottom: 1px solid #e7e7e7;
+  border-left: 1px solid #e7e7e7;
+  border-right: 1px solid #e7e7e7;
+}
+
+.panel-default>.panel-heading a {
+  font-size: 16px;
+  color: #29497b;
+  background-color: transparent !important;
+  text-decoration: none;
+}
+
+.panel-default>.panel-heading .panel-title {
+  margin-bottom: 0;
+  display: flex;
+  align-items: flex-end;
+}
+
+.panel-default>.panel-heading .panel-title a.info {
+  font-size: 0;
+  margin-left: 10px;
+}
+
+.panel-default>.panel-heading a:after {
+  content: "";
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  float: right;
+  transition: transform .25s linear;
+  -webkit-transition: -webkit-transform .25s linear;
+}
+
+.panel-default>.panel-heading a[aria-expanded="true"] {
+  background-color: #eee;
+}
+
+.panel-default>.panel-heading a[aria-expanded="true"]:before {
+  content: "\2212";
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+  margin: 10px;
+}
+
+.panel-default>.panel-heading a[aria-expanded="false"]:before {
+  content: "\002b";
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  margin: 10px;
+}
+
+.accordion-option {
+  width: 100%;
+  float: left;
+  clear: both;
+  border: 1px solid #e7e7e7;
+  background: #f2f9fc;
+}
+
+.accordion-option td {
+  font-size: 16px;
+  font-weight: bold;
+  color: #494c50
+}
+
+.accordion-option .toggle-accordion {
+  font-size: 16px;
+  color: #03abba;
+}
+
+.accordion-option .toggle-accordion:before {
+  content: "Expand/Collapse";
+}
+
+.panel-body>table {
+  margin-bottom: 0;
+  background: #fff;
+}
+
+.panel-body>table tr td:last-child,
+.panel-footer>table tr td:last-child {
+  font-weight: 500;
+}
+
+.panel-body {
+  background: #efefef;
+  padding: 10px;
+}
+
+.panel-footer {
+  border-bottom: 1px solid #e7e7e7;
+  border-left: 1px solid #e7e7e7;
+  border-right: 1px solid #e7e7e7;
+  margin-bottom: 0;
+}
+
+.panel-footer>table {
+  margin-bottom: 0;
+}
+
+.panel-footer td:first-child {
+  font-size: 16px;
+  color: #29497b !important;
+  font-weight: 500;
+}
+
+.compare-header {
+  background: #81cee3;
+}
+
+.compare-header h4 {
+  font-size: 18px;
+  color: #494c50;
+  padding-left: 20px;
+}
+
+.compare-header ul {
+  display: block;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.compare-header ul li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+.compare-header ul li a {
+  display: block;
+  width: 22px;
+  height: 26px;
+  line-height: 0;
+  font-size: 0;
+}
+
+.compare-header ul li a.xls {
+  background: url("/assets/images/industry-comparison-icons.png");
+  background-position: 0 0;
+}
+
+.compare-header ul li a.xls:hover {
+  background: url("/assets/images/industry-comparison-icons.png");
+  background-position: 0px -36px;
+}
+
+.compare-header ul li a.pdf {
+  background: url("/assets/images/industry-comparison-icons.png");
+  background-position: 0 -80px;
+}
+
+.compare-header ul li a.resizeIcon {
+  background: url("/assets/images/industry-comparison-icons.png");
+  background-position: 0 0;
+  cursor: pointer;
+}
+
+.compare-header ul li a.pdf:hover {
+  background: url("/assets/images/industry-comparison-icons.png");
+  background-position: 0 -116px;
+}
+
+.compare-header ul li a.print {
+  background: url("/assets/images/industry-comparison-icons.png");
+  background-position: 0 -160px;
+}
+
+.compare-header ul li a.edit {
+  background: url("/assets/images/industry-comparison-icons.png") no-repeat;
+  background-position: 0 -239px;
+  font-size: 14px;
+  color: #494c50;
+  width: auto;
+  padding-left: 25px;
+  display: table-cell;
+  vertical-align: middle;
+  text-decoration: none;
+}
+
+.info {
+  display: block;
+  font-size: 0;
+  line-height: 0;
+  width: 22px;
+  height: 22px;
+  background: url("/assets/images/industry-comparison-icons.png") no-repeat;
+  background-position: 0px -402px;
+}
+
+.info:hover {
+  background-position: 0px -402px;
+}
+
+.resizeIconMinMax{
+  font-size: 16px;
+  font-weight: bold;
+  color: #494c50;
+  cursor: pointer;
+}
+.gridDataScroll{
+  max-height: 470px;
+  overflow-y: auto;
+}
+

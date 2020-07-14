@@ -1,0 +1,1786 @@
+<!-- Main section starts here -->
+
+<!-- *ngIf="showServiceDeskData;else donotshow" -->
+<section class="main-content" *ngIf="showServiceDeskData;else donotshow">
+    <!-- <div class="card-header">
+        <span class="text-left">Unix Servers &nbsp; <a href=""><i class="info-icon"></i></a> </span>
+    </div> -->
+    <div class="container-fluid">
+        <div class="d-sm-flex flex-row flex-wrap">
+            <div class="w-100 p-2">
+                <div class="card-header px-0">
+                    <!-- {{servicedeskData.tower.id}} -->
+                    <h6 class="text-left">Service Desk &nbsp;
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="right" ngbTooltip="{{servicedeskData.tower.id}}"></i>
+                        </a>
+                    </h6>
+                </div>
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <div class="d-sm-flex flex-row flex-wrap align-items-center">
+                            <div class="p-2">
+                                <span> Scale (Users)
+                                </span>
+                            </div>
+                            <div class="p-2 mr-auto">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button (click)="setScale(size)" type="button" class="btn mip-small btn-setRange scale-button" [ngClass]="(scaleValue==size.value) ? 'active-scale' : ''"
+                                        *ngFor="let size of data.industrySize">{{size.key}}</button>
+                                </div>
+                            </div>
+                            <div class="p-2">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label>Region</label>
+                                        <select id="inputRegion" class="form-control mx-sm-3" name="selectedregion" [(ngModel)]='selectedregion'  (ngModelChange)='setRegion(selectedregion)'>
+                                            <option value="Grand Total" hidden>Global</option>
+                                            <option value="Total">&nbsp;Global&nbsp;</option>
+                                            <option *ngFor="let region of data.region"  [ngValue]=region> {{region.value}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Currency</label>
+                                        <select id="inputCurrency" class="form-control mx-sm-3" name="selectedcurrency" [(ngModel)]='selectedcurrency' id="currencyId"
+                                            (change)='setCurrency(selectedcurrency)' #currencyRef>
+                                            <option *ngFor="let currency of data.currency"  [ngValue]=currency> {{currency.value}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Compare Scenario</label>
+                                        <select id="inputScenarios" class="form-control mx-sm-3" name="selectedscenario" [(ngModel)]='selectedscenario' (ngModelChange)='getScenarioDataById(selectedscenario)'>
+                                            <option value="N/A" hidden>N/A</option>
+                                            <option *ngFor='let scenario of selectedScenarioName' [ngValue]=scenario>{{scenario.label}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                            <label>Custom Reference</label>
+                                            <select id="inputCRG" class="form-control mx-sm-3" [ngModelOptions]="{standalone: true}" [(ngModel)]='selectedcustomRef' (ngModelChange)='getScenarioDataByCustomRef(selectedcustomRef)'>
+                                                <option *ngFor='let crg of selectedCRGName' [ngValue]=crg>{{crg.customName}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" *ngIf="selectedcustomRef.customId != '-9999'">
+                                                    <i class="info-icon" placement="top"ngbTooltip="{{selectedcustomRef.definition}}" ></i>
+                                                </a>
+                                          </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-sm-flex flex-row flex-wrap">
+            <!-- Service desk card starts-->
+            <div class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Service Desk Cost Allocation
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{servicedeskDefinitionData.local_service_desk_personnel.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body mx-auto">
+                        <!-- First row -->
+                        <div class="card custom-card p-0">
+                            <div class="row card-body m-0 max-w-270">
+                                <div class="col-5 px-2 align-items-center d-inline-flex text-grey text-left">
+                                    Personnel
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    <!-- 69% -->
+                                    {{servicedeskData.data.TotalServiceDeskCostAllocation.CostAllocationEmp.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2 align-items-center d-inline-flex">
+                                    <!-- <img src="/assets/images/circle.jpg"> -->
+                                    <app-donut-chart id="service-desk-cost-allocation-personnel" chartID="service-desk-cost-allocation-personnel" fillColor="03abba"
+                                        percentVal="{{servicedeskData.data.TotalServiceDeskCostAllocation.CostAllocationEmp.Number.value/10}}"
+                                        chartWidth="35" chartHeight="35"></app-donut-chart>
+                                </div>
+                                <div class="col-2 p-0 d-inline">
+                                    <a href="javascript:void(0)" (click)="openModalDialog()">
+                                        <i class="circle-arrow-icon float-right"></i>
+                                    </a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0 max-w-270">
+                                <div class="col-5 px-2 align-items-center d-inline-flex text-grey text-left">
+                                    Hardware & Software
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    <!-- 16% -->
+                                    {{servicedeskData.data.TotalServiceDeskCostAllocation.CostAllocationHWSW.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2 align-items-center d-inline-flex">
+                                    <!-- <img src="/assets/images/circle.jpg"> -->
+                                    <app-donut-chart id="service-desk-cost-allocation-hardware" chartID="service-desk-cost-allocation-hardware" fillColor="29497b"
+                                        percentVal="{{servicedeskData.data.TotalServiceDeskCostAllocation.CostAllocationHWSW.Number.value/10 }}"
+                                        chartWidth="35" chartHeight="35"></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="hardwareModalDialog()">
+                                        <i class="circle-arrow-icon float-right"></i>
+                                    </a>
+                                    <!-- <div class="backdrop" [ngStyle]="{'display':display_hardware}"></div> -->
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Third row -->
+                        <!-- <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Software
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{servicedeskData.data.TotalServiceDeskCostAllocation.CostAllocationHWSW.Number.value | number : '1.2-2' }}%
+                                </div>
+                                <div class="col-2 ">
+                                    <app-donut-chart id="service-desk-cost-allocation-software" chartID="service-desk-cost-allocation-software" fillColor="81cee4" percentVal="{{servicedeskData.data.TotalServiceDeskCostAllocation.CostAllocationHWSW.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="softwareModalDialog()" > <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- Fourth row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0 max-w-270">
+                                <div class="col-5 px-2 align-items-center d-inline-flex text-grey text-left">
+                                    Outsourcing
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    <!-- 20% -->
+                                    {{servicedeskData.data.TotalServiceDeskCostAllocation.CostAllocationOS.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2 align-items-center d-inline-flex">
+                                    <!-- <img src="/assets/images/circle.jpg"> -->
+                                    <app-donut-chart id="service-desk-cost-allocation-outsourcing" chartID="service-desk-cost-allocation-outsourcing" fillColor="9acb3b"
+                                        percentVal="{{servicedeskData.data.TotalServiceDeskCostAllocation.CostAllocationOS.Number.value/10}}"
+                                        chartWidth="35" chartHeight="35"></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="outsourcingModalDialog()">
+                                        <i class="circle-arrow-icon float-right"></i>
+                                    </a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Service desk card ends-->
+
+            <!-- Annual Cost Per Service Desk User card starts-->
+            <div [ngClass]="[showDiv ? 'w-md-100 w-37 annual-cost-service-desk-2700 annual-cost-30' : 'w-37 annual-cost-30']" class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Annual Cost Per Service Desk User
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{servicedeskDefinitionData.priceperuser_numbercy.defination}}"></i>
+                        </a>
+                        <a *ngIf="isLineChartDisabled==false" href="javascript:void(0)" class="popout" (click)="costPerInstanceDialog()">
+                            <i class="circle-arrow-icon float-right"></i>
+                        </a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col border-right px-2 newclass">
+                                <!--pb-3 -->
+                                <p class="m-1">Total Cost of Ownership</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value
+                                                * refactorVal | number : '1.0-0' }}</p>
+
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.UpperCY.value
+                                                    * refactorVal | number : '1.0-0' }}</p>
+
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.LowerCY.value
+                                                    * refactorVal | number : '1.0-0' }}</p>
+
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="(enterMyData.annualTCOCostPerServiceDeskUser>=0)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]"
+                                        style="min-height: 228px;">
+
+                                        <p *ngIf="!TCOUserEauality" class="text-info">{{currencySymbol}}{{enterMyData.annualTCOCostPerServiceDeskUser | number : '1.0-0'
+                                            }}</p>
+                                        <p *ngIf="TCOUserEauality" class="text-info tco-user-ticket-equal">
+                                            {{currencySymbol}}{{enterMyData.annualTCOCostPerServiceDeskUser | number : '1.0-0' }}
+                                        </p>
+
+                                        <div class="mt-3" *ngIf="!TCOUserEauality &&((enterMyData.annualTCOCostPerServiceDeskUser>=servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value*refactorVal))">
+                                            <div class=" arrow-img">
+                                                <svg id="annualTCOCostPerServiceDeskUserSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                                    xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGannual456" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop4000" [attr.offset]="makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerServiceDeskUser)/(servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value * refactorVal))*100) + '%'"
+                                                                stop-color="#02ABBA" />
+                                                            <stop id="stop4001" [attr.offset]="makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerServiceDeskUser)/(servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value * refactorVal))*100) + '%'"
+                                                                stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual456)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font mb-0">
+                                                    {{ makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerServiceDeskUser)/(servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value
+                                                    * refactorVal))*100) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3" *ngIf="!TCOUserEauality &&((enterMyData.annualTCOCostPerServiceDeskUser<servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value*refactorVal))">
+                                            <div class=" arrow-img">
+                                                <svg id="annualTCOCostPerServiceDeskUserSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                                    xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGannual456" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop4000" [attr.offset]="makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerServiceDeskUser)/(servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value * refactorVal))*100 ) + '%'"
+                                                                stop-color="#02ABBA" />
+                                                            <stop id="stop4001" [attr.offset]="makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerServiceDeskUser)/(servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value * refactorVal))*100 ) + '%'"
+                                                                stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual456)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font mb-0">
+                                                    {{ makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerServiceDeskUser)/(servicedeskData.data.AnnualCostPerServiceDeskUser.CostPerUser.NumberCY.value
+                                                    * refactorVal))*100) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div *ngIf="enterMyData.annualTCOCostPerServiceDeskUser<0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]">
+                                        <div class="align-self-center">
+                                            <span class="bord-top"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- col p-0 pb-3 newclass -->
+                            <div class="col maxw45 p-0 pb-3 newclass">
+                                <p class="m-1">Market Price</p>
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="col p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskUser.PricePerUser.NumberCY.value
+                                                * refactorVal | number : '1.0-0'}}</p>
+
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskUser.PricePerUser.UpperCY.value
+                                                    * refactorVal | number : '1.0-0' }}</p>
+
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskUser.PricePerUser.LowerCY.value
+                                                    * refactorVal | number : '1.0-0' }}</p>
+
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- this added -->
+                                    <!-- <div class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                        <div class="align-self-center">
+                                            <span class="bord-top"></span>
+                                        </div>
+                                    </div> -->
+                                    <!-- this added -->
+
+                                    <!-- <div class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                        <p class="text-info" >{{currencySymbol}}{{enterMyData.annualTCOCostPerServiceDeskUser | number : '1.2-2' }}</p>
+                                        <div class="mt-3">
+                                            <div class=" arrow-img">
+                                                <svg id="marketPriceServiceDeskUserSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGannual852" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop10203" [attr.offset]="makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskUser.PricePerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerServiceDeskUser)/(servicedeskData.data.AnnualCostPerServiceDeskUser.PricePerUser.NumberCY.value * refactorVal))*100 | number : '1.2-2') + '%'" stop-color="#02ABBA" />
+                                                            <stop id="stop10204" [attr.offset]="makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskUser.PricePerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerServiceDeskUser)/(servicedeskData.data.AnnualCostPerServiceDeskUser.PricePerUser.NumberCY.value * refactorVal))*100 | number : '1.2-2') + '%'" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual852)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font mb-0">
+                                                    {{ makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskUser.PricePerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerServiceDeskUser)/(servicedeskData.data.AnnualCostPerServiceDeskUser.PricePerUser.NumberCY.value * refactorVal))*100) | number : '1.2-2' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost Per Service Desk User card ends-->
+
+            <!-- Annual Cost Per Service Desk Ticket card starts-->
+            <div [ngClass]="[showDiv ? 'w-md-100 w-37 cost-per-ser-31' : 'w-37 cost-per-ser-31']" class="p-2 kpi-width-all">
+                <div class="card custom-card min-ht320 ">
+                    <div class="card-header">
+                        Cost Per Service Desk Ticket
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{servicedeskDefinitionData.priceperticket_numbercy.defination}}"></i>
+                        </a>
+                        <a *ngIf="isLineChartDisabled==false" href="javascript:void(0)" class="popout" (click)="costPerCoreDialog()">
+                            <i class="circle-arrow-icon float-right"></i>
+                        </a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col border-right px-2 newclass">
+                                <!--pb-3 -->
+                                <p class="m-1 text-center">Total Cost of Ownership</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value
+                                                * refactorVal | number : '1.1-1'}}</p>
+
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.UpperCY.value
+                                                    * refactorVal | number : '1.1-1' }}</p>
+
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.LowerCY.value
+                                                    * refactorVal | number : '1.1-1' }}</p>
+
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="enterMyData.annualTCOPerServiceDeskTicketOwnership>=0" class="p-2 col bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]"
+                                        style="min-height: 228px;">
+
+                                        <p *ngIf="!TCOTicketEauality" class="text-info">{{currencySymbol}}{{enterMyData.annualTCOPerServiceDeskTicketOwnership | number :
+                                            '1.0-0' }}</p>
+                                        <p *ngIf="TCOTicketEauality" class="text-info tco-user-ticket-equal">
+                                            {{currencySymbol}}{{enterMyData.annualTCOPerServiceDeskTicketOwnership | number : '1.0-0' }}
+                                        </p>
+
+                                        <div class="mt-3" *ngIf="!TCOTicketEauality &&((enterMyData.annualTCOPerServiceDeskTicketOwnership>=servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value*refactorVal))">
+                                            <div class=" arrow-img">
+
+                                                <svg id="annualTCOCostPerInstalledTBSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                                    xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGannual1" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop4000" [attr.offset]="(makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value * refactorVal)-enterMyData.annualTCOPerServiceDeskTicketOwnership)/(servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value * refactorVal))*100) ) + '%'"
+                                                                stop-color="#02ABBA" />
+                                                            <stop id="stop4001" [attr.offset]="(makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value * refactorVal)-enterMyData.annualTCOPerServiceDeskTicketOwnership)/(servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value * refactorVal))*100) ) + '%'"
+                                                                stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font mb-0">
+                                                    {{ makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value * refactorVal)-enterMyData.annualTCOPerServiceDeskTicketOwnership)/(servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value
+                                                    * refactorVal))*100) | number : '1.1-1' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3" *ngIf="!TCOTicketEauality &&((enterMyData.annualTCOPerServiceDeskTicketOwnership<servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value*refactorVal))">
+                                            <div class=" arrow-img">
+
+                                                <svg id="annualTCOCostPerInstalledTBSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                                    xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGannual1" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop4000" [attr.offset]="(makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value * refactorVal)-enterMyData.annualTCOPerServiceDeskTicketOwnership)/(servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value * refactorVal))*100 )) + '%'"
+                                                                stop-color="#02ABBA" />
+                                                            <stop id="stop4001" [attr.offset]="(makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value * refactorVal)-enterMyData.annualTCOPerServiceDeskTicketOwnership)/(servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value * refactorVal))*100 )) + '%'"
+                                                                stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font mb-0">
+                                                    {{ makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value * refactorVal)-enterMyData.annualTCOPerServiceDeskTicketOwnership)/(servicedeskData.data.AnnualCostPerServiceDeskTicket.CostPerTicket.NumberCY.value
+                                                    * refactorVal))*100 ) | number : '1.1-1' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div *ngIf="enterMyData.annualTCOPerServiceDeskTicketOwnership<0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]">
+                                        <div class="align-self-center">
+                                            <span class="bord-top"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- col p-0 pb-3 newclass -->
+                            <div class="col maxw45 p-0 pb-3 newclass">
+                                <p class="m-2 text-center">Market Price</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="col p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskTicket.PricePerTicket.NumberCY.value
+                                                * refactorVal | number : '1.1-1' }}</p>
+
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskTicket.PricePerTicket.UpperCY.value
+                                                    * refactorVal | number : '1.1-1' }}</p>
+
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskTicket.PricePerTicket.LowerCY.value
+                                                    * refactorVal | number : '1.1-1' }}</p>
+
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- this added -->
+                                    <!-- <div class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                        <div class="align-self-center">
+                                            <span class="bord-top"></span>
+                                        </div>
+                                    </div> -->
+                                    <!-- this added -->
+
+                                    <!-- <div class="p-2 col bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+
+                                        <p class="text-info">
+                                            {{currencySymbol}}{{enterMyData.annualTCOPerServiceDeskTicketOwnership | number : '1.1-1' }}
+                                        </p>
+
+                                        <div class="mt-3">
+                                            <div class=" arrow-img">
+
+                                                <svg id="sdmarketplacePerInstalledTBSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGannual7420" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop8520" [attr.offset]="(((servicedeskData.data.AnnualCostPerServiceDeskTicket.PricePerTicket.NumberCY.value * refactorVal)-enterMyData.annualTCOPerServiceDeskTicketOwnership)/(servicedeskData.data.AnnualCostPerServiceDeskTicket.PricePerTicket.NumberCY.value * refactorVal))*100 + '%'" stop-color="#02ABBA" />
+                                                            <stop id="stop8523" [attr.offset]="(((servicedeskData.data.AnnualCostPerServiceDeskTicket.PricePerTicket.NumberCY.value * refactorVal)-enterMyData.annualTCOPerServiceDeskTicketOwnership)/(servicedeskData.data.AnnualCostPerServiceDeskTicket.PricePerTicket.NumberCY.value * refactorVal))*100 + '%'" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual7420)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font mb-0">
+                                                    {{ makePositiveValue((((servicedeskData.data.AnnualCostPerServiceDeskTicket.PricePerTicket.NumberCY.value * refactorVal)-enterMyData.annualTCOPerServiceDeskTicketOwnership)/(servicedeskData.data.AnnualCostPerServiceDeskTicket.PricePerTicket.NumberCY.value * refactorVal))*100 | number : '1.2-2') | number : '1.1-1' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost Per Service Desk Ticket card ends-->
+
+            <!-- Annual Cost Per windows server FTE card starts-->
+            <div class="p-2 w-28 second-row-component-2560 annual-cost-desk-fte">
+                <div class="card custom-card min-ht340 min-ht-2700">
+                    <div class="card-header">
+                        Annual Cost Per Service Desk FTE
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{servicedeskDefinitionData.costperemployee_lower.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="p-1 mx-auto align-self-center">
+                                <p class="m-2 text-center">Employee
+                                    <small>(Mean)</small>
+                                </p>
+                                <div class="minh-55">
+                                    <p class="text-info">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskFTE.CostPerEmployee.Number.value
+                                        * refactorVal | number : '1.0-0' }}</p>
+
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskFTE.CostPerEmployee.Upper.value
+                                            * refactorVal | number : '1.0-0' }}</p>
+
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskFTE.CostPerEmployee.Lower.value
+                                            * refactorVal | number : '1.0-0' }}</p>
+
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-1 mx-auto">
+                                <p class="m-2 text-center">Contractor
+                                    <small>(Mean)</small>
+                                </p>
+                                <div class="minh-55">
+                                    <p class="text-info">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskFTE.CostPerContractor.Number.value
+                                        * refactorVal | number : '1.0-0' }}</p>
+
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskFTE.CostPerContractor.Upper.value
+                                            * refactorVal | number : '1.0-0' }}</p>
+
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{currencySymbol}}{{servicedeskData.data.AnnualCostPerServiceDeskFTE.CostPerContractor.Lower.value
+                                            * refactorVal | number : '1.0-0' }}</p>
+
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost Per windows server FTE card ends-->
+
+            <!-- Windows server provisioning time card starts-->
+            <div [ngClass]="[showDiv ? 'w-32 second-row-component-2560 no-service-desk-ticket' : 'w-24 no-service-desk-ticket']" class="p-2">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header" style="text-transform: none;">
+                        <!-- # of Tickets Per Service Desk FTE Per Month -->
+                        # of Tickets Per FTE
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{servicedeskDefinitionData.ticketsperfte_number.defination}}"></i>
+                        </a>
+                    </div>
+                    <!-- p-0 -->
+                    <div class="card-body pt-3 pb-0" [ngClass]="[showDiv ? 'pr-0' : '' ]">
+                        <div class="row m-0">
+                            <div class="col p-2 pb-3">
+                                <div class="minh-55">
+                                    <p class="text-info">
+
+                                        {{servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value | number : '1.0-0'}}
+                                    </p>
+                                    <p>
+                                        <small>(Mean)</small>
+                                    </p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+
+                                            {{servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Upper.value | number : '1.0-0'}}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+
+                                            {{servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Lower.value | number : '1.0-0'}}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="enterMyData.noOfTicketsPerFTE>=0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]"
+                                style="min-height: 278px;">
+
+                                <p *ngIf="!sdEquatyEquality" class="text-info">
+                                    {{enterMyData.noOfTicketsPerFTE | number : '1.0-0'}}
+                                </p>
+                                <p *ngIf="sdEquatyEquality" class="text-info equality-center-aligned">
+                                    {{enterMyData.noOfTicketsPerFTE | number : '1.0-0'}}
+                                </p>
+
+                                <div class="mt-3" *ngIf="!sdEquatyEquality &&(enterMyData.noOfTicketsPerFTE>=servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value)">
+                                    <div class=" arrow-img">
+
+                                        <svg id="noOfTicketsPerFTESVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="nooffte1ticket" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4074" [attr.offset]="(makePositiveValue(((servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value-enterMyData.noOfTicketsPerFTE)/servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value)*100) ) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop4075" [attr.offset]="(makePositiveValue(((servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value-enterMyData.noOfTicketsPerFTE)/servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value)*100) ) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#nooffte1ticket)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue(((servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value-enterMyData.noOfTicketsPerFTE)/servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value)*100)
+                                            | number : '1.0-0' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3" *ngIf="!sdEquatyEquality &&(enterMyData.noOfTicketsPerFTE<servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value)">
+                                    <div class=" arrow-img">
+
+                                        <svg id="noOfTicketsPerFTESVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="nooffte1ticket" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4074" [attr.offset]="(makePositiveValue(((servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value-enterMyData.noOfTicketsPerFTE)/servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value)*100) ) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop4075" [attr.offset]="(makePositiveValue(((servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value-enterMyData.noOfTicketsPerFTE)/servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value)*100) ) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#nooffte1ticket)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue(((servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value-enterMyData.noOfTicketsPerFTE)/servicedeskData.data.NumberofTicketsPerFTE.TicketsPerFTE.Number.value)*100)
+                                            | number : '1.0-0' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="enterMyData.noOfTicketsPerFTE<0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]"
+                                style="min-height: 278px;">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Windows server provisioning time card ends-->
+
+            <div [ngClass]="[showDiv ? 'w-25 second-row-component-2560 offshore-perc' : 'w-23 offshore-perc']" class="p-2">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        Offshore %
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{servicedeskDefinitionData.offshore_upper.defination}}"></i>
+                        </a>
+                    </div>
+                    <!-- removed mx-auto -->
+                    <div class="card-body pt-3 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-2 pb-3">
+                                <div class="minh-55">
+                                    <p class="text-info">
+                                        {{servicedeskData.data.Offshore.Offshore.Number.value | number : '1.1-1' }}%
+                                    </p>
+                                    <p>
+                                        <small>(Mean)</small>
+                                    </p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{servicedeskData.data.Offshore.Offshore.Upper.value | number : '1.1-1' }}%
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+
+                                            {{servicedeskData.data.Offshore.Offshore.Lower.value | number : '1.1-1' }}%
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staffing mix card starts-->
+            <div [ngClass]="[showDiv ? 'w-40 second-row-component-2560 desk-staffing-mix' : 'w-25 desk-staffing-mix']" class="p-2">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        Staffing mix
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{servicedeskDefinitionData.staffingmixcontractor_number.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body px-1 pb-0" style="padding-right: 0px !important;">
+                        <!-- [ngClass]="[showDiv ? 'mright' : '' ]"  -->
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="pb-0 mx-auto" style="width:100%;">
+                                <!--margin-right: 0px !important;-->
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="p-0 mx-auto">
+                                        <div class="d-flex flex-row flex-wrap">
+                                            <div class="p-2">
+                                                <div class="minh-55">
+                                                    <app-donut-chart id="servicedeskstaffingmix-percentage-employee" chartID="servicedeskstaffingmix-percentage-employee" fillColor="9acb3b"
+                                                        percentVal="{{servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value/10}}"
+                                                        chartWidth="80" chartHeight="80"></app-donut-chart>
+                                                    <p class="text-info">{{servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value |
+                                                        number : '1.1-1' }}%</p>
+                                                    Employees
+                                                    <small>(Mean)</small>
+                                                </div>
+                                                <div class="my-3">
+                                                    <i class="arrow-up align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{servicedeskData.data.StaffingMix.StaffingMixEmployee.Upper.value
+                                                            | number : '1.1-1' }}%</p>
+                                                        <small>Upper</small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2">
+                                                    <i class="arrow-lower align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{servicedeskData.data.StaffingMix.StaffingMixEmployee.Lower.value
+                                                            | number : '1.1-1' }}%</p>
+                                                        <small>Lower</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2">
+                                                <div class="minh-55">
+                                                    <app-donut-chart id="service-desk-staffingmix-percentage-contractor" chartID="service-desk-staffingmix-percentage-contractor"
+                                                        fillColor="03abba" percentVal="{{servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value/10}}"
+                                                        chartWidth="80" chartHeight="80"></app-donut-chart>
+
+                                                    <p class="text-info">{{servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value
+                                                        | number : '1.1-1'}}%</p>
+                                                    Contractors
+                                                    <small>(Mean)</small>
+                                                </div>
+                                                <div class="my-3">
+                                                    <i class="arrow-up align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{servicedeskData.data.StaffingMix.StaffingMixContractor.Upper.value
+                                                            | number : '1.1-1'}}%</p>
+                                                        <small>Upper</small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2">
+                                                    <i class="arrow-lower align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{servicedeskData.data.StaffingMix.StaffingMixContractor.Lower.value
+                                                            | number : '1.1-1'}}%</p>
+                                                        <small>Lower</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col p-5 text-center bg-lightblue" [ngClass]="[showDiv ? '!displayDiv ' : 'displayDiv' ]" *ngIf="(enterMyData.staffingmixEmployee*100<0 && enterMyData.staffingmixContract*100<0)"
+                                        style="margin-right:0px !important;">
+                                        <div class="align-self-center p-5 mt-3">
+                                            <span class="bord-top"></span>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="(enterMyData.staffingmixEmployee*100>=0 || enterMyData.staffingmixContract*100>=0)" class="p-2 mx-auto bg-lightblue"
+                                        [ngClass]="[showDiv ? '!displayDiv ' : 'displayDiv' ]" style="margin-right:0px !important;">
+
+                                        <div class="d-flex flex-row flex-wrap">
+
+                                            <div *ngIf="enterMyData.staffingmixEmployee*100>=0" class="d-flex flex-row flex-wrap">
+                                                <div class="p-2 mt-3">
+                                                    <!-- <div class=" minh-55">
+                                                        <p class="text-info">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                        Employees
+                                                    </div> -->
+
+                                                    <div *ngIf="!staffingEmployeeEquality" class=" minh-55">
+                                                        <p class="text-info">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                        Employees
+                                                    </div>
+
+                                                    <div *ngIf="staffingEmployeeEquality" class=" minh-55">
+                                                        <p class="text-info equality-center-aligned-staffingmix">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                        Employees
+                                                    </div>
+
+                                                    <div *ngIf="!staffingEmployeeEquality && ((enterMyData.staffingmixEmployee*100) > servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value)"
+                                                        class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92"
+                                                                enable-background="new 0 0 60 92" xml:space="preserve">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual5" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop4010" [attr.offset]=" makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 ) + '%'"
+                                                                            stop-color="#9acb3b" />
+                                                                        <stop id="stop4009" [attr.offset]=" makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 ) + '%'"
+                                                                            stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+                                                                {{ makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100))
+                                                                / servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value)
+                                                                * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngIf="!staffingEmployeeEquality && ((enterMyData.staffingmixEmployee*100) < servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value)"
+                                                        class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92"
+                                                                enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual5785" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop401120" [attr.offset]=" makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100) + '%'"
+                                                                            stop-color="#9acb3b" />
+                                                                        <stop id="stop402309" [attr.offset]=" makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100) + '%'"
+                                                                            stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5785)" stroke="#9acb3b" stroke-miterlimit="10"
+                                                                    d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100))
+                                                                / servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value)
+                                                                * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="enterMyData.staffingmixEmployee*100<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv ' : 'displayDiv' ]">
+                                                <div class="align-self-center">
+                                                    <span class="bord-top"></span>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="enterMyData.staffingmixContract*100>=0" class="d-flex flex-row flex-wrap ">
+                                                <div class="p-2 mt-3">
+
+                                                    <div *ngIf="!contractEquality" class=" minh-55">
+                                                        <p class="text-info">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                        Contractors
+                                                    </div>
+                                                    <div *ngIf="contractEquality" class=" minh-55">
+                                                        <p class="text-info equality-center-aligned-staffingmix">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                        Contractors
+                                                    </div>
+                                                    <div *ngIf="!contractEquality &&(enterMyData.staffingmixContract*100)>servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value"
+                                                        class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92"
+                                                                enable-background="new 0 0 60 92" xml:space="preserve">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual65" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop4011" [attr.offset]="makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 ) + '%'"
+                                                                            stop-color="#02ABBA" />
+                                                                        <stop id="stop4012" [attr.offset]="makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 ) + '%'"
+                                                                            stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100))
+                                                                / servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value)
+                                                                * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngIf="!contractEquality &&(enterMyData.staffingmixContract*100)<servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value"
+                                                        class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92"
+                                                                enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual65451" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop401112" [attr.offset]="makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 ) + '%'"
+                                                                            stop-color="#02ABBA" />
+                                                                        <stop id="stop402312" [attr.offset]="makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 ) + '%'"
+                                                                            stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65451)" stroke="#02ABBA" stroke-miterlimit="10"
+                                                                    d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100))
+                                                                / servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value)
+                                                                * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="enterMyData.staffingmixContract*100<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv ' : 'displayDiv' ]">
+                                                <div class="align-self-center">
+                                                    <span class="bord-top"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <!-- <div class="d-flex flex-row flex-wrap"> -->
+
+                                        <!-- <div class="p-2 mt-3">
+                                                <div class=" minh-55">
+
+                                                    <p class="text-info">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                    Employees
+                                                </div>
+                                                <div class="mt-4">
+                                                    <div class=" arrow-img">
+
+                                                        <svg id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                            <defs>
+                                                                <linearGradient id="progressSVGannual5" x1="0" y1="1" x2="0" y2="0">
+                                                                    <stop id="stop4010" [attr.offset]="makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value - enterMyData.staffingmixEmployee*100)/servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value)*100 | number : '1.2-2') + '%'" stop-color="#9acb3b" />
+                                                                    <stop id="stop4009" [attr.offset]="makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value - enterMyData.staffingmixEmployee*100)/servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value)*100 | number : '1.2-2') + '%'" stop-color="#e1edf3" />
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                        </svg>
+                                                        <p class="remained-percentage remained-perc-font">
+                                                            {{ makePositiveValue(((servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value - enterMyData.staffingmixEmployee*100)/servicedeskData.data.StaffingMix.StaffingMixEmployee.Number.value)*100) | number : '1.1-1' }}%
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 mt-3">
+                                                <div class=" minh-55">
+
+                                                    <p class="text-info">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                    Contractors
+                                                </div>
+                                                <div class="mt-4">
+                                                    <div class=" arrow-img">
+
+                                                        <svg id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                            <defs>
+                                                                <linearGradient id="progressSVGannual65" x1="0" y1="1" x2="0" y2="0">
+                                                                    <stop id="stop4011" [attr.offset]=" makePositiveValue (((servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value - enterMyData.staffingmixContract*100)/servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value)*100 | number : '1.2-2') + '%'" stop-color="#02ABBA" />
+                                                                    <stop id="stop4012" [attr.offset]=" makePositiveValue (((servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value - enterMyData.staffingmixContract*100)/servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value)*100 | number : '1.2-2') + '%'" stop-color="#e1edf3" />
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                        </svg>
+                                                        <p class="remained-percentage remained-perc-font">
+                                                            {{ makePositiveValue (((servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value - enterMyData.staffingmixContract)/servicedeskData.data.StaffingMix.StaffingMixContractor.Number.value)*100) | number : '1.1-1' }}%
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+
+                                        <!-- </div> -->
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Staffing mix card ends-->
+
+
+            <div [ngClass]="[showDiv ? 'w-25 first-call-resolution width-33' : 'w-23 third-row-width-33']" class="p-2">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        First Call Resolution %
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{servicedeskDefinitionData.servicedesk_fcr_lower.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body pt-3 pb-0">
+                        <div class="row">
+                            <div class="col p-2 mx-auto">
+                                <div class="minh-55">
+                                    <app-donut-chart id="service-desk-firstcall" chartID="service-desk-firstcall" fillColor="03abba" percentVal="{{servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value/10}}"
+                                        chartWidth="90" chartHeight="90"></app-donut-chart>
+                                    <p class="text-info">
+
+                                        {{servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value | number : '1.1-1'}}%
+                                    </p>
+                                    <p>
+                                        <small>(Mean)</small>
+                                    </p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Upper.value | number : '1.1-1'}}%
+
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Lower.value | number : '1.1-1'}}%
+
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.firstcallResolution>=0)&&(enterMyData.firstcallResolution!=servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value)"
+                                class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                                <p class="text-info mt-3">{{enterMyData.firstcallResolution | number : '1.1-1' }}%</p>
+
+                                <div class="mt-5 pt-1" *ngIf="enterMyData.firstcallResolution>=servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value">
+                                    <div class="arrow-img">
+                                        <svg id="firstcallresolutionSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="firstcall1" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4045" [attr.offset]="(makePositiveValue (((servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value - enterMyData.firstcallResolution)/servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value)*100) ) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop4046" [attr.offset]="(makePositiveValue (((servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value - enterMyData.firstcallResolution)/servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value)*100) ) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#firstcall1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">{{ makePositiveValue (((servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value
+                                            - enterMyData.firstcallResolution)/servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value)*100)
+                                            | number : '1.1-1'}}%</p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-5 pt-1" *ngIf="enterMyData.firstcallResolution<servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value">
+                                    <div class="arrow-img">
+                                        <svg id="firstcallresolutionSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="firstcall1" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4045" [attr.offset]="(makePositiveValue (((servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value - enterMyData.firstcallResolution)/servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value)*100) ) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop4046" [attr.offset]="(makePositiveValue (((servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value - enterMyData.firstcallResolution)/servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value)*100) ) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#firstcall1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">{{ makePositiveValue (((servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value
+                                            - enterMyData.firstcallResolution)/servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value)*100)
+                                            | number : '1.1-1'}}%</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="(enterMyData.firstcallResolution<0)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.firstcallResolution==servicedeskData.data.FirstCallResolution.ServiceDeskFCR.Mean.value)" class="col p-2 bg-lightblue text-center"
+                                [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <p class="same-value">
+                                        {{enterMyData.firstcallResolution | number : '1.1-1' }}%
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div [ngClass]="[showDiv ? 'width-26-67' : 'w-17 third-row-width-33']" class="p-2">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header px-3">
+                        Average Speed To Answer
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{servicedeskDefinitionData.servicedesk_asa_upper.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body pt-3 pb-0">
+                        <div class="row">
+                            <div class="col p-2 mx-auto">
+                                <div class="minh-55">
+                                    <p class="text-info">
+                                        {{servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value | number : '1.1-1' }}
+                                    </p>
+                                    <p>Seconds
+                                        <small>(Mean)</small>
+                                    </p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Upper.value | number : '1.1-1' }}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Lower.value | number : '1.1-1' }}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.averagespeedtoAnswer>=0)&&(enterMyData.averagespeedtoAnswer!=servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value)"
+                                class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                                <p class="text-info mt-3">{{enterMyData.averagespeedtoAnswer | number : '1.1-1' }}</p>
+
+                                <div class="mt-5 pt-2" *ngIf="enterMyData.averagespeedtoAnswer>=servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value">
+                                    <div class="arrow-img">
+
+                                        <svg id="speedtoanswerSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                            y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="avgspeedtoanswer1" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4124" [attr.offset]="(makePositiveValue (((servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value-enterMyData.averagespeedtoAnswer)/servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value
+                                                        )*100)) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop457" [attr.offset]="(makePositiveValue (((servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value-enterMyData.averagespeedtoAnswer)/servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value
+                                                        )*100)) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#avgspeedtoanswer1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue (((servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value-enterMyData.averagespeedtoAnswer)/servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value
+                                            )*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-5 pt-2" *ngIf="enterMyData.averagespeedtoAnswer<servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value">
+                                    <div class="arrow-img">
+
+                                        <svg id="speedtoanswerSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                            y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="avgspeedtoanswer1" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4124" [attr.offset]="(makePositiveValue (((servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value-enterMyData.averagespeedtoAnswer)/servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value
+                                                        )*100)) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop457" [attr.offset]="(makePositiveValue (((servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value-enterMyData.averagespeedtoAnswer)/servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value
+                                                        )*100)) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#avgspeedtoanswer1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue (((servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value-enterMyData.averagespeedtoAnswer)/servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value
+                                            )*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="(enterMyData.averagespeedtoAnswer<0)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.averagespeedtoAnswer==servicedeskData.data.AverageSpeedtoAnswerinseconds.ServiceDeskASA.Mean.value)"
+                                class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <!-- <span class="bord-top"></span> -->
+                                    <p class="same-value">
+                                        {{enterMyData.averagespeedtoAnswer | number : '1.1-1' }}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div [ngClass]="[showDiv ? 'w-25 width-33' : 'w-17 third-row-width-33']" class="p-2">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        Average Handle Time
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{servicedeskDefinitionData.servicedesk_aha_lower.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body pt-2 pb-0">
+                        <div class="row">
+                            <div class="col p-2 mx-auto">
+                                <div class="minh-55">
+                                    <p class="text-info">
+
+                                        {{servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value | number : '1.1-1' }}
+                                    </p>
+                                    <p>Minutes
+                                        <small>(Mean)</small>
+                                    </p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Upper.value | number : '1.1-1' }}
+
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Lower.value | number : '1.1-1' }}
+
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- t1:{{enterMyData.averageHandletime}} -->
+
+                            <div *ngIf="(enterMyData.averageHandletime>=0)&&(servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value!=enterMyData.averageHandletime)"
+                                class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]"
+                                style="min-height: 286px;">
+                                <p class="text-info">{{enterMyData.averageHandletime | number : '1.1-1' }}</p>
+
+                                <div class="mt-4" *ngIf="enterMyData.averageHandletime>=servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value">
+                                    <div class=" arrow-img">
+                                        <svg id="averageHandletimeSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="avgHandleintime1" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4123" [attr.offset]="(makePositiveValue (((servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value-enterMyData.averageHandletime)/servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value
+                                                        )*100)) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop456" [attr.offset]="(makePositiveValue (((servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value-enterMyData.averageHandletime)/servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value
+                                                        )*100)) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#avgHandleintime1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue (((servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value-enterMyData.averageHandletime)/servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value
+                                            )*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4" *ngIf="enterMyData.averageHandletime<servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value">
+                                    <div class=" arrow-img">
+                                        <svg id="averageHandletimeSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="avgHandleintime1" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4123" [attr.offset]="(makePositiveValue (((servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value-enterMyData.averageHandletime)/servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value
+                                                        )*100)) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop456" [attr.offset]="(makePositiveValue (((servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value-enterMyData.averageHandletime)/servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value
+                                                        )*100)) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#avgHandleintime1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue (((servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value-enterMyData.averageHandletime)/servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value
+                                            )*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="(enterMyData.averageHandletime<0)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]"
+                                style="min-height: 286px;">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(servicedeskData.data.AverageHandleTimeinminutes.ServiceDeskAHA.Mean.value==enterMyData.averageHandletime)" class="col p-2 bg-lightblue text-center"
+                                [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]" style="min-height: 286px;">
+                                <div class="align-self-center">
+                                    <!-- <span class="bord-top"></span> -->
+                                    <p class="same-value-handletime">
+                                        {{enterMyData.averageHandletime | number : '1.1-1' }}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div [ngClass]="[showDiv ? 'w-25 width-33' : 'w-17']" class="p-2">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header px-2">
+                        <!-- Tickets Per User Per Month -->
+                        # of Tickets Per User
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{servicedeskDefinitionData.ticketsperuser_number.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body pt-2 pb-0">
+                        <div class="row">
+                            <div class="col p-2 mx-auto">
+                                <div class="minh-55">
+                                    <p class="text-info">{{servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value | number :
+                                        '1.1-1' }}</p>
+                                    <p>
+                                        <small>(Mean)</small>
+                                    </p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Upper.value | number : '1.1-1' }}
+
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Lower.value | number : '1.1-1' }}
+
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.noOfTicketsPerUser>0)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]"
+                                style="min-height: 286px;">
+                                <p *ngIf="!ticketEquality" class="text-info">
+                                    {{ enterMyData.noOfTicketsPerUser | number : '1.1-1' }}
+                                </p>
+
+                                <p *ngIf="ticketEquality" class="text-info same-value-ticket-per-month">
+                                    {{ enterMyData.noOfTicketsPerUser | number : '1.1-1' }}
+                                </p>
+
+                                <div class="mt-4" *ngIf="!ticketEquality&&(enterMyData.noOfTicketsPerUser>=servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value)">
+                                    <div class=" arrow-img">
+
+                                        <svg id="noOfTicketsPerUserSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="nooffte1ticketperuser" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4078" [attr.offset]="(makePositiveValue(((servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value-enterMyData.noOfTicketsPerUser)/servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value)*100) ) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop4079" [attr.offset]="(makePositiveValue(((servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value-enterMyData.noOfTicketsPerUser)/servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value)*100) ) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#nooffte1ticketperuser)" stroke="#02ABBA" stroke-miterlimit="10"
+                                                d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue (( servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value-enterMyData.noOfTicketsPerUser)
+                                            /(servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value | number
+                                            : '1.1-1') ) * 100 | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4" *ngIf="!ticketEquality&&(enterMyData.noOfTicketsPerUser<servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value)">
+                                    <div class=" arrow-img">
+
+                                        <svg id="noOfTicketsPerUserSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="nooffte1ticketperuser" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4078" [attr.offset]="(makePositiveValue(((servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value-enterMyData.noOfTicketsPerUser)/servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value)*100)) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop4079" [attr.offset]="(makePositiveValue(((servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value-enterMyData.noOfTicketsPerUser)/servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value)*100)) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#nooffte1ticketperuser)" stroke="#02ABBA" stroke-miterlimit="10"
+                                                d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue (( servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value-enterMyData.noOfTicketsPerUser)
+                                            /(servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value | number
+                                            : '1.1-1') ) * 100 | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="(enterMyData.noOfTicketsPerUser<=0)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]"
+                                style="min-height: 286px;">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                            <!-- <div *ngIf="(enterMyData.noOfTicketsPerUser==servicedeskData.data.NumberofTicketsPerUser.TicketsPerUser.Number.value)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                    <div class="align-self-center">
+                                        <p class="same-value-handletime">
+                                            {{enterMyData.noOfTicketsPerUser | number : '1.1-1' }}
+                                        </p>
+                                    </div>
+                                </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-2 w-25 width-33">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        User Experience Score By Channel
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="left" ngbTooltip="{{servicedeskDefinitionData.telephone.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body mx-auto">
+                        <!-- First row -->
+                        <div class="row card-body m-0">
+                            <div class="col-7 align-items-center d-inline-flex text-grey">
+                                Self Service
+                            </div>
+                            <div class="col-4 num-grey text-right">
+                                {{servicedeskData.data.UserExperienceScoreByChannel.SelfService.SelfService.value | number : '1.0-0' }}
+                            </div>
+                        </div>
+
+                        <!-- Second row -->
+                        <div class="row card-body m-0">
+                            <div class="col-7 align-items-center d-inline-flex text-grey">
+                                Email
+                            </div>
+                            <div class="col-4 num-grey text-right">
+                                {{servicedeskData.data.UserExperienceScoreByChannel.Email.Email.value | number : '1.0-0' }}
+                            </div>
+                        </div>
+
+                        <!-- Third row -->
+                        <div class="row card-body m-0">
+                            <div class="col-7 align-items-center d-inline-flex text-grey">
+                                Chat
+                            </div>
+                            <div class="col-4 num-grey text-right">
+                                {{servicedeskData.data.UserExperienceScoreByChannel.Chat.Chat.value | number : '1.0-0' }}
+                            </div>
+                        </div>
+
+                        <!-- Fourth row -->
+                        <div class="row card-body m-0">
+                            <div class="col-7 align-items-center d-inline-flex text-grey">
+                                Tech Bar
+                            </div>
+                            <div class="col-4 num-grey text-right">
+                                {{servicedeskData.data.UserExperienceScoreByChannel.TechBar.TechBar.value | number : '1.0-0' }}
+                            </div>
+                        </div>
+
+                        <!-- Fifth row -->
+                        <div class="row card-body m-0">
+                            <div class="col-7 align-items-center d-inline-flex text-grey">
+                                Telephone
+                            </div>
+                            <div class="col-4 num-grey text-right">
+                                {{servicedeskData.data.UserExperienceScoreByChannel.Telephone.Telephone.value | number : '1.0-0' }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_personnel}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content drilldown-modal-width-personnel">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Service Desk Cost Allocation for Personnel
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 drilldown-modal-body">
+                <div class="drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="personnel-drillDown" chartID="personnel-drillDown" [chartData]="servicedeskData.drills.PersonnelCostAllocation"
+                        thickness="35" chartWidth="180" chartRadius="40" chartLegendSize="19" chartHeight="340"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="backdrop" [ngStyle]="{'display':display_hardware}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_hardware}">
+    <div class="modal-dialog modal-dialog-centered infra-popup-modal-dialog" role="document">
+        <div class="modal-content drilldown-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Service Desk Cost Allocation for Hardware & Software
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 drilldown-modal-body">
+                <!-- <div class="drilldown-chart" *ngIf="singleValueDonut"> -->
+                <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="service-desk-hardware-drillDown" chartID="service-desk-hardware-drillDown"
+                    [chartData]="servicedeskData.drills.HardwareandSoftwareCostAllocation" thickness="35" chartWidth="180" chartRadius="30"
+                    chartLegendSize="19" chartHeight="310"></mainframe-drill-down-donut-chart>
+                <!-- </div>
+                            <div class="drilldown-chart-01" *ngIf="!singleValueDonut" >
+                                <app-donut-chart id="service-desk-cost-allocation-hardware-drilldown" chartID="service-desk-cost-allocation-hardware-drilldown" thickness="35" fillColor="81CDE4" percentVal="{{(servicedeskData.drills.HardwareCostAllocation[0].value | number : '1.1-1')/10 }}" chartWidth="250" chartHeight="250" oneValue="1"></app-donut-chart>
+                                <div class="hw-donut-chart-value">{{servicedeskData.drills.HardwareCostAllocation[0].value | number : '1.1-1'}}%</div>
+                                <div class="text-center hw-single-donut-chart-value">
+                                    <div class="square-hw m-auto"></div>
+                                    <span>{{servicedeskData.drills.HardwareCostAllocation[0].label}}</span>
+                                </div>
+                            </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+                <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_software}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content drilldown-modal-width">
+                            <div class="modal-header infra-popup-text-header">
+                                <div class="popup-div">
+                                    Service Desk Cost Allocation for Software
+                                </div>
+                                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+                            </div>
+                            <div class="modal-body padding0 software-drilldown-modal-body">
+
+                                <div class="drilldown-chart-01" *ngIf="!singleValueDonut" >
+                                    <app-donut-chart id="service-desk-cost-allocation-software-01" chartID="service-desk-cost-allocation-software-01" thickness="35" fillColor="81CDE4" percentVal="{{(servicedeskData.drills.SoftwareCostAllocation[0].value | number : '1.1-1')/10 }}" chartWidth="250" chartHeight="250" oneValue="1"></app-donut-chart>
+                                    <div class="hw-donut-chart-value">{{servicedeskData.drills.SoftwareCostAllocation[0].value | number : '1.1-1'}}%</div>
+                                    <div class="text-center hw-single-donut-chart-value">
+                                        <div class="square-hw m-auto"></div>
+                                        <span>{{servicedeskData.drills.SoftwareCostAllocation[0].label}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="drilldown-chart" *ngIf="singleValueDonut">
+                                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="software-drillDown" chartID="software-drillDown" [chartData]="servicedeskData.drills.SoftwareCostAllocation"  thickness="35" chartWidth="180" chartRadius="50" chartLegendSize="19" chartHeight="378"></mainframe-drill-down-donut-chart>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+<div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_outsourcing}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content outsourcing-drilldown-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Service Desk Cost Allocation for Outsourcing
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 outsourcing-drilldown-modal-body">
+                <div class="outsourcing-drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="outsourcing-drillDown" chartID="outsourcing-drillDown" [chartData]="servicedeskData.drills.OutsourcingCostAllocation"
+                        thickness="35" chartWidth="180" chartRadius="100" chartHeight="470" chartLegendSize="23"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_costPerInstance}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerInstance}">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-linechart" role="document">
+        <div class="modal-content">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Annual Cost Per Service Desk User - 3 Year Trend
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeCostPerInstanceModalDialog()"></button>
+            </div>
+            <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+                <!--<fusioncharts width= '480' height= '280' type="msline" [dataSource]="dataSourceCostPerUser"></fusioncharts> -->
+                <!-- <line-chart></line-chart> -->
+                <line-chart *ngIf="showDrillDown" [chartData]="dataSourceCostPerUser" id="servicedeskLineChart1" chartId="servicedeskLineChart1"></line-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_costPerCore}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerCore}">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-linechart" role="document">
+        <div class="modal-content">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Cost Per Service Desk Ticket - 3 Year Trend
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeCostPerCoreModalDialog()"></button>
+            </div>
+            <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+                <!--<fusioncharts width= '480' height= '280' type="msline" [dataSource]="dataSourceTicket"></fusioncharts> -->
+                <!-- <line-chart></line-chart> -->
+                <line-chart *ngIf="showDrillDown" [chartData]="dataSourceTicket" id="servicedeskLineChart2" chartId="servicedeskLineChart2"></line-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #donotshow>
+    <div class="loader-icon-container">
+        <div class="loader-icon"></div>
+    </div>
+</ng-template>

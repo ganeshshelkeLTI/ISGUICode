@@ -1,0 +1,1389 @@
+<!-- Main section starts here -->
+<section class="main-content">
+    <div class="container-fluid">
+        <div class="d-sm-flex flex-row flex-wrap">
+            <div class="w-100 p-2">
+                <div class="card-header px-0">
+                    <h6 class="text-left">Workplace Services &nbsp; <a href="javascript:void(0)"><i class="info-icon" placement="right" ngbTooltip="{{workPlaceData.tower.id}}"></i></a> </h6>
+                </div>
+
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <div class="d-sm-flex flex-row flex-wrap align-items-center">
+                            <div class="p-2">
+                                <span class="text-left">
+                                    <p>Scale</p>
+                                    (Workplace Services Devices)
+                                </span>
+                            </div>
+                            <div class="p-2 mr-auto">
+
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button (click)="setScale(size)" type="button" class="btn mip-small btn-setRange scale-button" [ngClass]="(scaleValue==size.value) ? 'active-scale' : ''" *ngFor="let size of data.industrySize">{{size.key}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-2">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label>Region</label>
+                                        <select id="inputRegion" class="form-control mx-sm-3" name="selectedregion" [(ngModel)]='selectedregion'  (ngModelChange)='setRegion(selectedregion)'>
+                                            <option value="Grand Total" hidden>Global</option>
+                                            <option value="Total">&nbsp;Global&nbsp;</option>
+                                            <option *ngFor="let region of data.region"  [ngValue]=region> {{region.value}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Currency</label>
+                                        <select id="inputCurrency" class="form-control mx-sm-3" name="selectedcurrency" [(ngModel)]='selectedcurrency' (change)='setCurrency(selectedcurrency)'>
+                                            <option *ngFor="let currency of data.currency"  [ngValue]=currency> {{currency.value}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Compare Scenario</label>
+                                            <select id="inputScenarios" class="form-control mx-sm-3" name="selectedscenario" [(ngModel)]='selectedscenario' (ngModelChange)='getScenarioDataById(selectedscenario)'>
+                                            <option value="N/A" hidden>N/A</option>
+                                            <option *ngFor='let scenario of selectedScenarioName' [ngValue]=scenario>{{scenario.label}}</option>
+                                            </select>
+                                          </div>
+                                          <div class="form-group">
+                                                <label>Custom Reference</label>
+                                            <select id="inputCRG" class="form-control mx-sm-3" name="selectedcustomRef" [(ngModel)]='selectedcustomRef' (ngModelChange)='getScenarioDataByCustomRef(selectedcustomRef)'>
+                                                <option *ngFor='let crg of selectedCRGName' [ngValue]=crg>{{crg.customName}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" *ngIf="selectedcustomRef.customId != '-9999'">
+                                                    <i class="info-icon" placement="top"ngbTooltip="{{selectedcustomRef.definition}}" ></i>
+                                                </a>
+                                          </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-sm-flex flex-row flex-wrap">
+            <div class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Workplace Services Cost Allocation <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{workplaceDefinitionData.email_software.defination}}"></i></a>
+                    </div>
+                    <div class="card-body mx-auto">
+                        <!-- First row -->
+                        <div class="card custom-card p-0">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Personnel
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+
+                                    {{workPlaceData.data.TotalWorkplaceServicesCostAllocation.CostAllocationEmp.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+
+                                    <app-donut-chart id="workplace-cost-allocation-personnel" chartID="workplace-cost-allocation-personnel" fillColor="03abba" percentVal="{{workPlaceData.data.TotalWorkplaceServicesCostAllocation.CostAllocationEmp.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 p-0 d-inline">
+                                    <a href="javascript:void(0)" (click)="openModalDialog()"><i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Hardware
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+
+                                    {{workPlaceData.data.TotalWorkplaceServicesCostAllocation.CostAllocationHW.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+
+                                    <app-donut-chart id="workplace-cost-allocation-hardware" chartID="workplace-cost-allocation-hardware" fillColor="29497b" percentVal="{{workPlaceData.data.TotalWorkplaceServicesCostAllocation.CostAllocationHW.Number.value/10 }}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="hardwareModalDialog()"> <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_hardware}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Third row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Software
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+
+                                    {{workPlaceData.data.TotalWorkplaceServicesCostAllocation.CostAllocationSW.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+
+                                    <app-donut-chart id="workplace-cost-allocation-software" chartID="workplace-cost-allocation-software" fillColor="81cee4" percentVal="{{workPlaceData.data.TotalWorkplaceServicesCostAllocation.CostAllocationSW.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="softwareModalDialog()"> <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fourth row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Outsourcing
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+
+                                    {{workPlaceData.data.TotalWorkplaceServicesCostAllocation.CostAllocationOS.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+
+                                    <app-donut-chart id="service-desk-cost-allocation-outsourcing" chartID="service-desk-cost-allocation-outsourcing" fillColor="9acb3b" percentVal="{{workPlaceData.data.TotalWorkplaceServicesCostAllocation.CostAllocationOS.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="outsourcingModalDialog()"> <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div [ngClass]="[showDiv ? 'w-md-100 w-37 annual-cost-2700' : 'w-37 annual-cost-2500-2700']" class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Annual Cost Per Workplace Services Device 
+                        <a href="javascript:void(0)" ><i class="info-icon" placement="top" ngbTooltip="{{workplaceDefinitionData.costperdevice_numbercy.defination}}"></i></a>
+                        <a *ngIf="isLineChartDisabled==false" href="javascript:void(0)" class="popout" (click)="costPerInstanceDialog()" ><i class="circle-arrow-icon float-right"></i></a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col px-2 newclass">
+                                <p class="m-1">Total Cost of Ownership</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="col p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">
+                                                {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal | number : '1.0-0'}}
+                                            </p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.UpperCY.value * refactorVal | number : '1.0-0'}}
+                                                </p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+
+                                                    {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.LowerCY.value * refactorVal | number : '1.0-0'}}
+                                                </p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-2 col bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]" style="min-height: 228px;">
+                                        <p *ngIf="!TCOPerWorkplaceDevicesEquality" class="text-info">{{currencySymbol}}{{enterMyData.annualTCOPerWorkplaceDevices | number : '1.0-0'}}</p>
+                                        <p *ngIf="TCOPerWorkplaceDevicesEquality" class="text-info equality-center-aligned">{{currencySymbol}}{{enterMyData.annualTCOPerWorkplaceDevices | number : '1.0-0'}}</p>
+
+                                        <div class="mt-2" *ngIf="!TCOPerWorkplaceDevicesEquality && (enterMyData.annualTCOPerWorkplaceDevices>(workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal))">
+                                            <div class="arrow-img">
+                                                <svg id="workplaceAnnualTCOcostPerDeviceSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGworkplace1" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop6000" [attr.offset]="(makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ) - enterMyData.annualTCOPerWorkplaceDevices)/(workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ))*100)) + '%'" stop-color="#02ABBA" />
+                                                            <stop id="stop6001" [attr.offset]="(makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ) - enterMyData.annualTCOPerWorkplaceDevices)/(workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ))*100)) + '%'" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font" >
+                                                    {{ makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ) - enterMyData.annualTCOPerWorkplaceDevices)/(workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ))*100) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2" *ngIf="!TCOPerWorkplaceDevicesEquality && (enterMyData.annualTCOPerWorkplaceDevices<(workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal))">
+                                            <div class="arrow-img">
+                                                <svg id="workplaceAnnualTCOcostPerDeviceSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGworkplace1" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop6000" [attr.offset]="(makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ) - enterMyData.annualTCOPerWorkplaceDevices)/(workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ))*100)) + '%'" stop-color="#02ABBA" />
+                                                            <stop id="stop6001" [attr.offset]="(makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ) - enterMyData.annualTCOPerWorkplaceDevices)/(workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ))*100)) + '%'" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font" >
+                                                    {{ makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ) - enterMyData.annualTCOPerWorkplaceDevices)/(workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.CostPerDevice.NumberCY.value * refactorVal ))*100) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="border-right"></span>
+                            <div class="col p-0 pb-3 newclass">
+                                <p class="m-1">Market Price </p>
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="col p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">
+
+                                                {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.PricePerDevice.NumberCY.value * refactorVal | number : '1.0-0'}}
+                                            </p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+
+                                                    {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.PricePerDevice.UpperCY.value * refactorVal | number : '1.0-0'}}
+                                                </p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+
+                                                    {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesDevice.PricePerDevice.LowerCY.value * refactorVal | number : '1.0-0'}}
+                                                </p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div [ngClass]="[showDiv ? 'w-md-100 w-37 annual-cost-user-2700' : 'w-37 annual-cost-user-2500-2700']" class="p-2 kpi-width-all">
+                <div class="card custom-card min-ht320">
+
+                    <div class="card-header">
+                        Annual Cost Per Workplace Services User 
+                        <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{workplaceDefinitionData.priceperuser_lowercy.defination}}"></i></a>
+                        <a *ngIf="isLineChartDisabled==false" href="javascript:void(0)" class="popout" (click)="costPerCoreDialog()" ><i class="circle-arrow-icon float-right"></i></a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col px-2 newclass">
+                                <p class="m-1">Total Cost of Ownership</p>
+                                <div class="row m-0">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">
+
+                                                {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal | number : '1.0-0'}}
+                                            </p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+
+                                                    {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.UpperCY.value * refactorVal | number : '1.0-0'}}
+                                                </p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+
+                                                    {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.LowerCY.value * refactorVal | number : '1.0-0'}}
+                                                </p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="py-2 col bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]" style="min-height: 228px;">
+                                        <p *ngIf="!TCOPerWorkplaceUserEquality" class="text-info">{{currencySymbol}}{{enterMyData.annualTCOPerWorkplaceUser  | number : '1.0-0'}}</p>
+                                        <p *ngIf="TCOPerWorkplaceUserEquality" class="text-info equality-center-aligned">{{currencySymbol}}{{enterMyData.annualTCOPerWorkplaceUser  | number : '1.0-0'}}</p>
+
+                                        <div class="mt-2" *ngIf="!TCOPerWorkplaceUserEquality && (enterMyData.annualTCOPerWorkplaceUser>(workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal))">
+                                            <div class="arrow-img">
+                                                <svg id="workplaceAnnualTCOcostPerUserSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGworkplace2" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop6002" [attr.offset]="makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOPerWorkplaceUser)/(workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal))*100) + '%'" stop-color="#02ABBA" />
+                                                            <stop id="stop6003" [attr.offset]="makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOPerWorkplaceUser)/(workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal))*100) + '%'" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace2)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font">
+
+                                                    {{ makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal) - enterMyData.annualTCOPerWorkplaceUser)/(workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal))*100) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2" *ngIf="!TCOPerWorkplaceUserEquality && (enterMyData.annualTCOPerWorkplaceUser<(workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal))">
+                                            <div class="arrow-img">
+                                                <svg id="workplaceAnnualTCOcostPerUserSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGworkplace2" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop6002" [attr.offset]="makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOPerWorkplaceUser)/(workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal))*100) + '%'" stop-color="#02ABBA" />
+                                                            <stop id="stop6003" [attr.offset]="makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal)-enterMyData.annualTCOPerWorkplaceUser)/(workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal))*100) + '%'" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace2)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font">
+
+                                                    {{ makePositiveValue((((workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal) - enterMyData.annualTCOPerWorkplaceUser)/(workPlaceData.data.AnnualCostPerWorkplaceServicesUser.CostPerUser.NumberCY.value * refactorVal))*100) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="border-right"></span>
+                            <div class="col p-0 pb-3 newclass">
+                                <p class="m-1">Market Price </p>
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="col p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">
+
+                                                {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesUser.PricePerUser.NumberCY.value * refactorVal | number : '1.0-0'}}
+                                            </p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+
+                                                    {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesUser.PricePerUser.UpperCY.value * refactorVal | number : '1.0-0'}}
+                                                </p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+
+                                                    {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesUser.PricePerUser.LowerCY.value * refactorVal | number : '1.0-0'}}
+                                                </p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="" [ngClass]="[showDiv ? 'p-2 w-33 second-row-component-2560' : 'p-2 w-37 annual-cost-wrkplace-2500-2700']">
+
+                <div class="card custom-card min-ht325">
+                    <div class="card-header">
+                        Annual Cost Per Workplace Services FTE <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{workplaceDefinitionData.costperemployee_lower.defination}}"></i></a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="p-2 mx-auto">
+                                <p class="m-2 text-center">Employee <small>(Mean)</small>
+                                </p>
+                                <div class="minh-55">
+                                    <p class="text-info">
+                                        {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesFTE.CostPerEmployee.Number.value * refactorVal | number : '1.0-0'}}
+                                    </p>
+
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesFTE.CostPerEmployee.Upper.value * refactorVal | number : '1.0-0'}}
+                                        </p>
+
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesFTE.CostPerEmployee.Lower.value * refactorVal | number : '1.0-0'}}
+                                        </p>
+
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="border-right"></span>
+                            <div class="p-2 mx-auto">
+                                <p class="m-2 text-center ml-xl-0">Contractor <small>(Mean)</small>
+                                </p>
+                                <div class="minh-55">
+                                    <p class="text-info">
+                                        {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesFTE.CostPerContractor.Number.value * refactorVal | number : '1.0-0'}}
+                                    </p>
+
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesFTE.CostPerContractor.Upper.value * refactorVal | number : '1.0-0'}}
+                                        </p>
+
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{currencySymbol}}{{workPlaceData.data.AnnualCostPerWorkplaceServicesFTE.CostPerContractor.Lower.value * refactorVal | number : '1.0-0'}}
+                                        </p>
+
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-2" [ngClass]="[showDiv ? 'w-25 second-row-component-2560 annual-cost-mailbox' : 'w-18']">
+
+                <div class="card custom-card min-ht325">
+                    <div class="card-header p-r-10">
+                        <!-- Annual Email Cost Per Mailbox -->
+                        Annual Cost Per Mailbox
+                        <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{workplaceDefinitionData.costpermailbox_lowercy.defination}}"></i></a>
+                        <a *ngIf="isLineChartDisabled==false" href="javascript:void(0)" class="popout" (click)="costPerMailboxDialog()"><i class="circle-arrow-icon float-right"></i></a>
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3">
+                                <div class="minh-55">
+                                    <p class="text-info">
+
+                                        {{currencySymbol}}{{workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal | number : '1.1-1'}}
+                                    </p>
+                                    <p><small>(Mean)</small></p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+
+                                            {{currencySymbol}}{{workPlaceData.data.AnnualCostPerMailbox.CostPerMailbox.UpperCY.value * refactorVal | number : '1.1-1'}}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+
+                                            {{currencySymbol}}{{workPlaceData.data.AnnualCostPerMailbox.CostPerMailbox.LowerCY.value * refactorVal | number : '1.1-1'}}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="enterMyData.annualEmailTCOPerMailbox>=0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+
+                                <p *ngIf="!mailBoxEquality" class="text-info">
+                                    {{currencySymbol}}{{enterMyData.annualEmailTCOPerMailbox | number : '1.1-1'}}
+                                </p>
+                                <p *ngIf="mailBoxEquality" class="text-info staffing-equality-center-aligned">
+                                    {{currencySymbol}}{{enterMyData.annualEmailTCOPerMailbox | number : '1.1-1'}}
+                                </p>
+
+                                <div class="mt-2" *ngIf="!mailBoxEquality && ((enterMyData.annualEmailTCOPerMailbox>=(workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal)))">
+                                    <div class="arrow-img">
+                                        <svg id="workplaceAnnualEmailTCOPerMailboxSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="progressSVGworkplace3" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop6004" [attr.offset]="(makePositiveValue((((workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal) - enterMyData.annualEmailTCOPerMailbox)/(workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal))*100) ) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop6005" [attr.offset]="(makePositiveValue((((workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal) - enterMyData.annualEmailTCOPerMailbox)/(workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal))*100) ) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace3)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue((((workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal) - enterMyData.annualEmailTCOPerMailbox)/(workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal))*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2" *ngIf="!mailBoxEquality && ((enterMyData.annualEmailTCOPerMailbox<(workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal)))">
+                                    <div class="arrow-img">
+                                        <svg id="workplaceAnnualEmailTCOPerMailboxSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="progressSVGworkplace3" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop6004" [attr.offset]="(makePositiveValue((((workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal) - enterMyData.annualEmailTCOPerMailbox)/(workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal))*100) ) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop6005" [attr.offset]="(makePositiveValue((((workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal) - enterMyData.annualEmailTCOPerMailbox)/(workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal))*100) ) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace3)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue((((workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal) - enterMyData.annualEmailTCOPerMailbox)/(workPlaceData.data.AnnualCostPerMailbox.CostPerDevice.MailboxCY.value * refactorVal))*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="enterMyData.annualEmailTCOPerMailbox<0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div [ngClass]="[showDiv ? 'p-2 w-25 second-row-component-2560 devices-per-fte' : 'p-2 w-18']">
+
+                <div class="card custom-card min-ht325">
+                    <div class="card-header" style="text-transform: none;">
+                        <!-- # of Workplace Services Devices Per FTE -->
+                        # of Devices Per FTE <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{workplaceDefinitionData.devicesperfte_upper.defination}}" class="info-icon"></i></a>
+
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3">
+                                <div class="minh-55">
+                                    <p class="text-info">
+
+                                        {{workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value | number : '1.0-0'}}
+                                    </p>
+                                    <small>(Mean)</small>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+
+                                            {{workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Upper.value | number : '1.0-0'}}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+
+                                            {{workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Lower.value | number : '1.0-0'}}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="enterMyData.noOfDevicesPerFTE>=0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <!-- {{enterMyData.noOfDevicesPerFTE}} -->
+                                <p *ngIf="!noOfDevicesFTEEquality" class="text-info">
+                                    {{enterMyData.noOfDevicesPerFTE | number : '1.0-0'}}
+                                </p>
+                                <p *ngIf="noOfDevicesFTEEquality" class="text-info staffing-equality-center-aligned">
+                                    {{enterMyData.noOfDevicesPerFTE | number : '1.0-0'}}
+                                </p>
+
+                                <div class="mt-2" *ngIf="!noOfDevicesFTEEquality && ((enterMyData.noOfDevicesPerFTE>=workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value))">
+                                    <div class="arrow-img">
+                                        <svg id="workplacenoOfDevicesPerFTESVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="progressSVGworkplace3415" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop6004231" [attr.offset]="( makePositiveValue
+                                                    (((workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value - enterMyData.noOfDevicesPerFTE)
+                                                    /
+                                                    workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value ))*100  | number : '1.2-2') + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop60051235" [attr.offset]="( makePositiveValue
+                                                    (((workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value - enterMyData.noOfDevicesPerFTE)
+                                                    /
+                                                    workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value ))*100  | number : '1.2-2') + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace3415)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{
+                                                makePositiveValue
+                                                (((workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value - enterMyData.noOfDevicesPerFTE)
+                                                /
+                                                workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value ))*100  | number : '1.0-0'
+                                            }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2" *ngIf="!noOfDevicesFTEEquality && ((enterMyData.noOfDevicesPerFTE<workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value))">
+                                    <div class="arrow-img">
+                                        <svg id="workplacenoOfDevicesPerFTESVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="progressSVGworkplace341" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop600423" [attr.offset]="( makePositiveValue
+                                                    (((workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value - enterMyData.noOfDevicesPerFTE)
+                                                    /
+                                                    workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value ))*100  | number : '1.2-2') + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop600532" [attr.offset]="( makePositiveValue
+                                                    (((workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value - enterMyData.noOfDevicesPerFTE)
+                                                    /
+                                                    workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value ))*100  | number : '1.2-2') + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace341)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+
+                                            {{
+                                                makePositiveValue
+                                                (((workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value - enterMyData.noOfDevicesPerFTE)
+                                                /
+                                                workPlaceData.data.NumberofDevicesPerFTE.DevicesPerFTE.Number.value ))*100  | number : '1.0-0'
+                                            }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="enterMyData.noOfDevicesPerFTE<0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div [ngClass]="[showDiv ? 'p-2 w-41 res-1920-staff-mix second-row-component-2560' : 'p-2 w-25']">
+                <div class="card custom-card min-ht325">
+                    <div class="card-header">
+                        Staffing mix <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{workplaceDefinitionData.staffingmixcontractor_upper.defination}}"></i></a>
+                    </div>
+                    <div [ngClass]="[showDiv ? 'mright' : '' ]" class="card-body px-1 py-0 mx-auto">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="pb-0">
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="p-0 mx-auto">
+                                        <div class="d-flex flex-row flex-wrap">
+                                            <div class="p-2">
+                                                <div class="minh-55">
+
+                                                    <app-donut-chart id="workplace-percentage-employee" chartID="workplace-percentage-employee"  fillColor="9acb3b" percentVal="{{workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value/10}}" chartWidth="80" chartHeight="80" ></app-donut-chart>
+                                                    <p class="text-info">
+
+                                                        {{workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value | number : '1.1-1' }}%
+                                                    </p>
+                                                    Employees <small>(Mean)</small>
+                                                </div>
+                                                <div class="my-3">
+                                                    <i class="arrow-up align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">
+
+                                                            {{workPlaceData.data.StaffingMix.StaffingMixEmployee.Upper.value | number : '1.1-1' }}%
+                                                        </p>
+                                                        <small>Upper</small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2">
+                                                    <i class="arrow-lower align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">
+
+                                                            {{workPlaceData.data.StaffingMix.StaffingMixEmployee.Lower.value | number : '1.1-1' }}%
+                                                        </p>
+                                                        <small>Lower</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2">
+                                                <div class="minh-55">
+
+                                                    <app-donut-chart id="workplace-staffingmix-percentage-contractor" chartID="workplace-staffingmix-percentage-contractor" fillColor="03abba" percentVal="{{workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value/10}}" chartWidth="80" chartHeight="80" ></app-donut-chart>
+                                                    <p class="text-info">
+
+                                                        {{workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value | number : '1.1-1'}}%
+                                                    </p>
+                                                    Contractors <small>(Mean)</small>
+                                                </div>
+                                                <div class="my-3">
+                                                    <i class="arrow-up align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">
+
+                                                            {{workPlaceData.data.StaffingMix.StaffingMixContractor.Upper.value | number : '1.1-1'}}%
+                                                        </p>
+                                                        <small>Upper</small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2">
+                                                    <i class="arrow-lower align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">
+
+                                                            {{workPlaceData.data.StaffingMix.StaffingMixContractor.Lower.value | number : '1.1-1'}}%
+                                                        </p>
+                                                        <small>Lower</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col p-5 text-center bg-lightblue" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" *ngIf="(enterMyData.staffingmixEmployee*100<0 && enterMyData.staffingmixContract*100<0)">
+                                        <div class="align-self-center p-5 mt-3">
+                                            <span class="bord-top"></span>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="(enterMyData.staffingmixEmployee*100>=0 || enterMyData.staffingmixContract*100>=0)" class="p-2 mx-auto bg-lightblue" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+
+                                        <div class="d-flex flex-row flex-wrap">
+
+                                            <div *ngIf="enterMyData.staffingmixEmployee*100>=0" class="d-flex flex-row flex-wrap">
+                                                <div class="p-2 mt-3">
+                                                    <div *ngIf="!staffingEmpEquality" class=" minh-55">
+                                                        <p class="text-info">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                        Employees
+                                                    </div>
+                                                    <div *ngIf="staffingEmpEquality" class=" minh-55">
+                                                        <p class="text-info equality-center-aligned-staffingmix">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                        Employees
+                                                    </div>
+
+                                                    <div *ngIf="!staffingEmpEquality && ((enterMyData.staffingmixEmployee*100) > workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value)" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg  id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual5" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop4010" [attr.offset]=" makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                                                        <stop id="stop4009" [attr.offset]=" makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+                                                                {{ makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngIf="!staffingEmpEquality && ((enterMyData.staffingmixEmployee*100) < workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value)" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg  id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual5785" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop401120" [attr.offset]=" makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                                                        <stop id="stop402309" [attr.offset]=" makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5785)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / workPlaceData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="enterMyData.staffingmixEmployee*100<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                                <div class="align-self-center">
+                                                    <span class="bord-top"></span>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="enterMyData.staffingmixContract*100>=0" class="d-flex flex-row flex-wrap ">
+                                                <div class="p-2 mt-3">
+
+                                                    <div *ngIf="!staffingContractEquality" class=" minh-55">
+                                                        <p class="text-info">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                        Contractors
+                                                    </div>
+                                                    <div *ngIf="staffingContractEquality" class="minh-55">
+                                                        <p class="text-info equality-center-aligned-staffingmix">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                        Contractors
+                                                    </div>
+                                                    <div *ngIf="!staffingContractEquality && ((enterMyData.staffingmixContract*100)>workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value)" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg  id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual65" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop4011" [attr.offset]="makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                                        <stop id="stop4012" [attr.offset]="makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngIf="!staffingContractEquality && ((enterMyData.staffingmixContract*100)<workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value)" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg  id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual65451" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop401112" [attr.offset]="makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                                        <stop id="stop402312" [attr.offset]="makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65451)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / workPlaceData.data.StaffingMix.StaffingMixContractor.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="enterMyData.staffingmixContract*100<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                                <div class="align-self-center">
+                                                    <span class="bord-top"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-2" [ngClass]="[showDiv ? 'w-25 second-row-component-2560' : 'w-18']">
+                <div class="card custom-card min-ht325">
+                    <div class="card-header">
+                        PC Deployment Time <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{workplaceDefinitionData.workplace_services_deploytime_upper.defination}}" class="info-icon"></i></a>
+
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3">
+                                <div class="minh-55">
+
+                                    <p class="text-info">
+                                        {{workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value | number : '1.1-1' }}
+                                    </p>
+                                    <small>Days (Mean)</small>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Upper.value | number : '1.1-1' }}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Lower.value | number : '1.1-1' }}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="!PCDeploymentTimeEquality && enterMyData.pcdeploytime>=0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <!-- *ngIf="!PCDeploymentTimeEquality" mt-2 -->
+                                <p class="text-info">
+                                    {{enterMyData.pcdeploytime | number : '1.1-1'}}
+                                </p>
+                                <!-- <p *ngIf="PCDeploymentTimeEquality" class="text-info equality-center-aligned-staffingmix">
+                                    {{enterMyData.pcdeploytime | number : '1.1-1'}}
+                                </p> -->
+
+                                <div class="mt-5" *ngIf="((enterMyData.pcdeploytime>=workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value))">
+                                    <div class="arrow-img">
+                                        <svg id="pcdeploytimeSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="progressSVGworkplace374" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop6004211" [attr.offset]="(makePositiveValue((((workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value) - enterMyData.pcdeploytime)/(workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value))*100)) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop600521" [attr.offset]="(makePositiveValue((((workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value) - enterMyData.pcdeploytime)/(workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value))*100)) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace374)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue((((workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value) - enterMyData.pcdeploytime)/(workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value))*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2" *ngIf="((enterMyData.pcdeploytime<workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value))">
+                                    <div class="arrow-img">
+                                        <svg id="pcdeploytimeSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="progressSVGworkplace374" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop6004211" [attr.offset]="(makePositiveValue((((workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value) - enterMyData.pcdeploytime)/(workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value))*100)) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop600521" [attr.offset]="(makePositiveValue((((workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value) - enterMyData.pcdeploytime)/(workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value))*100)) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace374)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue((((workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value) - enterMyData.pcdeploytime)/(workPlaceData.data.AverageDeploymentTimeindays.WorkplaceServicesDeployTime.Mean.value))*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="enterMyData.pcdeploytime<0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="PCDeploymentTimeEquality" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <p class="same-value-data">{{enterMyData.pcdeploytime | number : '1.1-1' }}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-2 w-33 second-row-component-2560 width-25-2500">
+
+                <div class="card custom-card min-ht325">
+                    <div class="card-header">
+                        Incident Response Time <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{workplaceDefinitionData.workplace_services_p1.defination}}" class="info-icon"></i></a>
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="p-0 pb-3" [ngClass]="[showDiv ? 'col-12' : 'col' ]">
+                                <div class="minh-55">
+                                    <!-- <app-barchart id="incidenceResponse" chartHeight="200" chartID="incidenceResponse" [chartData]="[
+                                    '',
+                                    this.workPlaceData.data.IncidentResponseTime.WorkplaceServices.P1.value | number : '1.1-1', this.workPlaceData.data.IncidentResponseTime.WorkplaceServices.P2.value | number : '1.1-1',
+                                    this.workPlaceData.data.IncidentResponseTime.WorkplaceServices.P3.value | number : '1.1-1',
+                                    ''
+                                    ]"></app-barchart> -->
+                                    <!-- <small class="text-left">Priority1 &nbsp; Priority2 &nbsp; Priority3 &nbsp;</small>
+                                    <div><small>Hours (Mean)</small></div> -->
+                                    <div>
+                                        <!-- {{incidentResponseTimeBarChartData.data[1]}} -->
+                                        <div>
+                                          <div style="display: block">
+                                           
+                                                <canvas [ngClass]="showDiv ? 'incident-scenario' : ''" baseChart
+                                                [datasets]="barChartData"
+                                                [labels]="barChartLabels"
+                                                [options]="barChartOptions"
+                                                [legend]="barChartLegend"
+                                                [colors]="chartColors"
+                                                [chartType]="barChartType">
+                                              </canvas>
+                                              <div><small>Hours (Mean)</small></div>
+                                          </div>
+                                         
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+
+                            <!-- <div *ngIf="enterMyData.priority1<=0&&enterMyData.priority2<=0&&enterMyData.priority3<=0" class=" p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv col-6' : 'displayDiv col' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.priority1>0||enterMyData.priority2>0||enterMyData.priority3>0)" class=" p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv col-6' : 'displayDiv col' ]">
+                                <div class="align-self-center">
+                                    <app-barchart id="enterIncidenceResponse" chartHeight="191" chartID="enterIncidenceResponse" [chartData]="[
+                                    '',
+                                    enterMyData.priority1 | number : '1.1-1', enterMyData.priority2 | number : '1.1-1',
+                                    enterMyData.priority3 | number : '1.1-1',
+                                    ''
+                                    ]"></app-barchart>
+                                    <small class="text-left">
+                                        Priority1 &nbsp;
+                                        Priority2 &nbsp;
+                                        Priority3 &nbsp;
+                                    </small>
+                                    <div><small>Hours (Mean)</small></div>
+                                </div>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-2" [ngClass]="[showDiv ? 'w-25 second-row-component-2560' : 'w-18']">
+                <div class="card custom-card min-ht325">
+                    <div class="card-header">
+                        PC Refresh Rate <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{workplaceDefinitionData.workplace_services_refreshrate_lower.defination}}" class="info-icon"></i></a>
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3">
+                                <div class="minh-55">
+
+                                    <app-donut-chart id="workplace-pcrefresh-rate" chartID="workplace-pcrefresh-rate"  fillColor="03abba" percentVal="{{workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value/10}}" chartWidth="80" chartHeight="80" ></app-donut-chart>
+                                    <p class="text-info">
+                                        {{workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value | number : '1.1-1' }}
+                                    </p>
+                                    <small>Years (Mean)</small>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Upper.value | number : '1.1-1' }}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Lower.value | number : '1.1-1' }}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="!PCRefreshTimeTimeEquality && enterMyData.pcrefreshrate>=0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <!-- *ngIf="!PCRefreshTimeTimeEquality" -->
+                                <p class="text-info">
+                                    {{enterMyData.pcrefreshrate | number : '1.1-1'}}
+                                </p>
+                                <!-- <p *ngIf="PCRefreshTimeTimeEquality" class="text-info equality-center-aligned-pcrefresh">
+                                    {{enterMyData.pcrefreshrate | number : '1.1-1'}}
+                                </p> -->
+
+                                <div class="mt-2" *ngIf="((enterMyData.pcrefreshrate>=workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value))">
+                                    <div class="arrow-img">
+                                        <svg id="pcrefreshrateSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="progressSVGworkplace374741" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop60042167" [attr.offset]="(makePositiveValue((((workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value) - enterMyData.pcrefreshrate)/(workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value))*100)) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop60052112" [attr.offset]="(makePositiveValue((((workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value) - enterMyData.pcrefreshrate)/(workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value))*100)) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace374741)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue((((workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value) - enterMyData.pcrefreshrate)/(workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value))*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2" *ngIf="((enterMyData.pcrefreshrate<workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value))">
+                                    <div class="arrow-img">
+                                        <svg id="pcrefreshrateSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="progressSVGworkplace374741" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop60042167" [attr.offset]="(makePositiveValue((((workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value) - enterMyData.pcrefreshrate)/(workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value))*100) ) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop60052112" [attr.offset]="(makePositiveValue((((workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value) - enterMyData.pcrefreshrate)/(workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value))*100)) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace374741)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue((((workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value) - enterMyData.pcrefreshrate)/(workPlaceData.data.RefreshRateinYears.WorkplaceServicesRefreshRate.Mean.value))*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="enterMyData.pcrefreshrate<0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="PCRefreshTimeTimeEquality" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <p class="same-value-data">{{enterMyData.pcrefreshrate | number : '1.1-1' }}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- w-25 -->
+            <!-- not needed w-29 -->
+            <div class="p-2 w-29 mb-2 second-row-component-2560">
+                <div class="card custom-card min-ht325">
+                    <div class="card-header">
+                        User Experience Score <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{workplaceDefinitionData.onsitesupport.defination}}"></i></a>
+                    </div>
+                    <!-- removed mx-auto class -->
+                    <div class="card-body py-2 userexp-p0">
+                        <!-- First row -->
+                        <div class="row card-body m-0">
+                            <div class="col-8 align-items-center d-inline-flex text-grey text-left"><!--text-left text-grey p-0  -->
+                                Onsite Support
+                            </div>
+                            <div class="col-4 text-right num-grey">
+
+                                {{workPlaceData.data.UserExperienceScore.OnsiteSupport.OnsiteSupport.value | number : '1.0-0' }}
+                            </div>
+                        </div>
+
+                        <!-- Second row -->
+                        <div class="row card-body m-0">
+                            <div class="col-8 align-items-center d-inline-flex text-grey text-left">
+                                Workplace Technology
+                            </div>
+                            <div class="col-4 text-right num-grey">
+
+                                {{workPlaceData.data.UserExperienceScore.WorkplaceTechnology.WorkplaceTechnology.value | number : '1.0-0' }}
+                            </div>
+                        </div>
+
+                        <!-- Third row -->
+                        <div class="row card-body m-0">
+                            <div class="col-8 align-items-center d-inline-flex text-grey text-left">
+                                Technology Procurement
+                            </div>
+                            <div class="col-4 text-right num-grey">
+
+                                {{workPlaceData.data.UserExperienceScore.TechnologyProcurement.TechnologyProcurement.value | number : '1.0-0' }}
+                            </div>
+                        </div>
+
+                        <!-- Fourth row -->
+                        <div class="row card-body m-0">
+                            <div class="col-8 align-items-center d-inline-flex text-grey text-left">
+                                Email
+                            </div>
+                            <div class="col-4 text-right num-grey">
+
+                                {{workPlaceData.data.UserExperienceScore.EmailSatisfaction.EmailSatisfaction.value | number : '1.0-0' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+
+
+<div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_personnel}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content drilldown-modal-width-personnel">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Workplace Services Cost Allocation for Personnel
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 drilldown-modal-body">
+                <div class="drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="personnel-drillDown" chartID="personnel-drillDown" [chartData]="workPlaceData.drills.PersonnelCostAllocation"  thickness="35" chartWidth="180" chartRadius="40" chartLegendSize="19"  chartHeight="340"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_hardware}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_hardware}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content drilldown-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Workplace Services Cost Allocation for Hardware
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 drilldown-modal-body infra-popup-body">
+                <div class="drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="hardware-drillDown" chartID="hardware-drillDown" [chartData]="workPlaceData.drills.HardwareCostAllocation" thickness="35" chartWidth="180" chartRadius="70" chartLegendSize="19"  chartHeight="400" rotateTextFlg=true></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_software}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content drilldown-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Workplace Services Cost Allocation for Software
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 software-drilldown-modal-body">
+                <div class="drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="software-drillDown" chartID="software-drillDown" [chartData]="workPlaceData.drills.SoftwareCostAllocation"  thickness="35" chartWidth="180" chartRadius="60" chartLegendSize="19" chartHeight="400" rotateTextFlg=true></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_outsourcing}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content outsourcing-drilldown-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Workplace Services Cost Allocation for Outsourcing
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 outsourcing-drilldown-modal-body">
+                <div class="outsourcing-drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="outsourcing-drillDown" chartID="outsourcing-drillDown" [chartData]="workPlaceData.drills.OutsourcingCostAllocation" thickness="35" chartWidth="180" chartRadius="100" chartHeight="470" chartLegendSize="23" rotateTextFlg=true></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_costPerInstance}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerInstance}">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-linechart" role="document">
+        <div class="modal-content">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Annual Cost Per Workplace Services Device - 3 Year Trend
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeCostPerInstanceModalDialog()"></button>
+            </div>
+            <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+                <line-chart *ngIf="showDrillDown" [chartData]="dataSourceCostPerDevice" id="workplaceLineChart1" chartId="workplaceLineChart1"></line-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_costPerCore}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerCore}">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-linechart" role="document">
+        <div class="modal-content">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Annual Cost Per Workplace Services User - 3 Year Trend
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeCostPerCoreModalDialog()"></button>
+            </div>
+            <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+                <line-chart *ngIf="showDrillDown" [chartData]="dataSourcePerUser" id="workplaceLineChart2" chartId="workplaceLineChart2"></line-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_costPerMailbox}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerMailbox}">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-linechart" role="document">
+        <div class="modal-content">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Annual Cost Per Workplace Services Mailbox - 3 Year Trend
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+                <line-chart *ngIf="showDrillDown" [chartData]="dataSourceMailbox" id="workplaceLineChart3" chartId="workplaceLineChart3"></line-chart>
+            </div>
+        </div>
+    </div>
+</div>

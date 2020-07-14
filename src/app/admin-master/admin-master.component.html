@@ -1,0 +1,104 @@
+<div class="w-100">
+    <section class="main-content">
+        <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 my-4 ">
+            <div class="card custom-card">
+              <div class="card-body pb-3">
+                    <div class="row m-0 mt-1">
+                            <div class="col-7 col-md-4 col-lg-3 col-xl-4 checkbarmenu mx-auto px-0">
+                                <div class="btn btn-isg-toggle" [ngClass]="(showIndustries==true)?'active':'no-active'" (click)="toggleFilter(true)">Internal</div>
+                                <div class="btn btn-isg-toggle" [ngClass]="(showIndustries==true)?'no-active':'active'" (click)="toggleFilter(false)">External</div>
+                            </div>
+                          </div>
+             <!-- User privileges form controls starts -->   
+                <div class="row m-0 mt-4">
+                  <div class="col">
+                    <form>
+                            <div class="form-row">
+                                <div class="form-group col-12 col-md-6">
+                                    <label>Role</label>
+                                    <select name="Role" class="form-control">
+                                        <option value=0>Role</option>
+                                        <option *ngFor='let scenario of scenarios' value={{scenario.key}}>{{scenario.value}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <label>User ID</label>
+                                    <select name="Userid" class="form-control">
+                                        <option value=0>User ID</option>
+                                        <option *ngFor='let scenario of scenarios' value={{scenario.key}}>{{scenario.value}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <label>Company</label>
+                                    <select name="Role" class="form-control">
+                                        <option value=0>Company</option>
+                                        <option *ngFor='let scenario of scenarios' value={{scenario.key}}>{{scenario.value}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <label>Project</label>
+                                    <select name="Role" class="form-control">
+                                        <option value=0>Project</option>
+                                        <option *ngFor='let scenario of scenarios' value={{scenario.key}}>{{scenario.value}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>Region</label>
+                                    <hr/>
+                                        <div class="list-group scenarion-list">
+                                            <label class="container-checkbox font-size-group2">
+                                                <div>Asia Pacific</div>
+                                                <input type="checkbox" >
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container-checkbox font-size-group2">
+                                                <div>Europe (EMEA)</div>
+                                                <input  type="checkbox" >
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container-checkbox font-size-group2">
+                                                <div>Latin America</div>
+                                                <input type="checkbox" >
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container-checkbox font-size-group2">
+                                                <div>North America</div>
+                                                <input type="checkbox" >
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container-checkbox font-size-group2">
+                                                <div>Global</div>
+                                                <input type="checkbox" >
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12 col-sm-6">
+                                        <label>Start Date</label>
+                                        <input type="text" class="form-control" placeholder="start date">
+                                    </div>
+                                    <div class="form-group col-12 col-sm-6">
+                                        <label>End Date</label>
+                                        <input type="text" class="form-control" placeholder="end date">
+                                    </div>
+                                </div>
+                                    <hr>
+                                    <div class="form-row">
+                                    <div class="form-group col-9 col-md-5 col-lg-4 col-xl-5 mx-auto px-0">
+                                        <button class="btn btn-primary btn-add mx-2">Save</button>
+                                        <button class="btn btn-primary btn-add mx-2">Update</button>
+                                        <button class="btn btn-primary btn-delete">Delete</button>
+                                    </div>
+                            </div>    
+                </form>
+                </div>
+              </div>
+          <!-- User privileges form controls ends -->  
+
+            </div>
+
+        </div>
+
+      </div>
+    </section>
+</div>

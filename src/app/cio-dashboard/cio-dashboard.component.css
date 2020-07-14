@@ -1,0 +1,1388 @@
+/***********************************************************/
+/************** © 2018 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: cio-dashboard.component.css                **/
+/** Description: This is cio-dashboard css.               **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10652318  Created Date: 28/09/2018        **/
+/** Update By: 10652318  Update Date: 28/09/2018          **/
+/** Developed at:                 **/
+/***********************************************************/
+.staffing-mix-equality
+{
+    padding-top:5.2rem;
+}
+
+.custom-value-alignment
+{
+    text-align: right;
+    padding-right: 3.5rem;
+    /*margin-top: -0.4rem;*/
+
+}
+
+.outsourced-equal-value-container
+{
+    height: 10rem;
+    padding-top:4rem;
+}
+
+.itrunchange-equal-value-container
+{
+    height: 10rem;
+}
+
+.equal-value-center
+{
+    margin-top:50%;
+}
+
+.cost-breakdown-value-center
+{
+    min-height: 5rem;
+    padding-top: 1.7rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+ .empty-arrow-container
+{
+    min-height: 30px;
+} 
+
+.empty-bord-top
+{
+    margin-top: 1rem;
+    border-top: 2px solid #C0A9C7;
+    width: 20%;
+    /* top: 50%; */
+    left: 45%;
+    position: absolute;
+}
+
+
+.bg-lightblue{
+    background: #D6EAF8;
+}
+
+.bord-top-both-empty{
+    border-top: 2px solid #C0A9C7;
+    width: 6%;
+    top: 60%;
+    left: 80%;
+    position: absolute;
+}
+.bord-top{
+    border-top: 2px solid #C0A9C7;
+    width: 20%;
+    top: 50%;
+    left: 45%;
+    position: absolute;
+}
+
+.bord-top-both-empty{
+    border-top: 2px solid #C0A9C7;
+    width: 6%;
+    top: 60%;
+    left: 80%;
+    position: absolute;
+}
+
+.right-side.max-data{
+    width: 140px;
+}
+.right-side.max-data .it-spend-PU{
+    font-size: 20px;
+}
+.upper, .lower{
+    font-size: 15px!important;
+    text-align: left!important;
+}
+.enter-my-data-background.circle-percent{
+    color: #03abba;
+    font-size: 21px;
+}
+.w-20{
+    width:20%;
+}
+.w-23{
+    width:23%;
+}
+.w-28{
+    width:28%;
+}
+.w-30{
+    width:30%;
+}
+.w-33{
+    width:33.33%;
+}
+.w-35{
+    width:35%;
+}
+.w-40{
+    width: 40%;
+}
+.w-45{
+    width: 45%;
+}
+.w-60{
+    width: 60%;
+}
+.w-65{
+    width: 65%;
+}
+.w-55{
+    width: 55%;
+}
+.w-52{
+    width: 52%;
+}
+.modal-dialog {
+    max-width: 780px;
+}
+.infra-popup-breakdown .modal-body{
+    min-height: 280px;
+    min-width: 600px;
+}
+.minht-250{
+    min-height: 250px;
+}
+.minht-285{
+    min-height: 285px;
+}
+.minht-300{
+    min-height: 300px;
+}
+.remained-percentage {
+    color: #75787b;
+}
+
+.backdrop {
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    display: none;
+}
+
+.cio-pie-chart-holder {
+    position: absolute;
+    top: 23px;
+    left: 20px;
+}
+
+.it-spend-exp-svg {
+    position: absolute;
+    top: -22px;
+    left: -12px;
+}
+
+#capex-donut > svg {
+    position: absolute;
+    display: block;
+    margin-top: -60px;
+    margin: auto;
+    top: -60px !important;
+}
+
+.pop-up-close {
+    background: #29497b;
+    border: 0;
+    width: 18px;
+    height: 18px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: 0px -158px;
+    background-image: url(/assets/images/popup-icons.png);
+}
+
+.ui-exp-popup-text {
+    top: 9px;
+    /* top: 62px; */
+    position: absolute;
+    width: 100%;
+    left: 0px;
+}
+
+.ui-ex-text > a {
+    font-family: OpenSansRegular;
+    font-size: 16px;
+    text-decoration: underline;
+    color: #75787b;
+}
+
+.ui-ex-mtop-btm {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.enter-my-data-font{
+    font-size: 21px !important;
+}
+
+/* Widget-CSS */
+
+.widget-box {
+    width: 100%;
+    padding-top: 12px;
+    margin-bottom: 18px;
+    background: #f5fbfe;
+    padding-bottom: 12px;
+    border: 1px solid #ddd;
+}
+
+.widget-box-m {
+    width: 100%;
+    padding-top: 12px;
+    margin-bottom: 18px;
+    background: #f5fbfe;
+    padding-bottom: 12px;
+    border: 1px solid #ddd;
+}
+
+.widget-box .widget-box-m,
+.heading {
+    font-size: 16px;
+    color: #494c50;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.widget-box .widget-box-m,
+.sub-heading {
+    color: #494c50;
+    font-size: 14px;
+    position: relative;
+    text-align: left;
+}
+
+.widget-box .widget-box-m,
+.sub-heading .info {
+    margin-left: 6px;
+}
+
+.widget-box .widget-box-m,
+.sub-heading .info a {
+    padding: 0px 10px;
+    transition: all 0.2s ease;
+    background-position: 0px -151px;
+    background-repeat: no-repeat;
+    background-image: url(/assets/images/ISG-widget-icons.png);
+}
+
+.widget-box .widget-box-m,
+.sub-heading .info a:hover {
+    background-position: 0px -151px;
+}
+
+/* for heading start */
+.heading .info {
+    margin-left: 6px;
+}
+
+.heading .info a {
+    padding: 0px 10px;
+    transition: all 0.2s ease;
+    background-position: 0px -151px;
+    background-repeat: no-repeat;
+    background-image: url(/assets/images/ISG-widget-icons.png);
+}
+
+.heading .info a:hover {
+    background-position: 0px -151px;
+}
+/* for heading end */
+
+.widget-box .widget-box-m,
+.sub-heading .popout {
+    top: 0px;
+    right: 0px;
+    position: absolute;
+}
+
+.widget-box .widget-box-m,
+.sub-heading .popout a {
+    padding: 1px 10px;
+    transition: all 0.2s ease;
+    background-position: 0px -215px;
+    background-repeat: no-repeat;
+    background-image: url(/assets/images/ISG-widget-icons.png);
+}
+
+.widget-box .widget-box-m,
+.sub-heading .popout a:hover {
+    background-position: 0px -215px;
+}
+
+.circle-graph {
+    display: flex;
+    align-items: center;
+}
+
+.cb-circle-graph {
+    justify-content: center;
+}
+
+.circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 6px solid #03abba;
+}
+
+.cb-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 4px solid #03abba;
+}
+
+.circle-percent {
+    color: #03abba;
+    font-size: 36px;
+    margin-left: 15px;
+    line-height: 25px;
+}
+
+.cb-circle-percent {
+    color: #75787b;
+    font-size: 24px;
+}
+
+.mean {
+    display: block;
+    color: #a0a6a7;
+    font-size: 14px;
+}
+
+.upper {
+    color:#a0a6a7;
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding-left: 25px;
+    background-position: 0px 5px;
+    background-repeat: no-repeat;
+    background-image: url(/assets/images/ISG-widget-icons.png);
+}
+
+.lower {
+    color:#a0a6a7;
+    font-size: 14px;
+    padding-left: 25px;
+    background-position: 0px -22px;
+    background-repeat: no-repeat;
+    background-image: url(/assets/images/ISG-widget-icons.png);
+}
+
+.upper .lower,
+span.percent {
+    font-size: 18px;
+    /* color: #494c50; */
+    /* color:#a0a6a7; */
+    color: #75787b;
+}
+
+.left-side {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding-left: 25px;
+}
+
+.right-side {
+    padding-right: 10px;
+}
+
+.right-side .it-spend-PU {
+    color: #03abba;
+    font-size: 26px;
+    line-height: 23px;
+    margin-bottom: 20px;
+}
+
+.right-side .it-spend-PU span.per-user {
+    color: #a0a6a7;
+    font-size: 14px;
+    display: block;
+}
+
+.right-side .upper {
+    color: #a0a6a7;
+    font-size: 18px;
+    margin-bottom: 42px;
+    padding-left: 25px;
+    background-position: 0px 5px;
+    background-repeat: no-repeat;
+    background-image: url(/assets/images/ISG-widget-icons.png);
+}
+
+.right-side .upper span {
+    color: #a0a6a7;
+    font-size: 12px;
+    display: block;
+    position: absolute;
+}
+
+.right-side .lower {
+    color: #a0a6a7;
+    font-size: 18px;
+    padding-left: 25px;
+    background-position: 0px -20px;
+    background-repeat: no-repeat;
+    background-image: url(/assets/images/ISG-widget-icons.png);
+}
+
+.right-side .lower span {
+    color: #a0a6a7;
+    font-size: 12px;
+    display: block;
+}
+
+.right-side ul li {
+    color: #a0a6a7;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.right-side .expendi {
+    font-size: 20px;
+}
+
+.right-side .expendi span {
+    font-size: 14px;
+    float: right;
+}
+
+.right-side .personnal {
+    color: #8b69c8;
+}
+
+.right-side .hardware {
+    color: #9acb3b;
+}
+
+.right-side .softwear {
+    color: #03abba;
+}
+
+.right-side .outsourced {
+    color: #29497b;
+}
+
+.right-side .other {
+    color: #81cee3;
+}
+
+.capex,
+.opex {
+    font-size: 12px;
+    color: #75787b;
+    text-align: center;
+}
+
+.capex {
+    padding-left: 20px;
+}
+
+.opex {
+    padding-right: 26px;
+}
+
+.capex-graph {
+    height: 80px;
+    margin: auto;
+    margin-bottom: 25px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.capex-graph .remained-percentage{
+    font-size: 1rem;
+}
+
+.capex-percent {
+    font-size: 26px;
+    color: #9acb3b;
+}
+
+.opex-percent {
+    font-size: 26px;
+    color: #03abba;
+}
+
+.capex-percent span {
+    font-size: 26px;
+}
+
+.it-stage {
+    text-align: center;
+}
+
+.it-stange-data {
+    border-right: 1px dashed #ddd;
+}
+
+.it-stage .percent-number {
+    font-size: 30px;
+    margin-top: 12px;
+    line-height: 22px;
+    margin-bottom: 30px;
+}
+
+.it-stage .percent-number .percent {
+    font-size: 24px;
+}
+
+.it-stage .stage-name {
+    font-size: 14px;
+    color: #a0a6a7;
+    display: block;
+}
+
+.it-stage .run, {
+    color: #9acb3b;
+}
+
+.run-percentage {
+    color: #9acb3b !important;
+}
+
+.it-stage .change {
+    color: #03abba;
+}
+
+.change-percentage {
+    color: #03abba !important;
+}
+
+.it-stage .transform {
+    color: #8b69c8;
+}
+
+.transform-percentage {
+    color: #8b69c8 !important;
+}
+
+.it-stage .upper {
+    font-size: 20px;
+    color: #75787b;
+    margin-bottom: 18px;
+}
+
+.it-stage .lower {
+    font-size: 20px;
+    color: #75787b;
+}
+
+.it-stage .upper,
+.it-stage .lower {
+    width: 75px;
+    line-height: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.it-stage .upper .lower,
+.direction {
+    font-size: 12px;
+    color: #a0a6a7;
+}
+
+.it-employee,
+.it-contractor {
+    text-align: center;
+}
+
+.it-employee .icon,
+.it-contractor .icon {
+    min-height: 76px;
+}
+
+.it-employee .percent-number,
+.it-contractor .percent-number {
+    color: #03abba;
+    font-size: 30px;
+    margin-top: 14px;
+    line-height: 22px;
+    margin-bottom: 30px;
+}
+
+.it-employee .percent,
+.it-contractor .percent {
+    font-size: 24px;
+    color: #03abba;
+}
+
+.it-employee .stage-name,
+.it-contractor .stage-name {
+    color: #a0a6a7;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.on-offshore {
+    text-align: center;
+}
+
+.onshore {
+    line-height: 18px;
+    border-right: 1px dashed #ddd;
+}
+
+.onshore .percent-number {
+    color: #75787b;
+    font-size: 20px;
+}
+
+.onshore .stage-name {
+    color: #a0a6a7;
+    font-size: 12px;
+}
+
+.ux-score {
+    text-align: center;
+}
+
+.ux-score .icon {
+    margin-bottom: 20px;
+}
+
+.ux-score .percent-number {
+    color: #9acb3b;
+    font-size: 30px;
+}
+
+.ux-score .percent {
+    font-size: 24px;
+}
+
+.digital-spend .percent-number{
+    color: #03abba;
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+.digital-spend .percent{
+    color: #03abba;
+    font-size: 24px;
+}
+
+.digital-spend-color {
+    color: #03abba !important;
+}
+
+.run-color {
+    color: #9acb3b !important;
+}
+
+.change-color {
+    color: #03abba !important;
+}
+
+.transform-color {
+    color: #8b69c8 !important;
+}
+
+.ux-score .stage-name {
+    font-size: 13px;
+    color: #a0a6a7;
+}
+
+.ux-direction {
+    margin-top: 10px;
+}
+
+.ux-direction .upper,
+.ux-direction .lower {
+    width: 75px;
+    color: #75787b;
+    font-size: 20px;
+    line-height: 17px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ux-direction .upper {
+    margin-bottom: 0px;
+}
+
+.ux-direction .direction {
+    width: 100%;
+    display: block;
+}
+
+.ds-direction {
+    margin-top: 32px;
+}
+
+/* Widget-CSS */
+
+/* Modal Popup */
+
+.modal-header {
+    font-size: 16px;
+    max-height: 42px;
+    color: #fff;
+    background: #29497b;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    border-radius: 0px;
+}
+
+.modal-title {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-header .close {
+    color: #fff;
+    transition: all 0.2s ease;
+    margin: -6px -10px 0px 0px;
+    background-repeat: no-repeat;
+    background-position: 5px -152px;
+    background-color: transparent;
+    background-image: url(/assets/images/popup-icons.png);
+}
+
+.modal-header .close:hover {
+    background-position: 5px -126px;
+}
+
+.modal-header .close:fpcus {
+    outline: none;
+}
+
+.close span {
+    display: none;
+}
+
+.modal-content {
+    border-radius: 0px;
+    border: 0;
+}
+
+.card-header {
+    padding: 0px;
+    border: 0px;
+}
+
+.ind-reg-section .form-group {
+    margin-bottom: 20px;
+}
+
+.ind-reg-section select {
+    font-size: 14px;
+    color: #75787b;
+}
+
+.ind-reg-section label {
+    color: #03abba;
+    font-size: 14px;
+}
+
+.ind-reg-section .btn-secondary {
+    background: #fff;
+    border-color: #dedede;
+}
+
+.ind-reg-section .btn-secondary:hover {
+    background-color: #03abba;
+    border-color: #03abba;
+}
+
+.ind-reg-section .btn-secondary.focus,
+.ind-reg-section .btn-secondary:focus {
+    box-shadow: none;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show>.btn-secondary.dropdown-toggle {
+    background-color: #03abba;
+    border-color: #03abba;
+}
+
+.model-subheading {
+    color: #494c50;
+    font-size: 16px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-transform: capitalize;
+}
+
+.collapse-expand {
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.collapse-expand a {
+    color: #75787b;
+    padding: 10px 24px;
+    background-repeat: no-repeat;
+    background-position: 0px 10px;
+    background-color: transparent;
+    background-image: url(/assets/images/popup-icons.png);
+}
+
+.collapse-expand a:hover {
+    background-position: 0px -20px;
+}
+
+.overall-percent {
+    text-align: right;
+}
+
+.overall-percent span {
+    font-size: 16px;
+    color: #494c50;
+}
+
+.card {
+    border: 0px;
+    margin-bottom: 5px;
+}
+
+.card-header .btn-link {
+    width: 100%;
+    color: #fff;
+    padding: 8px 10px 8px 40px;
+    font-size: 16px;
+    text-align: left;
+    border-radius: 0px;
+    position: relative;
+    text-transform: capitalize;
+    background-repeat: no-repeat;
+    background-position: 10px -88px;
+    background-color: #03abba;
+    background-image: url(/assets/images/popup-icons.png);
+}
+
+.card-header .btn-link:hover,
+.card-header .btn-link:focus {
+    text-decoration: none;
+}
+
+.card-header .btn-link span {
+    right: 10px;
+    font-size: 14px;
+    position: absolute;
+}
+
+.card-header .btn-link span span.percent {
+    right: auto;
+    color: #fff;
+    font-size: 16px;
+    position: relative;
+}
+
+.card-header button.collapsed {
+    color: #494c50;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    padding: 8px 10px 8px 40px;
+    border: 1px solid #eaeaea;
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
+    background-color: transparent;
+    background-image: url(/assets/images/popup-icons.png);
+}
+
+.card-header button.collapsed:hover {
+    color: #fff;
+    text-decoration: none;
+    background-position: 10px -19px;
+    background-color: #03abba;
+}
+
+.card-header button.collapsed span span.percent {
+    color: #75787b;
+}
+
+.card-header button.collapsed:hover span span.percent {
+    color: #fff;
+}
+
+.card-header button.collapsed:focus {
+    text-decoration: none;
+}
+
+.card .show .card-body {
+    padding: 20px 5px;
+    border: 1px solid #03abba;
+}
+
+.card-body .form-row>.col,
+.form-row>[class*=col-] {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.form-compare {
+    display: flex;
+}
+
+.form-compare .form-group {
+    margin-bottom: 20px;
+}
+
+.form-compare:last-child .form-group {
+    margin-bottom: 0px;
+}
+
+.form-compare label {
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+
+.form-compare input,
+.form-compare select {
+    font-size: 14px;
+}
+
+.compareform-btn {
+    height: 70px;
+    margin-top: 25px;
+    margin-bottom: 0px;
+    padding-top: 15px;
+    text-align: center;
+    padding-bottom: 15px;
+    border-top: 1px solid #eaeaea;
+}
+
+.compareform-btn .btn {
+    color: #fff;
+    font-size: 16px;
+    margin-right: 10px;
+    background: #777b7c;
+    transition: all 0.5s ease;
+    text-transform: capitalize;
+}
+
+.compareform-btn .btn:hover {
+    background: #29497b;
+}
+
+/* Modal Popup */
+
+/* Global CSS */
+
+body {
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul,
+li {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+.pl-0 {
+    padding-left: 0px;
+}
+
+.main-content {
+    margin-top: 30px;
+}
+
+/* Global CSS */
+
+.custom-card{
+    background: #f5fbfe;
+    border: 1px solid #dddddd;
+    border-radius:0.1rem;
+}
+.custom-card .card-body{
+    padding:0.5rem 1rem;
+    color:#a0a6a7;
+    text-align: center;
+}
+.custom-card .card-body .card-body{
+    padding:0.3rem 0rem;
+    min-width: 270px;
+}
+.it-spend-costBreakdown-subpart{
+    background-color: #e3f4fd;
+    padding: 5px;
+    width: 32%;
+    margin-right: 10px;
+}
+
+
+.it-spend-exp-type {
+    margin-top: -10px;
+    margin-left: -10px;
+}
+
+/* Media Query CSS */
+
+/*Extra small devices (portrait phones, less than 576px)*/
+
+@media (max-width: 575.98px) {
+    header {
+        max-height: none;
+        padding-top: 8px;
+        padding-bottom: 15px;
+    }
+    .filter-section .filter-btn {
+        text-align: left;
+    }
+    .widget-box {
+        display: block;
+    }
+    .it-companyrevenue {
+        margin-bottom: 20px;
+    }
+    .widget-box-m .right-side {
+        padding-left: 15px;
+    }
+    .it-spend-expenditure .right-side {
+        padding-left: 0px;
+        padding-right: 15px;
+    }
+    .card-header .btn-link span {
+        display: none;
+    }
+    .compareform-btn .btn {
+        font-size: 13px;
+        margin-right: 0px;
+    }
+}
+
+
+@media (max-width: 767.98px) {
+    .filter-section {
+        max-height: none;
+    }
+    .filter-section .filter-btn {
+        text-align: left;
+        margin-top: 15px;
+    }
+    .ind-reg-section .row>[class*=col-] {
+        text-align: center;
+    }
+    .ind-reg-section .btn-group {
+        margin-bottom: 10px;
+    }
+    .overall-percent {
+        text-align: left;
+        font-size: 13px;
+        margin-top: 5px;
+    }
+    .form-compare .form-group {
+        margin-bottom: 10px;
+    }
+    .form-compare:last-child .form-group {
+        margin-bottom: 10px;
+    }
+
+    .w-35,.w-40, .w-60, .w-65, .w-30, .w-20, .w-33, .w-45, .w-55, .w-23, .w-52, .w-28{
+        width: 100%;
+    }
+    .w-25{
+        width: 100%!important;
+    }
+    .upper, .lower{
+        text-align: left;
+    }
+    .it-spend-costBreakdown-subpart{
+        width: 100%;
+    }
+}
+
+/*Medium devices (tablets, less than 992px)*/
+@media (max-width: 991.98px) {
+    .filter-section .form-inline .form-group {
+        margin-right: 10px;
+    }
+    .filter-section .filter-btn a:first-child {
+        margin-right: 0px;
+    }
+}
+/* Medium devices (tablets, 768px and up)*/
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .card-header button.collapsed {
+        font-size: 13px;
+    }
+    .form-compare:last-child .form-group {
+        margin-bottom: 20px;
+    }
+    .it-companyrevenue .circle-percent{
+        font-size: 25px;
+    }
+    .cost-breakdown-md .sub-heading{
+        font-size: 13px;
+    }
+    .circle-percent{
+        margin-left: 10px;
+    }
+    .w-20{
+        width: 40%;
+    }
+    .w-28{
+        width: 60%;
+    }
+    .w-30, .w-33{
+        width: 50%;
+    }
+    .w-60 .w-33{
+        width: 33%;
+    }
+    .w-33{
+        width: 100%;
+    }
+    .w-25{
+        width: 50%!important;
+    }
+    .w-45, .w-55, .w-52{
+        width: 100%;
+    }
+
+}
+@media (min-width: 992px) and (max-width: 1024px) {
+    .w-20{
+        width: 33%;
+    }
+    .w-28{
+        width: 67%;
+    }
+    .w-30{
+        width: 66.63%;
+    }
+    .w-25{
+        width: 33.33%!important;
+    }
+    .w-40, .w-60{
+        width: 100%;
+    }
+    .w-35, .w-65{
+        width: 100%;
+    }
+    .w-60 .w-33{
+        width: 33%;
+    }
+    .w-33{
+        width: 50%;
+    }
+    .w-45, .w-55, .w-52{
+        width: 100%;
+    }
+}
+@media (min-width: 992px) {
+    .modal-lg {
+        max-width: 1000px;
+    }
+}
+
+.displayDiv{
+    display:none;
+}
+
+.it-revenue{
+    color: #03abba;
+    font-size: 36px;
+    line-height: 25px;
+    margin-bottom: 5px;
+}
+
+.circle-infrastructure{
+    padding-left: 20px;
+}
+
+.exp-background{
+    background-color: #f5fbfe  ;
+    text-align: center;
+}
+
+.it-personnel-percent{
+    padding-top: 5px;
+}
+
+.mb-0{
+    height: 94%;
+}
+
+.it-revenue-label{
+    font-size: 28px;
+}
+
+.capex-donut-01{
+    position: relative;
+    top: -62px;
+}
+
+.enter-my-data-background{
+    background-color: #D6EAF8;
+}
+
+.it-spend-align{
+    padding-top: 5px;
+    padding-bottom: 8px;
+}
+/* .upper-outsourced-label{
+    margin-left: 23px;
+} */
+
+.upper-outsourced{
+    background-position: 25px 5px !important;
+}
+
+.lower-outsourced{
+    background-position: 25px -20px !important;
+}
+
+.it-run-grp {
+    padding-top: 50px;
+}
+
+.it-personnel-div {
+    margin-bottom: 10px;
+}
+
+.it-spend-company-revenue {
+    padding-top: 5px;
+    text-align: center;
+}
+
+.it-change-transform-div{
+    padding-bottom: 10px;
+}
+
+i.arrow-down{
+    color: grey;
+    width:  0.5em;
+    height:  0.7em;
+    display:  inline-block;
+    position:  relative;
+    background:  currentColor;
+    vertical-align: top;
+}
+i.arrow-down:after{
+    border-right:  0.5em solid transparent;
+    border-left:  0.5em solid transparent;
+    border-top:  0.4em solid currentColor;
+    position:  absolute;
+    content:  "";
+    bottom:  -0.3em;
+    left: -5.8px;
+}
+
+.donutchart {
+    position: absolute;
+    top: 19px;
+    left: 38px;
+}
+
+.donut-align{
+    margin: auto !important;
+}
+
+
+.digital-spend-remain{
+    margin-top: 28px;
+}
+
+
+.itPersonnel{
+    padding-bottom: 2px;
+}
+
+
+.remained-perc-font{
+    font-size: 16px !important;
+}
+
+@media only screen and (min-device-width:320px) and (max-device-width:568px) {
+    .capex-graph {
+        padding-top: 0px !important;
+    }
+
+    .bottom-div {
+        margin-bottom: 12px !important;
+    }
+
+}
+@media only screen and (min-device-width:768px) and (max-device-width:991px) {
+    .w-40{
+        width: 100%;
+    }
+    .w-60{
+        width: 100%;
+    }
+    .w-35{
+        width: 100%;
+    }
+    .w-65{
+        width: 100%;
+    }
+}
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) {
+    .bottom-md-div {
+        margin-bottom: 12px !important;
+    }
+
+    .upper-outsourced{
+        background-position: 0px 5px !important;
+    }
+
+    .lower-outsourced{
+        background-position: 0px -20px !important;
+    }
+
+    .upper-outsourced-label{
+        margin-left: 0px !important;
+    }
+
+    .capex-graph {
+        padding-top: 0px !important;
+    }
+
+    .cost-breakdown-md{
+        padding-right: 0px !important;
+    }
+
+    .it-revenue-label{
+        font-size: 22px !important;
+    }
+
+}
+@media only screen and (min-device-width : 1200px) and (max-device-width : 1280px)  {
+    .w-23{
+        width: 25%;
+    }
+    .w-28{
+        width: 30%;
+    }
+    .w-52{
+        width: 50%;
+    }
+    .itPersonnel .card-body{
+        padding: 0.5rem 0.1rem;
+    }
+    /* .it-employee {
+        padding-left: 5px;
+    }
+
+    .it-contractor {
+        padding-right: 5px;
+    } */
+}

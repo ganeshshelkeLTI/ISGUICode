@@ -1,0 +1,211 @@
+<div class="w-100">
+  <section class="main-content">
+    <div class="card-header pl-0">
+      <h6 class="text-left text-bold mb-0 pl-0 text-center">Custom Reference Group maintenance </h6>
+    </div>
+    <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 my-3 ">
+      <div class="card custom-card">
+        <div class="card-body pb-0">
+
+          <!-- dashboard dropdown starts -->
+          <div class="row m-0 mt-1 center-align">
+            <div class="col">
+              <label for="Select dashboard" class="mr-2">Select Dashboard</label>
+              <select [(ngModel)]='selectedDashBoardItemId' (change)="getCRGData()">
+                <option *ngFor='let dashboard of dashBoardList' [value]="dashboard.dashboardID">{{dashboard.dashboardName}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- dashboard dropdown ends -->
+
+        </div>
+
+      </div>
+
+    </div>
+    <div class="modal-footer tower-enterdata-footer enter-my-data-save-button-panel">
+      
+      <div class="mx-auto">
+        <button type="button" [disabled]='!isSaveEnabled' class="btn btn-primary save-reset-btn crg-save-btn" (click)="saveCRG()">Save</button>
+        <button type="button" [disabled]='!isCopyEnabled' class="btn btn-primary save-reset-btn crg-copy-btn" (click)="createCRGCopy()">Create New Copy</button>
+      </div>
+    </div>
+
+    <div class="container-fluid padding-bottom-container">
+      <div class="col-12">
+        <form class="content-section it-operation-content pt-2 dashboard-section">
+          <fieldset class="it-operation-fieldset">
+            <legend class="it-operation-legend">General Information</legend>
+            <div class="form-row">
+              <div class="form-group col-12 col-sm-4">
+                <label for="companyName">Custom Reference Group ID:</label>
+                <select [(ngModel)]='selectedCustomRefGroup' name="customReferenceGroup" class="form-control" (change)="getGeneralData();getSelectedCRGData(selectedCustomRefGroup)">
+                  
+                  <option value=0>New Custom Reference Group</option>
+                  <option *ngFor='let crgId of customGroupID' value={{crgId.customId}}>{{crgId.label}}</option>
+                </select>
+              </div>
+              <div class="form-group col-12 col-sm-4">
+                <label for="customReferenceGroupName">Custom Reference Group Name:</label>
+                <input type="text" class="form-control" id="customReferenceGroupName" placeholder="CustomReferenceGroupName" [(ngModel)]="customReferenceGroupName"
+                  (keyup)="checkEntireFormFilled()" name="customReferenceGroupName" />
+              </div>
+              <div class="form-group col-12 col-sm-4">
+                <label for="definition">Definition:</label>
+                <input type="text" (keyup)="checkEntireFormFilled()" class="form-control" id="definition" placeholder="Definition" [(ngModel)]="definition" name="definition"
+                />
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <!-- Custom Reference Group genereal Info-->
+    <!-- Mainframe Custom Reference Group Kpi fields-->
+    <div class="container-fluid padding-bottom-container" *ngIf="mainframeDataLoaded">
+      <div id="kpi-data-section" class="col-12" *ngFor="let kpigroup of customDataObject">
+        <form class="content-section it-operation-content pt-2 dashboard-section">
+          <fieldset class="it-operation-fieldset" *ngIf="kpigroup.dataObj!=undefined">
+            <legend class="it-operation-legend crg-card-header">{{kpigroup.headerLabel}}
+            </legend>
+
+            <div class="form-row light-grey-row testclass">
+              <div class="col-4 col-md-4 col-sm-4" *ngFor="let kpiInfo of kpigroup.dataObj; let idx = index">
+                <div class="form-row m-0">
+                  <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-6':'col-sm-6'">
+                    <p class="m-0 kpi-element-label">
+                      {{kpiInfo.kpiElementLabel}} &nbsp;
+                      <span style="cursor:pointer;">
+                      </span>
+                    </p>
+                  </div>
+
+                  <div class="form-group col-4 col-sm-4">
+                    <input id={{kpiInfo.kpiCode}} class="crg-input-field" [(ngModel)]="kpiInfo.kpiElementValue" [ngModelOptions]="{standalone: true}" 
+                      (keyup)="validateKPIInput(kpiInfo.kpiElementValue, $event)" type="text" maxlength="12" (change)="kpiValueChange($event)" [textMask]="{mask: decimalNumberMask}"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </fieldset>
+          <!-- drilldown -->
+          <fieldset class="it-operation-fieldset" *ngIf="kpigroup.drilldownObj!=undefined">
+            <legend class="it-operation-legend crg-card-header">{{kpigroup.headerLabel}} 
+            </legend>
+
+            <div class="form-row light-grey-row testclass">
+              <div class="col-4 col-md-4 col-sm-4" *ngFor="let kpiInfo of kpigroup.drilldownObj; let idx = index">
+                <div class="form-row m-0">
+                  <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-6':'col-sm-6'">
+                    <p class="m-0 kpi-element-label">
+                      {{kpiInfo.kpiElementLabel}} &nbsp;
+                      <span style="cursor:pointer;">
+                      </span>
+                    </p>
+                  </div>
+
+                  <div class="form-group col-4 col-sm-4">
+                    <input id={{kpiInfo.kpiCode}} class="crg-input-field" [(ngModel)]="kpiInfo.kpiElementValue" [ngModelOptions]="{standalone: true}" 
+                      (keyup)="validateKPIInput(kpiInfo.kpiElementValue, $event)" type="text" maxlength="12" (change)="kpiValueChange($event)" [textMask]="{mask: decimalNumberMask}"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+
+      </div>
+    </div>
+    <!-- Mainframe Custom Reference Group Kpi fields end-->
+
+    <div class="modal-footer tower-enterdata-footer enter-my-data-save-button-panel">
+      
+      <div class="mx-auto">
+        <button type="button" [disabled]='!isSaveEnabled' class="btn btn-primary save-reset-btn crg-save-btn" (click)="saveCRG()">Save</button>
+        <button type="button" [disabled]='!isCopyEnabled' class="btn btn-primary save-reset-btn crg-copy-btn" (click)="createCRGCopy()">Create New Copy</button>
+      </div>
+    </div>
+
+    <div class="container-fluid kpi-maintenance" *ngIf="showTabularData==true">
+      <div class="row mt-4">
+        <div class="col-lg-12">
+          <div>
+            <table class="table table-responsive table-sm table-striped" style="width:100%">
+              <thead class="thead-blue">
+                <tr>
+                  <th>Dashboard</th>
+                  <th>Custom Reference Group Name</th>
+                  <th>Custom Reference Group Definition</th>
+                  <th>Created By</th>
+                  <th>Created Date</th>
+                  <th>Updated By</th>
+                  <th>Updated Date</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody class="tbody-height">
+                <tr>
+                  <td>
+                    {{selectedDashboardName}}
+                  </td>
+                  <td>
+                    {{tabularData[0].customName}}
+                  </td>
+                  <td>
+                    {{tabularData[0].definition}}
+                  </td>
+                  <td>
+                    {{tabularData[0].createdBy}}
+                  </td>
+                  <td>
+                    {{tabularData[0].createdDate}}
+                  </td>
+                  <td>
+                    {{tabularData[0].updatedBy}}
+                  </td>
+                  <td>
+                    {{tabularData[0].updatedDate}}
+                  </td>
+                  <td>
+                      {{tabularData[0].updatedDate}}
+                  </td>
+                  <td>
+                      <a id={{tabularData[0].customId}} href="javascript:void(0)" (click)="OpenDeleteCRGPrompt(tabularData[0].customId);" class="delete">
+                          <i class="fa fa-trash-o crg-delete-icon" aria-hidden="true"></i>
+                      </a>
+                  </td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+            <div class="confirm_box" *ngIf="display_confirmationbox==true">
+              <input id="rid" type="hidden" #rid [value]="selectedroleid" />
+              <div class="confirm-card">
+                <div class="col py-3">
+                  Are you sure you want to delete?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" (click)="closeModalDialog()">No</button>
+                  <button type="button" class="btn btn-primary" (click)="deleteCRG()">Yes</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+</div>
+<ng-template #other_content>
+  <div class="loader-icon-container">
+    <div class="loader-icon"></div>
+  </div>
+</ng-template>

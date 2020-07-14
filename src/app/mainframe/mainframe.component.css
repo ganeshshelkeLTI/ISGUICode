@@ -1,0 +1,480 @@
+/***********************************************************/
+/************** © 2018 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: mainframe.component.css                    **/
+/** Description: This is mainframe css.                   **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10652318  Created Date: 28/09/2018        **/
+/** Update By: 10652318  Update Date: 28/09/2018          **/
+/** Developed at:                 **/
+/***********************************************************/
+
+.mright {
+    margin-right: -5px;
+}
+
+.sm-mright {
+    margin-right: -4px;
+}
+
+.mrminus8 {
+    margin-right: -8px;
+}
+
+.m-t-13 {
+    margin-top: 13px;
+}
+
+.m-t-0 {
+    margin-top: 0 !important;
+}
+
+.bord-top-both-empty{
+    border-top: 2px solid #C0A9C7;
+    width: 6%;
+    top: 60%;
+    left: 80%;
+    position: absolute;
+}
+
+.same-value {
+    top: 42%;
+    left: 30%;
+    position: absolute;
+    font-size: 1.2rem !important;
+    color: #03abba!important;
+}
+
+.equality-center-aligned {
+    position: absolute;
+    top: 43%;
+    left: 40%;
+}
+
+.same-value-tco {
+    top: 42%;
+    left: 10%;
+    position: absolute;
+    font-size: 1.2rem !important;
+    color: #03abba!important;
+}
+
+.same-staffing-span {
+    font-family: OpenSansRegular !important;
+}
+
+.staffing-mix-emp-con-position {
+    /* top: 40%; */
+    top: 70px;
+    position: relative;
+}
+
+.same-value-staffingmix {
+    top: 42%;
+    left: 10%;
+    position: absolute;
+    font-size: 1.2rem !important;
+    color: #03abba!important;
+}
+
+.same-value-mips-configured {
+    top: 42%;
+    left: 42%;
+    position: absolute;
+    font-size: 1.2rem !important;
+    color: #03abba!important;
+}
+
+.text-info, .text-muted
+{
+    font-size: 1.2rem !important;
+}
+
+.remained-perc-font[_ngcontent-c3]
+{
+    font-size: 1.2rem !important;
+}
+
+.max-data.text-muted{
+    font-size: 14px!important;
+}
+.max-data.text-info{
+    font-size: 1rem!important;
+}
+
+.remained-percentage {
+    color: #75787b !important;
+}
+
+.remained-perc-font{
+    font-size: 16px !important;
+}
+
+.widget-box {
+    width: 100%;
+    display: flex;
+    padding-top: 12px;
+    margin-bottom: 18px;
+    background: #f5fbfe;
+    padding-bottom: 12px;
+    border: 1px solid #ddd;
+    /* added */
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+
+.outsourcing-drilldown-modal-body{
+    min-height: 480px;
+}
+.min-ht320{
+    min-height: 320px;
+}
+.min-ht325{
+    min-height: 325px;
+}
+.main-content {
+    font-size: 0.9rem;
+    margin-top: 30px;
+}
+.w-33{
+    width:33.33%;
+}
+.w-37{
+    width: 37.49%;
+}
+.w-25{
+    width: 25%;
+}
+.newclass{
+    margin: 0 auto;
+}
+.backdrop {
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    display: none;
+}
+
+.pop-up-close {
+    background: #29497b;
+    border: 0;
+    width: 18px;
+    height: 18px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: 0px -159px;
+    background-image: url(/assets/images/popup-icons.png);
+}
+
+.modal-header{
+    font-size: 16px;
+    max-height: 42px;
+    color: #fff;
+    background: #29497b;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    border-radius: 0px;
+}
+
+.outsourcing-drilldown-modal-width .modal-header{
+    z-index: 10;
+}
+
+
+/* Dashboard mainframe starts here */
+
+.active-scale, .btn-setRange:focus {
+    background: #03ABBA;
+    color: #ffffff;
+    box-shadow: none;
+}
+
+.active-scale {
+    background: #03ABBA !important;
+    color: #ffffff  !important;
+    box-shadow: none  !important;
+}
+
+.bord-top{
+    border-top: 2px solid #C0A9C7;
+    width: 20%;
+    top: 50%;
+    left: 45%;
+    position: absolute;
+}
+
+.bord-top-both-empty{
+    border-top: 2px solid #C0A9C7;
+    width: 6%;
+    top: 60%;
+    left: 80%;
+    position: absolute;
+}
+
+.min-ht300{
+    min-height: 300px;
+}
+.bg-lightblue{
+    background: #D6EAF8;
+    min-height: 261px;
+}
+.custom-card{
+    background: #f5fbfe;
+    border: 1px solid #dddddd;
+    border-radius:0.1rem;
+}
+.custom-card .card-body{
+    padding:1rem 1.25rem;
+    color:#a0a6a7;
+    text-align: center;
+}
+.custom-card .card-body .card-body{
+    padding:0.3rem 0rem;
+    min-width: 270px;
+}
+
+.compare-data-tabs select.form-control-sm, .custom-card select {
+    border-radius: .1rem;
+    border:1px solid #CAD4E1;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    background: url('/assets/images/ISG-filter-icons.png') right -131px no-repeat;
+    cursor: pointer;
+    max-width: 337px;
+}
+select::-ms-expand {
+    display:none;
+}
+
+.custom-card select.form-control{
+    width: 160px;
+    border: 1px solid #cad4e1;
+    border-radius: 0px;
+    height: 34px !important;
+    cursor: pointer;
+    font-size: 14px;
+}
+.custom-card span{
+    font-size: 0.9rem;
+    font-family: OpenSansSemiBold;
+}
+.custom-card span p{
+    margin-bottom: -0.3rem!important;
+}
+.btn-setRange{
+    background: #ffffff;
+    border: 1px solid #CAD4E1;
+    border-radius: 0.1rem !important;
+    color: #494c50;
+    font-size: 0.9rem;
+}
+.btn-setRange:focus, .btn-setRange.active {
+    background: #03ABBA;
+    color: #ffffff;
+    box-shadow: none;
+}
+
+.card-header{
+    background: #f5fbfe;
+    border-bottom: 1px solid #F7F7F7;
+    text-transform: capitalize;
+    color: #494c50;
+    font-size: 14px;
+}
+.info-icon{
+    background: url(/assets/images/ISG-widget-icons.png) -1px -152px no-repeat;
+    display: inline-block;
+    width: 15px;
+    margin-bottom: -2px;
+    height: 15px;
+}
+.circle-arrow-icon{
+    background: url(/assets/images/ISG-widget-icons.png) 1px -217px no-repeat;
+    display: inline-block;
+    width: 22px;
+    height: 20px;
+}
+.arrow-up{
+    background: url(/assets/images/ISG-widget-icons.png) 1px 1px no-repeat;
+    display: inline-block;
+    width: 22px;
+    height: 20px;
+}
+.arrow-lower{
+    background: url(/assets/images/ISG-widget-icons.png) 1px -26px no-repeat;
+    display: inline-block;
+    width: 22px;
+    height: 20px;
+}
+.card-body .text-info{
+    font-size: 20px;
+    margin-bottom: -6px;
+    color:#03abba!important;
+}
+.arrow-img img + p.text-info:before{
+    content: '';
+    border-top: 1px solid #C2C5C8;
+    display: block;
+    position: relative;
+    left: -16px;
+    width: 35%;
+    top: 17px;
+}
+.align-center{
+    align-items: center;
+}
+.card-body .text-muted{
+    font-size: 18px;
+    margin-bottom: -6px;
+    margin-top: -6px;
+    color:#75787b!important;
+}
+.card-body small{
+    color: #a0a6a7;
+    font-size: 90%;
+}
+.arrow-right {
+    width: 0;
+    height: 0;
+    border-bottom: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-left: 8px solid #ffffff;
+    position: relative;
+    left: -8px;
+    top: 45%;
+}
+.minh-55{
+    min-height: 55px;
+}
+.max-width145{
+    max-width: 145px;
+}
+.bg-lightblue .minh-55{
+    margin-top: -10px;
+}
+.card-body .border-right{
+    /* border-right: 1px solid #F7F7F7!important; */
+    border-right: 1px dashed #dddddd !important;
+}
+.card-body .text-grey{
+    color:#75787b;
+}
+.card-body .num-grey{
+    color:#494c50;
+    font-size: 1.2rem;
+}
+
+.displayDiv{
+    display: none;
+}
+
+@media (min-width: 767px){
+    .scale-button{
+        width: 120px;
+    }
+}
+
+@media (max-width: 767px)
+{
+    .w-33{
+        width: 100%;
+    }
+    .w-37{
+        width: 100%;
+    }
+    .w-25 {
+        width: 100%!important;
+    }
+    .custom-card .btn-group{
+        display: grid;
+    }
+
+    .navbar-brand{
+        margin: 0 auto;
+    }
+    .search-box{
+        width: 100%;
+        left: 0%;
+        background: #81CEE3;
+        top: 6%;
+    }
+
+    .main-top-nav .nav-item .nav-link{
+        font-size: 0.92rem;
+        display: inline-block;
+        margin: .8rem 0.5rem!important;
+    }
+    .custom-card select.form-control{
+        width: 100%;
+    }
+    .card-body .form-inline{
+        display: block;
+    }
+
+}
+
+
+@media only screen and (min-width:768px) and (max-width:1024px){
+
+    .card-body .text-info {
+        font-size: 1rem;
+    }
+    .w-37{
+        width: 55%;
+    }
+
+    .w-25, .w-33 {
+        width: 50%!important;
+    }
+}
+@media (min-width:768px) and (max-width:991px) and (orientation:portrait){
+    .card-body .text-muted{
+        font-size: 14px;
+    }
+
+    .w-37{
+        width: 55%;
+    }
+    .w-md-45{
+        width: 45%!important;
+    }
+    .w-md-50{
+        width: 50%!important;
+    }
+}
+@media (min-width:992px) and (max-width:1024px) and (orientation:landscape){
+    .search-box{
+        top: 15%;
+    }
+    .card-body .form-inline .form-group{
+        display: -webkit-box;
+    }
+    .w-md-45{
+        width: 45%!important;
+    }
+}
+@media only screen and (min-device-width : 1200px) and (max-device-width : 1280px)  {
+    .w-37{
+        width: 36.5%;
+    }
+    .w-17{
+        width: 16.8%;
+    }
+    .card-body .text-info{
+        font-size: 1.2rem;
+    }
+    .card-body .text-muted{
+        font-size: 16px;
+    }
+}
+
+/* Dashboard mainframe ends here */

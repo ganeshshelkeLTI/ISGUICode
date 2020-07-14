@@ -1,0 +1,1347 @@
+<div class="modal-header">
+    <h6 class="modal-title" id="exampleModalLabel">Validate Scenario Status</h6>
+    <button type="button" class="close" aria-label="Close" (click)="closeEnterDataModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <!-- Enter my data section starts  -->
+    <section class="main-data-section" style="overflow-y: scroll;height: auto; max-height: 480px;">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-12 col-sm-6 mt-2">
+                    <div class="float-left" style="cursor:pointer;" lastState="0" (click)="expandEnterDataForm(this)">
+                        <span class="icon-circle-plus">Expand/Collapse</span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 mt-2">
+                    <!-- <div class="float-right">
+                            Overall Completed:
+                            <font size="4" id="overall-percentage" #overallPer>0%</font> of 100
+                        </div> -->
+                </div>
+            </div>
+
+
+            <!-- Accordian starts  -->
+            <div class="row">
+                <div class="container-fluid" id="accordion">
+                    <div id="general-card" class="card mt-2">
+                        <div class="card-header" id="heading1" (click)="setScrollPosition(0)">
+                            <a id="collapse-link1" class="btn btn-link collapseHeader" data-toggle="collapse"
+                                data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                                <div class="row container-fluid">
+                                    <span class="icon-circle-minus pl-4 col-12 col-sm-6">ScenarioInformation</span>
+                                    <!-- <div class="text-right col-12 col-sm-6 p-0">Completed:
+                                            <font size="4" id="general-percentage" #generalPer>0%</font> of 100</div> -->
+                                </div>
+                            </a>
+                        </div>
+
+                        <div id="collapse1" class="collapse collapseBody show" aria-labelledby="heading1" data-parent="#accordion">
+                            <div class="card-body">
+                                <form class="general-section">
+
+                                    <div class="form-row ">
+                                        <div class="form-group col-12 col-sm-4 mb-2">
+                                            <label>Scenario ID</label>
+                                            <select name="Survey" class="form-control" disabled>
+                                                <!-- <option value=-9999>New Scenario</option> -->
+                                                <option>{{selectedSurvey}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-12 col-sm-4">
+                                            <label for="surveyName">Scenario Name:</label>
+                                            <input type="text" class="form-control" id="selectedSurveyName" placeholder="Enter Scenario Name"
+                                                [(ngModel)]="selectedSurveyName" name="surveyName" (keyup)="checkEntireFormFilled();calculateFormCompletion() "
+                                                disabled />
+                                        </div>
+                                        <div class="form-group col-12 col-sm-4">
+                                            <label for="definition">Data Status:</label>
+                                            <select [(ngModel)]='selectedDataStatus' name="selectedDataStatus" class="form-control"
+                                                (change)="calculateFormCompletion();">
+                                                <option *ngFor='let datastatus of surveyStatusList' [ngValue]=datastatus>{{datastatus.data_Status}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-12 col-sm-4">
+                                            <label for="definition">Currency:</label>
+                                            <select name="Currency" [disabled]="currencyDisabled==true" class="form-control">
+                                                <option value='USD'>USD</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <!-- <div class="form-row">
+                                                Data Not Available
+                                            </div> -->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- General questions card start-->
+                    <div class="card mt-2" id="general-question-card">
+                        <div class="card-header" id="heading2" (click)="setScrollPosition(10)">
+                            <a class="btn btn-link collapsed collapseHeader" data-toggle="collapse" data-target="#collapse2"
+                                aria-expanded="false" aria-controls="collapse2">
+                                <div class="row container-fluid">
+                                    <span class="icon-circle-minus pl-4 col-12 col-sm-6">General Questions
+
+                                    </span>
+                                    <!-- <div class="text-right col-12 col-sm-6 p-0">Completed:
+                                            <font size="4" id="general-q-percentage" #ADMPer>0%</font> of 100
+                                        </div> -->
+                                </div>
+                            </a>
+                        </div>
+                        <div id="collapse2" class="collapse collapseBody" aria-labelledby="heading2" data-parent="#accordion">
+                            <div class="card-body">
+                                <!-- <form class="legend-warning-container legend-finance-breakdown" *ngIf="!ADMOcnditionsFulfilled">
+                                        <div class="form-row legend-message-row">
+    
+                                            <div class="col-12 col-md-8 col-sm-8 col-lg-8 headcount-breakdown">
+                                                <p [ngClass]="(ADMWarningMessage ? 'legend-message-black mb-0':'legend-message mb-0')">
+                                                    {{errorMessageADM}}</p>
+                                            </div>
+                                        </div>
+                                    </form> -->
+
+
+
+                                <form class="content-section it-operation-content general-question-section pt-2">
+
+                                    <div class="form-row light-grey-row testclass">
+                                        <div class="form-group col-12 col-sm-7 col-md-9">
+                                            <!-- <div class="form-row m-0">
+                                                            <div class="form-group col-12"> -->
+                                            <p class="m-0">
+                                                {{surveyQuestionJSON.General.null[0].question_display_text}}
+
+                                            </p>
+                                            <!-- </div>
+                                                        </div> -->
+
+                                        </div>
+                                        <div class="form-group col-2 col-sm-1 col-md-1" *ngIf="surveyQuestionJSON.General.null[0].question_type !== 'N/A'">
+
+                                            <div>
+                                                <ng-template #popContent>
+                                                    <div>
+                                                        <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea"
+                                                            rows="5" [(ngModel)]="surveyQuestionJSON.General.null[0].note"
+                                                            name="{{surveyQuestionJSON.General.null[0].dashboard_question_id}}"
+                                                            (keyup)='activateShowBox(true)' [disabled]="true"></textarea>
+                                                        <button class="btn btn-note btn-Cancel" (click)="surveyQuestionJSON.General.null[0].note=''; p.close();"
+                                                            [disabled]="true">Cancel</button>
+                                                        <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                            [disabled]="true">Save</button>
+                                                    </div>
+                                                </ng-template>
+                                                <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                    [autoClose]="'outside'" placement="bottom-left" [ngClass]="(surveyQuestionJSON.General.null[0].note == undefined || surveyQuestionJSON.General.null[0].note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-10 col-sm-4 col-md-2">
+                                            <!-- <div class="form-row m-0">
+                                                                <div class="form-group col-12"> -->
+                                            <select [(ngModel)]="selectedJobFunction" id="{{surveyQuestionJSON.General.null[0].dashboard_question_id}}"
+                                                name="surveyQuestionJSON.General.null[0].selected_Value_Id" class="form-control"
+                                                (change)="captureQuestionDetails(surveyQuestionJSON.General.null[0]);calculateFormCompletion()"
+                                                disabled>
+                                                <option value="-9999">Please Select</option>
+                                                <option *ngFor='let option of surveyQuestionJSON.General.null[0].columns'
+                                                    value={{option.id}}>{{option.name}}</option>
+                                            </select>
+                                            <!-- </div>
+                                                    </div> -->
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row light-grey-row testclass" [hidden]="idx!=1 && idx!=2" *ngFor="let questionInfo of surveyQuestionJSON.General.null; let idx=index">
+                                        <div class="form-group col-12 col-sm-7 col-md-9">
+                                            <!-- <div class="form-row m-0">
+                                                            <div class="form-group col-12"> -->
+                                            <p class="m-0">
+                                                {{questionInfo.question_display_text}}
+                                                <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                            </p>
+                                            <!-- </div>
+                                                        </div> -->
+
+                                        </div>
+                                        <div class="form-group col-2 col-sm-1 col-md-1" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                            <div>
+                                                <ng-template #popContent>
+                                                    <div>
+                                                        <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea"
+                                                            rows="5" [(ngModel)]="questionInfo.note" name="{{questionInfo.dashboard_question_id}}"
+                                                            (keyup)='activateShowBox(true)' [disabled]="true"></textarea>
+                                                        <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                            [disabled]="true">Cancel</button>
+                                                        <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                            [disabled]="true">Save</button>
+                                                    </div>
+                                                </ng-template>
+                                                <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                    [autoClose]="'outside'" placement="bottom-left" [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-10 col-sm-4 col-md-2" *ngIf="questionInfo.question_type=='Textbox'">
+                                            <!-- <div class="form-row m-0">
+                                                            <div class="form-group col-12" *ngIf="questionInfo.question_type=='Textbox'"> -->
+                                            <input type="text" class="form-control" id="{{questionInfo.dashboard_question_id}}"
+                                                NumbersOnly [allowDecimals]="true" [allowSign]="false" placeholder="{{questionInfo.value_type}}"
+                                                (keyup)="checkthresholds(questionInfo, $event)" name="surveyName"
+                                                (change)="captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                value="{{questionInfo.numeric_Value}}" disabled />
+                                            <!-- </div>
+                                                </div> -->
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row light-grey-row testclass">
+                                        <div class="form-group col-12 col-sm-7 col-md-9">
+                                            <!-- <div class="form-row m-0">
+                                                        <div class="form-group col-12"> -->
+                                            <p class="m-0">
+                                                {{surveyQuestionJSON.General.null[3].question_display_text}}
+                                                <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                            </p>
+                                            <!-- </div>
+                                                    </div> -->
+
+                                        </div>
+                                        <div class="form-group col-2 col-sm-1 col-md-1" *ngIf="surveyQuestionJSON.General.null[3].question_type !== 'N/A'">
+
+                                            <div>
+                                                <ng-template #popContent>
+                                                    <div>
+                                                        <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea"
+                                                            rows="5" [(ngModel)]="surveyQuestionJSON.General.null[3].note"
+                                                            name="{{surveyQuestionJSON.General.null[3].dashboard_question_id}}"
+                                                            (keyup)='activateShowBox(true)' [disabled]="true"></textarea>
+                                                        <button class="btn btn-note btn-Cancel" (click)="surveyQuestionJSON.General.null[3].note=''; p.close();"
+                                                            [disabled]="true">Cancel</button>
+                                                        <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                            [disabled]="true">Save</button>
+                                                    </div>
+                                                </ng-template>
+                                                <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                    [autoClose]="'outside'" placement="bottom-left" [ngClass]="(surveyQuestionJSON.General.null[3].note == undefined || surveyQuestionJSON.General.null[3].note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-10 col-sm-4 col-md-2">
+                                            <!-- <div class="form-row m-0">
+                                                <div class="form-group col-12"> -->
+                                            <select [(ngModel)]="slectedIndustry" id="{{surveyQuestionJSON.General.null[3].dashboard_question_id}}"
+                                                name="surveyQuestionJSON.General.null[3].selected_Value_Id" class="form-control"
+                                                (change)="captureQuestionDetails(surveyQuestionJSON.General.null[3])"
+                                                disabled>
+                                                <option value="-9999">Please Select</option>
+                                                <option *ngFor='let option of surveyQuestionJSON.General.null[3].columns'
+                                                    value={{option.id}}>{{option.name}}</option>
+                                            </select>
+                                            <!-- </div>
+                                            </div> -->
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row light-grey-row testclass">
+                                        <div class="form-group col-12 col-sm-7 col-md-9">
+                                            <!-- <div class="form-row m-0">
+                                                        <div class="form-group col-12"> -->
+                                            <p class="m-0">
+                                                {{surveyQuestionJSON.General.null[4].question_display_text}}
+                                                <!-- <span style="cursor:pointer;">
+                                                                            <i placement="right" container="body" class="info-icon"></i>
+                                                                        </span> -->
+                                            </p>
+                                            <!-- </div>
+                                                    </div> -->
+
+                                        </div>
+                                        <div class="form-group col-2 col-sm-1 col-md-1" *ngIf="surveyQuestionJSON.General.null[4].question_type !== 'N/A'">
+
+                                            <div>
+                                                <ng-template #popContent>
+                                                    <div>
+                                                        <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea"
+                                                            rows="5" [(ngModel)]="surveyQuestionJSON.General.null[4].note"
+                                                            name="{{surveyQuestionJSON.General.null[4].dashboard_question_id}}"
+                                                            (keyup)='activateShowBox(true)' [disabled]="true"></textarea>
+                                                        <button class="btn btn-note btn-Cancel" (click)="surveyQuestionJSON.General.null[4].note=''; p.close();"
+                                                            [disabled]="true">Cancel</button>
+                                                        <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                            [disabled]="true">Save</button>
+                                                    </div>
+                                                </ng-template>
+                                                <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                    [autoClose]="'outside'" placement="bottom-left" [ngClass]="(surveyQuestionJSON.General.null[4].note == undefined || surveyQuestionJSON.General.null[4].note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-10 col-sm-4 col-md-2">
+                                            <!-- <div class="form-row m-0">
+                                                <div class="form-group col-12"> -->
+                                            <select [(ngModel)]="selectedCountry" id="{{surveyQuestionJSON.General.null[4].dashboard_question_id}}"
+                                                name="surveyQuestionJSON.General.null[4].selected_Value_Id" class="form-control"
+                                                (change)="captureQuestionDetails(surveyQuestionJSON.General.null[4]);calculateFormCompletion()"
+                                                disabled>
+                                                <option value="-9999">Please Select</option>
+                                                <option *ngFor='let option of surveyQuestionJSON.General.null[4].columns'
+                                                    value={{option.id}}>{{option.name}}</option>
+                                            </select>
+                                            <!-- </div>
+                                            </div> -->
+
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                            <!-- <div class="card-body" *ngIf="myData.ApplicationDevelopmentandMaintenanceInput == undefined ">
+                                    <form>
+                                        <div class="form-row">
+                                            Data Not Available
+                                        </div>
+                                    </form>
+                                </div> -->
+                        </div>
+                    </div>
+                    <!-- application Dev and main card end-->
+
+                    <!-- Digital Transformation Initiative questions start -->
+                    <div class="card mt-2" id="general-question-card">
+                        <div class="card-header" id="heading2" (click)="setScrollPosition(10)">
+                            <a class="btn btn-link collapsed collapseHeader" data-toggle="collapse" data-target="#collapse3"
+                                aria-expanded="false" aria-controls="collapse3">
+                                <div class="row container-fluid">
+                                    <span class="icon-circle-minus pl-4 col-12 col-sm-6">
+                                        Digital Transformation initiatives Questions
+                                    </span>
+                                    <!-- <div class="text-right col-12 col-sm-6 p-0">Completed:
+                                            <font size="4" id="transform-init-percentage" #ADMPer>0%</font> of 100
+                                        </div> -->
+                                </div>
+                            </a>
+                        </div>
+                        <div id="collapse3" class="collapse collapseBody" aria-labelledby="heading2" data-parent="#accordion">
+                            <div class="card-body">
+                                <!-- <form class="legend-warning-container legend-finance-breakdown" *ngIf="!ADMOcnditionsFulfilled">
+                                        <div class="form-row legend-message-row">
+    
+                                            <div class="col-12 col-md-8 col-sm-8 col-lg-8 headcount-breakdown">
+                                                <p [ngClass]="(ADMWarningMessage ? 'legend-message-black mb-0':'legend-message mb-0')">
+                                                    {{errorMessageADM}}</p>
+                                            </div>
+                                        </div>
+                                    </form> -->
+
+                                <!-- Digital Transformation Efforts start -->
+                                <form class="content-section it-operation-content digital-transformation-init pt-2">
+                                    <fieldset class="it-operation-fieldset">
+                                        <legend class="it-operation-legend">
+                                            Digital Transformation Efforts
+                                        </legend>
+
+                                        <div class="form-row light-grey-row testclass" [hidden]="idx>=2" *ngFor="let questionInfo of surveyQuestionJSON['Digital Transformation initiatives']['null']; let idx=index">
+                                            <div class="form-group col-12 col-sm-7 col-md-9">
+                                                <!-- <div class="form-row m-0">
+                                                            <div class="form-group col-12"> -->
+                                                <p class="m-0">
+                                                    {{questionInfo.question_display_text}}
+                                                    <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                                </p>
+                                                <!-- </div>
+                                                        </div> -->
+
+                                            </div>
+                                            <div class="form-group col-2 col-sm-1 col-md-1" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                                <div>
+                                                    <ng-template #popContent>
+                                                        <div>
+                                                            <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                class="form-control note-textarea" rows="5" [(ngModel)]="questionInfo.note"
+                                                                name="{{questionInfo.dashboard_question_id}}" (keyup)='activateShowBox(true)'
+                                                                [disabled]="true"></textarea>
+                                                            <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                                [disabled]="true">Cancel</button>
+                                                            <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                                [disabled]="true">Save</button>
+                                                        </div>
+                                                    </ng-template>
+                                                    <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                        [autoClose]="'outside'" placement="bottom-left" [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-10 col-sm-4 col-md-2">
+                                                <div>
+
+                                                    <div *ngIf="questionInfo.question_type=='Drop/Down'" [hidden]="questionInfo.is_Dependent==1 && showDigitalTransformationDependentQuestion==false">
+                                                        <select [(ngModel)]="questionInfo.selected_Value_Id" id="{{questionInfo.dashboard_question_id}}"
+                                                            name="questionInfo.response_Value" class="form-control"
+                                                            (change)="captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                            disabled>
+                                                            <option value="-9999">Please Select</option>
+                                                            <option *ngFor='let option of questionInfo.columns' value={{option.id}}>{{option.name}}</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div *ngIf="questionInfo.question_type=='Radio_Button'">
+                                                        <div class="radio align-left padding-right-1-rem">
+                                                            <label>
+                                                                <input type="radio" name="{{questionInfo.dashboard_question_id}}"
+                                                                    value="1" (change)="toggleDigitalTransformationRadio(questionInfo.dashboard_question_id);captureQuestionDetails(questionInfo)"
+                                                                    [checked]="showDigitalTransformationDependentQuestion==true"
+                                                                    disabled>Yes</label>
+                                                        </div>
+                                                        <div class="radio align-left padding-right-1-rem">
+                                                            <label>
+                                                                <input type="radio" name="{{questionInfo.dashboard_question_id}}"
+                                                                    value="0" (change)="toggleDigitalTransformationRadio(questionInfo.dashboard_question_id);captureQuestionDetails(questionInfo)"
+                                                                    [checked]="showDigitalTransformationDependentQuestion==false"
+                                                                    disabled>No</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                                <!-- Digital Transformation Efforts end -->
+
+                                <!-- Digital Expendure start -->
+                                <form class="content-section it-operation-content digital-transformation-init pt-2">
+                                    <fieldset class="it-operation-fieldset">
+                                        <legend class="it-operation-legend">
+                                            Expenditures for Digital Initiatives
+                                        </legend>
+
+                                        <div class="form-row light-grey-row testclass" *ngFor="let questionInfo of surveyQuestionJSON['Digital Transformation initiatives']['Expenditures for Digital Initiatives']">
+                                            <div class="form-group col-12 col-sm-7 col-md-9">
+                                                <!-- <div class="form-row m-0">
+                                                            <div class="form-group col-12"> -->
+                                                <p class="m-0">
+                                                    {{questionInfo.question_display_text}}
+                                                    <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                                </p>
+                                                <!-- </div>
+                                                        </div> -->
+
+                                            </div>
+                                            <div class="form-group col-2 col-sm-1 col-md-1" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                                <div>
+                                                    <ng-template #popContent>
+                                                        <div>
+                                                            <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                class="form-control note-textarea" rows="5" [(ngModel)]="questionInfo.note"
+                                                                name="{{questionInfo.dashboard_question_id}}" (keyup)='activateShowBox(true)'
+                                                                [disabled]="true"></textarea>
+                                                            <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                                [disabled]="true">Cancel</button>
+                                                            <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                                [disabled]="true">Save</button>
+                                                        </div>
+                                                    </ng-template>
+                                                    <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                        [autoClose]="'outside'" placement="bottom-left" [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-10 col-sm-4 col-md-2">
+                                                <div>
+                                                    <div *ngIf="questionInfo.question_type=='Drop/Down'">
+                                                        <select [(ngModel)]="questionInfo.selected_Value_Id" name="questionInfo.response_Value"
+                                                            class="form-control" disabled>
+                                                            <option *ngFor='let option of questionInfo.columns' value={{option.id}}>{{option.name}}</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div *ngIf="questionInfo.question_type=='Textbox'">
+                                                        <input type="text" class="form-control" id="{{questionInfo.dashboard_question_id}}"
+                                                            NumbersOnly [allowDecimals]="true" [allowSign]="false"
+                                                            placeholder="{{questionInfo.value_type}}" (change)="captureQuestionDetails(questionInfo);calculateFormCompletion();validateExpenditureSum(questionInfo)"
+                                                            disabled (keyup)="checkthresholds(questionInfo, $event)"
+                                                            name="surveyName" value="{{questionInfo.numeric_Value}}" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                                <!-- Digital Expendure end -->
+
+                                <!-- Employees Dedicated to Digital Initiatives start -->
+                                <form class="content-section it-operation-content digital-transformation-init pt-2">
+                                    <fieldset class="it-operation-fieldset">
+                                        <legend class="it-operation-legend">
+                                            Employees Dedicated to Digital
+                                        </legend>
+
+                                        <div class="form-row light-grey-row testclass" [hidden]="idx>4 || idx<2" *ngFor="let questionInfo of surveyQuestionJSON['Digital Transformation initiatives']['null']; let idx=index">
+                                            <div class="form-group col-12 col-sm-7 col-md-9">
+                                                <!-- <div class="form-row m-0">
+                                                            <div class="form-group col-12"> -->
+                                                <p class="m-0">
+                                                    {{questionInfo.question_display_text}}
+                                                    <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                                </p>
+                                                <!-- </div>
+                                                        </div> -->
+
+                                            </div>
+                                            <div class="form-group col-2 col-sm-1 col-md-1" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                                <div>
+                                                    <ng-template #popContent>
+                                                        <div>
+                                                            <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                class="form-control note-textarea" rows="5" [(ngModel)]="questionInfo.note"
+                                                                name="{{questionInfo.dashboard_question_id}}" (keyup)='activateShowBox(true)'
+                                                                [disabled]="true"></textarea>
+                                                            <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                                [disabled]="true">Cancel</button>
+                                                            <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                                [disabled]="true">Save</button>
+                                                        </div>
+                                                    </ng-template>
+                                                    <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                        [autoClose]="'outside'" placement="bottom-left" [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-10 col-sm-4 col-md-2">
+                                                <div>
+                                                    <div *ngIf="questionInfo.question_type=='Drop/Down'">
+                                                        <select [(ngModel)]='questionInfo.response_Value' name="questionInfo.response_Value"
+                                                            class="form-control" (ngModelChange)="calculateFormCompletion()"
+                                                            disabled>
+                                                            <option *ngFor='let option of questionInfo.columns' value={{option.id}}>{{option.name}}</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div *ngIf="questionInfo.question_type=='Radio_Button'">
+                                                        <div class="radio align-left padding-right-1-rem">
+                                                            <label>
+                                                                <input [(ngModel)]='questionInfo.response_Value' type="radio"
+                                                                    name="digitaleffortradio" (change)="calculateFormCompletion()"
+                                                                    disabled>Yes</label>
+                                                        </div>
+                                                        <div class="radio align-left padding-right-1-rem">
+                                                            <label>
+                                                                <input [(ngModel)]='questionInfo.response_Value' type="radio"
+                                                                    name="digitaleffortradio" (change)="calculateFormCompletion()"
+                                                                    disabled>No</label>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div *ngIf="questionInfo.question_type=='Textbox'">
+                                                        <input type="text" class="form-control" id="{{questionInfo.dashboard_question_id}}"
+                                                            NumbersOnly [allowDecimals]="true" [allowSign]="false"
+                                                            placeholder="{{questionInfo.value_type}}" disabled (keyup)="checkthresholds(questionInfo, $event)"
+                                                            name="questionInfo.response_Value" (change)="captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                            value="{{questionInfo.numeric_Value}}" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                                <!-- Employees Dedicated to Digital Initiatives end -->
+
+                                <!-- Center Of Excellence start -->
+                                <form class="content-section it-operation-content digital-transformation-init pt-2">
+                                    <fieldset class="it-operation-fieldset">
+                                        <legend class="it-operation-legend">
+                                            Where Companies have CoEs
+                                        </legend>
+
+                                        <div class="form-row light-grey-row testclass" [hidden]="idx<5" *ngFor="let questionInfo of surveyQuestionJSON['Digital Transformation initiatives']['null']; let idx=index">
+                                            <div class="form-group col-12 col-sm-7 col-md-9">
+                                                <!-- <div class="form-row m-0">
+                                                            <div class="form-group col-12"> -->
+                                                <p class="m-0">
+                                                    {{questionInfo.question_display_text}}
+                                                    <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                                </p>
+                                                <!-- </div>
+                                                        </div> -->
+
+                                            </div>
+                                            <div class="form-group col-2 col-sm-1 col-md-1" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                                <div>
+                                                    <ng-template #popContent>
+                                                        <div>
+                                                            <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                class="form-control note-textarea" rows="5" [(ngModel)]="questionInfo.note"
+                                                                name="{{questionInfo.dashboard_question_id}}" (keyup)='activateShowBox(true)'
+                                                                [disabled]="true"></textarea>
+                                                            <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                                [disabled]="true">Cancel</button>
+                                                            <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                                [disabled]="true">Save</button>
+                                                        </div>
+                                                    </ng-template>
+                                                    <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                        [autoClose]="'outside'" placement="bottom-left" [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-10 col-sm-4 col-md-2">
+                                                <div>
+                                                    <div *ngIf="questionInfo.question_type=='Radio_Button'">
+                                                        <label class="checkbox-inline">
+                                                            <input id="{{questionInfo.dashboard_question_id}}" type="checkbox"
+                                                                value="" (change)="captureQuestionDetails(questionInfo);toggleCOEQuestions(questionInfo);calculateFormCompletion()"
+                                                                [checked]="questionInfo.numeric_Value==1" disabled>
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+
+                                <!-- Center Of Excellence end -->
+
+                                <!-- Benefits of Digital Initiatives start -->
+                                <form class="content-section it-operation-content digital-transformation-init pt-2">
+                                    <fieldset class="it-operation-fieldset">
+                                        <legend class="it-operation-legend">
+                                            Benefits of Digital Initiatives
+                                        </legend>
+
+                                        <div class="form-row light-grey-row testclass" [hidden]="(questionInfo.is_Dependent==1 && showDigitalBenefitRevenueSub==false && questionInfo.dashboard_question_id=='29') ||(questionInfo.is_Dependent==1 && showDigitalBenefitCustomerSub==false && questionInfo.dashboard_question_id=='31') || (questionInfo.is_Dependent==1 && showDigitalBenefitOperationSub==false && questionInfo.dashboard_question_id=='33')"
+                                            *ngFor="let questionInfo of surveyQuestionJSON['Digital Transformation initiatives']['Benefits of Digital Initiatives']; let idx=index">
+                                            <div class="form-group col-12 col-sm-7 col-md-9">
+                                                <!-- <div class="form-row m-0">
+                                                        <div class="form-group col-12"> -->
+                                                <p class="m-0">
+                                                    {{questionInfo.question_display_text}}
+                                                    <!-- <span style="cursor:pointer;">
+                                                                    <i placement="right" container="body" class="info-icon"></i>
+                                                                </span> -->
+                                                </p>
+                                                <!-- </div>
+                                                    </div> -->
+
+                                            </div>
+                                            <div class="form-group col-2 col-sm-1 col-md-1" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                                <div>
+                                                    <ng-template #popContent>
+                                                        <div>
+                                                            <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                class="form-control note-textarea" rows="5" [(ngModel)]="questionInfo.note"
+                                                                name="{{questionInfo.dashboard_question_id}}" (keyup)='activateShowBox(true)'
+                                                                [disabled]="true"></textarea>
+                                                            <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                                [disabled]="true">Cancel</button>
+                                                            <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                                [disabled]="true">Save</button>
+                                                        </div>
+                                                    </ng-template>
+                                                    <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                        [autoClose]="'outside'" placement="bottom-left" [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-10 col-sm-4 col-md-2">
+                                                <div>
+                                                    <div *ngIf="questionInfo.question_type=='Radio_Button'">
+                                                        <div class="radio align-left padding-right-1-rem">
+                                                            <label>
+                                                                <input type="radio" id="{{questionInfo.dashboard_question_id}}"
+                                                                    name="{{questionInfo.dashboard_question_id}}" value="1"
+                                                                    (change)="toggleDigitalBenefitsRadio(questionInfo.dashboard_question_id);captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                                    [checked]="questionInfo.numeric_Value==1" disabled>Yes</label>
+                                                        </div>
+                                                        <div class="radio align-left padding-right-1-rem">
+                                                            <label>
+                                                                <input type="radio" id="{{questionInfo.dashboard_question_id}}"
+                                                                    name="{{questionInfo.dashboard_question_id}}" value="0"
+                                                                    (change)="toggleDigitalBenefitsRadio(questionInfo.dashboard_question_id);captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                                    [checked]="questionInfo.numeric_Value==0" disabled>No</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngIf="questionInfo.question_type=='Textbox'">
+                                                        <input type="text" class="form-control" id="{{questionInfo.dashboard_question_id}}"
+                                                            NumbersOnly [allowDecimals]="true" [allowSign]="false"
+                                                            placeholder="{{questionInfo.value_type}}" disabled (keyup)="checkthresholds(questionInfo, $event)"
+                                                            value="{{questionInfo.numeric_Value}}" name="questionInfo.response_Value"
+                                                            (change)="captureQuestionDetails(questionInfo);calculateFormCompletion()" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+                                    </fieldset>
+
+                                </form>
+                                <!-- Benefits of Digital Initiatives end -->
+
+
+                            </div>
+                            <!-- <div class="card-body" *ngIf="myData.ApplicationDevelopmentandMaintenanceInput == undefined ">
+                                    <form>
+                                        <div class="form-row">
+                                            Data Not Available
+                                        </div>
+                                    </form>
+                                </div> -->
+                        </div>
+                    </div>
+                    <!-- Digital Transformation Initiative questions End -->
+
+                    <!-- Capabilities questions start -->
+                    <div class="card mt-2" id="general-question-card">
+                        <div class="card-header" id="heading2" (click)="setScrollPosition(10)">
+                            <a class="btn btn-link collapsed collapseHeader" data-toggle="collapse" data-target="#collapse4"
+                                aria-expanded="false" aria-controls="collapse4">
+                                <div class="row container-fluid">
+                                    <span class="icon-circle-minus pl-4 col-12 col-sm-6">
+                                        Capabilities Questions
+                                    </span>
+                                    <!-- <div class="text-right col-12 col-sm-6 p-0">Completed:
+                                            <font size="4" id="capabilities-percentage" #ADMPer>0%</font> of 100
+                                        </div> -->
+                                </div>
+                            </a>
+                        </div>
+                        <div id="collapse4" class="collapse collapseBody" aria-labelledby="heading2" data-parent="#accordion">
+                            <div class="card-body">
+                                <!-- <form class="legend-warning-container legend-finance-breakdown" *ngIf="!ADMOcnditionsFulfilled">
+                                            <div class="form-row legend-message-row">
+        
+                                                <div class="col-12 col-md-8 col-sm-8 col-lg-8 headcount-breakdown">
+                                                    <p [ngClass]="(ADMWarningMessage ? 'legend-message-black mb-0':'legend-message mb-0')">
+                                                        {{errorMessageADM}}</p>
+                                                </div>
+                                            </div>
+                                        </form> -->
+
+                                <!-- Business Model Innovation start -->
+                                <form class="content-section it-operation-content capabilities-section pt-2">
+                                    <fieldset class="it-operation-fieldset">
+                                        <legend class="it-operation-legend">
+                                            Business Model Innovation
+                                        </legend>
+
+                                        <div class="form-row light-grey-row testclass" *ngFor="let questionInfo of surveyQuestionJSON['Capabilities']['null']; let idx=index">
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-12">
+                                                        <p class="m-0">
+                                                            {{questionInfo.question_display_text}}
+
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-2">
+                                                        <p class="m-0" style="padding-left: 1.5rem;">0</p>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <p class="m-0">25</p>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <p class="m-0">50</p>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <p class="m-0">75</p>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <p class="m-0">100</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row light-grey-row testclass" *ngFor="let questionInfo of surveyQuestionJSON['Capabilities']['Business Model Innovation']; let idx=index">
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-10 col-sm-10 col-md-10">
+                                                        <p class="m-0">
+                                                            {{questionInfo.question_display_text}}
+                                                            <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                                        </p>
+                                                    </div>
+                                                    <div class="form-group col-2 col-sm-2 col-md-2" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                                        <div>
+                                                            <ng-template #popContent>
+                                                                <div>
+                                                                    <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                        class="form-control note-textarea" rows="5"
+                                                                        [(ngModel)]="questionInfo.note" name="{{questionInfo.dashboard_question_id}}"
+                                                                        (keyup)='activateShowBox(true)' [disabled]="true"></textarea>
+                                                                    <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                                        [disabled]="true">Cancel</button>
+                                                                    <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                                        [disabled]="true">Save</button>
+                                                                </div>
+                                                            </ng-template>
+                                                            <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                                [autoClose]="'outside'" placement="bottom-left"
+                                                                [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-9">
+                                                        <ng5-slider id="{{questionInfo.dashboard_question_id}}" class="capability-slider"
+                                                            [(ngModel)]='questionInfo.numeric_Value' [(value)]="questionInfo.numeric_Value"
+                                                            [options]="options" (valueChange)="captureQuestionDetails(questionInfo);calculateFormCompletion();">
+
+                                                        </ng5-slider>
+                                                    </div>
+                                                    <div class="form-group col-3">
+                                                        <label class="checkbox-inline padding-left-top-1rem">
+                                                            Does not apply
+                                                            <input id="{{questionInfo.dashboard_question_id}}-checkbox"
+                                                                class="margin-left-3rem" type="checkbox" value=""
+                                                                [checked]="questionInfo.numeric_Value==0" (change)="toggleCapabilityCheckbox(questionInfo);captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                                disabled>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </fieldset>
+
+                                </form>
+                                <!-- Business Model Innovation end -->
+
+                                <!-- Digital Backbone start -->
+                                <form class="content-section it-operation-content pt-2">
+                                    <fieldset class="it-operation-fieldset">
+                                        <legend class="it-operation-legend">
+                                            Digital Backbone
+                                        </legend>
+
+                                        <div class="form-row light-grey-row testclass" *ngFor="let questionInfo of surveyQuestionJSON['Capabilities']['Digital Backbone']">
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-10 col-sm-10 col-md-10">
+                                                        <p class="m-0">
+                                                            {{questionInfo.question_display_text}}
+                                                            <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                                        </p>
+                                                    </div>
+                                                    <div class="form-group col-2 col-sm-2 col-md-2" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                                        <div>
+                                                            <ng-template #popContent>
+                                                                <div>
+                                                                    <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                        class="form-control note-textarea" rows="5"
+                                                                        [(ngModel)]="questionInfo.note" name="{{questionInfo.dashboard_question_id}}"
+                                                                        (keyup)='activateShowBox(true)' [disabled]="true"></textarea>
+                                                                    <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                                        [disabled]="true">Cancel</button>
+                                                                    <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                                        [disabled]="true">Save</button>
+                                                                </div>
+                                                            </ng-template>
+                                                            <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                                [autoClose]="'outside'" placement="bottom-left"
+                                                                [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-9">
+                                                        <ng5-slider [(ngModel)]='questionInfo.numeric_Value' [(value)]="questionInfo.numeric_Value"
+                                                            [options]="options" id="{{questionInfo.dashboard_question_id}}"
+                                                            (valueChange)="captureQuestionDetails(questionInfo);">
+
+                                                        </ng5-slider>
+                                                    </div>
+                                                    <div class="form-group col-3">
+                                                        <label class="checkbox-inline padding-left-top-1rem">
+                                                            Does not apply
+                                                            <input id="{{questionInfo.dashboard_question_id}}-checkbox"
+                                                                class="margin-left-3rem" type="checkbox" value=""
+                                                                [checked]="questionInfo.numeric_Value==0" (change)="toggleCapabilityCheckbox(questionInfo);captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                                disabled>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                                <!-- Digital Backbone end -->
+
+                                <!-- Digital Operating Model start -->
+                                <form class="content-section it-operation-content pt-2">
+                                    <fieldset class="it-operation-fieldset">
+                                        <legend class="it-operation-legend">
+                                            Enterprise Agility
+
+                                        </legend>
+
+                                        <div class="form-row light-grey-row testclass" *ngFor="let questionInfo of surveyQuestionJSON['Capabilities']['Enterprise Agility (formerly Digital Operating Model)']">
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-10 col-sm-10 col-md-10">
+                                                        <p class="m-0">
+                                                            {{questionInfo.question_display_text}}
+                                                            <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                                        </p>
+                                                    </div>
+                                                    <div class="form-group col-2 col-sm-2 col-md-2" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                                        <div>
+                                                            <ng-template #popContent>
+                                                                <div>
+                                                                    <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                        class="form-control note-textarea" rows="5"
+                                                                        [(ngModel)]="questionInfo.note" name="{{questionInfo.dashboard_question_id}}"
+                                                                        (keyup)='activateShowBox(true)' [disabled]="true"></textarea>
+                                                                    <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                                        [disabled]="true">Cancel</button>
+                                                                    <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                                        [disabled]="true">Save</button>
+                                                                </div>
+                                                            </ng-template>
+                                                            <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                                [autoClose]="'outside'" placement="bottom-left"
+                                                                [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-9">
+                                                        <ng5-slider [(ngModel)]='questionInfo.numeric_Value' [(value)]="questionInfo.numeric_Value"
+                                                            [options]="options" id="{{questionInfo.dashboard_question_id}}"
+                                                            (valueChange)="captureQuestionDetails(questionInfo);calculateFormCompletion()">
+
+                                                        </ng5-slider>
+                                                    </div>
+                                                    <div class="form-group col-3">
+                                                        <label class="checkbox-inline padding-left-top-1rem">
+                                                            Does not apply
+                                                            <input id="{{questionInfo.dashboard_question_id}}-checkbox"
+                                                                class="margin-left-3rem" type="checkbox" value=""
+                                                                [checked]="questionInfo.numeric_Value==0" (change)="toggleCapabilityCheckbox(questionInfo);captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                                disabled>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                                <!-- Digital Backbone end -->
+
+                                <!-- Digital EcoSystem start -->
+                                <form class="content-section it-operation-content pt-2">
+                                    <fieldset class="it-operation-fieldset">
+                                        <legend class="it-operation-legend">
+                                            Digital Ecosystems
+                                        </legend>
+
+                                        <div class="form-row light-grey-row testclass" *ngFor="let questionInfo of surveyQuestionJSON['Capabilities']['Digital Ecosystems']">
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-10 col-sm-10 col-md-10">
+                                                        <p class="m-0">
+                                                            {{questionInfo.question_display_text}}
+                                                            <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                                        </p>
+                                                    </div>
+                                                    <div class="form-group col-2 col-sm-2 col-md-2" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                                        <div>
+                                                            <ng-template #popContent>
+                                                                <div>
+                                                                    <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                        class="form-control note-textarea" rows="5"
+                                                                        [(ngModel)]="questionInfo.note" name="{{questionInfo.dashboard_question_id}}"
+                                                                        (keyup)='activateShowBox(true)' [disabled]="true"></textarea>
+                                                                    <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                                        [disabled]="true">Cancel</button>
+                                                                    <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                                        [disabled]="true">Save</button>
+                                                                </div>
+                                                            </ng-template>
+                                                            <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                                [autoClose]="'outside'" placement="bottom-left"
+                                                                [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-9">
+                                                        <ng5-slider [(ngModel)]='questionInfo.numeric_Value' [(value)]="questionInfo.numeric_Value"
+                                                            [options]="options" id="{{questionInfo.dashboard_question_id}}"
+                                                            (valueChange)="captureQuestionDetails(questionInfo);calculateFormCompletion()">
+
+                                                        </ng5-slider>
+                                                    </div>
+                                                    <div class="form-group col-3">
+                                                        <label class="checkbox-inline padding-left-top-1rem">
+                                                            Does not apply
+                                                            <input id="{{questionInfo.dashboard_question_id}}-checkbox"
+                                                                class="margin-left-3rem" type="checkbox" value=""
+                                                                [checked]="questionInfo.numeric_Value==0" (change)="toggleCapabilityCheckbox(questionInfo);captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                                disabled>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                                <!-- Digital Ecosystem end -->
+
+                                <!-- Insights start -->
+                                <form class="content-section it-operation-content pt-2">
+                                    <fieldset class="it-operation-fieldset">
+                                        <legend class="it-operation-legend">
+                                            Insights
+                                        </legend>
+
+                                        <div class="form-row light-grey-row testclass" *ngFor="let questionInfo of surveyQuestionJSON['Capabilities']['Insights']">
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-10 col-sm-10 col-md-10">
+                                                        <p class="m-0">
+                                                            {{questionInfo.question_display_text}}
+                                                            <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                                        </p>
+                                                    </div>
+                                                    <div class="form-group col-2 col-sm-2 col-md-2" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                                        <div>
+                                                            <ng-template #popContent>
+                                                                <div>
+                                                                    <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                        class="form-control note-textarea" rows="5"
+                                                                        [(ngModel)]="questionInfo.note" name="{{questionInfo.dashboard_question_id}}"
+                                                                        (keyup)='activateShowBox(true)' [disabled]="true"></textarea>
+                                                                    <button class="btn btn-note btn-Cancel" (click)="surveyQuestionJSON.General.null[4].note=''; p.close();"
+                                                                        [disabled]="true">Cancel</button>
+                                                                    <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                                        [disabled]="true">Save</button>
+                                                                </div>
+                                                            </ng-template>
+                                                            <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                                [autoClose]="'outside'" placement="bottom-left"
+                                                                [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-9">
+                                                        <ng5-slider [(ngModel)]='questionInfo.numeric_Value' [(value)]="questionInfo.numeric_Value"
+                                                            [options]="options" id="{{questionInfo.dashboard_question_id}}"
+                                                            (valueChange)="captureQuestionDetails(questionInfo);calculateFormCompletion()">
+
+                                                        </ng5-slider>
+                                                    </div>
+                                                    <div class="form-group col-3">
+                                                        <label class="checkbox-inline padding-left-top-1rem">
+                                                            Does not apply
+                                                            <input id="{{questionInfo.dashboard_question_id}}-checkbox"
+                                                                class="margin-left-3rem" type="checkbox" value=""
+                                                                [checked]="questionInfo.numeric_Value==0" (change)="toggleCapabilityCheckbox(questionInfo);captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                                disabled>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                                <!-- Insights end -->
+
+                                <!-- Smart Technologies start -->
+                                <form class="content-section it-operation-content pt-2">
+                                    <fieldset class="it-operation-fieldset">
+                                        <legend class="it-operation-legend">
+                                            Technologies@Scale
+                                        </legend>
+
+                                        <div class="form-row light-grey-row testclass" *ngFor="let questionInfo of surveyQuestionJSON['Capabilities']['Technologies at Scale (formerly Smart Technologies)']">
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-10 col-sm-10 col-md-10">
+                                                        <p class="m-0">
+                                                            {{questionInfo.question_display_text}}
+                                                            <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                                        </p>
+                                                    </div>
+                                                    <div class="form-group col-2 col-sm-2 col-md-2" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                                        <div>
+                                                            <ng-template #popContent>
+                                                                <div>
+                                                                    <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                        class="form-control note-textarea" rows="5"
+                                                                        [(ngModel)]="questionInfo.note" name="{{questionInfo.dashboard_question_id}}"
+                                                                        (keyup)='activateShowBox(true)' [disabled]="true"></textarea>
+                                                                    <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                                        [disabled]="true">Cancel</button>
+                                                                    <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                                        [disabled]="true">Save</button>
+                                                                </div>
+                                                            </ng-template>
+                                                            <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                                [autoClose]="'outside'" placement="bottom-left"
+                                                                [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-6 col-sm-6">
+                                                <div class="form-row m-0">
+                                                    <div class="form-group col-9">
+                                                        <ng5-slider [(ngModel)]='questionInfo.numeric_Value' [(value)]="questionInfo.numeric_Value"
+                                                            id="{{questionInfo.dashboard_question_id}}" [options]="options"
+                                                            (valueChange)="captureQuestionDetails(questionInfo);calculateFormCompletion()">
+
+                                                        </ng5-slider>
+                                                    </div>
+                                                    <div class="form-group col-3">
+                                                        <label class="checkbox-inline padding-left-top-1rem">
+                                                            Does not apply
+                                                            <input id="{{questionInfo.dashboard_question_id}}-checkbox"
+                                                                class="margin-left-3rem" type="checkbox" value=""
+                                                                [checked]="questionInfo.numeric_Value==0" (change)="toggleCapabilityCheckbox(questionInfo);captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                                disabled>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                                <!-- Smart Technologies end -->
+
+
+                            </div>
+                            <!-- <div class="card-body" *ngIf="myData.ApplicationDevelopmentandMaintenanceInput == undefined ">
+                                        <form>
+                                            <div class="form-row">
+                                                Data Not Available
+                                            </div>
+                                        </form>
+                                    </div> -->
+                        </div>
+                    </div>
+                    <!-- Capabilities questions end -->
+
+                    <!-- Feedback Questions start-->
+                    <div class="card mt-2" id="general-question-card">
+                        <div class="card-header" id="heading2" (click)="setScrollPosition(10)">
+                            <a class="btn btn-link collapsed collapseHeader" data-toggle="collapse" data-target="#collapse5"
+                                aria-expanded="false" aria-controls="collapse5">
+                                <div class="row container-fluid">
+                                    <span class="icon-circle-minus pl-4 col-12 col-sm-6">Feedback Questions
+
+                                    </span>
+                                    <!-- <div class="text-right col-12 col-sm-6 p-0">Completed:
+                                                <font size="4" id="feedback-percentage" #ADMPer>0%</font> of 100
+                                            </div> -->
+                                </div>
+                            </a>
+                        </div>
+                        <div id="collapse5" class="collapse collapseBody" aria-labelledby="heading2" data-parent="#accordion">
+                            <div class="card-body">
+                                <!-- <form class="legend-warning-container legend-finance-breakdown" *ngIf="!ADMOcnditionsFulfilled">
+                                            <div class="form-row legend-message-row">
+        
+                                                <div class="col-12 col-md-8 col-sm-8 col-lg-8 headcount-breakdown">
+                                                    <p [ngClass]="(ADMWarningMessage ? 'legend-message-black mb-0':'legend-message mb-0')">
+                                                        {{errorMessageADM}}</p>
+                                                </div>
+                                            </div>
+                                        </form> -->
+
+
+
+                                <form class="content-section feedback-section pt-2">
+
+
+                                    <div class="form-row light-grey-row testclass" *ngFor="let questionInfo of surveyQuestionJSON.Feedback.null">
+                                        <div class="form-group col-12 col-sm-7 col-md-9">
+                                            <!-- <div class="form-row m-0">
+                                                        <div class="form-group col-12"> -->
+                                            <p class="m-0">
+                                                {{questionInfo.question_display_text}}
+                                                <!-- <span style="cursor:pointer;">
+                                                                        <i placement="right" container="body" class="info-icon"></i>
+                                                                    </span> -->
+                                            </p>
+                                            <!-- </div>
+                                                    </div> -->
+
+                                        </div>
+                                        <div class="form-group col-2 col-sm-1 col-md-1" *ngIf="questionInfo.question_type !== 'N/A'">
+
+                                            <div>
+                                                <ng-template #popContent>
+                                                    <div>
+                                                        <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea"
+                                                            rows="5" [(ngModel)]="questionInfo.note" name="{{questionInfo.dashboard_question_id}}"
+                                                            (keyup)='activateShowBox(true)' [disabled]="true"></textarea>
+                                                        <button class="btn btn-note btn-Cancel" (click)="questionInfo.note=''; p.close();"
+                                                            [disabled]="true">Cancel</button>
+                                                        <button class="btn btn-note btn-Save" (click)="p.close()"
+                                                            [disabled]="true">Save</button>
+                                                    </div>
+                                                </ng-template>
+                                                <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                    [autoClose]="'outside'" placement="bottom-left" [ngClass]="(questionInfo.note == undefined || questionInfo.note == '' ) ? 'note_blank' : 'note_save' "></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-10 col-sm-4 col-md-2">
+                                            <div>
+                                                <div *ngIf="questionInfo.question_type=='Textbox'">
+                                                    <input type="text" class="form-control" id="{{questionInfo.dashboard_question_id}}"
+                                                        placeholder="{{questionInfo.value_type}}" name="surveyName"
+                                                        (change)="captureQuestionDetails(questionInfo);calculateFormCompletion()"
+                                                        value="{{questionInfo.text_Value}}" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </form>
+
+                            </div>
+                            <!-- <div class="card-body" *ngIf="myData.ApplicationDevelopmentandMaintenanceInput == undefined ">
+                                        <form>
+                                            <div class="form-row">
+                                                Data Not Available
+                                            </div>
+                                        </form>
+                                    </div> -->
+                        </div>
+                    </div>
+                    <!-- Feedback Questions end-->
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<div class="error-message-compare-enter-data per-four mx-3 my-3">
+
+</div>
+<div class="modal-footer enter-my-data-save-button-panel">
+    <div class="mx-auto">
+        <span>
+            <button type="button" class="btn btn-blue mt-2 enter-my-data-btn" data-dismiss="modal" (click)="saveEnteredSurvey()">Save</button>
+        </span>
+    </div>
+</div>
+
+
+<div class="confirm_box" *ngIf="confirmBoxCloseFlag==true">
+    <div class="confirm-card z-index-1000">
+        <div class="col py-3">
+            All unsaved data will be lost. Do you wish to continue?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeConfirmYes(false);">No</button>
+            <button type="button" class="btn btn-primary" (click)="closeConfirmYes(true);">Yes</button>
+        </div>
+    </div>
+</div>

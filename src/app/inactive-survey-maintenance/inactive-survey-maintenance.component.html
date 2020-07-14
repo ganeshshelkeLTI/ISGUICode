@@ -1,0 +1,238 @@
+<div class="w-100">
+  <section class="main-content">
+    <div class="card-header pl-0">
+      <h6 class="text-left text-bold mb-0 pl-0 text-center">Inactive Scenario Maintenance</h6>
+    </div>
+    <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 my-3 ">
+      <div class="card custom-card">
+        <div class="card-body pb-0">
+
+          <!-- User privileges form controls starts -->
+          <div class="row m-0 mt-1">
+            <div class="col">
+              <form>
+                <div class="row">
+
+                  <div class="col-12 col-md-6">
+                    <div class="form-group col-12">
+                      <label>Dashboard</label>
+                      <div class="list-group scenarion-list ">
+                        <select class="form-control user-suggestion-container" [(ngModel)]="selectedDashBoardItem" name="dashboard" (change)='updateScenariodata()'
+                          style="border: 1px solid #ced4da; padding: .300rem .75rem; z-index: 5">
+                          <option class="user-suggestion" *ngFor='let dashboard of dashBoardList' [ngValue]=dashboard>{{dashboard.dashboardName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div class="row m-0">
+                      <div class="col-12">
+                        <div class="form-group col-12 p-0">
+                          <label>User</label>
+                          <input type="text" class="form-control" placeholder="Search User" value="{{roleId}}" [(ngModel)]="roleId" name="roleId" (keyup)="suggestUserId(roleId, $event);"
+                            autocomplete="off" />
+                          <div class="user-suggestion-container" *ngIf="userFound">
+                            <div class="user-suggestion" *ngFor="let user of userData.staff" (click)="selectUser(user)">{{user.id}}</div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row m-0 mt-1">
+                      <div class="col-3 pr-0">
+                        <label>Email :</label>
+                      </div>
+                      <div class="col-9 p-0" *ngIf="selectedUserData != undefined && selectedUserData != null">
+                        {{selectedUserData.id}}
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-1">
+                      <div class="col-3 pr-0">
+                        <label>Type:</label>
+                      </div>
+                      <div class="col-9 p-0" *ngIf="selectedUserData != undefined && selectedUserData != null">
+                        <strong> {{selectedUserData.value}}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    <div class="container-fluid kpi-maintenance" *ngIf="showSscenarioData">
+        <!-- <div class="modal-footer tower-enterdata-footer enter-my-data-save-button-panel">
+      
+            <div class="mx-auto">
+              <button type="button" [disabled]='!isDeleteEnabled' class="btn btn-primary save-reset-btn scenario-delete-btn" (click) = "showDeletePopup()">Delete</button>
+              <button type="button" [disabled]='!isRestoreEnabled' class="btn btn-primary save-reset-btn scenario-restore-btn" (click) = "activateScenarios()">Restore</button>
+            </div>
+          </div> -->
+      <div class="row mt-4">
+        <div class="col-lg-12">
+          <div>
+            <table class="table table-responsive table-sm table-striped" style="width:100%" *ngIf="selectedDashboard!=14">
+              <thead class="thead-blue">
+                <tr>
+                  <th class="t-head">Select Scenarios 
+                    <span>
+                      <label class="container-checkbox font-size-group2">
+                        <input id="" type="checkbox" [(ngModel)]="selectAllcheckBox" (change) = "selectAllScenarios($event)">
+                        Select All
+                        <span class="checkmark header-checkmark"></span>
+  
+                      </label>  
+                    </span>
+                  </th>
+                  <th class="t-head">Scenario Id</th>
+                  <th class="t-head">Scenario Name</th>
+                  <th class="t-head">Created By</th>
+                  <th class="t-head">Created Date</th>
+                </tr>
+              </thead>
+              <tbody class="scenario-table-tbody">
+                <tr *ngFor="let scenarioData of allScenarioList; let ind=index">
+                  <td>
+                   <label class="container-checkbox font-size-group2">
+                      <input id=""  [(ngModel)]="scenarioData.checked" [ngModelOptions]="{standalone: true}" type="checkbox" [checked]="scenarioData.checked" (change) = "checkUncheckSenario(scenarioData)">
+
+                      <span class="checkmark"></span>
+
+                    </label>  
+                  </td>
+                  <td>
+                    <span>{{scenarioData.scenarioID}}</span>
+                  </td>
+                  <td>
+                    <span>{{scenarioData.scenarioName}}</span>
+                  </td>
+                  <td>
+                    <span *ngIf="scenarioData.createdBy!=null || scenarioData.createdBy!=''">
+                      {{scenarioData.createdBy}}
+                    </span>
+                    <span *ngIf="scenarioData.createdBy==null || scenarioData.createdBy==''">
+                      NA
+                    </span>
+                  </td>
+                  <td>
+                    <span *ngIf="scenarioData.createdDate!=null || scenarioData.createdDate!=''">
+                      {{scenarioData.createdDate | date:'dd/MM/yyyy'}}
+                    </span>
+                    <span *ngIf="scenarioData.createdDate==null || scenarioData.createdDate==''">
+                      NA
+                    </span>
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+            <table class="table table-responsive table-sm table-striped" style="width:100%" *ngIf="selectedDashboard==14">
+                <thead class="thead-blue">
+                  <tr>
+                    <th class="t-head">Select Scenarios
+                      <span>
+                        <label class="container-checkbox font-size-group2">
+                          <input id="" type="checkbox" [(ngModel)]="selectAllcheckBox" (change) = "selectAllScenarios($event)">
+                          Select All
+                          <span class="checkmark header-checkmark-digital"></span>
+    
+                        </label>  
+                      </span>
+                    </th>
+                    <th class="t-head">Scenario Id</th>
+                    <th class="t-head">Scenario Name</th>
+                    <th class="t-head">Created By</th>
+                    <th class="t-head">Created Date</th>
+                    <th class="t-head">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="scenario-table-tbody">
+                  <tr *ngFor="let scenarioData of allScenarioList; let ind=index">
+                    <td>
+                     <label class="container-checkbox font-size-group2">
+                        <input id=""  [(ngModel)]="scenarioData.checked" [ngModelOptions]="{standalone: true}" type="checkbox" [checked]="scenarioData.checked" (change) = "checkUncheckSenario(scenarioData)">
+  
+                        <span class="checkmark"></span>
+  
+                      </label>  
+                    </td>
+                    <td>
+                      <span>{{scenarioData.userSurveyId}}</span>
+                    </td>
+                    <td>
+                      <span>{{scenarioData.surveyName}}</span>
+                    </td>
+                    <td>
+                      <span *ngIf="scenarioData.createdBy!=null || scenarioData.createdBy!=''">
+                        {{scenarioData.createdBy}}
+                      </span>
+                      <span *ngIf="scenarioData.createdBy==null || scenarioData.createdBy==''">
+                        NA
+                      </span>
+                    </td>
+                    <td>
+                      <span *ngIf="scenarioData.createdDate!=null || scenarioData.createdDate!=''">
+                        {{scenarioData.createdDate | date:'dd/MM/yyyy'}}
+                      </span>
+                      <span *ngIf="scenarioData.createdDate==null || scenarioData.createdDate==''">
+                        NA
+                      </span>
+                    </td>
+                    <td>
+                        <span>{{scenarioData.dataStatusId}}</span>
+                      </td>
+  
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer tower-enterdata-footer enter-my-data-save-button-panel">
+      
+        <div class="mx-auto">
+          <button type="button" [disabled]='!isDeleteEnabled' class="btn btn-primary save-reset-btn scenario-delete-btn" (click) = "showDeletePopup()">Delete</button>
+          <button type="button" [disabled]='!isRestoreEnabled' class="btn btn-primary save-reset-btn scenario-restore-btn" (click) = "activateScenarios()">Restore</button>
+        </div>
+
+      </div>
+      <div class="modal-footer tower-enterdata-footer enter-my-data-save-button-panel" *ngIf="validationErrorMessage">
+          <div class="mx-auto">
+              <span class="validationmessage">Please uncheck all scenarios with Validated status to proceed with Delete action</span>
+            </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+</div>
+
+<div class="confirm_box" *ngIf="confirmDeleteBoxFlag">
+    <div class="confirm-card">
+      <div class="col py-3">
+        {{deleteWarningMessage}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="deleteConfirmYes(false);">No</button>
+        <button type="button" class="btn btn-primary" (click)="deleteConfirmYes(true);">Yes</button>
+      </div>
+    </div>
+ </div>
+
+ <!-- <div class="confirm_box" *ngIf="confirmRestoreBoxFlag">
+    <div class="confirm-card">
+      <div class="col py-3">
+          {{restoreWarningMessage}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="restoreConfirmYes(false);">No</button>
+        <button type="button" class="btn btn-primary" (click)="restoreConfirmYes(true);">Yes</button>
+      </div>
+    </div>
+ </div> -->

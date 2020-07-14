@@ -1,0 +1,241 @@
+<div class="w-100">
+  <section class="main-content">
+    <div class="card-header pl-0">
+      <h6 class="text-left text-bold mb-0 pl-0 text-center">Custom Reference Group User Mapping</h6>
+    </div>
+    <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 my-3 ">
+      <div class="card custom-card">
+        <div class="card-body pb-0">
+
+          <!-- User privileges form controls starts -->
+          <div class="row m-0 mt-1">
+            <div class="col">
+              <form>
+                <div class="row">
+
+                  <div class="col-12 col-md-6">
+                    <div class="form-group col-12">
+                      <label>Dashboard</label>
+                      <div class="list-group scenarion-list ">
+                        <select class="form-control user-suggestion-container" [(ngModel)]="selectedDashBoardItem" name="dashboard" (change)='updateKpidata()' style="border: 1px solid #ced4da; padding: .300rem .75rem;">
+                          <option class="user-suggestion" *ngFor='let dashboard of dashBoardList' [ngValue]=dashboard>{{dashboard.dashboardName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div class="row m-0">
+                      <div class="col-12">
+                        <div class="form-group col-12 p-0">
+                          <label>User</label>
+                          <input type="text" class="form-control" placeholder="Search User" value="{{roleId}}" [(ngModel)]="roleId" name="roleId" (keyup)="suggestUserId(roleId, $event);"
+                            autocomplete="off" />
+                          <div class="user-suggestion-container" *ngIf="userFound">
+                            <div class="user-suggestion" *ngFor="let user of userData.staff" (click)="selectUser(user)">{{user.id}}</div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row m-0 mt-1">
+                      <div class="col-3 pr-0">
+                        <label>Email :</label>
+                      </div>
+                      <div class="col-9 p-0" *ngIf="selectedUserData != undefined && selectedUserData != null">
+                        {{selectedUserData.id}}
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-1">
+                      <div class="col-3 pr-0">
+                        <label>Type:</label>
+                      </div>
+                      <div class="col-9 p-0"  *ngIf="selectedUserData != undefined && selectedUserData != null">
+                        <strong> {{selectedUserData.value}}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="card-header pl-0">
+                  <h6 class="text-left mb-0 pl-0">Custom Reference Groups</h6>
+                </div>
+              <div class="row mt-3">
+
+                <div class="col-lg-12 text-color">
+
+                  <div>
+
+                    <table class="table table-responsive table-sm table-striped dashboard-table" style="width:100%">
+
+                      <thead >
+
+                        <tr>
+
+                          <th class="thead-blue" style="width:10px"></th>
+
+                          <th class="col role-padding" class="thead-blue">Custom Reference Group Name</th>
+
+                          <th class="col desc-padding desc-width" class="thead-blue">Custom Reference Group Definition</th>
+
+
+
+                        </tr>
+
+                      </thead>
+
+                      <tbody class="tbodyHeight">
+                        <tr *ngFor="let customRefGroup of allCustomRefGroupList">
+
+                          <td class="checkboxAlign">
+
+                            <label class="container-checkbox font-size-group2">
+                              <input id=""  [(ngModel)]="customRefGroup.checked" [ngModelOptions]="{standalone: true}" type="checkbox" [checked]="customRefGroup.checked" 
+
+                              (change)="updateSelectedCustomRefGroup(customRefGroup, $event)">
+
+                              <span class="checkmark"></span>
+
+                            </label>
+
+                          </td>
+
+
+
+                          <td class="text-left customReftdblock">
+
+                              <input type="text"  [disabled]= 'true' [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="customRefGroup.customName" value="customRefGroup.customName">
+
+                          </td>
+
+                          <td class="text-left customReftdblock">
+
+                              <input type="text"  [disabled]= 'true' [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="customRefGroup.definition">
+
+                            </td>
+
+                        </tr>
+
+
+
+                      </tbody>
+
+
+
+                    </table>
+
+                  </div>
+
+                </div>
+
+
+
+              </div>
+                <hr>
+               
+                <div class="form-row">
+                  <div class="form-group col-9 col-md-5 col-lg-4 col-xl-4 mx-auto px-0 save-role-btn-container">
+
+                    <button [disabled]="isSaveDisabled" class="btn btn-primary btn-add mx-2" (click)="saveMappedData()" >Save</button>
+
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- User privileges form controls ends -->
+
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid kpi-maintenance" *ngIf="displayCRGData">
+      <div class="row mt-4">
+          <div class="col-lg-12">
+              <div>
+                  <table class="table table-responsive table-sm table-striped" style="width:100%">
+                      <thead class="thead-blue">
+                          <tr>
+                              <th class="t-head">Dashboard</th>
+                              <th class="t-head">Custom Reference Group</th>
+                              <th class="t-head">Custom Reference Group Definition</th>
+                              <th class="t-head">Created By</th>
+                              <th class="t-head">Created Date</th>
+                              <th class="t-head">Updated By</th>
+                              <th class="t-head">Updated Date</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let cRefData of customRefGroupData; let ind=index">
+
+                              <td>
+                                  {{selectedDashBoardItem.dashboardName}}
+                              </td>
+                              <td>
+                                {{cRefData.groupList[0].value}}
+                              </td>
+                              <td>
+                                {{cRefData.definition}}
+                              </td>
+                              <td>
+                                  <span *ngIf="cRefData.createdBy!=null || cRefData.createdBy!=''">
+                                      {{cRefData.createdBy}}
+                                  </span>
+                                  <span *ngIf="cRefData.createdBy==null || cRefData.createdBy==''">
+                                      NA
+                                  </span>
+                              </td>
+                              <td>
+                                  <span *ngIf="cRefData.createdDate!=null || cRefData.createdDate!=''">
+                                      {{cRefData.createdDate | date:'dd/MM/yyyy'}}
+                                  </span>
+                                  <span *ngIf="cRefData.createdDate==null || cRefData.createdDate==''">
+                                      NA
+                                  </span>
+                              </td>
+                              <td>
+                                  <span *ngIf="cRefData.updatedBy!=null || cRefData.updatedBy!=''">
+                                      {{cRefData.updatedBy}}
+                                  </span>
+                                  <span *ngIf="cRefData.updatedBy==null || cRefData.updatedBy==''">
+                                      NA
+                                  </span>
+                              </td>
+                              <td>
+                                  <span *ngIf="cRefData.updatedDate!=null || cRefData.updatedDate!=''">
+                                      {{cRefData.updatedDate | date:'dd/MM/yyyy'}}
+                                  </span>
+                                  <span *ngIf="cRefData.updatedDate==null || cRefData.updatedDate==''">
+                                      NA
+                                  </span>
+                              </td>
+                              <!-- <td class="float-right row-actions">
+                                  <a id={{cRefData.userCustomId}} href="javascript:void(0)" *ngIf="userType=='External'" (click)="resetBtnHandler(customRefGroupData[ind].userCustomId,customRefGroupData[ind].customId);" class="delete">
+                                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                  </a>
+                              </td> -->
+                          </tr>
+
+                      </tbody>
+
+                  </table>
+                  <div class="confirm_box" [ngStyle]="{'display':display_confirmationbox}">
+                    <input id="crgid" type="hidden" #rid [value]="selecteduserCustomId"/>
+                    <div class="confirm-card">
+                        <div class="col py-3">
+                            Are you sure you want to delete?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="closeModalDialog()">No</button>
+                            <button type="button" class="btn btn-primary" (click)="resetConfirmYes(true)" >Yes</button>
+                        </div>
+                    </div>
+                </div>
+
+              </div>
+          </div>
+      </div>
+  </div>
+  </section>
+</div>

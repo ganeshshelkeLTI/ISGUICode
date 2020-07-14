@@ -1,0 +1,941 @@
+<header *ngIf="!hideHeaderForLogin">
+  <!-- First line Menues starts here -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+
+    <button (click)="toggleMenu()" class="navbar-toggler p-0 border-0 mr-auto" type="button" data-toggle="firstline-menus">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Mobile and ipad portrait view search, help icon and option icon coding starts -->
+    <div class="float-right d-flex d-lg-none mt-1">
+      <!-- <ul class="nav navbar-nav main-user-nav mr-3">
+        <li class="dropdown nav-item"><a class="nav-link"><span class="search-icon" (click)="searchIcon()"></span></a></li>
+      </ul> -->
+
+      <ul class="nav navbar-nav float-lg-right main-user-nav mr-3">
+        <li class="dropdown nav-item">
+          <a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+            <span class="user-name">{{fullname}}</span>
+            <span class="angle-down"></span>
+          </a>
+          <div class="dropdown-menu" role="menu">
+            <a class="dropdown-item" href="javascript:void(0)" (click)="logoutUser()"> Log Out</a>
+          </div>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav float-lg-right main-icons-nav d-lg-none">
+        <li class="dropdown nav-item" (click)="openNav()">
+          <i _ngcontent-c1="" class="fa fa-bars"></i>
+        </li>
+      </ul>
+    </div>
+
+
+    <div id="menu_overlay" *ngIf="menuOverlayFlg" (click)="closeNav()"></div>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">
+        <i class="fa fa-bars"></i>
+      </a>
+
+      <div class="menu_holder">
+
+        <div class="" id="accordionMenu">
+          <div class="menu_option">
+            <div class="menu_option_title" id="headingMenu1">
+              <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseMenu1" aria-expanded="false" aria-controls="collapseMenu1">
+                <div class="row container p-0">
+                  <span class="main_title">Insights</span>
+                </div>
+              </a>
+            </div>
+
+            <div id="collapseMenu1" class="collapse" aria-labelledby="headingMenu1" data-parent="#accordionMenu">
+              <div class="">
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option">
+                    <a href="assets/insights/ISG_Insights_The_Power_of_Collaboration.pdf" target="_blank">The Power of Collaboration</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="assets/insights/ISG_Insights_Google_Cloud’s_Next_Act_Scaling_Sales.pdf" target="_blank">Google Cloud’s Next Act</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="assets/insights/The_ISG_Digital_Capability-Insights Template.pdf" target="_blank">Digital Capability Model</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://www.isg-one.com/articles/isg-index" target="_blank">ISG Index™</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://research.isg-one.com/reportaction/2018-Momentum-Verticals-Report/Marketing" target="_blank">Momentum Market Trends & Insights 2018 Vertical Report</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://www.isg-one.com/consulting/articles/managing-the-business-of-it" target="_blank">Managing the Business of IT</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://www.isg-one.com/consulting/articles/is-your-it-organization-a-value-to-the-business" target="_blank">Is Your IT Organization a Value to the Business?</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://www.isg-one.com/articles/measuring-the-elusive-end-user-experience" target="_blank">Measuring the Elusive End-User Experience</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://isg-one.com/consulting/articles/when-microsoft-products-move-to-the-cloud-licensing-costs-rise-too" target="_blank">When Microsoft Products Move to the Cloud, Licensing Costs Rise, Too</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://www.isg-one.com/articles/searching-for-it-agility-it-s-not-just-up-to-it" target="_blank">Searching for IT Agility? It’s Not Just Up to IT</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://www.isg-one.com/consulting/financial-analysis/articles/making-digital-transformation-work-with-it-cost-management-and-tbm"
+                      target="_blank">Making Digital Transformation Work with IT Cost Management and TBM</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://www.isg-one.com/articles/the-specter-of-software-audits-assessing-risks-and-keys-to-preparation" target="_blank">The Specter of Software Audits: Assessing Risks and Keys to Preparation</a>
+                  </li>
+                  
+                  <!-- removed by cleint -->
+                  <!-- <li class="menu_list_option">
+                    <a href="javascript:void(0);" target="_blank">The Surprising Disconnect Between Data Analytics Capability and Execution</a>
+                  </li> -->
+                  <li class="menu_list_option">
+                    <a href="https://www.isg-one.com/consulting/articles/you-can-go-home-again-a-checklist-for-repatriating-automating-and-remediating"
+                      target="_blank">You Can Go Home Again: A Checklist for Repatriating, Automating and Remediating</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://www.isg-one.com/articles/the-danger-of-staying-the-course-your-next-it-sourcing-contract-should-take-a-new-tack"
+                      target="_blank">The Danger of Staying the Course: Your Next IT Sourcing Contract Should Take a New Tack</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://www.isg-one.com/consulting/articles/seismic-shifts-in-sourcing" target="_blank">Seismic Shifts in Sourcing</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="https://www.isg-one.com/articles/top-four-it-planning-challenges-explored" target="_blank">Top Four IT Planning Challenges Explored</a>
+                  </li>
+                  <li class="menu_list_option">
+                      <a href="https://research.isg-one.com/reportaction/Enterprises-Microsoft-Latest-Licensing-Changes/Toc" target="_blank">What Enterprises Need To Know About Microsoft’s Latest Licensing Changes</a>
+                  </li>
+                  <li class="menu_list_option">
+                      <a href="https://research.isg-one.com/reportaction/Driving-As-a-Service-Growth-Software-Services/Toc" target="_blank">What's Driving As-a-service Growth In The Software And Services Sector?</a>
+                  </li>
+                  <li class="menu_list_option">
+                      <a href="https://research.isg-one.com/reportaction/Blockchain-in-the-Supply-Chain/Toc" target="_blank">Blockchain In The Supply Chain</a>
+                  </li>
+                  <li class="menu_list_option">
+                      <a href="https://research.isg-one.com/reportaction/Multi-Cloud-Adoption-Accelerates/Toc" target="_blank">Multi-Cloud Adoption Accelerates</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!--old glossary menu start 
+          <div class="menu_option">
+            <div class="menu_option_title" id="headingMenu2">
+              <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseMenu2" aria-expanded="false" aria-controls="collapseMenu2">
+                <div class="row container p-0">
+                  <span class="main_title">Glossary</span>
+                </div>
+              </a>
+            </div>
+            <div id="collapseMenu2" class="collapse" aria-labelledby="headingMenu2" data-parent="#accordion">
+              <div class="">
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option">
+                    <a href="assets/glossary/glossary.pdf" target="_blank">Help</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!--old glossary menu end -->
+
+          <!--new help menu start -->
+          <div class="menu_option">
+            <div class="menu_option_title" id="headingMenu2">
+              <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseMenu2" aria-expanded="false" aria-controls="collapseMenu2">
+                <div class="row container p-0">
+                  <span class="main_title">Help</span>
+                </div>
+              </a>
+            </div>
+            <div id="collapseMenu2" class="collapse" aria-labelledby="headingMenu2" data-parent="#accordion">
+              <div class="">
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option">
+                    <a href="assets/FAQ.pdf" target="_blank">FAQ</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="assets/glossary/glossary.pdf" target="_blank">Glossary</a>
+                  </li>
+                  <li class="menu_list_option">
+                    <a href="assets/industries/industries.pdf" target="_blank">Industries</a>
+                  </li>
+                  <li class="menu_list_option" data-toggle="collapse" data-target="#collapseMenu3" aria-expanded="false" aria-controls="collapseMenu3">
+                    <a href="javascript:void(0);">Help Cards</a>
+                  </li>
+                  <div id="collapseMenu3" class="collapse" aria-labelledby="headingMenu3" data-parent="#accordion">
+                    <ul class="menu_list_holder">
+                      <li class="menu_list_option">
+                        <a href="assets/GeneralNavigation.pdf" target="_blank">General Navigation</a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <li class="menu_list_option">
+                    <!--<a href="#" data-toggle="modal" data-target=".send-mail-modal">Support</a> -->
+                    <a href="mailto:ISGInform@isg-one.com">Support</a>
+                  </li>
+
+                  <li class="menu_list_option">
+                    <a download="data-collection-workbook.xlsx" target="_blank" href="assets/data-collection-workbook/data-collection-workbook.xlsx">Data Collection Workbook</a>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!--new help menu end -->
+
+          <div *ngIf='showAdmin||(canAccessKPI&&isInternal)' class="menu_option">
+            <div class="menu_option_title" id="headingMenu3">
+              <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseMenu4" aria-expanded="false" aria-controls="collapseMenu4">
+                <div class="row container p-0">
+                  <span class="main_title">Admin</span>
+                </div>
+              </a>
+            </div>
+            <div id="collapseMenu4" class="collapse" aria-labelledby="headingMenu4" data-parent="#accordion">
+              <div class="">
+                <ul *ngIf="canAccessKPI&&isInternal" class="menu_list_holder">
+                  <li class="menu_list_option">
+                    <a href="javascript:void(0);" (click)="openKpiMaintenence()">KPI Maintenance</a>
+                  </li>
+                </ul>
+                <ul class="menu_list_holder" *ngIf='adminAccessObject["/dashboardMaster"]&&isInternal'>
+                  <li class="menu_list_option">
+                    <!-- routerLink="/dashboard-master" -->
+                    <a href="javascript:void(0);" (click)="openDashboardMaster()">Dashboard Master</a>
+                  </li>
+                </ul>
+
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option" *ngIf='adminAccessObject["/dashboardFeatureMapping"]'>
+                    <a href="javascript:void(0);" (click)="openDashboardFeatureMapping()">Dashboard Feature Mapping</a>
+                  </li>
+                </ul>
+
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option" *ngIf='adminAccessObject["/adminRights"]&&isInternal'>
+                    <a href="javascript:void(0);" (click)="openWebLink()">Admin Features</a>
+                  </li>
+                </ul>
+
+                <ul class="menu_list_holder" *ngIf='adminAccessObject["/roleMaster"]&&isInternal'>
+                  <li class="menu_list_option">
+                    <a href="javascript:void(0);" (click)="openRoleMaster()">Role Master</a>
+                  </li>
+                </ul>
+
+                <ul class="menu_list_holder" *ngIf='adminAccessObject["/roleDashboardMapping"]'>
+                  <li class="menu_list_option">
+                    <a href="javascript:void(0);" (click)="openRoleDashboardMapping()">Role Dashboard Mapping</a>
+                  </li>
+                </ul>
+
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option" *ngIf='adminAccessObject["/roleUserMapping"]'>
+                    <a href="javascript:void(0);" (click)="openRoleUserMapping()">Role User Mapping</a>
+                  </li>
+                </ul>
+
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option" *ngIf='adminAccessObject["/externalUserProjectMapping"]'>
+                    <a href="javascript:void(0);" (click)="openExternalProjectMapping()">External User Project Mapping</a>
+                  </li>
+                </ul>
+
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option" *ngIf='adminAccessObject["/customReferenceMaintenance"]'>
+                    <a href="javascript:void(0);" (click)="openCustomReferenceMiantenance()">Custom Reference Group Maintenance</a>
+                  </li>
+                </ul>
+
+
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option" *ngIf='adminAccessObject["/customReferenceRoleUserMapping"]'>
+                    <a href="javascript:void(0);" (click)="openCustomReferenceUserMapping()">Custom Reference Group User Mapping</a>
+                  </li>
+                </ul>
+
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option" *ngIf='adminAccessObject["/surveyQuestionMaintenance"]'>
+                    <a href="javascript:void(0);" (click)="openSurveyQuestionMaintenance()">Digital KPI Maintenance</a>
+                  </li>
+                </ul>
+
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option" *ngIf='adminAccessObject["/surveyValidation"]'>
+                    <a href="javascript:void(0);" (click)="openSurveyValidation()">Digital Data Validation</a>
+                  </li>
+                </ul>
+
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option" *ngIf='adminAccessObject["/scenarioMaintenance"]'>
+                    <a href="javascript:void(0);" (click)="openScenarioMaintenance()">Inactive Sceanrio Maintenance</a>
+                  </li>
+                </ul>
+
+                 <ul class="menu_list_holder">
+                  <li class="menu_list_option" *ngIf='adminAccessObject["/masterQuestionMaintenance"]'>
+                    <a href="javascript:void(0);" (click)="openMasterQuestionMaintenance()">Master Question Maintenance</a>
+                  </li>
+                </ul>
+                
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option" *ngIf='adminAccessObject["/deploymentNotificationComponent"]'>
+                    <a href="javascript:void(0);" (click)="openDeploymentNotification()">Notification Maintenance</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- <div>
+          <div>
+            <div class="btn btn-isg-toggle" [ngClass]="(selectedMenuOption=='Insights')?'active':'no-active'" (click)="toggleMenuOption('Insights')">Insights</div>
+            <div class="btn btn-isg-toggle" [ngClass]="(selectedMenuOption=='Glossary')?'active':'no-active'" (click)="toggleMenuOption('Glossary')">Glossary</div>
+            <div class="btn btn-isg-toggle" [ngClass]="(selectedMenuOption=='Admin')?'active':'no-active'" (click)="toggleMenuOption('Admin')">Admin</div>
+          </div>
+
+          <div>
+            <div class="menu-option-holder">
+              <div *ngIf="selectedMenuOption=='Insights'">
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option"><a href="javascript:void(0);" target="_blank">Is Your IT Organization a Value to the Business?</a></li>
+                  <li class="menu_list_option"><a href="javascript:void(0);" target="_blank">Let's Talk Business. How the CIO Can Enable Corporate Growth</a></li>
+                  <li class="menu_list_option"><a href="javascript:void(0);" target="_blank">Top Four IT Planning Challenges Explored</a></li>
+                </ul>
+              </div>
+
+              <div *ngIf="selectedMenuOption=='Glossary'">
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option"><a href="assets/glossary/glossary.pdf" target="_blank">Help</a></li>
+                </ul>
+              </div>
+
+              <div *ngIf="selectedMenuOption=='Admin'">
+                <ul class="menu_list_holder">
+                  <li class="menu_list_option"><a href="javascript:void(0);" target="_blank" (click) = "openKpiMaintenence()">KPI Maintenance</a></li>
+                </ul>
+              </div>
+
+
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- Mobile and ipad portrait view search, help icon and option icon coding ends -->
+
+    <div class="navbar-collapse firstline-menus-collapse" id="navbarsExampleDefault">
+      <div class="isg-icon-container" *ngIf="!showHeader&&!showMainframeHeader" routerLink="/">
+      </div>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" target="_blank" href="https://www.isg-one.com/who-we-are">Who we are </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" target="_blank" href="https://www.isg-one.com/industries">Industries</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" target="_blank" href="http://ir.isg-one.com/">Investors</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" target="_blank" href="https://www.isg-one.com/careers">Careers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" target="_blank" href="https://www.isg-one.com/contact-us">Contact us</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- First line Menues ends here -->
+  <!-- second line main logo with menues strats here -->
+  <nav class="navbar navbar-expand-lg main-sub-header" *ngIf="showHeader||showMainframeHeader">
+    <a class="navbar-brand" href="#" style="margin-top: -10px;"></a>
+    <ul class="nav navbar-nav main-top-nav mr-auto">
+      <li class="nav-item" *ngIf="privilegesObject['CIO DASHBOARD']" [ngClass]="{'active': selectedItem == 'dashboard'}" (click)="toggleDashboard($event, 'dashboard')">
+        <a class="nav-link" routerLink="/CIODashboard">CIO DASHBOARD</a>
+      </li>
+      <li class="nav-item" *ngIf="privilegesObject.infratowers" [ngClass]="{'active': selectedItem == 'mainframe'}" (click)="toggleDashboard($event, 'mainframe')">
+
+        <a class="nav-link" [routerLink]="privilegesObject.infraURL">INFRASTRUCTURE KPIs</a>
+      </li>
+      <li class="nav-item" *ngIf="privilegesObject.applicationtowers" [ngClass]="{'active': selectedItem == 'application'}" (click)="toggleDashboard($event, 'application')">
+        <a class="nav-link" [routerLink]="privilegesObject.applicationURL">APPLICATION KPIs</a>
+      </li>
+      <li class="nav-item" *ngIf="privilegesObject.digitaltower" [ngClass]="{'active': selectedItem == 'digital'}" (click)="toggleDashboard($event, 'digital')">
+        <a class="nav-link" [routerLink]="privilegesObject.digitalURL">DIGITAL DASHBOARD</a>
+      </li>
+    </ul>
+    <!-- <ul class="nav navbar-nav float-lg-right main-user-nav mr-2 d-none d-lg-block">
+      <li class="dropdown nav-item"><a class="nav-link"><span class="search-icon" (click)="searchIcon()"></span></a></li>
+    </ul> -->
+    <ul class="nav navbar-nav float-lg-right main-user-nav mr-2 d-none d-lg-block">
+      <li class="dropdown nav-item">
+        <a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+          <span class="user-name">{{fullname}}</span>
+          <span class="angle-down"></span>
+        </a>
+        <div class="dropdown-menu" role="menu">
+          <a class="dropdown-item" href="javascript:void()" (click)="logoutUser()"> Log Out</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav float-lg-right main-icons-nav d-none d-lg-block">
+      <!-- <li class="dropdown nav-item d-inline"><span class="help-icon"></span></li> -->
+      <li class="dropdown nav-item d-inline" (click)="openNav();">
+        <i _ngcontent-c1="" class="fa fa-bars"></i>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- <div class="input-group mb-3 search-box">
+    <input type="text" class="form-control" placeholder="Search here"  aria-describedby="basic-addon2">
+    <div class="input-group-append">
+      <button class="btn btn-search" type="button"><span class="search-icon-blue"></span></button>
+    </div>
+  </div> -->
+  <!-- second line main logo with menues ends here -->
+
+  <!-- Third line menues starts here -->
+  <div *ngIf="showHeader&&!showMainframeHeader&&!showApplicationHeader&&!showDigitalHeader&&showLogoHeader" class="nav-scroller sub-menu-scroll">
+    <div class="nav-menu-scroll">
+
+      <nav class="nav nav-underline">
+        <div class="nav form-inline mr-auto">
+          <div class="form-group">
+            <label class="align-industry">Industry</label>
+            <select [(ngModel)]='selectedindustry' (click)='getFilterData("industry")' id="inputRegion" class="form-control mx-2">
+              <option [hidden]=true value="Grand Total">All Industries</option>
+              <option value="Total">&nbsp;All Industries&nbsp;</option>
+              <option *ngFor="let industry of data.industries"  value={{industry.id}}> {{industry.value}} </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="align-region">Region</label>
+            <select [(ngModel)]='selectedregion'  (ngModelChange)='getFilterData("region")' id="inputRegion" class="form-control mx-2">
+              <option value="Grand Total" hidden>Global</option>
+              <option value="Total">&nbsp;Global&nbsp;</option>
+              <option *ngFor="let region of selectedregions"  value={{region.id}}> {{region.value}} </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Revenue</label>
+            <select [(ngModel)]='selectedsize' (ngModelChange)='getFilterData("size")' id="inputRevenue" class="form-control mx-2">
+              <option value="Grand Total" hidden>All Sizes</option>
+              <option value="Total">&nbsp;All Sizes&nbsp;</option>
+              <option *ngFor="let size of revenues"  value={{size.id}}> {{size.value}} </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Currency</label>
+            <select [(ngModel)]='selectedcurrency' (ngModelChange)='getFilterData("currency")' id="inputCurrency" class="form-control mx-2">
+              <!-- <option *ngFor="let currency of data.currency"  [ngValue]=currency> {{currency.currencyCode}} </option> -->
+              <option *ngFor="let currency of data.currency"  [ngValue]=currency> {{currency.value}} </option>
+            </select>
+          </div>
+        </div>
+        <ul class="nav float-right">
+          <li appAuthorizer disable-access="enter_data" (click)="showEnterData()" class="nav-item">
+            <a href="#" *ngIf='privilegesObject.enterMyData && CIODataLoaded' class="nav-link" id="dispBox" data-toggle="modal" data-backdrop="static"
+              data-keyboard="false" data-target=".modal-select-to-compare">
+              <span class="enter-data-icon"></span>
+              <span>Input my data</span>
+            </a>
+          </li>
+          <li (click)="ShowCompareModel()" class="nav-item">
+          <a *ngIf='privilegesObject.compareScreen && CIODataLoaded' data-toggle="modal" data-target=".compare-option-modal" href="#" class="nav-link">
+              <span class="compare-icon"></span>
+              <span>Compare</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- input my data compare for digital dashboard
+        <ul class="nav float-right">
+          <li class="nav-item"  (click)="showEnterDataTower()">
+            <a href="#"  class="nav-link" id="dispBox" data-toggle="modal" data-backdrop="static" data-keyboard="false"  data-target=".modal-select-to-compare-tower">
+              <span class="enter-data-icon"></span>
+              <span>Input My Data</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item" (click)="setInoutMyData()"><a href="#" class="nav-link" id="dispBox" data-toggle="modal" data-target=".modal-select-to-compare-tower"><span class="enter-data-icon"></span> <span>Input My Data</span></a></li> -->
+        <!--<li class="nav-item"  (click)="updateCompareScreen()">
+            <a href="#"  class="nav-link" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target=".compare-towers-modal"
+            (click)="setCompare()">
+            <span class="compare-icon"></span>
+            <span>Compare</span>
+          </a>
+        </li>
+    
+        </ul> -->
+
+        <!-- *ngxPermissionsOnly="['admin','demo_sales_super','isg_internal_global_access','external_user','isg_user_project_specific_level_access']" -->
+      </nav>
+    </div>
+  </div>
+  <div *ngIf="showHeader&&!showMainframeHeader&&!showApplicationHeader&&!showDigitalHeader&&showLogoHeader" class="nav-scroller sub-menu-scroll header-ht">
+    <div class="nav-menu-scroll">
+      <nav class="nav nav-underline">
+        <div class="nav form-inline mr-auto">
+          <div class="form-group">
+            <label class="align-industry " style="margin-top: -6px">
+              Compare
+              <br>Scenario
+            </label>
+            <select [(ngModel)]='selectedscenario' (ngModelChange)='getFilterData("scenario")' id="inputRegion" class="form-control mx-2">
+              <!-- <option *ngFor="let currency of data.currency"  [ngValue]=currency> {{currency.currencyCode}} </option> -->
+              <option *ngFor="let scenario of selectedScenarioList"  [ngValue]=scenario> {{scenario.label}} </option>
+            </select>
+          </div>
+          <!-- crg will go here-->
+          <div class="form-group">
+            <label class="align-crg" style="margin-top: -6px">
+              Custom
+              <br>Reference
+            </label>
+            <select id="inputCRG" class="form-control mx-sm-3" [ngModelOptions]="{standalone: true}" [(ngModel)]='selectedcustomRef'
+              (ngModelChange)='getFilterData("custom_reference")'>
+              <option *ngFor='let crg of selectedCRGName' [ngValue]=crg>{{crg.customName}}</option>
+            </select>
+          </div>
+          <a href="javascript:void(0)" *ngIf="selectedcustomRef.customId != '-9999'" style="background: white; height: 20px; width: 20px;">
+            <i class="info-icon" placement="top" ngbTooltip="{{selectedcustomRef.definition}}"></i>
+          </a>
+
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!--mainframe header start -->
+  <div class="nav-scroller sub-menu-scroll tower-list-section" *ngIf="showMainframeHeader">
+    <div class="nav-menu-scroll">
+      <nav class="nav nav-underline">
+        <ul class="nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" *ngIf='privilegesObject.MAINFRAME' routerLink="/Mainframe" routerLinkActive="active-link">Mainframe</a>
+          </li>
+          <!-- <li class="nav-item"><a class="nav-link" href="#">Servers</a></li> -->
+          <li class="nav-item dropdown" *ngIf='privilegesObject.servers'>
+            <a class="nav-link dropdown-toggle menu-dropdown-width" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true"
+              aria-expanded="false" [ngClass]="currentURL=='/Unix' || currentURL=='/Linux' || currentUrl =='/Windows'  ? 'active-link' : ''">Servers
+              <div class="tower-dropdown"></div>
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" *ngIf='privilegesObject.WINDOWS' routerLink="/Windows" href="javascript:void(0)">Windows</a>
+              <a class="dropdown-item" *ngIf='privilegesObject.LINUX' routerLink="/Linux" href="javascript:void(0)">Linux</a>
+              <a class="dropdown-item" *ngIf='privilegesObject.UNIX' routerLink="/Unix" href="javascript:void(0)">Unix</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf='privilegesObject.STORAGE' routerLink="/Storage" routerLinkActive="active-link">Storage</a>
+          </li>
+          <!-- <li class="nav-item"><a class="nav-link" href="#" >Network</a></li> -->
+          <li class="nav-item dropdown" *ngIf='privilegesObject.network'>
+            <a class="nav-link dropdown-toggle menu-dropdown-width" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true"
+              aria-expanded="false" [ngClass]="currentURL=='/LAN' || currentURL=='/WAN' || currentUrl =='/Voice'  ? 'active-link' : ''">Network
+              <div class="tower-dropdown"></div>
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" *ngIf='privilegesObject.LAN' routerLink="/LAN" href="javascript:void(0)">LAN</a>
+              <!-- routerLink="/wan" -->
+              <a class="dropdown-item" *ngIf='privilegesObject.WAN' routerLink="/WAN" href="javascript:void(0)">WAN</a>
+              <a class="dropdown-item" *ngIf='privilegesObject.VOICE' routerLink="/Voice">Voice</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf='privilegesObject["WORKPLACE SERVICE"]' routerLink="/WorkplaceServices" href="javascript:void(0)"
+              routerLinkActive="active-link">Workplace Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf='privilegesObject["SERVICE DESK"]' routerLink="/ServiceDesk" href="javascript:void(0)" routerLinkActive="active-link">Service Desk</a>
+          </li>
+        </ul>
+        <ul class="nav float-right">
+          <li class="nav-item" *ngIf='privilegesObject.enterMyData  && landingPageDataLoaded' (click)="showEnterDataTower()">
+            <a href="#" class="nav-link" id="dispBox" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target=".modal-select-to-compare-tower">
+              <span class="enter-data-icon"></span>
+              <span>Input My Data</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item" (click)="setInoutMyData()"><a href="#" class="nav-link" id="dispBox" data-toggle="modal" data-target=".modal-select-to-compare-tower"><span class="enter-data-icon"></span> <span>Input My Data</span></a></li> -->
+          <li class="nav-item" *ngIf='privilegesObject.compareScreen && landingPageDataLoaded' (click)="updateCompareScreen()">
+            <a href="#" class="nav-link" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target=".compare-towers-modal"
+              (click)="setCompare()">
+              <span class="compare-icon"></span>
+              <span>Compare</span>
+            </a>
+          </li>
+
+          <!-- <li class="nav-item compare-disabled" *ngIf='privilegesObject.compareScreen && !landingPageDataLoaded'>
+      <a href="#"  class="nav-link" data-toggle="modal" data-backdrop="static" data-keyboard="false">
+      <span class="compare-icon"></span>
+      <span>Compare</span>
+    </a>
+  </li> -->
+
+          <!-- <li (click)="ShowCompareModel()" class="nav-item"><a data-toggle="modal" data-target=".compare-option-modal" href="#" class="nav-link"><span class="compare-icon"></span> <span>Compare</span></a></li> -->
+          <!-- <li class="nav-item">
+      <label class="check-label">Scenario 1
+        <input type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+    </li> -->
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- mainframe header end -->
+
+  <!--application tower header start -->
+  <div class="nav-scroller sub-menu-scroll tower-list-section" *ngIf="showApplicationHeader">
+    <div class="nav-menu-scroll">
+      <nav class="nav nav-underline">
+        <ul class="nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" *ngIf='privilegesObject["Application Development"]' routerLink="/application-development" routerLinkActive="active-link">Application Development</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf='privilegesObject["Application Maintenance and Support"]' routerLink="/application-maintenance"
+              routerLinkActive="active-link">Application Maintenance</a>
+          </li>
+        </ul>
+        <ul class="nav float-right">
+          <li class="nav-item" *ngIf='privilegesObject.enterMyData && landingPageDataLoaded' (click)="showEnterDataTower()">
+            <a href="#" class="nav-link" id="dispBox" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target=".modal-select-to-compare-adm">
+              <span class="enter-data-icon"></span>
+              <span>Input My Data</span>
+            </a>
+          </li>
+
+          <li class="nav-item" *ngIf='privilegesObject.compareScreen && landingPageDataLoaded' (click)="updateCompareScreen()">
+            <a href="#" class="nav-link" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target=".compare-towers-modal"
+              (click)="setCompare()">
+              <span class="compare-icon"></span>
+              <span>Compare</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- application tower header end -->
+
+  <!-- Digital dashboard header start-->
+
+  <div class="nav-scroller sub-menu-scroll tower-list-section" *ngIf="showDigitalHeader">
+    <div class="nav-menu-scroll">
+      <nav class="nav nav-underline">
+        <ul class="nav mr-auto">
+          <!-- <li class="nav-item">
+            <a class="nav-link" *ngIf='privilegesObject["Application Development"]' routerLink="/application-development" routerLinkActive="active-link">Application Development</a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" *ngIf='privilegesObject["Digital Tower"]' routerLink="/Digital" routerLinkActive="active-link">Digital</a>
+          </li>
+        </ul>
+        <ul class="nav float-right">
+          <li class="nav-item" *ngIf='privilegesObject.enterMyData && landingPageDataLoaded' (click)="showEnterDataTower()">
+            <a href="#" class="nav-link" id="dispBox" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target=".modal-select-to-compare-digital">
+              <span class="enter-data-icon"></span>
+              <span>Input My Data</span>
+            </a>
+          </li>
+
+          <li class="nav-item" *ngIf='privilegesObject.compareScreen && landingPageDataLoaded' (click)="updateCompareScreen()">
+            <a href="#" class="nav-link" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target=".compare-towers-digital"
+              (click)="setCompare()">
+              <span class="compare-icon"></span>
+              <span>Compare</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+
+  <!-- Digital dashboard header ends-->
+
+
+</header>
+
+<!-- Compare Select Option CIO -->
+<div class="modal fade compare-option-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-data-input">
+    <div class="modal-content modal-content-data-input">
+      <app-compare [header]='this'></app-compare>
+    </div>
+  </div>
+</div>
+
+<!-- Compare Select Option Digital -->
+<div class="modal fade compare-towers-digital" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-data-input">
+    <div class="modal-content modal-content-data-input">
+      <app-compare-towers-digital [header]='this'></app-compare-towers-digital>
+    </div>
+  </div>
+</div>
+
+<!-- Compare Grid Table -->
+<div style="padding-right: 0px !important;" id="ComparePopup" class="modal fade compare-grid-modal bd-example-modal-lg" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'"
+  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 1054px;">
+    <div class="modal-content modal-content-data-input">
+      <app-compare-grid (messageEvent)="receiveMessage($event)"></app-compare-grid>
+    </div>
+  </div>
+</div>
+
+<!-- Compare Enter Data -->
+<div class="modal fade bd-example-modal-lg modal-select-to-compare fullwidthmodal" *ngIf='privilegesObject.enterMyData' tabindex="-1"
+  role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div id="enterDataForm" class="modal-dialog modal-lg" style="max-width: 1400px; margin-top: 0px;">
+    <div class="modal-content">
+      <compare-enter-data *ngIf="showEnteredDataflag"></compare-enter-data>
+    </div>
+  </div>
+</div>
+
+<!-- Enter My Data Tower -->
+<!-- <div class="modal fade bd-example-modal-lg modal-select-to-compare-tower" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div id="enterDataForm" class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <enter-my-data-towers></enter-my-data-towers>
+    </div>
+  </div>
+</div> -->
+
+<!-- compare towers -->
+<div class="modal fade compare-towers-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-data-input">
+    <div class="modal-content modal-content-data-input">
+      <compare-towers></compare-towers>
+    </div>
+  </div>
+</div>
+
+<!-- enter my data ADM tower-->
+<div class="modal fade bd-example-modal-lg fullwidthmodal modal-select-to-compare-adm" *ngIf='privilegesObject.enterMyData'
+  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div id="enterDataForm1" class="modal-dialog modal-lg" style="max-width: 1400px; margin-top: 0px;">
+    <div class="modal-content">
+      <!-- <app-enter-my-data-digital *ngIf="currentURL=='/Digital'"></app-enter-my-data-digital> -->
+      <app-enter-my-data-application-development *ngIf="currentURL=='/application-development' || currentURL=='/application-maintenance'"></app-enter-my-data-application-development>
+      <!-- <app-enter-my-data-application-maintenance *ngIf="currentURL=='/application-maintenance'"></app-enter-my-data-application-maintenance>  -->
+    </div>
+  </div>
+</div>
+
+<!-- enter my data digital tower-->
+<div class="modal fade bd-example-modal-lg fullwidthmodal modal-select-to-compare-digital" *ngIf='privilegesObject.enterMyData'
+  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div id="enterDataForm1" class="modal-dialog modal-lg" style="max-width: 1400px; margin-top: 0px;">
+    <div class="modal-content">
+      <app-enter-my-data-digital *ngIf="currentURL=='/Digital'"></app-enter-my-data-digital>
+      <!-- <app-enter-my-data-application-maintenance *ngIf="currentURL=='/application-maintenance'"></app-enter-my-data-application-maintenance>  -->
+    </div>
+  </div>
+</div>
+
+
+<!-- Enter My Data Tower -->
+<div class="modal fade bd-example-modal-lg modal-select-to-compare-tower" *ngIf='privilegesObject.enterMyData' tabindex="-1"
+  role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div id="enterDataForm1" class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <enter-my-data-towers *ngIf="currentURL=='/Mainframe'"></enter-my-data-towers>
+      <app-enter-my-data-linux *ngIf="currentURL=='/Linux'"></app-enter-my-data-linux>
+      <app-enter-my-data-unix *ngIf="currentURL=='/Unix'"></app-enter-my-data-unix>
+      <app-enter-my-data-windows *ngIf="currentURL=='/Windows'"></app-enter-my-data-windows>
+      <app-enter-my-data-workplace-service *ngIf="currentURL=='/WorkplaceServices'"></app-enter-my-data-workplace-service>
+      <app-enter-my-data-storage class="storagePopup" *ngIf="currentURL=='/Storage'"></app-enter-my-data-storage>
+      <app-enter-my-data-service-desk *ngIf="currentURL=='/ServiceDesk'"></app-enter-my-data-service-desk>
+      <app-enter-my-data-lan *ngIf="currentURL=='/LAN'"></app-enter-my-data-lan>
+      <app-enter-my-data-wan *ngIf="currentURL=='/WAN'"></app-enter-my-data-wan>
+      <app-enter-my-data-voice *ngIf="currentURL=='/Voice'"></app-enter-my-data-voice>
+    </div>
+  </div>
+</div>
+
+<!-- compare Grid towers -->
+<div class="modal fade modal-compare-grid-tower bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 1054px;">
+    <div class="modal-content modal-content-data-input">
+      <compare-grid-towers (messageEvent)="receiveMessage($event)"></compare-grid-towers>
+    </div>
+  </div>
+</div>
+
+<!-- compare Grid server -->
+<div class="modal fade modal-compare-grid-server bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 1054px;">
+    <div class="modal-content modal-content-data-input">
+      <compare-grid-servers (messageEvent)="receiveMessage($event)"></compare-grid-servers>
+    </div>
+  </div>
+</div>
+
+<!-- compare Grid storage -->
+<div class="modal fade modal-compare-grid-storage bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 1054px;">
+    <div class="modal-content modal-content-data-input">
+      <compare-grid-storage (messageEvent)="receiveMessage($event)"></compare-grid-storage>
+    </div>
+  </div>
+</div>
+
+<!-- compare Grid workplace -->
+<div class="modal fade modal-compare-grid-workplace bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 1054px;">
+    <div class="modal-content modal-content-data-input">
+      <compare-grid-workplace (messageEvent)="receiveMessage($event)"></compare-grid-workplace>
+    </div>
+  </div>
+</div>
+
+<!-- compare Grid service desk -->
+<div class="modal fade modal-compare-grid-servicedesk bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 1054px;">
+    <div class="modal-content modal-content-data-input">
+      <compare-grid-service-desk (messageEvent)="receiveMessage($event)"></compare-grid-service-desk>
+    </div>
+  </div>
+</div>
+
+<!-- compare Grid network -->
+<div class="modal fade modal-compare-grid-network bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 1054px;">
+    <div class="modal-content modal-content-data-input">
+      <compare-grid-network (messageEvent)="receiveMessage($event)"></compare-grid-network>
+    </div>
+  </div>
+</div>
+
+<!-- Send mail for support-->
+<div class="modal fade send-mail-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-data-input">
+    <div class="modal-content modal-content-data-input">
+      <app-support-mail></app-support-mail>
+    </div>
+  </div>
+</div>
+
+<!-- compare Grid Application Development -->
+<div class="modal fade modal-app-compare-grid-application-development bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 1054px;">
+    <div class="modal-content modal-content-data-input">
+      <app-compare-grid-application-development (messageEvent)="receiveMessage($event)"></app-compare-grid-application-development>
+    </div>
+  </div>
+</div>
+
+<!-- compare Grid Application Development -->
+<div class="modal fade modal-app-compare-grid-application-maintenance bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 1054px;">
+    <div class="modal-content modal-content-data-input">
+      <app-compare-grid-application-maintenance (messageEvent)="receiveMessage($event)"></app-compare-grid-application-maintenance>
+    </div>
+  </div>
+</div>
+
+<!-- compare Grid towers -->
+<div class="modal fade modal-compare-grid-digital bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 1054px;">
+    <div class="modal-content modal-content-data-input">
+      <app-compare-grid-digital (messageEvent)="receiveMessage($event)"></app-compare-grid-digital>
+    </div>
+  </div>
+</div>
+
+<a href="#" class="nav-link" id="dispBox" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target=".modal-notificication-popup" style="display: none" #ghostbutton>
+  
+</a>
+
+<!-- notification popup -->
+<div class="modal fade modal-notificication-popup bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+aria-hidden="true" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 800px;">
+    <div class="modal-content modal-content-data-input notification-popup-content">
+      <div class="row notification-header-row">
+      <div class="col-lg-11">
+        <div class="mb-0 row notification-header">Important Notification:</div>
+      </div>
+      
+    </div>
+    
+    <br>
+    <div class="row notification-content-row">
+      <div class="col-lg-10">
+        <div class="mb-0 row notification-message">{{notificationMessage}}</div>
+      </div>
+      </div>
+      <br>
+      <div class="modal-footer">
+          <div class="mx-auto">
+        <button type="button" class="btn btn-secondary" (click)="closeNotificationPopup();">Ok</button>
+        </div>
+      </div>
+  </div>
+</div>
+</div>
+
+<!-- session log out popup-->
+<div class="modal fade modal-idle-session-popup bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+aria-hidden="true" [ngClass]="(resizePopup=='minimize')?'minimizepopup':'maximizepopup'">
+  <div class="modal-dialog modal-lg modal-dialog-data-input" style="max-width: 800px; max-height: 10rem !important">
+    <div class="modal-content modal-content-data-input notification-popup-content">
+       <div class="row notification-header-row">
+      <div class="col-lg-11">
+        <div class="mb-0 row notification-header">
+          <span style="width: 100%; text-align: center;">Alert!</span>
+        </div>
+      </div>
+      
+    </div> 
+    
+    <!-- <br> -->
+    <div class="row notification-content-row">
+      <div class="col-lg-10">
+        <div class="mb-0 row notification-message">
+          <p style="text-align: center; width: 100%; padding-top: 1rem;">
+            Your session is expired due to inactivity. Please login again to continue.
+            </p>
+          </div>
+      </div>
+      </div>
+      
+      <div class="modal-footer">
+          <div class="mx-auto">
+        <button type="button" class="btn btn-secondary" (click)="closeSessionPopup();">Ok</button>
+        </div>
+      </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,49 @@
+/***********************************************************/
+/************** © 2018 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: barchart.component.css                     **/
+/** Description: This is barchart CSS.                    **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10652318  Created Date: 28/09/2018        **/
+/** Update By: 10652318  Update Date: 28/09/2018          **/
+/** Developed at:                 **/
+/***********************************************************/
+
+#chart rect{
+    fill: #4aaeea;
+}
+
+#chart text{
+    fill: white;
+    font: 10px sans-serif;
+    text-anchor: end;
+}
+
+.axis text{
+    font: 10px sans-serif;
+}
+
+.axis path, .axis line{
+    fill: none;
+    stroke : #fff;
+    shape-rendering: crispEdges;
+}
+
+.barChart {
+    border: 1px solid black;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+}
+
+.line {
+    fill: none;
+    stroke: blue;
+    stroke-width: 2px;
+}

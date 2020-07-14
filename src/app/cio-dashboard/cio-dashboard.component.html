@@ -1,0 +1,1937 @@
+<!--
+	/******************************************* ***********/
+	/************** © 2019 ISG - All Rights Reserved     ***********/
+	/******************************************************/
+
+	/*******************************************************/
+	/** File Name:cio-dashboard.component.ts **/
+	/** Description: This file is created to get the ladning page data, filter related data and compare/input my data with drill downs (Chart) for CIO Dashboard **/
+	/** Created By: 10651227, 10641278, 10651577, 10650615, 10650513, 10641888  Created Date: 28/09/2018 **/
+	/** Update By:  10651227, 10641278, 10651577, 10650615, 10650513, 10641888  Update Date:  28/09/2018 **/
+	/*******************************************************/
+-->
+<div>
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="d-flex flex-row flex-wrap">
+				<div class="w-100 p-2">
+					<div class="card custom-card">
+						<div class="card-body">
+							<div class="d-flex flex-row flex-wrap">
+								<div class="w-40 p-2 it-companyrevenue">
+									<div class="heading">{{IT_SPEND_REVENUE_HEADER_LABEL}}<span placement="top" ngbTooltip="{{definitionData.itspendrevmean.defination}}" class="info"><a href="javascript:void(0)"></a></span></div>
+									<div class="d-flex flex-row flex-wrap">
+										<div class="p-2 mt-2">
+											<div class="circle-graph circle-graph-md">
+												<div>
+													<!-- <app-donut-chart id="it-spen-rev-donut" chartID="it-spen-rev-donut" fillColor="03abba" percentVal="{{data.itspendrev.mean/10}}" chartWidth="68" chartHeight="68" ></app-donut-chart> -->
+													<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+													width="94px" height="94px" viewBox="0 0 94 94" enable-background="new 0 0 94 94" xml:space="preserve">
+													<defs>
+														<linearGradient id="progress781" x1="0" y1="1" x2="0" y2="0">
+															<stop id="stop791" [attr.offset]="(data.itspendrev.mean/100)" stop-color="#03abba"/>
+															<stop id="stop801" [attr.offset]="(data.itspendrev.mean/100)" stop-color="#e1edf3"/>
+														</linearGradient>
+													</defs>
+													<path fill="url(#progress781)" d="M21.423,55.768v28.529c0,0,0.046,0.573-1.27,0.85L1.602,92L1.527,58.307l18.117-3.81
+													C19.644,54.497,20.914,54.073,21.423,55.768z M90.423,61.32c-1.235-0.495-3.877,0.328-5.688,1.318c0,0,0.164-1.979-2.063-2.146
+													s-3.629,1.071-3.629,1.071s-0.166-1.979-2.146-2.063c-1.979-0.082-3.629,0.825-4.537,1.155c-0.904,0.327-5.439,2.969-5.439,2.969
+													s5.439,2.31,4.781,6.021c-0.6,3.363-4.04,4.123-4.04,4.123l-12.452-0.082c0,0-5.771-0.74-8.165-3.135
+													c-2.393-2.392-2.722-4.619-2.722-4.619s5.362,3.383,8.661,4.455c3.299,1.071,14.928,0.328,14.928,0.328s1.814-1.979,0-3.546
+													c-1.814-1.565-3.547-1.565-8.494-2.557c-3.902-0.78-7.753-4.701-8.99-5.69c0,0-4.865-3.959-10.967-3.794
+													c-6.104,0.166-12.124,3.218-14.351,4.701l-0.082,17.401c0,0,7.092-2.724,8.742-2.642c1.649,0.083,7.258,3.959,13.361,5.443
+													c0,0,7.34,1.979,12.781,1.813c5.443-0.164,13.113-4.205,15.176-5.113c2.063-0.906,14.434-8.658,16.494-10.392
+													C93.641,64.619,91.661,61.814,90.423,61.32z M64.073,39.833c5.466,0,9.896,4.431,9.896,9.896c0,5.467-4.428,9.896-9.896,9.896
+													c-5.466,0-9.896-4.43-9.896-9.896C54.177,44.265,58.607,39.834,64.073,39.833z M64.984,43.828v-1.755h-1.27v1.729
+													c-0.967,0.104-1.734,0.442-2.307,1.018c-0.57,0.578-0.857,1.318-0.857,2.22c0,0.971,0.287,1.724,0.854,2.258
+													c0.566,0.533,1.441,1.017,2.621,1.453c0.601,0.235,1.023,0.492,1.271,0.767c0.246,0.272,0.369,0.627,0.369,1.063
+													c0,0.441-0.127,0.79-0.387,1.05c-0.258,0.263-0.629,0.392-1.111,0.392c-0.498,0-0.914-0.153-1.242-0.467
+													c-0.33-0.312-0.494-0.826-0.494-1.547H60.17l-0.018,0.04c-0.021,1.183,0.293,2.078,0.939,2.687c0.65,0.608,1.471,0.961,2.465,1.065
+													v1.586h1.267v-1.594c0.971-0.101,1.745-0.435,2.315-0.994c0.568-0.56,0.854-1.305,0.854-2.233c0-0.957-0.286-1.699-0.854-2.229
+													c-0.568-0.531-1.438-1.029-2.613-1.498c-0.633-0.252-1.067-0.509-1.305-0.771c-0.236-0.26-0.354-0.601-0.354-1.019
+													c0-0.441,0.111-0.793,0.339-1.06c0.226-0.263,0.565-0.397,1.022-0.397c0.441,0,0.793,0.171,1.054,0.515
+													c0.26,0.345,0.391,0.832,0.391,1.467h2.265l0.022-0.041c0.013-1.035-0.252-1.877-0.785-2.524
+													C66.645,44.362,65.911,43.969,64.984,43.828z M40.749,32.18c0-4.782,3.877-8.659,8.658-8.659c4.782,0,8.659,3.877,8.659,8.659
+													c0,4.783-3.877,8.66-8.659,8.66C44.626,40.84,40.749,36.963,40.749,32.18z M45.651,33.877h1.021v0.056
+													c0,1.061,0.352,1.906,1.057,2.534c0.707,0.628,1.629,0.942,2.771,0.942c0.289,0,0.576-0.018,0.859-0.056
+													c0.285-0.036,0.56-0.09,0.826-0.16l-0.146-1.585c-0.238,0.079-0.488,0.139-0.746,0.178c-0.26,0.039-0.523,0.059-0.795,0.059
+													c-0.561,0-0.999-0.165-1.313-0.496c-0.315-0.331-0.474-0.803-0.474-1.417v-0.056h2.993v-1.068h-2.993v-1.047h2.993v-1.068h-2.993
+													v-0.104c0-0.642,0.159-1.147,0.474-1.515c0.315-0.367,0.746-0.551,1.297-0.551c0.264,0,0.523,0.022,0.787,0.066
+													c0.266,0.045,0.521,0.104,0.77,0.178l0.146-1.598c-0.316-0.07-0.609-0.124-0.877-0.161c-0.271-0.037-0.543-0.056-0.824-0.056
+													c-1.137,0-2.059,0.332-2.76,0.995c-0.704,0.663-1.054,1.549-1.054,2.656v0.091H45.65v1.068h1.021v1.047H45.65L45.651,33.877
+													L45.651,33.877z M68.195,14.762c4.511,0,8.166,3.656,8.166,8.165c0,4.509-3.655,8.165-8.166,8.165c-4.508,0-8.163-3.656-8.163-8.165
+													C60.032,18.418,63.688,14.762,68.195,14.762z M64.65,23.932h1.091l0.026,0.654c0,0.396-0.054,0.778-0.158,1.145
+													c-0.105,0.367-0.26,0.578-0.471,0.631h-0.066v1.495h6.666V25.4h-1.491l-0.08,0.961h-3.201c0.25-0.254,0.44-0.54,0.574-0.861
+													c0.135-0.32,0.2-0.654,0.2-1.001l-0.026-0.567h2.313V22.43h-2.379l-0.067-1.429c0-0.476,0.09-0.845,0.269-1.108
+													c0.178-0.263,0.426-0.394,0.741-0.394c0.312,0,0.569,0.102,0.775,0.304c0.204,0.202,0.307,0.517,0.307,0.944h1.905l0.015-0.04
+													c0.017-0.814-0.239-1.469-0.766-1.966c-0.53-0.496-1.272-0.744-2.229-0.744c-0.899,0-1.619,0.266-2.156,0.801
+													c-0.537,0.535-0.807,1.269-0.807,2.203l0.055,1.429h-1.037H64.65V23.932z M48.893,8.928C48.893,5.102,51.997,2,55.82,2
+													c3.826,0,6.929,3.102,6.929,6.928c0,3.826-3.103,6.928-6.929,6.928C51.997,15.856,48.895,12.754,48.893,8.928z M52.031,4.745
+													l0.002,1.011l0.947,0.126l1.574,2.965h-1.522v0.948h1.937v0.719h-1.937v0.942h1.937v0.477l-0.887,0.172v1.006h3.352v-1.006
+													l-0.799-0.172v-0.477h1.852v-0.942h-1.852V9.795h1.852V8.847h-1.395l1.574-2.965l0.948-0.126V4.745h-3.063v1.011l0.391,0.075
+													l-1.104,2.401h-0.033l-1.103-2.401l0.388-0.075V4.745H52.031z"/>
+												</svg>
+
+
+											</div>
+											<div class="circle-percent circle-percent-md">{{data.itspendrev.mean| number : '1.1-1'}}%<span class="mean text-center">Mean</span></div>
+										</div>
+									</div>
+									<div class="p-2 mt-2">
+										<div class="upper">
+											Upper: <span class="percent">{{data.itspendrev.upper| number : '1.1-1'}}%</span>
+										</div>
+										<div class="lower">
+											Lower: <span class="percent">{{data.itspendrev.lower| number : '1.1-1'}}%</span>
+										</div>
+									</div>
+
+									<div class="p-2" *ngIf="enterMyData.itspendrev >= 0 " [ngClass]="[showDiv ? '!displayDiv enter-my-data-background it-spend-company-revenue' : 'displayDiv']">
+										<div [ngClass]="[showDiv ? 'it-revenue it-revenue-label' : 'it-revenue']" *ngIf="!compareEqualCompanyRevenue">{{enterMyData.itspendrev| number : '1.1-1'}}%</div>
+										<div [ngClass]="[showDiv ? 'it-revenue it-revenue-label' : 'it-revenue']" *ngIf="compareEqualCompanyRevenue">
+												<div class="equal-value-center">
+													{{enterMyData.itspendrev | number : '1.1-1' }}%
+												</div>
+										</div>
+										<div *ngIf="!compareEqualCompanyRevenue && (data.itspendrev.mean <= enterMyData.itspendrev)">
+											<svg version="1.1" id="comapanyRevenueSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+												<defs>
+													<linearGradient id="progress1019" x1="0" y1="1" x2="0" y2="0">
+														<stop id="stop1002" [attr.offset]="makePositiveValue( ( ((data.itspendrev.mean - enterMyData.itspendrev ) / data.itspendrev.mean)*100) ) + '%'" stop-color="#02ABBA" />
+														<stop id="stop2002" [attr.offset]="makePositiveValue( ( ((data.itspendrev.mean - enterMyData.itspendrev ) / data.itspendrev.mean)*100) ) + '%'" stop-color="#e1edf3" />
+													</linearGradient>
+												</defs>
+												<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1019)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+											</svg>
+										</div>
+										<!-- down arrow-->
+										<div *ngIf="!compareEqualCompanyRevenue && (data.itspendrev.mean > enterMyData.itspendrev)">
+											<svg version="1.1" id="comapanyRevenueSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform ="rotate(90) rotate(90)">
+												<defs>
+													<linearGradient id="progress1019" x1="0" y1="1" x2="0" y2="0">
+														<stop id="stop1002" [attr.offset]="makePositiveValue( ( ((data.itspendrev.mean - enterMyData.itspendrev ) / data.itspendrev.mean)*100) ) + '%'" stop-color="#02ABBA" />
+														<stop id="stop2002" [attr.offset]="makePositiveValue( ( ((data.itspendrev.mean - enterMyData.itspendrev ) / data.itspendrev.mean)*100) ) + '%'" stop-color="#e1edf3" />
+													</linearGradient>
+												</defs>
+												<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1019)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+											</svg>
+										</div>
+										<span class="remained-percentage" *ngIf="!compareEqualCompanyRevenue">
+											<!-- {{ makePositiveValue( ( (((data.itspendrev.mean  | number : '1.2-2') - (enterMyData.itspendrev | number : '1.2-2') ) / (data.itspendrev.mean | number : '1.2-2'))*100)) | number : '1.2-2' }}% -->
+											{{
+												makePositiveValue( ( ((data.itspendrev.mean - enterMyData.itspendrev ) / data.itspendrev.mean)*100) ) | number : '1.1-1'
+											}}%
+										</span>
+										<!-- <span class="remained-percentage" *ngIf="( (data.itspendrev.mean | number : '1.2-2') > (enterMyData.itspendrev | number : '1.2-2') )">{{ makePositiveValue( ( (((data.itspendrev.mean  | number : '1.2-2') - (enterMyData.itspendrev | number : '1.2-2') ) / (data.itspendrev.mean | number : '1.2-2'))*100)) | number : '1.2-2' }}%</span>
+											<span class="remained-percentage" *ngIf="( (enterMyData.itspendrev | number : '1.2-2') > (data.itspendrev.mean | number : '1.2-2') )">{{ makePositiveValue( ( (((data.itspendrev.mean | number : '1.2-2') - (enterMyData.itspendrev | number : '1.2-2') ) / (data.itspendrev.mean | number : '1.2-2') )*100)) | number : '1.2-2' }}%</span> -->
+										</div>
+
+										<div *ngIf="enterMyData.itspendrev <0 " class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+
+											<div class="align-self-center">
+												<span class="bord-top"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- IT Spend - Cost Breakdown -->
+								<div class="w-60 p-2">
+									<div class="heading">IT Spend - Cost Breakdown<span placement="top" ngbTooltip="{{definitionData.appdevelopmentpercent.defination}}" class="info"><a href="javascript:void(0)"></a></span></div>
+									<div class="d-flex flex-row flex-wrap">
+										<div class="px-2 cost-breakdown-md mt-2 it-spend-costBreakdown-subpart">
+											<div class="sub-heading">Infrastructure<span placement="top" ngbTooltip="{{data.itspendrev.infrastructure.info}}" class="info"><a href="javascript:void(0)"></a></span>
+												<span (click)="openModalDialog()" class="popout"><a href="javascript:void(0)"></a></span>
+												<div class="backdrop" [ngStyle]="{'display':display_infra}"></div>
+											</div>
+											<div class="row mx-2 mt-3">
+												<div [ngClass]="[showDiv ? 'col-6 col-lg-6 circle-graph cb-circle-graph circle-infrastructure ' : 'circle-graph cb-circle-graph']">
+													<div class="">
+														<app-donut-chart id="it-spen-rev-infra-donut" chartID="it-spen-rev-infra-donut" fillColor="9acb3b"  percentVal="{{data.itspendrev.infrastructure.value/10}}" chartWidth="52" chartHeight="52" ></app-donut-chart>
+													</div>
+													<div class="circle-percent cb-circle-percent">{{data.itspendrev.infrastructure.value | number : '1.0-0' }}%</div>
+												</div>
+
+												<div class="col-6 col-lg-6 circle-graph cb-circle-graph" *ngIf="enterMyData.infrastructure >= 0" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv']">
+													<div class="circle-percent cb-circle-percent" [ngClass]="[showDiv ?'enter-my-data-background text-center' : '']"><span *ngIf="!compareEqualityInfrastructure">&nbsp;{{enterMyData.infrastructure | number : '1.0-0' }}%</span>
+														<div *ngIf="compareEqualityInfrastructure">
+															<div class="cost-breakdown-value-center">
+																{{enterMyData.infrastructure | number : '1.0-0' }}%
+															</div>
+														</div>
+														<!-- up arrow -->
+
+														<div *ngIf="!compareEqualityInfrastructure && (data.itspendrev.infrastructure.value < enterMyData.infrastructure)">
+															<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+															width="60px" height="40px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+															<defs>
+																<linearGradient id="progress1020" x1="0" y1="1" x2="0" y2="0">
+																	<stop id="stop1003" offset="0" stop-color="#e1edf3" />
+																	<stop id="stop2003" offset="0" stop-color="#02ABBA" />
+																</linearGradient>
+															</defs>
+															<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1020)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+															h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+															<!-- <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1020)" stroke="#02ABBA" stroke-miterlimit="10" d="M15.507,1.351v58.005H1.81
+																L30,90.649l28.189-31.294H44.492V1.351H15.507z"/> -->
+															</svg>
+														</div>
+														<!-- down arrow -->
+														<div *ngIf="!compareEqualityInfrastructure && (data.itspendrev.infrastructure.value > enterMyData.infrastructure)">
+															<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+															width="60px" height="40px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+															<defs>
+																<linearGradient id="progress1020" x1="0" y1="1" x2="0" y2="0">
+																	<stop id="stop100312" offset="0" stop-color="#e1edf3" />
+																	<stop id="stop200321" offset="0" stop-color="#02ABBA" />
+																</linearGradient>
+															</defs>
+															<!-- <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1020)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+																h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/> -->
+																<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1020)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+																h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+															</svg>
+														</div>
+														<!-- <span class="remained-percentage remained-perc-font" *ngIf="( ((data.itspendrev.infrastructure.value) | number : '1.2-2') > (enterMyData.infrastructure | number : '1.2-2') )">
+															{{ makePositiveValue(((data.itspendrev.infrastructure.value - enterMyData.infrastructure) /(data.itspendrev.infrastructure.value))*100) | number : '1.0-0' }}%</span>
+															<span class="remained-percentage remained-perc-font" *ngIf="( (enterMyData.infrastructure | number : '1.2-2') > ((data.itspendrev.infrastructure.value) | number : '1.2-2') )">{{ makePositiveValue(((data.itspendrev.infrastructure.value - enterMyData.infrastructure) /(data.itspendrev.infrastructure.value))*100) | number : '1.0-0' }}%</span> -->
+
+															<span class="remained-percentage remained-perc-font" *ngIf="!compareEqualityInfrastructure">
+
+																{{ makePositiveValue((((data.itspendrev.infrastructure.value) - (enterMyData.infrastructure)) /(data.itspendrev.infrastructure.value))*100) | number : '1.0-0' }}%
+															</span>
+
+														</div>
+													</div>
+
+													<div class="col-6 col-lg-6 circle-graph cb-circle-graph" *ngIf="enterMyData.infrastructure<0" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv']">
+														<div class="circle-percent cb-circle-percent" [ngClass]="[showDiv ?'enter-my-data-background text-center' : '']">
+															<div class="align-self-center">
+																<span class="bord-top"></span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="px-2 mt-2 it-spend-costBreakdown-subpart">
+												<div class="sub-heading">Applications<span class="info" placement="top" ngbTooltip="{{data.itspendrev.applications.info}}" ><a href="javascript:void(0)"></a></span><span class="popout" (click)="applicationDialog()"><a href="javascript:void(0)"></a></span><div class="backdrop" [ngStyle]="{'display':display_application}"></div></div>
+												<div class="row mx-2 mt-3" [ngClass]="[showDiv ? 'row' : '']">
+													<div [ngClass]="[showDiv ? 'col-6 col-lg-6 circle-graph cb-circle-graph circle-infrastructure ' : 'circle-graph cb-circle-graph']">
+														<div class="">
+															<app-donut-chart id="it-spen-rev-appl-donut" chartID="it-spen-rev-appl-donut" fillColor="03abba"  percentVal="{{data.itspendrev.applications.value/10}}" chartWidth="52" chartHeight="52" ></app-donut-chart>
+														</div>
+														<div class="circle-percent cb-circle-percent" >{{data.itspendrev.applications.value| number : '1.0-0'}}%</div>
+													</div>
+
+													<div class="col-6 col-lg-6 circle-graph cb-circle-graph" *ngIf="enterMyData.applications >= 0" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv']">
+														<div class="circle-percent cb-circle-percent" [ngClass]="[showDiv ?'enter-my-data-background text-center' : '']"><span *ngIf="!compareEqualityApplications">&nbsp;{{enterMyData.applications| number : '1.0-0' }}%</span>
+															<div *ngIf="compareEqualityApplications">
+																	<div class="cost-breakdown-value-center">
+																			{{enterMyData.applications | number : '1.0-0' }}%
+																	</div>
+															</div>
+															<div *ngIf="!compareEqualityApplications && (data.itspendrev.applications.value < enterMyData.applications)">
+																<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+																width="60px" height="40px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+																<defs>
+																	<linearGradient id="progress10211023" x1="0" y1="1" x2="0" y2="0">
+																		<stop id="stop100454" offset="0" stop-color="#e1edf3" />
+																		<stop id="stop200445" offset="0" stop-color="#02ABBA" />
+																	</linearGradient>
+																</defs>
+																<!-- <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress10211023)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+																	h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/> -->
+																	<path  fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress10211023)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+																	h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+																</svg>
+															</div>
+
+															<!-- down arrow -->
+															<div *ngIf="!compareEqualityApplications && (data.itspendrev.applications.value > enterMyData.applications)">
+																<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+																width="60px" height="40px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+																<defs>
+																	<linearGradient id="progress10211222" x1="0" y1="1" x2="0" y2="0">
+																		<stop id="stop100409" offset="0" stop-color="#e1edf3" />
+																		<stop id="stop200490" offset="0" stop-color="#02ABBA" />
+																	</linearGradient>
+																</defs>
+																<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress10211222)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+																h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+																<!-- <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1021)" stroke="#02ABBA" stroke-miterlimit="10" d="M15.507,1.351v58.005H1.81
+																	L30,90.649l28.189-31.294H44.492V1.351H15.507z"/> -->
+																</svg>
+															</div>
+
+															<!-- <span class="remained-percentage remained-perc-font" *ngIf="( ((data.itspendrev.applications.value) | number : '1.2-2') > (enterMyData.applications | number : '1.2-2') )">{{  makePositiveValue((data.itspendrev.applications.value  - enterMyData.applications)/(data.itspendrev.applications.value) *100) | number : '1.0-0'  }}%</span>
+																<span class="remained-percentage remained-perc-font" *ngIf="( (enterMyData.applications | number : '1.2-2') > ((data.itspendrev.applications.value) | number : '1.2-2') )">{{ makePositiveValue((data.itspendrev.applications.value  - enterMyData.applications)/(data.itspendrev.applications.value) *100) | number : '1.0-0' }}%</span> -->
+
+																<span class="remained-percentage remained-perc-font" *ngIf="!compareEqualityApplications">{{  makePositiveValue(((data.itspendrev.applications.value )  - (enterMyData.applications ))/(data.itspendrev.applications.value ) *100) | number : '1.0-0' }}%</span>
+
+															</div>
+														</div>
+
+														<div class="col-6 col-lg-6 circle-graph cb-circle-graph" *ngIf="enterMyData.applications<0" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv']">
+															<div class="circle-percent cb-circle-percent" [ngClass]="[showDiv ?'enter-my-data-background text-center' : '']">
+																<div class="align-self-center">
+																	<span class="bord-top"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<div class="px-2 cost-breakdown-md mt-2 it-spend-costBreakdown-subpart mr-0">
+													<div class="sub-heading">IT Management<span class="info" placement="top" ngbTooltip="{{data.itspendrev.management.info}}" ><a href="javascript:void(0)"></a></span><span (click)="itmgtDialog()" class="popout"><a href="javascript:void(0)"></a></span>
+														<div class="backdrop" [ngStyle]="{'display':display_itmgt}"></div>
+													</div>
+													<div class="row mx-2 mt-3"  [ngClass]="[showDiv ? 'row' : '']">
+														<div [ngClass]="[showDiv ? 'col-6 col-lg-6 circle-graph cb-circle-graph circle-infrastructure ' : 'circle-graph cb-circle-graph']">
+															<div class="">
+																<app-donut-chart id="it-spen-itmgt-donut" chartID="it-spen-itmgt-donut" fillColor="8b69c8"  percentVal="{{data.itspendrev.management.value/10}}" chartWidth="52" chartHeight="52" ></app-donut-chart>
+															</div>
+															<div class="circle-percent cb-circle-percent">{{data.itspendrev.management.value| number : '1.0-0'}}%</div>
+														</div>
+
+														<div class="col-6 col-lg-6 circle-graph cb-circle-graph" *ngIf="enterMyData.management >= 0" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv']">
+															<div class="circle-percent cb-circle-percent" [ngClass]="[showDiv ?'enter-my-data-background text-center' : '']"><span *ngIf="!compareEqualityManagement">&nbsp;{{enterMyData.management| number : '1.0-0' }}%</span>
+																<div *ngIf="compareEqualityManagement">
+																		<div class="cost-breakdown-value-center">
+																				{{enterMyData.management | number : '1.0-0' }}%
+																		</div>
+																</div>
+																<div *ngIf="!compareEqualityManagement && (data.itspendrev.management.value < enterMyData.management)">
+
+																	<svg version="1.1" id="Layer_11" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+																	width="60px" height="40px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+																	<defs>
+																		<linearGradient id="progress1022" x1="0" y1="1" x2="0" y2="0">
+																			<stop id="stop1005" offset="0" stop-color="#e1edf3" />
+																			<stop id="stop2005" offset="0" stop-color="#02ABBA" />
+																		</linearGradient>
+																	</defs>
+																	<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1022)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+																	h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+																	<!-- <path  fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1022)" stroke="#02ABBA" stroke-miterlimit="10" d="M15.507,1.351v58.005H1.81
+																		L30,90.649l28.189-31.294H44.492V1.351H15.507z"/> -->
+																	</svg>
+																</div>
+
+																<!-- down arrow-->
+																<div *ngIf="!compareEqualityManagement && (data.itspendrev.management.value > enterMyData.management)">
+																	<svg version="1.1" id="Layer_12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+																	width="60px" height="40px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+																	<defs>
+																		<linearGradient id="progress1022" x1="0" y1="1" x2="0" y2="0">
+																			<stop id="stop1005" offset="0" stop-color="#e1edf3" />
+																			<stop id="stop2005" offset="0" stop-color="#02ABBA" />
+																		</linearGradient>
+																	</defs>
+																	<!-- <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1022)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+																		h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/> -->
+																		<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1022)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+																		h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+																	</svg>
+																</div>
+
+																<!-- <span class="remained-percentage remained-perc-font" *ngIf="( ((data.itspendrev.management.value) | number : '1.2-2') > (enterMyData.management | number : '1.2-2') )">{{ makePositiveValue((data.itspendrev.management.value - enterMyData.management)/(data.itspendrev.management.value)*100) | number : '1.0-0' }}%</span>
+																	<span class="remained-percentage remained-perc-font" *ngIf="( (enterMyData.management | number : '1.2-2') > ((data.itspendrev.management.value) | number : '1.2-2') )">{{ makePositiveValue((data.itspendrev.management.value - enterMyData.management)/(data.itspendrev.management.value)*100) | number : '1.0-0' }}%</span> -->
+
+																	<span class="remained-percentage remained-perc-font" *ngIf="!compareEqualityManagement">
+																		{{ makePositiveValue(((data.itspendrev.management.value) - (enterMyData.management))/(data.itspendrev.management.value )*100) | number : '1.0-0'
+																	}}%
+																</span>
+
+															</div>
+
+														</div>
+
+
+														<div class="col-6 col-lg-6 circle-graph cb-circle-graph" *ngIf="enterMyData.management<0" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv']">
+															<div class="circle-percent cb-circle-percent" [ngClass]="[showDiv ?'enter-my-data-background text-center' : '']">
+																<div class="align-self-center">
+																	<span class="bord-top"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- IT Spend Per User -->
+						<div class="p-2" [ngClass]="[showDiv ? 'w-33' : 'w-25']">
+							<div class="card custom-card minht-250">
+								<div class="p-2">
+									<div class="sub-heading" >IT Spend Per User<span placement="top" ngbTooltip="{{definitionData.itspendperuserlowercy.defination}}" class="info">
+										<a href="javascript:void(0)"></a></span><span class="popout" (click)="spendPerUserDialog()" *ngIf="showDrillDownAfterCrg"><a href="javascript:void(0)"></a></span></div>
+								</div>
+								<div class="card-body">
+									<div class="d-inline-flex d-md-flex flex-row flex-wrap">
+										<div class="px-2" [ngClass]="[showDiv ? 'enter-my-data-font bottom-div' : '']">
+											<svg class="h-100" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+											width="117px" height="87px" viewBox="805.995 1252.981 117 87" enable-background="new 805.995 1252.981 117 87"
+											xml:space="preserve" color="#000">
+											<defs>
+												<linearGradient id="progress54" x1="0" y1="1" x2="0" y2="0">
+													<stop id="stop55" [attr.offset]="1" stop-color="#03abba"/>
+													<stop id="stop65" [attr.offset]="1" stop-color="#e1edf3"/>
+												</linearGradient>
+											</defs>
+											<g>
+												<g>
+													<path fill="url(#progress54)" id="my-shape36" cx="200" cy="200" r="200"  d="M918.283,1254.02h-64.446c1.554,1.815,2.944,3.922,4.106,5.934h58.063v54.072h-39.017l0.02,24.876H908.4
+													c-0.002-6.451-10.87-11.828-24.361-13.012l-0.047-5.975h34.291c2.047,0,3.706-2.183,3.706-4.278v-57.821
+													C921.989,1255.719,920.33,1254.02,918.283,1254.02z M863.256,1293.039H851.59l-11.908,20.035l-11.906-20.035h-11.666
+													c-4.912,0-9.109,4.025-9.109,8.991v36.964h64.997v-36.964C871.996,1297.064,868.168,1293.039,863.256,1293.039z M839.682,1287.682
+													c9.208,0,16.674-7.547,16.674-16.856c0-9.311-7.465-16.857-16.674-16.857c-9.208,0-16.674,7.547-16.674,16.857
+													C823.008,1280.135,830.474,1287.682,839.682,1287.682z" />
+												</g>
+											</g>
+										</svg>
+									</div>
+									<div class="p-2 right-side">
+										<div class="d-flex flex-row flex-wrap">
+											<div class="p-1 mx-auto">
+												<div [ngClass]="[showDiv ? 'it-spend-PU enter-my-data-font' : 'it-spend-PU']">{{currencySymbol}}{{(data.itSpendPerUser.mean*refactorVal) | number:'1.0-0' }}<span class="per-user">Per user</span></div>
+
+												<div class="upper">
+													{{currencySymbol}}{{(data.itSpendPerUser.upper*refactorVal)| number:'1.0-0'}} <span class="direction">Upper</span>
+												</div>
+												<div class="lower">
+													{{currencySymbol}}{{(data.itSpendPerUser.lower*refactorVal) | number:'1.0-0' }} <span class="direction">Lower</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="p-1" *ngIf="enterMyData.itSpendPerUser>=0" [ngClass]="[showDiv ? '!displayDiv text-center' : 'displayDiv']">
+										<div class="right-side p-2" [ngClass]="[showDiv ? 'enter-my-data-background it-spend-align' : '']">
+											<div [ngClass]="[showDiv ? 'it-spend-PU enter-my-data-font' : 'it-spend-PU']" *ngIf="!compareEqualityItSpendPerUser">
+												{{currencySymbol}}{{enterMyData.itSpendPerUser | number:'1.0-0'}}
+												<span class="per-user">Per user</span>
+											</div>
+
+												<div [ngClass]="[showDiv ? 'it-spend-PU enter-my-data-font' : 'it-spend-PU']" *ngIf="compareEqualityItSpendPerUser">
+														<div class="equal-value-center">
+																{{currencySymbol}}{{enterMyData.itSpendPerUser | number : '1.0-0' }}
+																<span class="per-user">Per user</span>
+														</div>
+												</div>
+
+												<div *ngIf="!compareEqualityItSpendPerUser && ((data.itSpendPerUser.mean*refactorVal) < enterMyData.itSpendPerUser)">
+													<svg version="1.1" id="itSpendPerUserSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+													width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+													<defs>
+														<linearGradient id="progress1023" x1="0" y1="1" x2="0" y2="0">
+															<stop id="stop1006" [attr.offset]="makePositiveValue((( ((data.itSpendPerUser.mean * refactorVal) -+ enterMyData.itSpendPerUser)/(data.itSpendPerUser.mean * refactorVal)) | number : '1.2-2' )*100) + '%'" stop-color="#02ABBA" />
+															<stop id="stop2006" [attr.offset]="makePositiveValue((( ((data.itSpendPerUser.mean * refactorVal) -+ enterMyData.itSpendPerUser)/(data.itSpendPerUser.mean * refactorVal)) | number : '1.2-2' )*100) + '%'" stop-color="#e1edf3" />
+														</linearGradient>
+													</defs>
+
+													<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1023)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+												</svg>
+											</div>
+											<!-- down arrow -->
+											<div *ngIf="!compareEqualityItSpendPerUser && ((data.itSpendPerUser.mean*refactorVal) > enterMyData.itSpendPerUser)">
+												<svg version="1.1" id="itSpendPerUserSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+												width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+												<defs>
+													<linearGradient id="progress1023" x1="0" y1="1" x2="0" y2="0">
+														<stop id="stop1006" [attr.offset]="makePositiveValue((( ((data.itSpendPerUser.mean * refactorVal) -+ enterMyData.itSpendPerUser)/(data.itSpendPerUser.mean * refactorVal)) | number : '1.2-2' )*100) + '%'" stop-color="#02ABBA" />
+														<stop id="stop2006" [attr.offset]="makePositiveValue((( ((data.itSpendPerUser.mean * refactorVal) -+ enterMyData.itSpendPerUser)/(data.itSpendPerUser.mean * refactorVal)) | number : '1.2-2' )*100) + '%'" stop-color="#e1edf3" />
+													</linearGradient>
+												</defs>
+
+												<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1023)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+											</svg>
+										</div>
+										<span *ngIf="!compareEqualityItSpendPerUser">
+											<span class="remained-percentage" *ngIf="( ((data.itSpendPerUser.mean) | number : '1.2-2') > (enterMyData.itSpendPerUser | number : '1.2-2') )">
+												{{ makePositiveValue((( ((data.itSpendPerUser.mean * refactorVal) -+ enterMyData.itSpendPerUser)/(data.itSpendPerUser.mean * refactorVal)) | number : '1.0-2' )*100) | number : '1.0-2' }}%
+											</span>
+											<span class="remained-percentage" *ngIf="( (enterMyData.itSpendPerUser | number : '1.2-2') > ((data.itSpendPerUser.mean) | number : '1.2-2') )">
+												{{ makePositiveValue((((enterMyData.itSpendPerUser -+ (data.itSpendPerUser.mean * refactorVal))/(data.itSpendPerUser.mean * refactorVal)) | number : '1.0-2' )*100) | number : '1.0-2' }}%
+											</span>
+										</span>
+									</div>
+								</div>
+
+								<div *ngIf="enterMyData.itSpendPerUser<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+									<div class="align-self-center">
+										<span class="bord-top"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- IT spend By Expenditure Type -->
+				<div class="p-2" [ngClass]="[showDiv ? 'w-33' : 'w-25']">
+					<div class="card custom-card it-spend-expenditure minht-250">
+						<div class="p-2">
+							<div class="sub-heading">IT Spend By Expenditure Type<span class="info" placement="top" ngbTooltip="{{definitionData.itspendsoftware.defination}}" ><a href="javascript:void(0)"></a></span>
+								<div class="backdrop" [ngStyle]="{'display':display_spendPerUser}"></div>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col pr-0 left-side" [ngClass]="[showDiv ? 'col-sm-4' : 'col-sm-6']">
+									<svg class="h-100 it-spend-exp-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+									width="117px" height="87px" viewBox="805.995 1252.981 117 87" enable-background="new 805.995 1252.981 117 87"
+									xml:space="preserve">
+									<defs>
+										<linearGradient id="progress587" x1="0" y1="1" x2="0" y2="0">
+											<stop id="stop585" offset="1" stop-color="#03abba"/>
+											<stop id="stop685" offset="1" stop-color="#e1edf3"/>
+										</linearGradient>
+									</defs>
+									<g>
+										<g>
+											<path fill="url(#progress587)" id="my-shape368" cx="200" cy="200" r="200" d="M903.264,1321.914c-3.441,0-6.688-0.566-9.125-1.61c-1.057-0.441-1.936-0.956-2.599-1.521v1.911
+											c0,0.495,0.269,1.009,0.771,1.504c0.537,0.549,1.381,1.08,2.42,1.521c2.276,0.956,5.289,1.47,8.533,1.47
+											c3.227,0,6.256-0.514,8.515-1.47c1.038-0.441,1.883-0.974,2.438-1.521c0.502-0.495,0.754-1.009,0.754-1.504v-1.911
+											c-0.664,0.564-1.523,1.079-2.582,1.521C909.932,1321.348,906.688,1321.914,903.264,1321.914z M876.924,1321.914
+											c-3.424,0-6.668-0.566-9.123-1.61c-1.059-0.441-1.918-0.956-2.582-1.521v1.911c0,0.495,0.252,1.009,0.754,1.504
+											c0.556,0.549,1.397,1.08,2.438,1.521c2.258,0.956,5.288,1.47,8.514,1.47c3.245,0,6.256-0.514,8.533-1.47
+											c1.039-0.441,1.882-0.974,2.42-1.521c0.502-0.495,0.771-1.009,0.771-1.504v-1.911c-0.663,0.564-1.542,1.079-2.581,1.521
+											C883.61,1321.348,880.365,1321.914,876.924,1321.914z M903.264,1316.955c-3.441,0-6.688-0.564-9.125-1.605
+											c-1.057-0.44-1.936-0.953-2.599-1.518v1.906c0,0.512,0.269,1.005,0.771,1.518c0.537,0.547,1.381,1.059,2.42,1.5
+											c2.276,0.953,5.289,1.482,8.533,1.482c3.227,0,6.256-0.529,8.515-1.482c1.038-0.441,1.883-0.953,2.438-1.5
+											c0.502-0.513,0.754-1.006,0.754-1.518v-1.906c-0.664,0.564-1.523,1.076-2.582,1.518
+											C909.932,1316.391,906.688,1316.955,903.264,1316.955z M876.924,1316.955c-3.424,0-6.668-0.564-9.123-1.605
+											c-1.059-0.44-1.918-0.953-2.582-1.518v1.906c0,0.512,0.252,1.005,0.754,1.518c0.556,0.547,1.397,1.059,2.438,1.5
+											c2.258,0.953,5.288,1.482,8.514,1.482c3.245,0,6.256-0.529,8.533-1.482c1.039-0.441,1.882-0.953,2.42-1.5
+											c0.502-0.513,0.771-1.006,0.771-1.518v-1.906c-0.663,0.564-1.542,1.076-2.581,1.518
+											C883.61,1316.391,880.365,1316.955,876.924,1316.955z M903.264,1312.014c-3.441,0-6.688-0.584-9.125-1.609
+											c-1.057-0.442-1.936-0.956-2.599-1.522v1.896c0,0.513,0.269,1.024,0.771,1.521c0.537,0.549,1.381,1.08,2.42,1.504
+											c2.276,0.956,5.289,1.487,8.533,1.487c3.227,0,6.256-0.531,8.515-1.487c1.038-0.424,1.883-0.954,2.438-1.504
+											c0.502-0.496,0.754-1.009,0.754-1.521v-1.896c-0.664,0.566-1.523,1.08-2.582,1.522
+											C909.932,1311.43,906.688,1312.014,903.264,1312.014z M885.457,1307.732c-2.277-0.939-5.288-1.473-8.533-1.473
+											c-3.226,0-6.256,0.532-8.514,1.473c-1.04,0.442-1.883,0.976-2.438,1.524c-0.502,0.496-0.754,1.011-0.754,1.509
+											c0,0.514,0.252,1.027,0.754,1.524c0.556,0.549,1.397,1.081,2.438,1.507c2.258,0.958,5.288,1.489,8.514,1.489
+											c3.245,0,6.256-0.531,8.533-1.489c1.039-0.426,1.882-0.958,2.42-1.507c0.502-0.497,0.771-1.012,0.771-1.524
+											c0-0.497-0.27-1.013-0.771-1.509C887.339,1308.708,886.496,1308.176,885.457,1307.732z M903.264,1307.197
+											c-3.441,0-6.688-0.591-9.125-1.681c-0.43-0.185-0.842-0.387-1.201-0.59c-0.536-0.313-1.004-0.646-1.396-0.996v1.144v0.85
+											c0,0.516,0.27,1.052,0.771,1.587c0.536,0.571,1.381,1.106,2.42,1.567c2.275,0.997,5.287,1.551,8.532,1.551
+											c3.227,0,6.255-0.554,8.515-1.551c1.039-0.461,1.883-0.996,2.438-1.567c0.502-0.535,0.754-1.071,0.754-1.587v-1.992
+											c-0.664,0.59-1.523,1.125-2.582,1.586C909.932,1306.605,906.688,1307.197,903.264,1307.197z M880.227,1303.48
+											c-1.034-0.463-1.909-0.997-2.569-1.589v2.75c3.141,0.094,6.066,0.665,8.334,1.662c1.034,0.48,1.907,1.017,2.567,1.605
+											c1,0.905,1.535,1.92,1.535,3.01v-5.778c-0.268,0-0.518,0.02-0.768,0.02C885.9,1305.16,882.671,1304.551,880.227,1303.48z
+											M880.207,1298.529c-1.027-0.461-1.895-0.996-2.551-1.587v1.991c0,0.518,0.266,1.053,0.762,1.588
+											c0.531,0.571,1.365,1.106,2.393,1.567c2.232,0.996,5.228,1.55,8.434,1.55c0.248,0,0.496-0.019,0.762-0.019v-2.656
+											c0-0.259,0.02-0.517,0.089-0.774c-0.282,0.019-0.565,0.019-0.851,0.019C885.842,1300.208,882.635,1299.617,880.207,1298.529z
+											M898.566,1296.763c-1.416,0.257-2.707,0.642-3.836,1.116c-0.287,0.129-0.557,0.257-0.808,0.403
+											c-0.663,0.348-1.219,0.751-1.612,1.171c-0.232,0.221-0.412,0.459-0.537,0.695c-0.146,0.293-0.233,0.587-0.233,0.86
+											c0,0.531,0.269,1.063,0.771,1.574c0.252,0.274,0.574,0.531,0.95,0.77c0.432,0.293,0.934,0.55,1.47,0.787
+											c0.287,0.128,0.574,0.238,0.88,0.349c2.149,0.769,4.82,1.188,7.653,1.188c3.227,0,6.256-0.549,8.515-1.537
+											c1.039-0.458,1.883-0.987,2.438-1.557c0.502-0.512,0.754-1.043,0.754-1.574c0-0.513-0.252-1.043-0.754-1.557
+											c-0.555-0.566-1.397-1.115-2.438-1.574c-2.259-0.988-5.288-1.519-8.515-1.519h-0.771c-0.322,0.018-0.627,0.018-0.95,0.036
+											c-0.197,0.02-0.395,0.037-0.591,0.056C900.126,1296.524,899.338,1296.616,898.566,1296.763z M894.273,1296.52
+											c1.828-0.76,4.104-1.288,6.578-1.482c0.071-0.018,0.144-0.018,0.231-0.018v-2.735c-0.662,0.564-1.522,1.094-2.58,1.535
+											c-2.456,1.023-5.701,1.588-9.125,1.588c-3.44,0-6.686-0.564-9.141-1.588c-1.041-0.441-1.918-0.97-2.582-1.535v1.906
+											c0,0.512,0.27,1.022,0.771,1.518c0.537,0.547,1.38,1.059,2.42,1.5c2.258,0.953,5.287,1.482,8.531,1.482
+											c0.574,0,1.146-0.019,1.703-0.054c0.18-0.193,0.377-0.389,0.592-0.582C892.338,1297.489,893.215,1296.96,894.273,1296.52z
+											M880.848,1292.27c2.258,0.957,5.287,1.47,8.531,1.47c3.227,0,6.256-0.515,8.516-1.47c1.039-0.441,1.883-0.973,2.438-1.521
+											c0.502-0.496,0.752-1.009,0.752-1.504v-1.911c-0.662,0.566-1.522,1.079-2.58,1.521c-2.456,1.045-5.701,1.61-9.125,1.61
+											c-3.44,0-6.686-0.565-9.141-1.61c-1.041-0.442-1.918-0.955-2.582-1.521v1.911c0,0.496,0.27,1.009,0.771,1.504
+											C878.965,1291.297,879.808,1291.828,880.848,1292.27z M880.848,1287.307c2.258,0.953,5.287,1.482,8.531,1.482
+											c3.227,0,6.256-0.53,8.516-1.482c1.039-0.44,1.883-0.953,2.438-1.5c0.502-0.512,0.752-1.005,0.752-1.518v-1.906
+											c-0.662,0.564-1.522,1.076-2.58,1.535c-2.456,1.023-5.701,1.588-9.125,1.588c-3.44,0-6.686-0.564-9.141-1.588
+											c-1.041-0.459-1.918-0.971-2.582-1.535v1.906c0,0.512,0.27,1.006,0.771,1.518C878.965,1286.354,879.808,1286.865,880.848,1287.307
+											z M880.848,1282.367c2.258,0.958,5.287,1.472,8.531,1.472c3.229,0,6.256-0.514,8.516-1.472c1.039-0.444,1.883-0.977,2.438-1.525
+											c0.502-0.497,0.752-1.011,0.752-1.507v-0.018c0-0.497-0.25-1.012-0.752-1.507c-0.556-0.551-1.397-1.082-2.438-1.508
+											c-2.26-0.958-5.287-1.489-8.516-1.489c-3.244,0-6.273,0.531-8.531,1.489c-1.039,0.426-1.883,0.958-2.42,1.508
+											c-0.502,0.496-0.771,1.011-0.771,1.524c0,0.497,0.27,1.011,0.771,1.507C878.965,1281.391,879.808,1281.923,880.848,1282.367z" />
+										</g>
+									</g>
+								</svg>
+								<div class="cio-pie-chart-holder">
+									<pie-chart  [chartData]="data.charts.ITSpendbyFunctionInfrastructure" id="cioPersonnel" chartID="cioPersonnel" chartWidth="105" chartHeight="105" thickness="10.5"></pie-chart>
+								</div>
+							</div>
+							<div class="col p-0" [ngClass]="[showDiv ? 'col-lg-4 col-sm-4 col-6 px-0' : 'col-sm-6 pr-0']">
+								<div class="right-side">
+									<ul>
+										<li class="clearfix">
+											<div class="float-left mt-1">Personnel</div>
+											<div class="float-right expendi personnal">{{data.itSpendByExpenditure.personnel | number : '1.0-0'}}%</div>
+										</li>
+										<li class="clearfix">
+											<div class="float-left mt-1">Hardware</div>
+											<div class="float-right expendi hardware">{{data.itSpendByExpenditure.hardware | number : '1.0-0'}}%</div>
+										</li>
+										<li class="clearfix">
+											<div class="float-left mt-1">Software</div>
+											<div class="float-right expendi softwear">{{data.itSpendByExpenditure.software | number : '1.0-0'}}%</div>
+										</li>
+										<li class="clearfix">
+											<div class="float-left mt-1">Outsourced</div>
+											<div class="float-right expendi outsourced">{{data.itSpendByExpenditure.outsourced | number : '1.0-0'}}%</div>
+										</li>
+										<li class="clearfix">
+											<div class="float-left mt-1">Other</div>
+											<div class="float-right expendi other">{{data.itSpendByExpenditure.other | number : '1.0-0'}}%</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="col-lg-4 col-sm-4 col-6 pr-0 exp-background it-spend-exp-type" *ngIf="showDiv">
+
+								<div class="right-side pr-0">
+									<ul class="p-2" [ngClass]="[showDiv ? '!displayDiv enter-my-data-background' : 'displayDiv']">
+										<li [ngClass]="[compareEqualityPersonnel ? 'clearfix empty-arrow-container' : 'clearfix empty-arrow-container']">
+											<div   *ngIf="enterMyData.itSpendByExpenditurepersonnel< 0">
+												<div class="align-self-center">
+													<span class="empty-bord-top"></span>
+												</div>
+											</div>
+
+											<div [ngClass]="[compareEqualityPersonnel ? 'expendi personnal custom-value-alignment' : 'expendi personnal']" *ngIf="enterMyData.itSpendByExpenditurepersonnel>=0">
+												{{enterMyData.itSpendByExpenditurepersonnel| number : '1.0-0'}}%
+
+												<span>
+
+													<!-- up arrow -->
+													<svg *ngIf="!compareEqualityPersonnel && (enterMyData.itSpendByExpenditurepersonnel > data.itSpendByExpenditure.personnel)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+														width="40px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+														<defs>
+															<linearGradient id="progress1025" x1="0" y1="1" x2="0" y2="0">
+																<stop id="stop1007" offset="1" stop-color="#02ABBA" />
+																<stop id="stop2007" offset="1" stop-color="#e1edf3" />
+															</linearGradient>
+														</defs>
+														<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1025)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+														h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+													</svg>
+													<!-- down arrow-->
+													<svg *ngIf="!compareEqualityPersonnel && (enterMyData.itSpendByExpenditurepersonnel < data.itSpendByExpenditure.personnel)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+													width="40px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+													<defs>
+														<linearGradient id="progress1025" x1="0" y1="1" x2="0" y2="0">
+															<stop id="stop1007" offset="1" stop-color="#02ABBA" />
+															<stop id="stop2007" offset="1" stop-color="#e1edf3" />
+														</linearGradient>
+													</defs>
+													<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1025)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+													h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+												</svg>
+											</span>
+										</div>
+
+									</li>
+
+									<li [ngClass]="[compareEqualityHardware ? 'clearfix empty-arrow-container' : 'clearfix empty-arrow-container']">
+										<div  *ngIf="enterMyData.itSpendByExpenditurehardware < 0">
+											<div class="align-self-center">
+												<span class="empty-bord-top"></span>
+											</div>
+										</div>
+
+										<div [ngClass]="[compareEqualityHardware ? 'expendi hardware custom-value-alignment' : 'expendi hardware']"  *ngIf="enterMyData.itSpendByExpenditurehardware>=0"> 
+											{{enterMyData.itSpendByExpenditurehardware | number : '1.0-0'}}%
+
+											<span>
+												<svg *ngIf="!compareEqualityHardware && (enterMyData.itSpendByExpenditurehardware > data.itSpendByExpenditure.hardware)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+													width="40px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+													<defs>
+														<linearGradient id="progress1026" x1="0" y1="1" x2="0" y2="0">
+															<stop id="stop1008" offset="1" stop-color="#02ABBA" />
+															<stop id="stop2008" offset="1" stop-color="#e1edf3" />
+														</linearGradient>
+													</defs>
+
+													<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1026)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+													h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+												</svg>
+
+												<!-- down arrow -->
+												<svg *ngIf="!compareEqualityHardware && (enterMyData.itSpendByExpenditurehardware < data.itSpendByExpenditure.hardware)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+												width="40px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+												<defs>
+													<linearGradient id="progress1026" x1="0" y1="1" x2="0" y2="0">
+														<stop id="stop1008" offset="1" stop-color="#02ABBA" />
+														<stop id="stop2008" offset="1" stop-color="#e1edf3" />
+													</linearGradient>
+												</defs>
+
+												<path  fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1026)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+												h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+											</svg>
+
+										</span>
+									</div>
+
+								</li>
+
+								<li [ngClass]="[compareEqualitySoftware ? 'clearfix empty-arrow-container' : 'clearfix empty-arrow-container']">
+									<div  *ngIf="enterMyData.itSpendByExpendituresoftware<0">
+										<div class="align-self-center">
+											<span class="empty-bord-top"></span>
+										</div>
+									</div>
+									<div *ngIf="enterMyData.itSpendByExpendituresoftware>=0" [ngClass]="[compareEqualitySoftware ? 'expendi softwear custom-value-alignment' : 'expendi softwear']" >
+										
+										{{enterMyData.itSpendByExpendituresoftware | number : '1.0-0'}}%
+
+										<span>
+											<svg *ngIf="!compareEqualitySoftware && (enterMyData.itSpendByExpendituresoftware > data.itSpendByExpenditure.software)" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 60 92" height="22px" id="Layer_1" version="1.1" viewBox="0 0 60 92" width="40px" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
+												<defs>
+													<linearGradient id="progress1027" x1="0" y1="1" x2="0" y2="0">
+														<stop id="stop1009" offset="1" stop-color="#02ABBA" />
+														<stop id="stop2009" offset="1" stop-color="#e1edf3" />
+													</linearGradient>
+												</defs>
+												<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1027)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+												h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+											</svg>
+
+											<!-- down arrow-->
+											<svg *ngIf="!compareEqualitySoftware && (enterMyData.itSpendByExpendituresoftware < data.itSpendByExpenditure.software)" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 60 92" height="22px" id="Layer_1" version="1.1" viewBox="0 0 60 92" width="40px" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px" transform="rotate(90) rotate(90)">
+												<defs>
+													<linearGradient id="progress1027" x1="0" y1="1" x2="0" y2="0">
+														<stop id="stop1009" offset="1" stop-color="#02ABBA" />
+														<stop id="stop2009" offset="1" stop-color="#e1edf3" />
+													</linearGradient>
+												</defs>
+												<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1027)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+												h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+											</svg>
+
+										</span>
+									</div>
+
+								</li>
+
+
+								<li [ngClass]="[compareEqualityOutsourced ? 'clearfix empty-arrow-container' : 'clearfix empty-arrow-container']">
+									<div  *ngIf="enterMyData.itSpendByExpenditureoutsourced < 0">
+										<div class="align-self-center">
+											<span class="empty-bord-top"></span>
+										</div>
+									</div>
+									<div *ngIf="enterMyData.itSpendByExpenditureoutsourced>=0"  [ngClass]="[compareEqualityOutsourced ? 'expendi outsourced custom-value-alignment' : 'expendi outsourced']">
+										
+										{{enterMyData.itSpendByExpenditureoutsourced | number : '1.0-0'}}%
+
+										<span>
+											<svg *ngIf="!compareEqualityOutsourced && (enterMyData.itSpendByExpenditureoutsourced > data.itSpendByExpenditure.outsourced)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+												width="40px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+												<defs>
+													<linearGradient id="progress100999" x1="0" y1="1" x2="0" y2="0">
+														<stop id="stop1001143" offset="1" stop-color="#02ABBA" />
+														<stop id="stop2001132" offset="1" stop-color="#e1edf3" />
+													</linearGradient>
+												</defs>
+												<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress100999)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+												h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+											</svg>
+											<!-- down arrow -->
+											<svg *ngIf="!compareEqualityOutsourced && (enterMyData.itSpendByExpenditureoutsourced < data.itSpendByExpenditure.outsourced)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+											width="40px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+											<defs>
+												<linearGradient id="progress1029" x1="0" y1="1" x2="0" y2="0">
+													<stop id="stop10011" offset="1" stop-color="#02ABBA" />
+													<stop id="stop20011" offset="1" stop-color="#e1edf3" />
+												</linearGradient>
+											</defs>
+											<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1029)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+											h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+										</svg>
+									</span></div>
+									<!-- </ng-template> -->
+								</li>
+
+								<li [ngClass]="[compareEqualityOther ? 'clearfix empty-arrow-container' : 'clearfix empty-arrow-container']">
+									<div  *ngIf="enterMyData.itSpendByExpenditureother < 0">
+										<div class="align-self-center">
+											<span class="empty-bord-top"></span>
+										</div>
+									</div>
+									<div *ngIf="enterMyData.itSpendByExpenditureother>=0" [ngClass]="[compareEqualityOther ? 'expendi other custom-value-alignment' : 'expendi other']">
+										
+										{{enterMyData.itSpendByExpenditureother | number : '1.0-0'}}%
+
+										<span>
+											<svg *ngIf="!compareEqualityOther && (enterMyData.itSpendByExpenditureother > data.itSpendByExpenditure.other)" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 60 92" height="22px" id="Layer_1" version="1.1" viewBox="0 0 60 92" width="40px" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
+												<defs>
+													<linearGradient id="progress1028" x1="0" y1="1" x2="0" y2="0">
+														<stop id="stop10010" offset="1" stop-color="#02ABBA" />
+														<stop id="stop20010" offset="1" stop-color="#e1edf3" />
+													</linearGradient>
+												</defs>
+												<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1028)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+												h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+											</svg>
+
+											<!-- down arrow -->
+											<svg *ngIf="!compareEqualityOther && (enterMyData.itSpendByExpenditureother < data.itSpendByExpenditure.other)" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 60 92" height="22px" id="Layer_1" version="1.1" viewBox="0 0 60 92" width="40px" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px" transform="rotate(90) rotate(90)">
+												<defs>
+													<linearGradient id="progress1028" x1="0" y1="1" x2="0" y2="0">
+														<stop id="stop10010" offset="1" stop-color="#02ABBA" />
+														<stop id="stop20010" offset="1" stop-color="#e1edf3" />
+													</linearGradient>
+												</defs>
+												<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1028)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+												h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+											</svg>
+
+										</span>
+									</div>
+
+								</li>
+							</ul>
+
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- IT Spend outsourced -->
+	<div class="p-2" [ngClass]="[showDiv ? 'w-33' : 'w-25']">
+		<div class="card custom-card minht-250">
+			<div class="p-2">
+				<div class="sub-heading">IT Spend Outsourced<span class="info" placement="top" ngbTooltip="{{definitionData.outsourcedmean.defination}}"><a href="javascript:void(0)"></a></span></div>
+			</div>
+			<div class="card-body">
+				<div class="d-inline-flex d-md-flex flex-row flex-wrap">
+					<div class="p-2 pr-0 left-side" [ngClass]="[showDiv ? 'bottom-div' : '']">
+						<svg class="h-100" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						width="108px" height="118px" viewBox="835.863 1240.82 108 118" enable-background="new 835.863 1240.82 108 118"
+						xml:space="preserve">
+						<defs>
+							<linearGradient id="progress78" x1="0" y1="1" x2="0" y2="0">
+								<stop id="stop79" [attr.offset]="(data.itSpendOutSourced.mean/100)" stop-color="#03abba"/>
+								<stop id="stop80" [attr.offset]="(data.itSpendOutSourced.mean/100)" stop-color="#e1edf3"/>
+
+							</linearGradient>
+						</defs>
+						<g id="animat-01">
+							<path fill="url(#progress78)" id="my-shape88" cx="200" cy="200" r="200"d="M911.921,1315.942h-11.252l-10.783,17.979l-10.782-17.979H868.07c-4.482,0-8.076,3.702-8.076,8.307v33.644    h60.003v-33.644C919.997,1319.645,916.355,1315.942,911.921,1315.942z M929.423,1281.474l0.747,4.462l-19.138,3.228l1.26,7.688    l19.138-3.274l0.747,4.415l10.316-10.252L929.423,1281.474z M868.694,1289.163l-19.14-3.228l0.747-4.462l-13.069,6.267    l10.314,10.252l0.747-4.415l19.139,3.274L868.694,1289.163z M889.84,1310.428c8.354,0,15.124-6.978,15.124-15.568    c0-8.592-6.77-15.568-15.124-15.568c-8.31,0-15.125,6.977-15.125,15.568C874.715,1303.45,881.484,1310.428,889.84,1310.428z     M907.531,1282.52l13.724-13.955l3.127,3.18l2.521-14.429l-14.19,2.609l3.128,3.182l-13.724,13.907L907.531,1282.52z     M858.472,1268.563l13.725,13.955l5.414-5.506l-13.725-13.906l3.128-3.182l-14.236-2.609l2.566,14.429L858.472,1268.563z     M885.918,1273.5h7.609v-19.697h4.435l-8.216-12.056l-8.262,12.056h4.434V1273.5z" />
+						</g>
+					</svg>
+				</div>
+				<div class="p-2 pr-0 right-side mx-auto">
+					<div class="right-side" [ngClass]="[showDiv ? 'text-center' : '']">
+						<div class="it-spend-PU">
+							{{data.itSpendOutSourced.mean | number : '1.0-0'}}% <span class="per-user">Outsourced</span>
+						</div>
+						<div class="upper">
+							{{data.itSpendOutSourced.upper | number : '1.0-0'}}% <span class="direction" [ngClass]="[showDiv ? 'upper-outsourced-label' : '']">Upper</span>
+						</div>
+						<div class="lower">
+							{{data.itSpendOutSourced.lower | number : '1.0-0'}}% <span class="direction">Lower</span>
+						</div>
+					</div>
+				</div>
+				<div class="p-0" *ngIf="enterMyData.itSpendOutSourced >= 0" [ngClass]="[showDiv ? '!displayDiv text-center ' : 'displayDiv']">
+					<div class="p-2 right-side" [ngClass]="[showDiv ? 'enter-my-data-background it-spend-align' : '']">
+						<div class="it-spend-PU" *ngIf="!compareEqualityItSpendOutsourced">
+							{{enterMyData.itSpendOutSourced | number : '1.0-0'}}% <span class="per-user">Outsourced</span>
+						</div>
+						<div class="it-spend-PU outsourced-equal-value-container" *ngIf="compareEqualityItSpendOutsourced">
+							<div>
+									{{enterMyData.itSpendOutSourced | number : '1.0-0'}}% <span class="per-user">Outsourced</span>
+							</div>
+						</div>
+						<div *ngIf="!compareEqualityItSpendOutsourced && (data.itSpendOutSourced.mean < enterMyData.itSpendOutSourced)">
+							<svg version="1.1" id="itSpendOutSourcedSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+							<defs>
+								<linearGradient id="progress1030" x1="0" y1="1" x2="0" y2="0">
+									<stop id="stop10012" [attr.offset]="(makePositiveValue(((data.itSpendOutSourced.mean)  - (enterMyData.itSpendOutSourced)) / (data.itSpendOutSourced.mean)*100 )) + '%'" stop-color="#02ABBA" />
+									<stop id="stop20012" [attr.offset]="(makePositiveValue(((data.itSpendOutSourced.mean)  - (enterMyData.itSpendOutSourced)) / (data.itSpendOutSourced.mean)*100 )) + '%'" stop-color="#e1edf3" />
+								</linearGradient>
+							</defs>
+							<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1030)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+						</svg>
+					</div>
+
+
+					<!-- down arrow -->
+					<div *ngIf="!compareEqualityItSpendOutsourced && (data.itSpendOutSourced.mean > enterMyData.itSpendOutSourced)">
+						<svg version="1.1" id="itSpendOutSourcedSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+						<defs>
+							<linearGradient id="progress1030" x1="0" y1="1" x2="0" y2="0">
+								<stop id="stop10012" [attr.offset]="(makePositiveValue(((data.itSpendOutSourced.mean)  - (enterMyData.itSpendOutSourced)) / (data.itSpendOutSourced.mean)*100 )) + '%'" stop-color="#02ABBA" />
+								<stop id="stop20012" [attr.offset]="(makePositiveValue(((data.itSpendOutSourced.mean)  - (enterMyData.itSpendOutSourced)) / (data.itSpendOutSourced.mean)*100 )) + '%'" stop-color="#e1edf3" />
+							</linearGradient>
+						</defs>
+						<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1030)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+					</svg>
+				</div>
+
+
+				<!-- <span class="remained-percentage" *ngIf="( (data.itSpendOutSourced.mean | number : '1.0-0') > (enterMyData.itSpendOutSourced | number : '1.0-0') )">{{ makePositiveValue((data.itSpendOutSourced.mean  - enterMyData.itSpendOutSourced) / (data.itSpendOutSourced.mean)*100 ) | number : '1.0-0' }}%</span>
+					<span class="remained-percentage" *ngIf="( (enterMyData.itSpendOutSourced | number : '1.0-0') > (data.itSpendOutSourced.mean | number : '1.0-0') )">{{ makePositiveValue((data.itSpendOutSourced.mean  - enterMyData.itSpendOutSourced) / (data.itSpendOutSourced.mean)*100 ) | number : '1.0-0' }}%</span> -->
+
+					<span class="remained-percentage" *ngIf="!compareEqualityItSpendOutsourced">{{ makePositiveValue(((data.itSpendOutSourced.mean)  - (enterMyData.itSpendOutSourced)) / (data.itSpendOutSourced.mean)*100 ) | number : '1.0-0' }}%</span>
+
+				</div>
+			</div>
+			<div *ngIf="enterMyData.itSpendOutSourced <0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+				<div class="align-self-center">
+					<span class="bord-top"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<!-- CAPEX vs. OPEX -->
+<div class="p-2" [ngClass]="[showDiv ? 'pb-0 w-45' : 'w-25']">
+	<div class="card custom-card" [ngClass]="[showDiv ? 'mb-0 minht-300' : 'minht-250']">
+		<div class="p-2">
+			<div class="sub-heading">CAPEX vs. OPEX<span class="info" placement="top" ngbTooltip="{{definitionData.opexmean.defination}}"><a href="javascript:void(0)"></a></span></div>
+		</div>
+		<div class="card-body">
+			<div class="d-inline-flex flex-row flex-wrap" [ngClass]="[showDiv ? 'mr-0' : '']">
+				<div [ngClass]="[showDiv ? '' : 'w-50']">
+					<div class="d-flex flex-row flex-wrap m-0">
+						<div class="p-4 capex">
+							<div class="capex-graph">
+								<div class="capex-percent">
+									<app-donut-chart id="capex-donut" chartID="capex-donut" class="capex-donut-01" fillColor="9acb3b"  percentVal="{{data.capexVsOpex.capexmean/10}}" chartWidth="80" chartHeight="80" >{{data.capexVsOpex.capexmean | number : '1.0-0'}}<span>%</span></app-donut-chart>
+								</div>
+							</div>
+							IT CAPEX %
+						</div>
+						<div class="opex px-4" *ngIf="enterMyData.capexmean >= 0" [ngClass]="[showDiv ? '!displayDiv enter-my-data-background px-0 bottom-md-div' : 'displayDiv']">
+							<div class="capex-graph">
+								<div class="capex-percent opex-donut" *ngIf="!compareEqualityCapex">
+									{{enterMyData.capexmean| number : '1.0-0'}}%
+								</div>
+								<div class="it-spend-PU outsourced-equal-value-container" *ngIf="compareEqualityCapex">
+									<div class="capex-percent opex-donut">
+											{{enterMyData.capexmean| number : '1.0-0'}}%
+									</div>
+								</div>
+								<div *ngIf="!compareEqualityCapex && (data.capexVsOpex.capexmean < enterMyData.capexmean)">
+									<svg version="1.1" id="capexdSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+									width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+									<defs>
+										<linearGradient id="progress1031" x1="0" y1="1" x2="0" y2="0">
+											<stop id="stop10013" [attr.offset]="(makePositiveValue( ((data.capexVsOpex.capexmean ) - (enterMyData.capexmean )) / (data.capexVsOpex.capexmean ) *100) ) + '%'" stop-color="#9acb3b" />
+											<stop id="stop20013" [attr.offset]="(makePositiveValue( ((data.capexVsOpex.capexmean ) - (enterMyData.capexmean )) / (data.capexVsOpex.capexmean ) *100) ) + '%'" stop-color="#e1edf3" />
+										</linearGradient>
+									</defs>
+									<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1031)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+								</svg>
+							</div>
+
+							<!-- down arrow -->
+							<div *ngIf="!compareEqualityCapex && (data.capexVsOpex.capexmean > enterMyData.capexmean)">
+								<svg version="1.1" id="capexdSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+								width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+								<defs>
+									<linearGradient id="progress1031" x1="0" y1="1" x2="0" y2="0">
+										<stop id="stop10013" [attr.offset]="(makePositiveValue( ((data.capexVsOpex.capexmean) - (enterMyData.capexmean)) / (data.capexVsOpex.capexmean) *100)) + '%'" stop-color="#9acb3b" />
+										<stop id="stop20013" [attr.offset]="(makePositiveValue( ((data.capexVsOpex.capexmean) - (enterMyData.capexmean)) / (data.capexVsOpex.capexmean) *100)) + '%'" stop-color="#e1edf3" />
+									</linearGradient>
+								</defs>
+								<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1031)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+							</svg>
+						</div>
+
+						<!-- <span class="remained-percentage" *ngIf="( (data.capexVsOpex.capexmean | number : '1.0-0') > (enterMyData.capexmean | number : '1.0-0') )">{{ makePositiveValue( (data.capexVsOpex.capexmean - enterMyData.capexmean) / (data.capexVsOpex.capexmean) *100) | number : '1.0-0' }}%</span>
+							<span class="remained-percentage" *ngIf="( (enterMyData.capexmean | number : '1.0-0') > (data.capexVsOpex.capexmean | number : '1.0-0') )">{{ makePositiveValue( (data.capexVsOpex.capexmean - enterMyData.capexmean) / (data.capexVsOpex.capexmean) *100) | number : '1.0-0' }}%</span> -->
+
+							<span class="remained-percentage" *ngIf="!compareEqualityCapex">{{ makePositiveValue( ((data.capexVsOpex.capexmean) - (enterMyData.capexmean)) / (data.capexVsOpex.capexmean) *100) | number : '1.0-0' }}%</span>
+						</div>
+					</div>
+
+					<div *ngIf="enterMyData.capexmean <0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+						<div class="align-self-center">
+							<span class="bord-top"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div [ngClass]="[showDiv ? '' : 'w-50']">
+				<div class="d-flex flex-row flex-wrap m-0">
+					<div class="p-4 opex">
+						<div class="capex-graph">
+							<div class="opex-percent">
+								<app-donut-chart id="opex-donut" chartID="opex-donut" class="capex-donut-01" fillColor="03abba"  percentVal="{{data.capexVsOpex.opexmean/10}}" chartWidth="80" chartHeight="80" >{{data.capexVsOpex.opexmean| number : '1.0-0'}}<span>%</span></app-donut-chart>
+							</div>
+						</div>
+						IT OPEX %
+					</div>
+					<div class="opex px-4" *ngIf="enterMyData.opexmean >= 0" [ngClass]="[showDiv ? '!displayDiv enter-my-data-background px-0 bottom-md-div' : 'displayDiv']">
+						<div class="capex-graph">
+							<div class="opex-percent opex-donut" *ngIf="!compareEqualityOpex">
+								{{enterMyData.opexmean| number : '1.0-0'}}%
+							</div>
+
+							<div *ngIf="compareEqualityOpex" class="it-spend-PU outsourced-equal-value-container">
+									<div class="opex-percent opex-donut">
+											{{enterMyData.opexmean| number : '1.0-0'}}%
+									</div>
+								</div>
+							<div *ngIf="!compareEqualityOpex && (data.capexVsOpex.opexmean < enterMyData.opexmean)">
+								<svg version="1.1" id="opexdSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+								width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+								<defs>
+									<linearGradient id="progress1032" x1="0" y1="1" x2="0" y2="0">
+										<stop id="stop10014" [attr.offset]="(makePositiveValue(((data.capexVsOpex.opexmean)  - (enterMyData.opexmean ))/(data.capexVsOpex.opexmean )*100) ) + '%'" stop-color="#02ABBA" />
+										<stop id="stop20014" [attr.offset]="(makePositiveValue(((data.capexVsOpex.opexmean)  - (enterMyData.opexmean ))/(data.capexVsOpex.opexmean)*100) ) + '%'" stop-color="#e1edf3" />
+									</linearGradient>
+								</defs>
+								<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1032)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+							</svg>
+						</div>
+
+						<!-- down arrow -->
+						<div *ngIf="!compareEqualityOpex && (data.capexVsOpex.opexmean > enterMyData.opexmean)">
+							<svg version="1.1" id="opexdSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+							<defs>
+								<linearGradient id="progress1032" x1="0" y1="1" x2="0" y2="0">
+									<stop id="stop10014" [attr.offset]="(makePositiveValue(((data.capexVsOpex.opexmean)  - (enterMyData.opexmean ))/(data.capexVsOpex.opexmean )*100) ) + '%'" stop-color="#02ABBA" />
+									<stop id="stop20014" [attr.offset]="(makePositiveValue(((data.capexVsOpex.opexmean)  - (enterMyData.opexmean ))/(data.capexVsOpex.opexmean )*100) ) + '%'" stop-color="#e1edf3" />
+								</linearGradient>
+							</defs>
+							<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1032)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+						</svg>
+					</div>
+
+					<!-- <span class="remained-percentage" *ngIf="( (data.capexVsOpex.opexmean | number : '1.0-0') > (enterMyData.opexmean | number : '1.0-0') )">{{ makePositiveValue((data.capexVsOpex.opexmean  - enterMyData.opexmean)/(data.capexVsOpex.opexmean)*100)  | number : '1.0-0' }}%</span>
+						<span class="remained-percentage" *ngIf="( (enterMyData.opexmean | number : '1.0-0') > (data.capexVsOpex.opexmean | number : '1.0-0') )">{{ makePositiveValue((data.capexVsOpex.opexmean  - enterMyData.opexmean)/(data.capexVsOpex.opexmean)*100)  | number : '1.0-0' }}%</span> -->
+
+						<span class="remained-percentage" *ngIf="!compareEqualityOpex">{{ makePositiveValue(((data.capexVsOpex.opexmean)  - (enterMyData.opexmean ))/(data.capexVsOpex.opexmean )*100)  | number : '1.0-0' }}%</span>
+
+					</div>
+				</div>
+
+
+				<div *ngIf="enterMyData.opexmean < 0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+					<div class="align-self-center">
+						<span class="bord-top"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+
+
+<!-- IT run vs. IT change vs. IT transform -->
+<div class="p-2" [ngClass]="[showDiv ? 'w-55' : 'w-30']">
+	<div class="card custom-card minht-300">
+		<div class="p-2">
+			<div class="sub-heading">IT Run vs. IT Change vs. IT Transform<span class="info" placement="top" ngbTooltip="{{definitionData.changemean.defination}}"><a href="javascript:void(0)"></a></span></div>
+		</div>
+		<div class="card-body">
+			<div class="d-inline-flex flex-row flex-wrap" [ngClass]="[showDiv ? 'mr-0' : '']">
+				<div class="px-1">
+					<div class="d-flex flex-row flex-wrap">
+						<div class="px-2 it-stage it-run pr-0">
+							<div class="icon">
+								<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px"
+								width="58px" height="44px" viewBox="861.097 1277.851 58 44" enable-background="new 861.097 1277.851 58 44"
+								xml:space="preserve">
+								<defs>
+									<linearGradient id="progress101" x1="0" y1="1" x2="0" y2="0">
+										<stop id="stop1" [attr.offset]="(data.itrunvschangevstransform.itRun.mean/100)" stop-color="#9acb3b" />
+										<stop id="stop2" [attr.offset]="(data.itrunvschangevstransform.itRun.mean/100)" stop-color="#e1edf3" />
+									</linearGradient>
+								</defs>
+								<g id="animat-02">
+									<path xmlns="http://www.w3.org/2000/svg" fill="url(#progress101)" id="my-shape1" cx="200" cy="200" r="200" d="M875.836,1300.589l-0.602,0.161l-0.49,0.223l-0.469,0.311l-0.47,0.31l-0.359,0.372l-0.445,0.396  l-0.274,0.349l-0.336,0.458l-0.229,0.521l-0.229,0.521l-0.144,0.497l-0.056,0.475l-0.119,0.584l0.052,0.537l0.075,0.624l0.138,0.516  l0.14,0.515l0.245,0.577l0.225,0.492l0.396,0.445l0.286,0.384l0.372,0.358l0.458,0.337l0.458,0.339l0.521,0.228l0.412,0.167  l0.605,0.205l0.475,0.057l0.562,0.032l0.561,0.034l0.538-0.051l0.602-0.161l0.514-0.138l0.577-0.248l0.469-0.311l0.384-0.285  l0.469-0.31l0.336-0.458l0.359-0.373l0.252-0.436l0.313-0.545l0.143-0.497l0.144-0.498l0.143-0.497l0.033-0.562l0.033-0.562  l-0.074-0.624l-0.139-0.515l-0.138-0.514l-0.248-0.579l-0.309-0.469l-0.312-0.469l-0.371-0.36l-0.372-0.358l-0.371-0.361  l-0.545-0.313l-0.436-0.252l-0.497-0.143l-0.498-0.144l-0.584-0.119l-0.475-0.057l-0.561-0.033l-0.623,0.075L875.836,1300.589  L875.836,1300.589L875.836,1300.589z M902.546,1290.855l-0.257,0.069l-0.233,0.155l-0.234,0.154l-0.234,0.154l-0.147,0.131  l-0.234,0.154l-0.336,0.458l-0.143,0.499l-0.125,0.217l-0.019,0.281l-0.017,0.279l-0.018,0.28l0.069,0.258l-0.019,0.28l0.155,0.234  l0.069,0.258l0.152,0.233l0.154,0.234l0.156,0.233l0.217,0.125l0.373,0.36l0.52,0.229l0.28,0.017l0.218,0.126l0.279,0.018  l0.259-0.068l0.28,0.017l0.256-0.069l0.344-0.092l0.234-0.154l0.257-0.067l0.148-0.134l0.211-0.239l0.235-0.154l0.25-0.437  l0.229-0.521l0.126-0.218l0.017-0.28l0.019-0.281l0.016-0.278l-0.067-0.258l-0.069-0.259l-0.069-0.257l-0.067-0.258l-0.154-0.234  l-0.155-0.232l-0.154-0.235l-0.218-0.125l-0.459-0.338l-0.434-0.252l-0.281-0.017l-0.278-0.017l-0.195-0.04l-0.279-0.017  l-0.28-0.019L902.546,1290.855L902.546,1290.855L902.546,1290.855z M901.765,1287.939l0.602-0.16l0.623-0.076l0.561,0.034  l0.562,0.034l0.496,0.142l0.586,0.12l0.52,0.229l0.436,0.25l0.545,0.315l0.371,0.359l0.459,0.337l0.308,0.47l0.396,0.446  l0.225,0.489l0.224,0.492l0.246,0.578l0.076,0.623l0.052,0.538l0.053,0.538l-0.119,0.584l-0.033,0.56l-0.205,0.607l-0.144,0.497  l-0.336,0.459l-0.252,0.436l-0.336,0.458l-0.446,0.396l-0.359,0.372l-0.467,0.31l-0.471,0.31l-0.576,0.247l-0.601,0.161  l-0.515,0.139l-0.624,0.073l-0.562-0.032l-0.56-0.034l-0.584-0.119l-0.497-0.143l-0.521-0.229l-0.521-0.229l-0.437-0.251  l-0.457-0.337l-0.396-0.445l-0.396-0.444l-0.311-0.47l-0.31-0.47l-0.225-0.491l-0.159-0.602l-0.162-0.601l-0.053-0.538l0.034-0.561  l0.033-0.562l0.119-0.584l0.143-0.497l0.229-0.521l0.229-0.522l0.336-0.457l0.337-0.458l0.359-0.373l0.446-0.395l0.468-0.311  l0.47-0.31l0.577-0.246L901.765,1287.939L901.765,1287.939L901.765,1287.939z M900.96,1284.938l-0.429,0.114l-0.406,0.201  l-0.834,0.315l-0.703,0.464l-0.703,0.465l-0.68,0.549l-0.57,0.614l-0.548,0.697l-0.438,0.763l-0.439,0.761l-0.269,0.715  l-0.223,0.888l-0.246,0.803l-0.05,0.841l0.059,0.902l0.059,0.904l0.115,0.429l0.114,0.43l0.114,0.429l0.115,0.43l0.401,0.813  l0.401,0.813l0.464,0.703l0.637,0.657l0.613,0.572l0.61,0.569l0.763,0.439l0.737,0.354l0.824,0.331l0.8,0.245l0.864,0.137  l0.841,0.051l0.841,0.05l0.881-0.144l0.451-0.029l0.429-0.114l0.516-0.139l0.406-0.199l0.834-0.316l0.703-0.464l0.702-0.464  l0.68-0.55l0.571-0.613l0.549-0.698l0.461-0.676l0.354-0.738l0.33-0.823l0.244-0.802l0.137-0.864l0.138-0.863l-0.062-0.904  l-0.057-0.903l-0.115-0.43l-0.115-0.429l-0.114-0.43l-0.115-0.429l-0.401-0.813l-0.399-0.813l-0.551-0.681l-0.526-0.595  l-0.637-0.657l-0.675-0.462l-0.676-0.463l-0.762-0.44l-0.823-0.33l-0.802-0.246l-0.863-0.136l-0.84-0.052l-0.842-0.05l-0.881,0.144  l-0.451,0.029L900.96,1284.938L900.96,1284.938L900.96,1284.938z M872.729,1291.398l1.2-0.322l0.173-0.046l0.193,0.04l0.108,0.063  l0.194,0.04l0.131,0.148l0.109,0.063l0.131,0.148l0.047,0.172l0.644,2.402l0.71-0.1l0.646,0.012l0.623-0.073l0.67,0.096l0.67,0.096  l0.669,0.098l0.584,0.119l0.605,0.206l1.146-2.239l0.039-0.194l0.148-0.131l0.172-0.046l0.148-0.131l0.172-0.047l0.193,0.039  l0.194,0.039l0.108,0.063l1.149,0.52l0.108,0.063l0.131,0.147l0.133,0.148l0.046,0.172l0.046,0.172l0.047,0.172l-0.04,0.194  l-0.063,0.107l-1.061,2.216l0.543,0.314l0.48,0.423l0.566,0.398l0.505,0.51l0.396,0.444l0.504,0.51l0.332,0.556l0.419,0.531  l2.2-1.049l0.172-0.047l0.171-0.046l0.193,0.039l0.195,0.039l0.106,0.063l0.134,0.147l0.131,0.149l0.133,0.147l0.469,1.068  l0.048,0.172l0.045,0.172l0.047,0.171l-0.039,0.195l-0.148,0.132l-0.04,0.193l-0.172,0.046l-0.147,0.133l-2.2,1.049l0.067,0.259  l0.092,0.343l0.162,0.601l0.16,0.603l0.053,0.535l0.074,0.625l-0.033,0.561l-0.032,0.562l-0.033,0.563l-0.011,0.646l2.271,0.588  l0.195,0.039l0.131,0.148l0.108,0.063l0.132,0.148l0.047,0.172l0.045,0.172l0.047,0.172l-0.04,0.194l-0.324,1.188l-0.063,0.109  l-0.039,0.195l-0.148,0.131l-0.147,0.133l-0.173,0.046l-0.172,0.046l-0.193-0.041l-0.171,0.047l-2.295-0.673l-0.29,0.63l-0.291,0.63  l-0.313,0.545l-0.399,0.565l-0.313,0.543l-0.509,0.506l-0.422,0.48l-0.508,0.504l1.321,1.853l0.134,0.147l0.045,0.172l-0.039,0.194  l0.046,0.172l-0.04,0.194l-0.148,0.132l-0.063,0.108l-0.148,0.131l-1,0.729l-0.147,0.132l-0.173,0.046l-0.192-0.04l-0.172,0.047  l-0.195-0.041l-0.131-0.147l-0.109-0.063l-0.132-0.147l-1.323-1.854l-0.577,0.246l-0.64,0.355l-0.602,0.16l-0.687,0.185  l-0.686,0.184l-0.686,0.185l-0.646-0.011l-0.709,0.099l-0.197,2.353l-0.04,0.193l-0.063,0.109l-0.04,0.193l-0.148,0.133  l-0.172,0.046l-0.148,0.131l-0.192-0.039l-0.172,0.046l-1.23-0.13l-0.193-0.041l-0.108-0.063l-0.195-0.041l-0.131-0.147  l-0.047-0.171l-0.131-0.148l-0.046-0.172l0.04-0.194l0.197-2.352l-0.693-0.183l-0.605-0.205l-0.606-0.206l-0.629-0.291l-0.544-0.313  l-0.63-0.292l-0.457-0.337l-0.567-0.399l-1.734,1.754l-0.176,0.047l-0.148,0.131l-0.172,0.046l-0.193-0.039l-0.172,0.046  l-0.194-0.04l-0.132-0.149l-0.108-0.062l-0.877-0.87l-0.131-0.146l-0.047-0.172l-0.045-0.172l-0.047-0.172l0.041-0.195l0.063-0.108  l0.039-0.193l0.148-0.132l1.735-1.753l-0.395-0.445l-0.312-0.47l-0.331-0.555l-0.224-0.49l-0.248-0.579l-0.223-0.491l-0.247-0.578  l-0.161-0.601l-0.052-0.537l-2.518,0.214l-0.193-0.039l-0.172,0.047l-0.132-0.148l-0.194-0.04l-0.131-0.147l-0.047-0.172  l-0.046-0.173l-0.046-0.172l-0.127-1.161l0.04-0.193l0.04-0.195l0.04-0.193l0.063-0.108l0.148-0.132l0.149-0.132l0.171-0.046  l0.171-0.047l2.431-0.19l0.097-0.669l0.097-0.67l0.097-0.669l0.182-0.692l0.119-0.584l0.291-0.63l0.205-0.607l0.291-0.629  l-2.026-1.389l-0.108-0.063l-0.132-0.148l-0.046-0.173l-0.046-0.171l-0.046-0.172l0.039-0.194l0.04-0.194l0.063-0.108l0.736-1.023  l0.063-0.109l0.149-0.132l0.147-0.131l0.172-0.046l0.193,0.039l0.172-0.047l0.194,0.039l0.132,0.149l2.111,1.365l0.424-0.481  l0.444-0.395l0.531-0.419l0.531-0.418l0.554-0.332l0.641-0.355l0.555-0.333l0.663-0.269l-0.645-2.403l-0.046-0.172l-0.046-0.171  l0.063-0.109l0.125-0.217l0.063-0.109l0.148-0.131l0.148-0.132L872.729,1291.398L872.729,1291.398L872.729,1291.398z   M898.768,1278.813l1.115-0.3l0.193,0.04l0.172-0.046l0.195,0.04l0.192,0.04l0.134,0.148l0.131,0.147l0.046,0.172l0.132,0.148  l0.621,2.316l0.646,0.011l0.709-0.099l0.646,0.012l0.646,0.011l0.669,0.097l0.67,0.098l0.605,0.205l0.606,0.204l1.123-2.323  l0.063-0.108l0.147-0.132l0.148-0.132l0.172-0.046l0.172-0.047l0.172-0.046l0.193,0.039l0.109,0.063l1.149,0.52l0.132,0.148  l0.131,0.147l0.11,0.063l0.045,0.172l0.047,0.172l0.046,0.171l-0.041,0.195l-0.039,0.193l-1.062,2.216l0.544,0.313l0.481,0.424  l0.565,0.398l0.48,0.423l0.418,0.531l0.505,0.509l0.333,0.556l0.418,0.531l2.199-1.05l0.172-0.046l0.172-0.047l0.194,0.04  l0.193,0.039l0.109,0.064l0.217,0.125l0.047,0.172l0.131,0.146l0.472,1.069l0.132,0.149l-0.04,0.193l0.045,0.172l-0.039,0.194  l-0.148,0.132l-0.041,0.194l-0.17,0.046l-0.147,0.133l-2.201,1.049l0.16,0.602l0.162,0.601l0.159,0.602l0.054,0.536l0.075,0.623  l-0.032,0.563l-0.034,0.562l-0.011,0.646l-0.034,0.562l2.271,0.587l0.193,0.039l0.132,0.149l0.132,0.147l0.108,0.063l0.132,0.147  l-0.039,0.194l0.045,0.172l-0.039,0.194l-0.324,1.189l-0.041,0.194l-0.062,0.109l-0.149,0.132l-0.147,0.133l-0.172,0.046  l-0.171,0.046l-0.172,0.045l-0.193-0.04l-2.271-0.587l-0.291,0.63l-0.313,0.544l-0.291,0.631l-0.4,0.565l-0.422,0.481l-0.399,0.565  l-0.423,0.48l-0.508,0.505l1.322,1.853l0.047,0.173l0.045,0.172l0.047,0.17l-0.039,0.194l-0.063,0.109l-0.041,0.194l-0.063,0.107  l-0.148,0.132l-1,0.729l-0.171,0.046l-0.171,0.046l-0.172,0.046l-0.195-0.04l-0.195-0.039l-0.107-0.063l-0.218-0.125l-0.046-0.172  l-1.324-1.854l-0.639,0.355l-0.578,0.246l-0.662,0.271l-0.688,0.184l-0.686,0.186l-0.623,0.074l-0.709,0.099l-0.646-0.012  l-0.197,2.352l-0.041,0.195l-0.126,0.218l-0.063,0.107l-0.148,0.133l-0.147,0.131l-0.17,0.046l-0.172,0.046l-0.173,0.047  l-1.144-0.152l-0.194-0.039l-0.194-0.041l-0.131-0.147l-0.109-0.063l-0.132-0.147l-0.046-0.173l-0.047-0.172l-0.046-0.172  l0.197-2.351l-0.606-0.206l-0.691-0.184l-0.629-0.291l-0.521-0.229l-0.629-0.29l-0.566-0.4l-0.545-0.313l-0.565-0.399l-1.735,1.753  l-0.148,0.131l-0.172,0.048l-0.172,0.046l-0.172,0.046l-0.193-0.039l-0.109-0.063l-0.193-0.039l-0.132-0.148l-0.876-0.87  l-0.133-0.147l-0.046-0.17l-0.046-0.172l-0.046-0.173l0.04-0.193l0.063-0.109l0.041-0.194l0.146-0.132l1.737-1.752l-0.396-0.445  l-0.311-0.47l-0.224-0.49l-0.332-0.557l-0.246-0.578l-0.225-0.489l-0.161-0.603l-0.246-0.578l-0.053-0.537l-2.516,0.215  l-0.194-0.039l-0.172,0.046l-0.132-0.148l-0.194-0.041l-0.131-0.146l-0.047-0.171l-0.132-0.149l0.039-0.194l-0.127-1.16l0.039-0.195  l0.04-0.194l0.04-0.193l0.063-0.108l0.147-0.133l0.149-0.131l0.171-0.047l0.172-0.046l2.516-0.215l0.013-0.646l0.096-0.67  l0.096-0.669l0.183-0.693l0.207-0.604l0.181-0.692l0.313-0.545l0.291-0.629l-2.112-1.365l-0.132-0.148l-0.131-0.148l-0.045-0.171  l-0.048-0.172l-0.046-0.173l0.063-0.107l0.039-0.194l0.04-0.193l0.736-1.025l0.063-0.109l0.148-0.131l0.172-0.046l0.172-0.046  l0.171-0.046l0.193,0.039l0.195,0.04l0.107,0.063l2.136,1.45l0.423-0.48l0.509-0.504l0.531-0.419l0.531-0.418l0.554-0.332  l0.555-0.333l0.663-0.27l0.555-0.332l-0.62-2.317l-0.046-0.171l0.039-0.194l0.041-0.194l0.039-0.194l0.147-0.132l0.147-0.132  l0.173-0.046L898.768,1278.813L898.768,1278.813L898.768,1278.813z">
+									</path>
+								</g>
+							</svg>
+						</div>
+						<div class=" it-stange-data pr-2">
+							<div class="percent-number run-color">{{data.itrunvschangevstransform.itRun.mean | number : '1.0-0'}}<span class="percent run-color">%</span>
+								<div class="stage-name">Run</div>
+							</div>
+							<div class="upper">
+								{{data.itrunvschangevstransform.itRun.upper | number : '1.0-0'}}% <span class="direction">Upper</span>
+							</div>
+							<div class="lower">
+								{{data.itrunvschangevstransform.itRun.lower | number : '1.0-0'}}% <span class="direction">Lower</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="px-3 it-stage it-run" *ngIf="enterMyData.itRun >= 0" [ngClass]="[showDiv ? '!displayDiv pl-0 pr-0 enter-my-data-background bottom-div' : 'displayDiv pr-0']" >
+						<div [ngClass]="[showDiv ? 'it-run-grp' : '']">
+							<div *ngIf="!compareEqualityItRun" class="percent-number run-color">{{enterMyData.itRun | number : '1.0-0'}}<span class="percent run-percentage">%</span>
+							</div>
+							<div class="icon">
+									<div *ngIf="compareEqualityItRun" class="it-spend-PU itrunchange-equal-value-container">
+											<div class="percent-number run-color">
+													{{enterMyData.itRun| number : '1.0-0'}}%
+											</div>
+										</div>
+								<div *ngIf="!compareEqualityItRun && (data.itrunvschangevstransform.itRun.mean < enterMyData.itRun)">
+									<svg version="1.1" id="itRunSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+									width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+									<defs>
+										<linearGradient id="progress1033" x1="0" y1="1" x2="0" y2="0">
+											<stop id="stop10015" [attr.offset]="(makePositiveValue( ((data.itrunvschangevstransform.itRun.mean ) - (enterMyData.itRun ))/(data.itrunvschangevstransform.itRun.mean )*100) ) + '%'" stop-color="#9acb3b" />
+											<stop id="stop20015" [attr.offset]="(makePositiveValue( ((data.itrunvschangevstransform.itRun.mean ) - (enterMyData.itRun ))/(data.itrunvschangevstransform.itRun.mean )*100) ) + '%'" stop-color="#e1edf3" />
+										</linearGradient>
+									</defs>
+									<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1033)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+								</svg>
+							</div>
+
+							<!--down arrow -->
+							<div *ngIf="!compareEqualityItRun && (data.itrunvschangevstransform.itRun.mean > enterMyData.itRun)">
+								<svg version="1.1" id="itRunSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+								width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+								<defs>
+									<linearGradient id="progress1033" x1="0" y1="1" x2="0" y2="0">
+										<stop id="stop10015" [attr.offset]="(makePositiveValue( ((data.itrunvschangevstransform.itRun.mean ) - (enterMyData.itRun ))/(data.itrunvschangevstransform.itRun.mean )*100) ) + '%'" stop-color="#9acb3b" />
+										<stop id="stop20015" [attr.offset]="(makePositiveValue( ((data.itrunvschangevstransform.itRun.mean ) - (enterMyData.itRun ))/(data.itrunvschangevstransform.itRun.mean )*100) ) + '%'" stop-color="#e1edf3" />
+									</linearGradient>
+								</defs>
+								<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1033)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+							</svg>
+						</div>
+
+						<!-- <span class="remained-percentage" *ngIf="( (data.itrunvschangevstransform.itRun.mean | number : '1.0-0') > (enterMyData.itRun | number : '1.0-0') )">{{
+							makePositiveValue( (data.itrunvschangevstransform.itRun.mean - enterMyData.itRun)/(data.itrunvschangevstransform.itRun.mean)*100) | number : '1.0-0' }}%</span>
+							<span class="remained-percentage" *ngIf="( (enterMyData.itRun | number : '1.0-0') > (data.itrunvschangevstransform.itRun.mean | number : '1.0-0') )">{{
+								makePositiveValue( (data.itrunvschangevstransform.itRun.mean - enterMyData.itRun)/(data.itrunvschangevstransform.itRun.mean)*100) | number : '1.0-0' }}%</span> -->
+
+								<span *ngIf="!compareEqualityItRun" class="remained-percentage">{{
+									makePositiveValue( ((data.itrunvschangevstransform.itRun.mean) - (enterMyData.itRun))/(data.itrunvschangevstransform.itRun.mean)*100) | number : '1.0-0' }}%
+								</span>
+
+							</div>
+						</div>
+					</div>
+
+
+					<div *ngIf="enterMyData.itRun<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+						<div class="align-self-center">
+							<span class="bord-top"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="px-1">
+				<div class="d-flex flex-row flex-wrap">
+					<div class="px-2 it-stage it-change pl-0 pr-0">
+						<div class="icon">
+							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px"
+							width="58px" height="44px" viewBox="869.053 1278.952 43 42" enable-background="new 869.053 1278.952 43 42"
+							xml:space="preserve">
+							<defs>
+								<linearGradient id="progress2" x1="0" y1="1" x2="0" y2="0">
+									<stop id="stop3" [attr.offset]="(data.itrunvschangevstransform.itChange.mean/100)" stop-color="#03abba" />
+									<stop id="stop4" [attr.offset]="(data.itrunvschangevstransform.itChange.mean/100)" stop-color="#e1edf3" />
+								</linearGradient>
+							</defs>
+							<path fill="url(#progress2)" id="my-shape2" cx="200" cy="200" r="200" d="M898.406,1312.002h4.598v-3.305l8.095,5.863l-8.095,5.501v-3.118h-5.279l-0.127,0.063h-0.381l-0.445-0.063  l-0.381-0.063l-0.381-0.191l-0.317-0.439h-0.063v-0.063l-0.127-0.063l-0.127-0.127l-0.128-0.127l-0.063-0.063l-0.063-0.063  l-0.189-0.189l-0.128-0.255l-0.189-0.317l0,0l0,0l-4.129-7.438l2.714-5.911L898.406,1312.002z M870.006,1282.898h11.268l1.505,0.394  l0.629,0.476l4.256,7.691l-2.832,5.911l-5.209-9.407h-9.615L870.006,1282.898L870.006,1282.898z M903.035,1279.843l8.053,5.636  l-8.053,5.791v-3.307h-4.801l-14.357,27.333l-0.254,0.317l-0.254,0.317l-0.318,0.317l-0.381,0.189l-0.381,0.191l-0.381,0.313  l-0.445,0.063h-0.381l-0.127-0.063h-10.949v-4.945h9.68l14.928-27.85l1.396-0.966l0.826-0.255h0.189h0.255h5.755V1279.843z">
+							</path>
+						</svg>
+					</div>
+					<div class=" it-stange-data pr-2">
+						<div class="percent-number change">{{data.itrunvschangevstransform.itChange.mean | number : '1.0-0' }}<span class="percent change-color">%</span>
+							<div class="stage-name">Change</div>
+						</div>
+						<div class="upper">
+							{{data.itrunvschangevstransform.itChange.upper | number : '1.0-0'}}% <span class="direction">Upper</span>
+						</div>
+						<div class="lower">
+							{{data.itrunvschangevstransform.itChange.lower | number : '1.0-0'}}% <span class="direction">Lower</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="px-3 it-stage it-change " *ngIf="enterMyData.itChange>=0" [ngClass]="[showDiv ? '!displayDiv pl-0 pr-0 enter-my-data-background bottom-div' : 'displayDiv pr-0']">
+					<div [ngClass]="[showDiv ? 'it-run-grp' : '']">
+						<div *ngIf="!compareEqualityItChange" class="percent-number change">{{enterMyData.itChange | number : '1.0-0'}}<span class="percent change-percentage">%</span>
+						</div>
+						<div class="icon">
+							<div *ngIf="compareEqualityItChange" class="it-spend-PU itrunchange-equal-value-container">
+									<div class="percent-number change">
+											{{enterMyData.itChange| number : '1.0-0'}}%
+									</div>
+								</div>
+							<div *ngIf="!compareEqualityItChange && (data.itrunvschangevstransform.itChange.mean < enterMyData.itChange)">
+								<svg version="1.1" id="itChangeSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+								width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+								<defs>
+									<linearGradient id="progress1034" x1="0" y1="1" x2="0" y2="0">
+										<stop id="stop10016" [attr.offset]="(makePositiveValue( ((data.itrunvschangevstransform.itChange.mean  ) - (enterMyData.itChange  ) )/(data.itrunvschangevstransform.itChange.mean  )*100) ) + '%'" stop-color="#03abba" />
+										<stop id="stop20016" [attr.offset]="(makePositiveValue( ((data.itrunvschangevstransform.itChange.mean  ) - (enterMyData.itChange  ) )/(data.itrunvschangevstransform.itChange.mean  )*100) ) + '%'" stop-color="#e1edf3" />
+									</linearGradient>
+								</defs>
+								<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1034)" stroke="#03abba" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+							</svg>
+						</div>
+
+						<!-- down arrow -->
+						<div *ngIf="!compareEqualityItChange && (data.itrunvschangevstransform.itChange.mean > enterMyData.itChange)">
+							<svg version="1.1" id="itChangeSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+							<defs>
+								<linearGradient id="progress1034" x1="0" y1="1" x2="0" y2="0">
+									<stop id="stop10016" [attr.offset]="(makePositiveValue( ((data.itrunvschangevstransform.itChange.mean  ) - (enterMyData.itChange  ) )/(data.itrunvschangevstransform.itChange.mean  )*100) ) + '%'" stop-color="#03abba" />
+									<stop id="stop20016" [attr.offset]="(makePositiveValue( ((data.itrunvschangevstransform.itChange.mean  ) - (enterMyData.itChange  ) )/(data.itrunvschangevstransform.itChange.mean  )*100) ) + '%'" stop-color="#e1edf3" />
+								</linearGradient>
+							</defs>
+							<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1034)" stroke="#03abba" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+						</svg>
+					</div>
+
+					<!-- <span class="remained-percentage t"
+						*ngIf="(data.itrunvschangevstransform.itChange.mean) > (enterMyData.itChange)">{{
+							makePositiveValue( (data.itrunvschangevstransform.itChange.mean - enterMyData.itChange )/(data.itrunvschangevstransform.itChange.mean)*100) | number : '1.0-0' }}%</span>
+							<span class="remained-percentage t1"
+							*ngIf="(enterMyData.itChange) > (data.itrunvschangevstransform.itChange.mean)">{{
+								makePositiveValue( (data.itrunvschangevstransform.itChange.mean - enterMyData.itChange )/(data.itrunvschangevstransform.itChange.mean)*100) | number : '1.0-0'
+							}}%</span> -->
+
+							<span *ngIf="!compareEqualityItChange" class="remained-percentage t">{{
+								makePositiveValue( ((data.itrunvschangevstransform.itChange.mean ) - (enterMyData.itChange ) )/(data.itrunvschangevstransform.itChange.mean )*100) | number : '1.0-0' }}%</span>
+
+							</div>
+						</div>
+					</div>
+
+					<div *ngIf="enterMyData.itChange<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+						<div class="align-self-center">
+							<span class="bord-top"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="px-1">
+				<div class="d-flex flex-row flex-wrap">
+					<div class="px-2 it-stage it-transform pl-0" [ngClass]="[showDiv ? 'pr-0' : '']">
+						<div class="icon">
+							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px"
+							width="58px" height="44px" viewBox="867.037 1277.074 47 45" enable-background="new 867.037 1277.074 47 45"
+							xml:space="preserve">
+							<defs>
+								<linearGradient id="progress3" x1="0" y1="1" x2="0" y2="0">
+									<stop id="stop5" [attr.offset]="(data.itrunvschangevstransform.itTransform.mean/100)" stop-color="#8b69c8" />
+									<stop id="stop6" [attr.offset]="(data.itrunvschangevstransform.itTransform.mean/100)" stop-color="#e1edf3" />
+								</linearGradient>
+							</defs>
+							<g>
+								<g>
+									<path fill="url(#progress3)" id="my-shape3" cx="200" cy="200" r="200" d="M897.689,1278.229c-6.993,0-13.756,4.154-15.011,12.306l3.267-0.008c1.394-5.334,6.223-9.062,11.744-9.062    c6.69,0,12.137,5.444,12.137,12.137c0,6.693-5.445,12.137-12.137,12.137v3.235c8.477,0,15.373-6.896,15.373-15.372    S906.166,1278.229,897.689,1278.229z M891.002,1317.064h-18.996v-19.135h15.963v-3.925h-19.957v26.915h26.983v-14.988h-3.993    V1317.064L891.002,1317.064z M882.84,1308.14c0.807,0.813,2.115,0.813,2.922,0l14.543-14.67l2.064,2.083l1.446-8.594l-8.52,1.459    l2.086,2.105l-14.543,14.67C882.033,1306.007,882.033,1307.326,882.84,1308.14z"
+									/>
+								</g>
+							</g>
+						</svg>
+					</div>
+					<div class="it-stange-data border-0">
+						<div class="percent-number transform">{{data.itrunvschangevstransform.itTransform.mean | number : '1.0-0'}}<span class="transform-color percent">%</span>
+							<div class="stage-name">Transform</div>
+						</div>
+						<div class="upper">
+							{{data.itrunvschangevstransform.itTransform.upper | number : '1.0-0'}}% <span class="direction">Upper</span>
+						</div>
+						<div class="lower">
+							{{data.itrunvschangevstransform.itTransform.lower | number : '1.0-0'}}% <span class="direction">Lower</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="px-3 it-stage it-transform" *ngIf="enterMyData.itTransform >= 0" [ngClass]="[showDiv ? '!displayDiv pl-0 pr-0 enter-my-data-background' : 'displayDiv pr-0']">
+					<div [ngClass]="[showDiv ? 'it-stange-data it-run-grp' : 'border-right-0 border-0']">
+						<div *ngIf="!compareEqualityItTransform" class="percent-number transform">
+							{{enterMyData.itTransform | number : '1.0-0'}}<span class="percent transform-percentage">%</span>
+						</div>
+						<div class="icon">
+
+							<div *ngIf="compareEqualityItTransform" class="it-spend-PU itrunchange-equal-value-container">
+									<div class="percent-number transform">
+											{{enterMyData.itTransform| number : '1.0-0'}}%
+									</div>
+								</div>
+							<div *ngIf="!compareEqualityItTransform && (data.itrunvschangevstransform.itTransform.mean < enterMyData.itTransform)">
+								<svg version="1.1" id="itTransformSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+								width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve"> <defs>
+									<linearGradient id="progress1035" x1="0" y1="1" x2="0" y2="0">
+										<stop id="stop10017" [attr.offset]="(makePositiveValue(((data.itrunvschangevstransform.itTransform.mean)  - (enterMyData.itTransform))/(data.itrunvschangevstransform.itTransform.mean)*100) ) + '%'" stop-color="#8b69c8" />
+										<stop id="stop20017" [attr.offset]="(makePositiveValue(((data.itrunvschangevstransform.itTransform.mean)  - (enterMyData.itTransform))/(data.itrunvschangevstransform.itTransform.mean)*100) ) + '%'" stop-color="#e1edf3" />
+									</linearGradient>
+								</defs>
+								<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1035)" stroke="#8b69c8" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+							</svg>
+						</div>
+
+						<!-- down arrow-->
+						<div *ngIf="!compareEqualityItTransform && (data.itrunvschangevstransform.itTransform.mean > enterMyData.itTransform)">
+							<svg version="1.1" id="itTransformSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)"> <defs>
+								<linearGradient id="progress1035" x1="0" y1="1" x2="0" y2="0">
+									<stop id="stop10017" [attr.offset]="(makePositiveValue(((data.itrunvschangevstransform.itTransform.mean )  - (enterMyData.itTransform ))/(data.itrunvschangevstransform.itTransform.mean )*100)  ) + '%'" stop-color="#8b69c8" />
+									<stop id="stop20017" [attr.offset]="(makePositiveValue(((data.itrunvschangevstransform.itTransform.mean )  - (enterMyData.itTransform ))/(data.itrunvschangevstransform.itTransform.mean )*100)  ) + '%'" stop-color="#e1edf3" />
+								</linearGradient>
+							</defs>
+							<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1035)" stroke="#8b69c8" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+						</svg>
+					</div>
+
+					<!-- <span class="remained-percentage" *ngIf="( (data.itrunvschangevstransform.itTransform.mean | number : '1.0-0') > (enterMyData.itTransform | number : '1.0-0') )">{{
+						makePositiveValue((data.itrunvschangevstransform.itTransform.mean  - enterMyData.itTransform)/(data.itrunvschangevstransform.itTransform.mean)*100) | number : '1.0-0'
+					}}%</span>
+					<span class="remained-percentage" *ngIf="( (enterMyData.itTransform | number : '1.0-0') > (data.itrunvschangevstransform.itTransform.mean | number : '1.0-0') )">{{ makePositiveValue((data.itrunvschangevstransform.itTransform.mean  - enterMyData.itTransform)/(data.itrunvschangevstransform.itTransform.mean)*100) | number : '1.0-0' }}%</span> -->
+
+					<span *ngIf="!compareEqualityItTransform" class="remained-percentage">{{
+						makePositiveValue(((data.itrunvschangevstransform.itTransform.mean)  - (enterMyData.itTransform))/(data.itrunvschangevstransform.itTransform.mean)*100) | number : '1.0-0'
+					}}%</span>
+
+				</div>
+			</div>
+		</div>
+
+
+		<div *ngIf="enterMyData.itTransform<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+			<div class="align-self-center">
+				<span class="bord-top"></span>
+			</div>
+		</div>
+
+	</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!--IT personnel-->
+<div class="p-2" [ngClass]="[showDiv ? 'w-52' : 'w-25']">
+	<div class="card custom-card it-personnel-card minht-300" [ngClass]="[showDiv ? 'itPersonnel' : '']">
+		<div class="p-2">
+			<div class="sub-heading">IT Personnel<span class="info" placement="top" ngbTooltip="{{definitionData.attritionupper.defination}}"><a href="javascript:void(0)"></a></span></div>
+		</div>
+		<div class="card-body">
+			<div class="d-inline-flex flex-row flex-wrap mr-0 mb-3" [ngClass]="[showDiv ? 'mr-0' : '']">
+				<div [ngClass]="[showDiv ? '' : 'w-50']">
+					<div class="d-flex flex-row flex-wrap m-0">
+						<div class="p-1">
+							<div class="it-employee">
+								<div class="icon">
+									<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="74px" height="76px" viewBox="827.445 1258.922 74 76" enable-background="new 827.445 1258.922 74 76" xml:space="preserve">
+										<defs>
+											<linearGradient id="progress4" x1="0" y1="1" x2="0" y2="0">
+												<stop id="stop7" [attr.offset]="(data.itPersonnel.ftePercent/100)" stop-color="#03abba"/>
+												<stop id="stop8" [attr.offset]="(data.itPersonnel.ftePercent/100)" stop-color="#e1edf3"/>
+											</linearGradient>
+										</defs>
+										<path fill="url(#progress4)"  id="my-shape4" cx="200" cy="200" r="200"  d="M856.39,1288.244h3.972l3.97,6.693l4.083-6.693h3.972h0.229h0.34l0.227,0.113l0.341,0.112l0.453,0.229  l0.454,0.34l0.341,0.453l0.34,0.567l0.115,0.566l0.111,0.229v0.34v15.768l-0.111,0.567l-0.115,0.566l-0.112,0.454l-0.342,0.453  l-0.227,0.341l-0.454,0.454l-0.34,0.228l-0.453,0.227l-1.021,0.228v20.419v0.341l-0.112,0.341v0.34l-0.114,0.341l-0.228,0.228  l-0.112,0.341l-0.455,0.453l-0.565,0.453l-0.229,0.228l-0.34,0.113l-0.34,0.112l-0.342,0.114h-0.341l-0.338,0.113l-0.342-0.113  h-0.341l-0.34-0.114l-0.34-0.112l-0.341-0.113l-0.342-0.228l-0.453-0.453l-0.453-0.453l-0.114-0.341l-0.227-0.228l-0.113-0.341  l-0.113-0.34v-0.341v-0.341v-20.306h-1.476v20.306v0.341l-0.112,0.341l-0.113,0.34l-0.114,0.341l-0.112,0.228l-0.228,0.341  l-0.34,0.453l-0.568,0.453l-0.34,0.228l-0.227,0.113l-0.34,0.112l-0.34,0.114h-0.342l-0.34,0.113l-0.341-0.113h-0.454l-0.34-0.114  l-0.227-0.112l-0.341-0.113l-0.34-0.228l-0.454-0.453l-0.454-0.453l-0.227-0.341l-0.114-0.228l-0.113-0.341l-0.112-0.34v-0.341  v-0.341v-20.419l-1.021-0.228l-0.454-0.227l-0.453-0.228l-0.341-0.454l-0.34-0.341l-0.227-0.453l-0.229-0.454l-0.112-0.566v-0.567  v-15.768v-0.34v-0.229l0.227-0.566l0.227-0.567l0.342-0.453l0.453-0.34l0.567-0.229l0.228-0.112l0.34-0.113h0.34H856.39  L856.39,1288.244L856.39,1288.244z M872.046,1281.438h1.7l4.084,6.692l3.971-6.692h3.971H886h0.34l0.567,0.228l0.565,0.228  l0.343,0.341l0.452,0.454l0.228,0.566l0.115,0.228l0.111,0.34v0.341v0.227v15.769v0.455l-0.111,0.452l-0.115,0.342l-0.112,0.34  l-0.228,0.341l-0.114,0.34l-0.34,0.228l-0.229,0.341l-0.794,0.454l1.136,8.166h-2.27v12.479v0.34v0.341l-0.113,0.341l-0.112,0.341  l-0.229,0.341l-0.111,0.226l-0.455,0.567l-0.565,0.454l-0.228,0.113l-0.341,0.113l-0.34,0.112l-0.34,0.112l-0.342,0.114h-0.341  h-0.34l-0.342-0.114l-0.34-0.112l-0.34-0.112l-0.34-0.113l-0.229-0.113l-0.566-0.454l-0.454-0.567l-0.111-0.226l-0.228-0.341  l-0.114-0.341v-0.341l-0.113-0.341v-0.34v-12.479h-4.766l0.34-0.112h0.228l0.34-0.113l0.229-0.113l0.566-0.228l0.455-0.34  l0.453-0.568l0.229-0.453l0.111-0.34l0.112-0.227v-0.342v-0.34v-4.766l0,0v-13.727v-0.453l-0.112-0.34l-0.111-0.342l-0.115-0.34  l-0.111-0.341l-0.229-0.227l-0.454-0.567l-0.452-0.453l-0.342-0.113l-0.34-0.228l-0.34-0.113l-0.342-0.113h-0.341h-0.34h-3.063  l0.682-0.794l0.455-0.794l0.34-0.794l0.227-0.795l0.229-0.794L872.046,1281.438L872.046,1281.438z M842.89,1281.438h3.857  l4.084,6.692l3.971-6.692h1.815l0.113,0.907l0.112,0.794l0.228,0.795l0.34,0.794l0.454,0.794l0.68,0.794h-3.063h-0.341h-0.34  l-0.34,0.113l-0.34,0.113l-0.341,0.228l-0.34,0.113l-0.453,0.453l-0.454,0.567l-0.228,0.227l-0.113,0.341l-0.113,0.34l-0.114,0.342  l-0.113,0.34v0.453v13.727h-0.907v0.114h-0.907v20.306v0.34v0.341l-0.114,0.341l-0.114,0.34l-0.112,0.342l-0.228,0.226l-0.454,0.567  l-0.454,0.453l-0.34,0.114l-0.34,0.113l-0.228,0.112l-0.34,0.113l-0.453,0.113h-0.341h-0.34l-0.34-0.113l-0.34-0.113l-0.341-0.112  l-0.341-0.113l-0.227-0.114l-0.567-0.453l-0.453-0.567l-0.113-0.226l-0.228-0.342l-0.112-0.34v-0.341l-0.114-0.341v-0.34v-20.42  l-0.907-0.112l-0.566-0.341l-0.341-0.227l-0.454-0.342l-0.227-0.453l-0.34-0.453l-0.113-0.454l-0.113-0.566l-0.113-0.567v-15.769  v-0.227l0.113-0.341l0.113-0.566l0.34-0.567l0.342-0.454l0.453-0.34l0.454-0.228l0.567-0.228h0.34H842.89L842.89,1281.438  L842.89,1281.438z M864.331,1275.425h0.567l0.566,0.114l0.567,0.113l0.567,0.113l0.453,0.227l0.454,0.341l0.453,0.34l0.341,0.341  l0.452,0.34l0.342,0.454l0.227,0.454l0.228,0.566l0.228,0.454l0.114,0.566l0.112,0.567v0.566v0.566l-0.112,0.567l-0.114,0.567  l-0.228,0.452l-0.228,0.567l-0.227,0.454l-0.342,0.34l-0.452,0.454l-0.341,0.34l-0.453,0.341l-0.454,0.34l-0.453,0.229l-0.567,0.112  l-0.567,0.228h-0.566l-0.567,0.113l-0.567-0.113h-0.566l-0.454-0.228l-0.567-0.112l-0.454-0.229l-0.454-0.34l-0.453-0.341  l-0.453-0.34l-0.34-0.454l-0.341-0.34l-0.228-0.454l-0.228-0.567l-0.227-0.452l-0.113-0.567l-0.114-0.567v-0.566v-0.566l0.114-0.567  l0.113-0.566l0.227-0.454l0.228-0.566l0.228-0.454l0.341-0.454l0.34-0.34l0.453-0.341l0.453-0.34l0.454-0.341l0.454-0.227  l0.567-0.113l0.454-0.113l0.566-0.114H864.331L864.331,1275.425L864.331,1275.425z M885.545,1275.085h1.588l3.631,6.013l3.631-6.013  h3.517l0.565,0.113l0.455,0.112l0.454,0.229l0.454,0.34l0.227,0.454l0.342,0.454l0.111,0.453l0.115,0.566v14.181l-0.115,0.566  l-0.111,0.454l-0.114,0.454l-0.228,0.339l-0.341,0.341l-0.34,0.341l-0.34,0.341l-0.454,0.227l-0.795,0.114v18.377l-0.112,0.227  v0.342l-0.114,0.34l-0.112,0.227l-0.228,0.567l-0.455,0.454l-0.452,0.453l-0.568,0.228l-0.228,0.113l-0.34,0.112h-0.34l-0.227,0.113  l-0.34-0.113h-0.341l-0.342-0.112l-0.228-0.113l-0.567-0.228l-0.452-0.453l-0.454-0.454l-0.228-0.567l-0.112-0.227l-0.115-0.34  v-0.342v-0.227v-18.264h-1.134v-12.365l-0.111-0.454v-0.34l-0.115-0.341l-0.111-0.34l-0.115-0.341l-0.227-0.228l-0.453-0.567  l-0.454-0.453l-0.34-0.112l-0.342-0.229l-0.341-0.113l-0.34-0.112h-0.34h-0.342h-3.063l0.681-0.794l0.342-0.794l0.339-0.794  l0.341-0.795l0.228-0.795V1275.085L885.545,1275.085z M833.587,1275.085h0.681l-0.113,0.228v0.453l0.113,0.454l0.113,0.34  l0.114,0.454l0.114,0.34l0.227,0.342l0.454,0.681l0.227,0.227l0.341,0.228l0.34,0.228l0.341,0.228l0.34,0.113l0.34,0.112h0.341  l0.34,0.113l0.453-0.113h0.341l0.34-0.112l0.34-0.113l0.34-0.228l0.341-0.228l0.228-0.228l0.341-0.227l0.453-0.681l0.114-0.342  l0.227-0.34l0.113-0.454l0.112-0.34v-0.454v-0.453v-0.228h0.228l0,0h1.361v0.228l0.112,0.793l0.342,0.796l0.34,0.794l0.454,0.794  l0.681,0.794h-3.177h-0.341h-0.34l-0.341,0.112l-0.34,0.113l-0.341,0.229l-0.228,0.112l-0.566,0.453l-0.454,0.567l-0.227,0.228  l-0.113,0.34l-0.114,0.341l-0.113,0.341v0.34v0.454v4.765l0,0v15.314h-1.021v10.55v0.227l-0.113,0.341v0.341l-0.114,0.227  l-0.34,0.567l-0.34,0.454l-0.568,0.452l-0.454,0.229l-0.34,0.113l-0.34,0.113h-0.227l-0.34,0.112l-0.341-0.112h-0.34l-0.34-0.113  l-0.228-0.113l-0.566-0.229l-0.454-0.452l-0.34-0.454l-0.34-0.567l-0.114-0.227l-0.113-0.341v-0.341v-0.227v-10.55h-2.042  l1.136-8.055l-0.795-0.453l-0.227-0.229l-0.227-0.227l-0.228-0.341l-0.227-0.227l-0.114-0.342l-0.113-0.341v-0.34v-0.453v-14.181  v-0.227v-0.341l0.113-0.453l0.341-0.454l0.34-0.454l0.341-0.34l0.453-0.229l0.567-0.113l0.567-0.112h2.608V1275.085  L833.587,1275.085z M867.961,1271.001h2.836l-0.111,0.113l-0.343,0.681l-0.112,0.682l-0.114,0.793v0.796v0.565v0.682l0.228,1.021  l-0.451-0.681l-0.569-0.454l-0.567-0.453l-0.68-0.454l-0.682-0.341l-1.021-0.228L867.961,1271.001L867.961,1271.001z   M857.979,1271.001h2.836l1.589,2.723l-1.021,0.228l-0.68,0.341l-0.681,0.454l-0.568,0.453l-0.566,0.454l-0.567,0.794l0.227-1.136  v-0.681l0.114-0.566l-0.114-0.795l-0.112-0.794l-0.114-0.681l-0.341-0.682V1271.001L857.979,1271.001z M877.83,1268.619h0.566  l0.569,0.113l0.451,0.112l0.568,0.113l0.452,0.341l0.455,0.228l0.452,0.34l0.454,0.341l0.34,0.454l0.342,0.34l0.229,0.567  l0.227,0.453l0.227,0.453l0.115,0.567l0.111,0.567v0.565v0.568l-0.111,0.565l-0.115,0.567l-0.227,0.567l-0.227,0.454l-0.229,0.452  l-0.342,0.454l-0.34,0.341l-0.454,0.341l-0.452,0.34l-0.455,0.341l-0.452,0.227l-0.568,0.228l-0.451,0.114l-0.569,0.112h-0.566  h-0.68l-0.454-0.112l-0.567-0.114l-0.566-0.228l-0.454-0.227l-0.454-0.341l-0.452-0.34l-0.342-0.341l-0.453-0.341l-0.341-0.454  l-0.227-0.452l-0.227-0.454l-0.229-0.567l-0.111-0.567l-0.115-0.565v-0.568v-0.565l0.115-0.567l0.111-0.567l0.229-0.453l0.227-0.453  l0.227-0.567l0.341-0.34l0.453-0.454l0.342-0.341l0.452-0.34l0.454-0.228l0.454-0.341l0.566-0.113l0.567-0.112l0.454-0.113H877.83  L877.83,1268.619L877.83,1268.619z M850.831,1268.619h0.567l0.566,0.113l0.567,0.112l0.454,0.113l0.453,0.341l0.567,0.228l0.34,0.34  l0.454,0.341l0.34,0.454l0.342,0.34l0.34,0.567l0.227,0.453l0.114,0.453l0.228,0.567v0.567l0.112,0.565l-0.112,0.568v0.565  l-0.228,0.567l-0.114,0.567l-0.227,0.454l-0.34,0.452l-0.342,0.454l-0.34,0.341l-0.454,0.341l-0.34,0.34l-0.567,0.341l-0.453,0.227  l-0.454,0.228l-0.567,0.114l-0.566,0.112h-0.567h-0.567l-0.566-0.112l-0.568-0.114l-0.454-0.228l-0.567-0.227l-0.453-0.341  l-0.454-0.34l-0.34-0.341l-0.341-0.341l-0.34-0.454l-0.34-0.452l-0.227-0.454l-0.113-0.567l-0.227-0.567v-0.565l-0.113-0.568  l0.113-0.565v-0.567l0.227-0.567l0.113-0.453l0.227-0.453l0.34-0.567l0.34-0.34l0.341-0.454l0.34-0.341l0.454-0.34l0.453-0.228  l0.567-0.341l0.454-0.113l0.568-0.112l0.566-0.113H850.831L850.831,1268.619L850.831,1268.619z M890.764,1263.628h0.453h0.566  l0.455,0.228l0.453,0.112l0.455,0.228l0.452,0.227l0.343,0.343l0.34,0.339l0.34,0.341l0.34,0.341l0.227,0.453l0.228,0.454  l0.113,0.454l0.114,0.453l0.111,0.453v0.567v0.566l-0.111,0.454l-0.114,0.453l-0.113,0.454l-0.228,0.453l-0.227,0.454l-0.34,0.34  l-0.34,0.454l-0.34,0.228l-0.343,0.341l-0.452,0.227l-0.455,0.228l-0.453,0.228l-0.455,0.113h-0.566l-0.453,0.113l-0.565-0.113  h-0.455l-0.566-0.113l-0.454-0.228l-0.453-0.228l-0.341-0.227l-0.455-0.341l-0.34-0.228l-0.34-0.454l-0.228-0.34l-0.34-0.454  l-0.114-0.453l-0.228-0.454l-0.113-0.453l-0.111-0.454v-0.566v-0.567l0.111-0.453l0.113-0.453l0.228-0.454l0.114-0.454l0.34-0.453  l0.228-0.341l0.34-0.341l0.34-0.339l0.455-0.343l0.341-0.227l0.453-0.228l0.454-0.112l0.566-0.228h0.455H890.764L890.764,1263.628  L890.764,1263.628z M838.125,1263.628h0.454h0.567l0.453,0.228l0.454,0.112l0.454,0.228l0.454,0.227l0.341,0.343l0.34,0.339  l0.34,0.341l0.341,0.341l0.227,0.453l0.228,0.454l0.112,0.454l0.113,0.453l0.114,0.453v0.567v0.566l-0.114,0.454l-0.113,0.453  l-0.112,0.454l-0.228,0.453l-0.227,0.454l-0.341,0.34l-0.34,0.454l-0.34,0.228l-0.341,0.341l-0.454,0.227l-0.454,0.228l-0.454,0.228  l-0.453,0.113h-0.567l-0.454,0.113l-0.567-0.113h-0.454l-0.566-0.113l-0.454-0.228l-0.454-0.228l-0.341-0.227l-0.454-0.341  l-0.34-0.228l-0.34-0.454l-0.228-0.34l-0.34-0.454l-0.114-0.453l-0.227-0.454l-0.114-0.453l-0.112-0.454v-0.566v-0.567l0.112-0.453  l0.114-0.453l0.227-0.454l0.114-0.454l0.34-0.453l0.228-0.341l0.34-0.341l0.34-0.339l0.454-0.343l0.341-0.227l0.454-0.228  l0.454-0.112l0.566-0.228h0.454H838.125L838.125,1263.628L838.125,1263.628z M864.331,1259.43h0.567h0.455l0.566,0.229l0.452,0.113  l0.454,0.227l0.34,0.229l0.455,0.34l0.34,0.341l0.341,0.34l0.229,0.341l0.34,0.453l0.228,0.454l0.112,0.453l0.112,0.454l0.114,0.566  v0.453v0.568l-0.114,0.453l-0.112,0.453l-0.112,0.567l-0.228,0.34l-0.34,0.454l-0.229,0.453l-0.341,0.341l-0.34,0.341l-0.455,0.228  l-0.34,0.227l-0.454,0.229l-0.452,0.227l-0.566,0.112l-0.455,0.114h-0.567h-0.453l-0.567-0.114l-0.455-0.112l-0.453-0.227  l-0.454-0.229l-0.454-0.227l-0.34-0.228l-0.34-0.341l-0.342-0.341l-0.34-0.453l-0.228-0.454l-0.228-0.34l-0.113-0.567l-0.114-0.453  l-0.113-0.453v-0.568v-0.453l0.113-0.566l0.114-0.454l0.113-0.453l0.228-0.454l0.228-0.453l0.34-0.341l0.342-0.34l0.34-0.341  l0.34-0.34l0.454-0.229l0.454-0.227l0.453-0.113l0.455-0.229h0.567H864.331L864.331,1259.43L864.331,1259.43z"/>
+									</svg>
+								</div>
+								<div class="percent-number">{{data.itPersonnel.ftePercent | number : '1.0-0'}}<span class="percent">%</span>
+									<div class="stage-name">IT Employees % of Total Employees</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="px-2" *ngIf="enterMyData.itPersonnelFtePercent >= 0" [ngClass]="[showDiv ? '!displayDiv enter-my-data-background pl-0 it-personnel-div' : 'displayDiv']">
+							<div class="it-employee">
+								<div *ngIf="!compareEqualityEmployee" class="percent-number">{{enterMyData.itPersonnelFtePercent | number : '1.0-0'}}<span class="percent">%</span></div>
+								<div class="icon">
+									<div *ngIf="compareEqualityEmployee" class="it-spend-PU itrunchange-equal-value-container">
+											<div class="percent-number staffing-mix-equality">
+													{{enterMyData.itPersonnelFtePercent| number : '1.0-0'}}%
+											</div>
+										</div>
+									<div *ngIf="!compareEqualityEmployee  && (data.itPersonnel.ftePercent < enterMyData.itPersonnelFtePercent)">
+										<svg version="1.1" id="itFtePercentSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+										width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve"> <defs>
+											<linearGradient id="progress1036" x1="0" y1="1" x2="0" y2="0">
+												<stop id="stop10018" [attr.offset]="(makePositiveValue(((data.itPersonnel.ftePercent) - (enterMyData.itPersonnelFtePercent))/(data.itPersonnel.ftePercent)*100)) + '%'" stop-color="#02ABBA" />
+												<stop id="stop20018" [attr.offset]="(makePositiveValue(((data.itPersonnel.ftePercent) - (enterMyData.itPersonnelFtePercent))/(data.itPersonnel.ftePercent)*100)) + '%'" stop-color="#e1edf3" />
+											</linearGradient>
+										</defs>
+										<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1036)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+									</svg>
+								</div>
+
+								<!-- down arrow-->
+								<div *ngIf="!compareEqualityEmployee && (data.itPersonnel.ftePercent > enterMyData.itPersonnelFtePercent)">
+									<svg version="1.1" id="itFtePercentSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+									width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)"> <defs>
+										<linearGradient id="progress1036" x1="0" y1="1" x2="0" y2="0">
+											<stop id="stop10018" [attr.offset]="(makePositiveValue(((data.itPersonnel.ftePercent) - (enterMyData.itPersonnelFtePercent))/(data.itPersonnel.ftePercent)*100)) + '%'" stop-color="#02ABBA" />
+											<stop id="stop20018" [attr.offset]="(makePositiveValue(((data.itPersonnel.ftePercent) - (enterMyData.itPersonnelFtePercent))/(data.itPersonnel.ftePercent)*100)) + '%'" stop-color="#e1edf3" />
+										</linearGradient>
+									</defs>
+									<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1036)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+								</svg>
+							</div>
+
+							<!-- <span class="remained-percentage" *ngIf="( (data.itPersonnel.ftePercent | number : '1.0-0') > (enterMyData.itPersonnelFtePercent | number : '1.0-0') )">{{ makePositiveValue((data.itPersonnel.ftePercent - enterMyData.itPersonnelFtePercent)/(data.itPersonnel.ftePercent)*100) | number : '1.0-0' }}%</span>
+								<span class="remained-percentage" *ngIf="( (enterMyData.itPersonnelFtePercent | number : '1.0-0') > (data.itPersonnel.ftePercent | number : '1.0-0') )">{{ makePositiveValue((data.itPersonnel.ftePercent - enterMyData.itPersonnelFtePercent)/(data.itPersonnel.ftePercent)*100) | number : '1.0-0' }}%</span> -->
+
+								<span *ngIf="!compareEqualityEmployee" class="remained-percentage">{{ makePositiveValue(((data.itPersonnel.ftePercent) - (enterMyData.itPersonnelFtePercent))/(data.itPersonnel.ftePercent)*100) | number : '1.0-0' }}%</span>
+
+							</div>
+						</div>
+					</div>
+
+
+					<div *ngIf="enterMyData.itPersonnelFtePercent<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" style="padding: 2rem !important;">
+						<div class="align-self-center">
+							<span class="bord-top"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div [ngClass]="[showDiv ? '' : 'w-50']">
+				<div class="d-flex flex-row flex-wrap m-0">
+					<div class="p-1">
+						<div class="it-contractor">
+							<div class="icon">
+								<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="74px" height="76px" viewBox="852.125 1262.486 50 66" enable-background="new 852.125 1262.486 50 66" xml:space="preserve">
+									<defs>
+										<linearGradient id="progress5" x1="0" y1="1" x2="0" y2="0">
+											<stop id="stop9" [attr.offset]="(data.itPersonnel.contractorpercent/100)" stop-color="#03abba"/>
+											<stop id="stop10" [attr.offset]="(data.itPersonnel.contractorpercent/100)" stop-color="#e1edf3"/>
+										</linearGradient>
+									</defs>
+									<path fill="url(#progress5)"  id="my-shape5" cx="200" cy="200" r="200" d="M869.423,1282.505h3.877l3.876,6.49l3.877-6.49h3.877h0.29l0.29,0.097h0.292l0.29,0.099l0.193,0.192  l0.291,0.098l0.388,0.388l0.388,0.388l0.098,0.29l0.192,0.194l0.098,0.29l0.098,0.291v0.291v0.29v15.402v0.483l-0.098,0.582  l-0.192,0.483l-0.292,0.389l-0.29,0.387l-0.388,0.389l-0.39,0.29l-0.483,0.192h-0.097l1.26,8.913h-2.131v11.141v0.388v0.29  l-0.099,0.389l-0.194,0.29l-0.096,0.292l-0.193,0.29l-0.194,0.29l-0.193,0.194l-0.29,0.193l-0.193,0.193l-0.29,0.192l-0.292,0.194  l-0.387,0.098l-0.293,0.096h-0.388l-0.29,0.098l-0.388-0.098h-0.29l-0.389-0.096l-0.29-0.098l-0.29-0.194l-0.292-0.192l-0.29-0.193  l-0.194-0.193l-0.29-0.194l-0.193-0.29l-0.099-0.29l-0.192-0.292l-0.098-0.29l-0.096-0.389v-0.29l-0.098-0.388v-11.141h-1.357  v11.141l-0.097,0.388v0.29l-0.097,0.389l-0.098,0.29l-0.193,0.292l-0.193,0.29l-0.194,0.29l-0.192,0.194l-0.194,0.193l-0.29,0.193  l-0.291,0.192l-0.291,0.194l-0.291,0.098l-0.387,0.096h-0.291l-0.389,0.098l-0.291-0.098h-0.388l-0.291-0.096l-0.388-0.098  l-0.29-0.194l-0.291-0.192l-0.193-0.193l-0.291-0.193l-0.192-0.194l-0.194-0.29l-0.194-0.29l-0.192-0.292l-0.097-0.29l-0.098-0.389  v-0.29v-0.388v-11.141h-2.133l1.261-8.913h-0.098l-0.484-0.192l-0.388-0.29l-0.388-0.389l-0.29-0.387l-0.291-0.389l-0.194-0.483  l-0.097-0.582v-0.483v-15.402v-0.29v-0.291l0.097-0.291l0.099-0.29l0.097-0.194l0.192-0.29l0.389-0.388l0.388-0.388l0.291-0.098  l0.193-0.192l0.291-0.099h0.291l0.29-0.097H869.423L869.423,1282.505L869.423,1282.505z M884.735,1275.918h1.646l3.877,6.587  l3.973-6.587h3.78h0.29l0.291,0.097l0.291,0.098l0.29,0.098l0.291,0.097l0.193,0.098l0.483,0.388l0.293,0.388l0.192,0.29  l0.097,0.291l0.099,0.193l0.097,0.29v0.291l0.096,0.291v15.499l-0.096,0.484l-0.097,0.582l-0.194,0.386l-0.291,0.486l-0.29,0.386  l-0.389,0.389l-0.388,0.29l-0.388,0.194l-0.97,0.192v19.956l-0.096,0.29v0.39l-0.1,0.29l-0.096,0.29l-0.194,0.388l-0.096,0.29  l-0.194,0.194l-0.291,0.29l-0.193,0.193l-0.291,0.194l-0.29,0.193l-0.291,0.097l-0.291,0.192h-0.388l-0.29,0.098h-0.389h-0.389  l-0.29-0.098h-0.388l-0.29-0.192l-0.29-0.097l-0.292-0.193l-0.29-0.194l-0.194-0.193l-0.193-0.29l-0.193-0.194l-0.193-0.29  l-0.194-0.388l-0.097-0.29l-0.097-0.29v-0.39v-0.29v-19.858h-0.97v-0.098h-0.774v-13.465v-0.388l-0.098-0.388l-0.097-0.29  l-0.099-0.388l-0.096-0.291l-0.194-0.291l-0.193-0.291l-0.29-0.192l-0.193-0.193l-0.292-0.291l-0.29-0.097l-0.29-0.194l-0.389-0.097  l-0.29-0.098l-0.388-0.098h-0.29h-3.005l0.58-0.773l0.485-0.68l0.29-0.773l0.29-0.775l0.194-0.871L884.735,1275.918  L884.735,1275.918z M856.146,1275.918h3.875l3.877,6.587l3.974-6.587h1.647l0.098,0.872l0.193,0.871l0.291,0.774l0.291,0.774  l0.483,0.679l0.581,0.774h-3.004h-0.291l-0.389,0.098l-0.388,0.098l-0.29,0.097l-0.291,0.194l-0.291,0.097l-0.291,0.291  l-0.192,0.193l-0.291,0.192l-0.193,0.291l-0.194,0.29l-0.097,0.291l-0.097,0.389l-0.098,0.289l-0.098,0.389v0.388v13.465h-0.969  v0.097h-0.775v19.859l-0.097,0.29v0.39l-0.097,0.289l-0.099,0.291l-0.192,0.388l-0.098,0.29l-0.193,0.193l-0.291,0.29l-0.193,0.194  l-0.291,0.194l-0.29,0.192l-0.291,0.098l-0.291,0.192h-0.388l-0.29,0.098h-0.39h-0.388l-0.29-0.098h-0.291l-0.388-0.192  l-0.291-0.098l-0.29-0.192l-0.291-0.194l-0.193-0.194l-0.193-0.29l-0.193-0.193l-0.193-0.29l-0.193-0.388l-0.097-0.291l-0.099-0.289  v-0.39v-0.29v-19.956l-0.969-0.192l-0.484-0.194l-0.388-0.29l-0.388-0.389l-0.291-0.387l-0.291-0.485l-0.193-0.387l-0.097-0.582  v-0.483v-15.499v-0.291v-0.291l0.097-0.29l0.098-0.193l0.097-0.291l0.193-0.29l0.291-0.388l0.484-0.388l0.193-0.098l0.291-0.097  l0.291-0.098l0.291-0.098l0.29-0.097L856.146,1275.918L856.146,1275.918L856.146,1275.918z M877.176,1269.814h0.582l0.484,0.098  l0.582,0.097l0.483,0.193l0.483,0.291l0.484,0.291l0.389,0.29l0.388,0.291l0.388,0.388l0.291,0.483l0.289,0.388l0.194,0.484  l0.194,0.581l0.096,0.483l0.098,0.582l0.098,0.483l-0.098,0.582l-0.098,0.581l-0.096,0.483l-0.194,0.484l-0.194,0.484l-0.289,0.483  l-0.291,0.389l-0.388,0.388l-0.388,0.387l-0.389,0.291l-0.484,0.29l-0.483,0.291l-0.483,0.097l-0.582,0.193l-0.484,0.098h-0.582  h-0.581l-0.582-0.098l-0.483-0.193l-0.484-0.097l-0.484-0.291l-0.484-0.29l-0.387-0.291l-0.389-0.387l-0.389-0.388l-0.29-0.389  l-0.291-0.483l-0.193-0.484l-0.193-0.484l-0.097-0.483l-0.098-0.581l-0.098-0.582l0.098-0.483l0.098-0.582l0.097-0.483l0.193-0.581  l0.193-0.484l0.291-0.388l0.29-0.483l0.389-0.388l0.389-0.291l0.387-0.29l0.484-0.291l0.484-0.291l0.484-0.193l0.483-0.097  l0.582-0.098H877.176L877.176,1269.814L877.176,1269.814z M890.259,1263.422h0.582l0.484,0.098l0.581,0.097l0.483,0.194l0.484,0.192  l0.483,0.29l0.389,0.388l0.388,0.291l0.39,0.388l0.289,0.483l0.29,0.388l0.194,0.484l0.193,0.484l0.193,0.581v0.581l0.098,0.484  l-0.098,0.581v0.581l-0.193,0.484l-0.193,0.484l-0.194,0.483l-0.29,0.484l-0.289,0.388l-0.39,0.387l-0.388,0.389l-0.389,0.291  l-0.483,0.29l-0.484,0.291l-0.483,0.192l-0.581,0.098l-0.484,0.098h-0.582h-0.582l-0.483-0.098l-0.582-0.098l-0.484-0.192  l-0.484-0.291l-0.482-0.29l-0.389-0.291l-0.389-0.389l-0.388-0.387l-0.291-0.388l-0.29-0.484l-0.193-0.483l-0.193-0.484  l-0.194-0.484v-0.581l-0.096-0.581l0.096-0.484v-0.581l0.194-0.581l0.193-0.484l0.193-0.484l0.29-0.388l0.291-0.483l0.388-0.388  l0.389-0.291l0.389-0.388l0.482-0.29l0.484-0.192l0.484-0.194l0.582-0.097l0.483-0.098H890.259L890.259,1263.422L890.259,1263.422z   M863.898,1263.422h0.582l0.483,0.098l0.582,0.097l0.484,0.194l0.483,0.192l0.484,0.29l0.388,0.388l0.388,0.291l0.389,0.388  l0.291,0.483l0.291,0.388l0.193,0.484l0.192,0.484l0.194,0.581v0.581l0.097,0.484l-0.097,0.581v0.581l-0.194,0.484l-0.192,0.484  l-0.193,0.483l-0.291,0.484l-0.291,0.388l-0.389,0.387l-0.388,0.389l-0.388,0.291l-0.484,0.29l-0.483,0.291l-0.484,0.192  l-0.582,0.098l-0.483,0.098h-0.582h-0.581l-0.484-0.098l-0.581-0.098l-0.484-0.192l-0.484-0.291l-0.484-0.29l-0.388-0.291  l-0.388-0.389l-0.389-0.387l-0.291-0.388l-0.29-0.484l-0.193-0.483l-0.193-0.484l-0.194-0.484v-0.581l-0.097-0.581l0.097-0.484  v-0.581l0.194-0.581l0.193-0.484l0.193-0.484l0.29-0.388l0.291-0.483l0.389-0.388l0.388-0.291l0.388-0.388l0.484-0.29l0.484-0.192  l0.484-0.194l0.581-0.097l0.484-0.098H863.898L863.898,1263.422L863.898,1263.422z"/>
+								</svg>
+							</div>
+							<div class="percent-number">{{data.itPersonnel.contractorpercent | number : '1.0-0'}}<span class="percent">%</span>
+								<div class="stage-name">IT Contractors as a % of IT Personnel</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="px-2 "  *ngIf="enterMyData.itPersonnelContractorPercent >= 0" [ngClass]="[showDiv ? '!displayDiv enter-my-data-background it-personnel-div' : 'displayDiv']">
+						<div class="it-contractor">
+							<div  *ngIf="!compareEqualityContractor" class="percent-number">{{enterMyData.itPersonnelContractorPercent | number : '1.0-0'}}<span class="percent">%</span></div>
+							<div class="icon">
+								<div *ngIf="compareEqualityContractor" class="it-spend-PU itrunchange-equal-value-container">
+										<div class="percent-number staffing-mix-equality">
+												{{enterMyData.itPersonnelContractorPercent| number : '1.0-0'}}%
+										</div>
+									</div>
+								<div *ngIf="!compareEqualityContractor && (data.itPersonnel.contractorpercent < enterMyData.itPersonnelContractorPercent)">
+									<svg version="1.1" id="itContractorPercentSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+									width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve"> <defs>
+										<linearGradient id="progress1037" x1="0" y1="1" x2="0" y2="0">
+											<stop id="stop10019" [attr.offset]="(makePositiveValue(((data.itPersonnel.contractorpercent ) - (enterMyData.itPersonnelContractorPercent )) /(data.itPersonnel.contractorpercent )*100) ) + '%'" stop-color="#02ABBA" />
+											<stop id="stop20019" [attr.offset]="(makePositiveValue(((data.itPersonnel.contractorpercent ) - (enterMyData.itPersonnelContractorPercent )) /(data.itPersonnel.contractorpercent )*100) ) + '%'" stop-color="#e1edf3" />
+										</linearGradient>
+									</defs>
+									<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1037)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+								</svg>
+							</div>
+
+							<div *ngIf="!compareEqualityContractor && (data.itPersonnel.contractorpercent > enterMyData.itPersonnelContractorPercent)">
+								<svg version="1.1" id="itContractorPercentSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+								width="60px" height="65px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)"> <defs>
+									<linearGradient id="progress1037" x1="0" y1="1" x2="0" y2="0">
+										<stop id="stop10019" [attr.offset]="(makePositiveValue(((data.itPersonnel.contractorpercent) - (enterMyData.itPersonnelContractorPercent)) /(data.itPersonnel.contractorpercent)*100)) + '%'" stop-color="#02ABBA" />
+										<stop id="stop20019" [attr.offset]="(makePositiveValue(((data.itPersonnel.contractorpercent) - (enterMyData.itPersonnelContractorPercent)) /(data.itPersonnel.contractorpercent)*100)) + '%'" stop-color="#e1edf3" />
+									</linearGradient>
+								</defs>
+								<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1037)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645 h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+							</svg>
+						</div>
+						<!-- <span class="remained-percentage" *ngIf="( (data.itPersonnel.contractorpercent | number : '1.0-0') > (enterMyData.itPersonnelContractorPercent | number : '1.0-0') )">{{ makePositiveValue((data.itPersonnel.contractorpercent - enterMyData.itPersonnelContractorPercent) /(data.itPersonnel.contractorpercent)*100) | number : '1.0-0' }}%</span>
+							<span class="remained-percentage" *ngIf="( (enterMyData.itPersonnelContractorPercent | number : '1.0-0') > (data.itPersonnel.contractorpercent | number : '1.0-0') )">{{ makePositiveValue((data.itPersonnel.contractorpercent - enterMyData.itPersonnelContractorPercent) /(data.itPersonnel.contractorpercent)*100) | number : '1.0-0' }}%</span> -->
+
+							<span *ngIf="!compareEqualityContractor" class="remained-percentage">{{ makePositiveValue((data.itPersonnel.contractorpercent - enterMyData.itPersonnelContractorPercent) /data.itPersonnel.contractorpercent*100) | number : '1.0-0' }}%</span>
+
+						</div>
+					</div>
+				</div>
+
+
+				<div *ngIf="enterMyData.itPersonnelContractorPercent<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" style="padding: 2rem !important;">
+					<div class="align-self-center">
+						<span class="bord-top"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row on-offshore" [ngClass]="[showDiv ? 'mr-0' : '']">
+		<div class="col pr-0 pl-0" [ngClass]="[showDiv ? 'col-sm-2 col-6 bottom-div' : 'col-sm-4']">
+			<div class="onshore">
+				<div class="percent-number">{{data.itPersonnel.onshorepercent | number : '1.0-0'}}<span class="percent">%</span></div>
+				<div class="stage-name">Onshore</div>
+			</div>
+		</div>
+		<div *ngIf="enterMyData.itPersonnelOnshorePercent >= 0" [ngClass]="[showDiv ? 'col col-sm-2 col-6 pr-0 enter-my-data-background bottom-div' : 'displayDiv']">
+			<div class="onshore">
+				<div class="percent-number percent it-personnel-percent">{{enterMyData.itPersonnelOnshorePercent| number : '1.0-0'}}%
+
+					<span>
+						<!-- up arrow-->
+
+						<svg *ngIf="!compareEqualityOnshore && (data.itPersonnel.onshorepercent < enterMyData.itPersonnelOnshorePercent)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						width="30px" height="20px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+						<defs>
+							<linearGradient id="progress2001" x1="0" y1="1" x2="0" y2="0">
+								<stop id="stop10020" offset="0" stop-color="#e1edf3" />
+								<stop id="stop20020" offset="0" stop-color="#02ABBA" />
+							</linearGradient>
+						</defs>
+						<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress2001)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+						h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+					</svg>
+					<!-- down arrow-->
+					<svg *ngIf="!compareEqualityOnshore && (data.itPersonnel.onshorepercent > enterMyData.itPersonnelOnshorePercent)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						width="30px" height="20px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+						<defs>
+							<linearGradient id="progress2001" x1="0" y1="1" x2="0" y2="0">
+								<stop id="stop10020" offset="0" stop-color="#e1edf3" />
+								<stop id="stop20020" offset="0" stop-color="#02ABBA" />
+							</linearGradient>
+						</defs>
+						<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress2001)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+						h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+					</svg>
+				</span></div>
+			</div>
+		</div>
+
+		<div *ngIf="enterMyData.itPersonnelOnshorePercent<0" class="col col-sm-2 col-6 pr-0 enter-my-data-background bottom-div bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+			<div class="align-self-center">
+				<span class="bord-top"></span>
+			</div>
+		</div>
+
+		<div class="col pr-0 pl-0" [ngClass]="[showDiv ? 'col-sm-2 col-6 bottom-div' : 'col-sm-4']">
+			<div class="onshore offshore">
+				<div class="percent-number">{{data.itPersonnel.offshorepercent | number : '1.0-0'}}<span class="percent">%</span></div>
+				<div class="stage-name">Offshore</div>
+			</div>
+		</div>
+		<div *ngIf="enterMyData.itPersonnelOffshorePercent >= 0" [ngClass]="[showDiv ? 'col col-sm-2 pr-0 enter-my-data-background bottom-div' : 'displayDiv']">
+			<div class="onshore">
+				<div class="percent-number percent it-personnel-percent">
+					{{enterMyData.itPersonnelOffshorePercent | number : '1.0-0'}}%
+
+					<span>
+						<!-- up arrow -->
+						<svg *ngIf="!compareEqualityOffshore && (enterMyData.itPersonnelOffshorePercent > data.itPersonnel.offshorepercent)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							width="30px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+							<defs>
+								<linearGradient id="progress2002" x1="0" y1="1" x2="0" y2="0">
+									<stop id="stop10021" offset="0" stop-color="#e1edf3" />
+									<stop id="stop20021" offset="0" stop-color="#02ABBA" />
+								</linearGradient>
+							</defs>
+							<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress2002)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+							h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+						</svg>
+						<!-- down arrow -->
+						<svg *ngIf="!compareEqualityOffshore && (enterMyData.itPersonnelOffshorePercent < data.itPersonnel.offshorepercent)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						width="30px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+						<defs>
+							<linearGradient id="progress2002" x1="0" y1="1" x2="0" y2="0">
+								<stop id="stop10021" offset="0" stop-color="#e1edf3" />
+								<stop id="stop20021" offset="0" stop-color="#02ABBA" />
+							</linearGradient>
+						</defs>
+						<path  fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress2002)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+						h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+					</svg>
+				</span></div>
+			</div>
+		</div>
+
+		<div *ngIf="enterMyData.itPersonnelOffshorePercent<0" class="col col-sm-2 col-6 pr-0 enter-my-data-background bottom-div bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+			<div class="align-self-center">
+				<span class="bord-top"></span>
+			</div>
+		</div>
+
+		<div class="col pl-0" [ngClass]="[showDiv ? 'col-sm-2 col-6 pr-0' : 'col-sm-4 pr-0']">
+			<div class="onshore attrition-rate border-0">
+				<div class="percent-number">{{data.itPersonnel.attritionmean | number : '1.0-0'}}<span class="percent">%</span></div>
+				<div class="stage-name">Turnover Rate</div>
+			</div>
+		</div>
+		<div *ngIf="enterMyData.itPersonnelAttritionMean >= 0" [ngClass]="[showDiv ? 'col col-sm-2 col-6 pr-0 enter-my-data-background' : 'displayDiv']">
+			<div class="onshore border-0">
+				<div class="percent-number percent it-personnel-percent">{{enterMyData.itPersonnelAttritionMean | number : '1.0-0'}}%
+
+					<span>
+						<!-- up arrow -->
+						<svg *ngIf="!compareEqualityAttritionMean && (enterMyData.itPersonnelAttritionMean > data.itPersonnel.attritionmean)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							width="30px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+							<defs>
+								<linearGradient id="progress2003" x1="0" y1="1" x2="0" y2="0">
+									<stop id="stop10022" offset="0" stop-color="#e1edf3" />
+									<stop id="stop20022" offset="0" stop-color="#02ABBA" />
+								</linearGradient>
+							</defs>
+							<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress2003)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+							h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+						</svg>
+
+						<!-- down arrow -->
+						<svg *ngIf="!compareEqualityAttritionMean && (enterMyData.itPersonnelAttritionMean < data.itPersonnel.attritionmean)" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						width="30px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+						<defs>
+							<linearGradient id="progress2003" x1="0" y1="1" x2="0" y2="0">
+								<stop id="stop10022" offset="0" stop-color="#e1edf3" />
+								<stop id="stop20022" offset="0" stop-color="#02ABBA" />
+							</linearGradient>
+						</defs>
+						<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress2003)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+						h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+
+					</svg>
+
+				</span></div>
+			</div>
+		</div>
+
+		<div *ngIf="enterMyData.itPersonnelAttritionMean<0" class="col col-sm-2 col-6 pr-0 enter-my-data-background bottom-div bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+			<div class="align-self-center">
+				<span class="bord-top"></span>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+
+<!--User Experience Score-->
+<div class="p-2 w-20">
+	<div class="card custom-card minht-300">
+		<div class="p-2">
+				<!-- User Experience Score -->
+			<div class="sub-heading">User Experience Index<span class="info" placement="top" ngbTooltip="{{definitionData.userexperiencelower.defination}}"><a href="javascript:void(0)"></a></span><span (click)="uiexpDialog()" class="popout" *ngIf="showDrillDownAfterCrg"><a href="javascript:void(0)"></a></span>
+				<div class="backdrop" [ngStyle]="{'display':display_uiexp_one}"></div>
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="d-inline-flex d-md-flex flex-row flex-wrap">
+				<div class="p-2 mx-auto">
+					<div class="ux-score">
+						<div class="icon">
+							<svg class="user-exp-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="60px" height="50px" viewBox="865.289 1269.741 60 50" enable-background="new 865.289 1269.741 60 50" xml:space="preserve">
+								<defs>
+									<linearGradient id="progress6" x1="0" y1="1" x2="0" y2="0">
+										<stop id="stop11" [attr.offset]="(data.userExperience.mean/100)" stop-color="#9acb3b"/>
+										<stop id="stop12" [attr.offset]="(data.userExperience.mean/100)" stop-color="#e1edf3"/>
+									</linearGradient>
+								</defs>
+								<path fill="url(#progress6)"  id="my-shape6" cx="200" cy="200" r="200" d="M916.26,1271.133l7.913,7.658l-37.81,39.558l-19.958-19.422l7.627-7.946l12.058,11.718L916.26,1271.133z"/>
+							</svg>
+						</div>
+						<div class="percent-number">{{data.userExperience.mean | number : '1.0-0'}}<span class="percent"></span>
+							<div class="stage-name">Overall Satisfaction with IT Services</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ux-direction">
+				<div class="col col-sm-6">
+					<div class="upper">
+						{{data.userExperience.upper | number : '1.0-0'}}<span class="direction">Upper</span>
+					</div>
+				</div>
+				<div class="col col-sm-6">
+					<div class="lower">
+						{{data.userExperience.lower | number : '1.0-0'}}<span class="direction">Lower</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--Digital Spend-->
+<div class="p-2" [ngClass]="[showDiv ? 'w-28' : 'w-25']" >
+	<div class="card custom-card minht-300">
+		<div class="p-2">
+			<div class="sub-heading">Digital Spend
+				<span class="info"
+				placement="top" ngbTooltip="{{definitionData.digitallower.defination}}"><a href="javascript:void(0)"></a>
+			</span>
+		</div>
+	</div>
+	<div class="card-body px-2">
+		<div class="d-inline-flex flex-row flex-wrap">
+			<div class="px-3">
+				<div class="ux-score">
+					<div class="icon">
+						<svg class="digital-spend-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="54px" height="54px" viewBox="0 0 54 54" enable-background="new 0 0 54 54" xml:space="preserve">
+							<defs>
+								<linearGradient id="progress7" x1="0" y1="1" x2="0" y2="0">
+									<stop id="stop13" [attr.offset]="(data.digitalSpend.mean/100)" stop-color="#03abba"/>
+									<stop id="stop14" [attr.offset]="(data.digitalSpend.mean/100)" stop-color="#e1edf3"/>
+								</linearGradient>
+							</defs>
+							<path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress7)"  id="my-shape7" cx="200" cy="200" r="200" d="M7.988,25.368h5.995v20.894H7.988V25.368z M16.979,20.286h6.007  v25.976h-6.007V20.286z M25.979,15.266h6.012v30.996h-6.012V15.266z M34.987,9.339h5.995v36.923h-5.995V9.339z M43.998,4.288h5.995  v41.974h-5.995V4.288z M3.044,0.649c1.149,0,1.925,0.943,1.925,2.107V49.26h45.956c1.149,0,2.082,0.818,2.082,1.982  c0,1.165-0.933,2.108-2.082,2.108H0.993V2.757C0.993,1.593,1.895,0.649,3.044,0.649"/>
+						</svg>
+					</div>
+					<div class="percent-number digital-spend-color">{{data.digitalSpend.mean | number : '1.0-0'}}<span class="percent digital-spend-color">%</span>
+						<div class="stage-name">Digital Spend as a % of IT Spend</div>
+					</div>
+				</div>
+
+				<div class="row ux-direction ds-direction">
+					<div class="col col-sm-6 pr-0">
+						<div class="upper">
+							{{data.digitalSpend.upper | number : '1.0-0'}}%<span class="direction">Upper</span>
+						</div>
+					</div>
+					<div class="col col-sm-6">
+						<div class="lower">
+							{{data.digitalSpend.lower | number : '1.0-0'}}%<span class="direction">Lower</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="px-3" *ngIf="enterMyData.digitalSpend >= 0" [ngClass]="[showDiv ? '!displayDiv enter-my-data-background digital-spend' : 'displayDiv']">
+				<div  *ngIf="!digitalSpendEquality" class="percent-number">{{enterMyData.digitalSpend | number : '1.0-0'}}<span class="percent">%</span></div>
+				<div *ngIf="digitalSpendEquality" class="it-spend-PU itrunchange-equal-value-container">
+						<div class="percent-number staffing-mix-equality">
+								{{enterMyData.digitalSpend| number : '1.0-0'}}%
+						</div>
+					</div>
+				<div class="text-center "  *ngIf="!digitalSpendEquality && (enterMyData.digitalSpend > data.digitalSpend.mean) ">
+					<svg version="1.1" id="digitalSpendSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+					width="40px" height="62px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+					<defs>
+						<linearGradient id="progress1038" x1="0" y1="1" x2="0" y2="0">
+							<stop id="stop10020" [attr.offset]="(makePositiveValue(((data.digitalSpend.mean) - (enterMyData.digitalSpend) ) /(data.digitalSpend.mean)*100))+ '%'" stop-color="#03abba" />
+							<stop id="stop20020" [attr.offset]="(makePositiveValue(((data.digitalSpend.mean) - (enterMyData.digitalSpend) ) /(data.digitalSpend.mean)*100)) + '%'" stop-color="#e1edf3" />
+						</linearGradient>
+					</defs>
+					<path *ngIf="!compareDigitalSpend" fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1038)" stroke="#03abba" stroke-miterlimit="10" d="M44.492,90.649V32.645
+					h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+					<path *ngIf="compareDigitalSpend" clip-rule="evenodd" d="M15.507,1.351v58.005H1.81
+					L30,90.649l28.189-31.294H44.492V1.351H15.507z" fill="url(#progress1038)" fill-rule="evenodd" stroke="#03abba" stroke-miterlimit="10"></path>
+				</svg>
+				<div class="text-center digital-spend-remain" *ngIf="!digitalSpendEquality">
+					<span class="remained-percentage">
+						{{
+							makePositiveValue((data.digitalSpend.mean - enterMyData.digitalSpend)  / (data.digitalSpend.mean)*100) | number : '1.0-0'
+						}}%
+					</span>
+				</div>
+			</div>
+
+			<!-- down arrow -->
+			<div class="text-center " *ngIf="!digitalSpendEquality && (enterMyData.digitalSpend < data.digitalSpend.mean)">
+				<svg version="1.1" id="digitalSpendSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				width="40px" height="62px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+				<defs>
+					<linearGradient id="progress1038" x1="0" y1="1" x2="0" y2="0">
+						<stop id="stop10020" [attr.offset]="(makePositiveValue(((data.digitalSpend.mean) - (enterMyData.digitalSpend) ) /(data.digitalSpend.mean)*100))+ '%'" stop-color="#9acb3b" />
+						<stop id="stop20020" [attr.offset]="(makePositiveValue(((data.digitalSpend.mean) - (enterMyData.digitalSpend) ) /(data.digitalSpend.mean)*100)) + '%'" stop-color="#e1edf3" />
+					</linearGradient>
+				</defs>
+				<path *ngIf="!compareDigitalSpend" fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1038)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+				h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+				<path *ngIf="compareDigitalSpend" clip-rule="evenodd" d="M15.507,1.351v58.005H1.81
+				L30,90.649l28.189-31.294H44.492V1.351H15.507z" fill="url(#progress1038)" fill-rule="evenodd" stroke="#9acb3b" stroke-miterlimit="10"></path>
+			</svg>
+			<div class="text-center digital-spend-remain" *ngIf="!digitalSpendEquality">
+				<span class="remained-percentage">{{
+					makePositiveValue((data.digitalSpend.mean - enterMyData.digitalSpend ) /data.digitalSpend.mean*100) | number : '1.0-0' }}%</span>
+				</div>
+			</div>
+
+		</div>
+
+		<div *ngIf="enterMyData.digitalSpend < 0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+			<div class="align-self-center">
+				<span class="bord-top"></span>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+<!--last widget section -->
+
+</div>
+</div>
+</div>
+
+
+
+<button type="button" class="btn btn-info btn-lg" (click)="openModalDialog()" style="display:none;"></button>
+<div class="backdrop" [ngStyle]="{'display':display_infra}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_infra}">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content infra-popup-breakdown">
+
+			<div class="modal-header infra-popup-text-header">
+				<div class="popup-div">
+					IT Infrastructure Spend Breakdown
+				</div>
+				<button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+			</div>
+			<div class="modal-body padding0">
+
+				<div>
+
+					<drill-down-donut-chart *ngIf="showDrillDown" id="infra-drillDown" chartID="infra-drillDown" [chartData]="data.charts.ITSpendbyFunctionInfrastructure" thickness="35" chartWidth="180" chartHeight="230"></drill-down-donut-chart>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<button type="button" class="btn btn-info btn-lg" (click)="applicationDialog()" style="display:none;"></button>
+<div class="backdrop" [ngStyle]="{'display':display_application}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_application}">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content infra-popup-breakdown">
+
+			<div class="modal-header infra-popup-text-header">
+				<div class="popup-div">
+					Applications Spend Breakdown
+				</div>
+				<button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeApplicationModalDialog()"></button>
+			</div>
+			<div class="modal-body padding0">
+
+				<div>
+
+					<drill-down-donut-chart *ngIf="showDrillDown" id="application-drillDown" chartID="application-drillDown" [chartData]="data.charts.ITSpendbyFunctionApplications" thickness="35" chartWidth="180" chartHeight="230"></drill-down-donut-chart>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<button type="button" class="btn btn-info btn-lg" (click)="itmgtDialog()" style="display:none;"></button>
+<div class="backdrop" [ngStyle]="{'display':display_itmgt}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_itmgt}">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content infra-popup-breakdown">
+
+			<div class="modal-header infra-popup-text-header">
+				<div class="popup-div">
+					IT Management Spend Breakdown
+				</div>
+				<button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeitmgtModalDialog()"></button>
+			</div>
+			<div class="modal-body padding0">
+
+				<div>
+
+					<drill-down-donut-chart *ngIf="showDrillDown" id="itMgmt-drillDown" chartID="itMgmt-drillDown" [chartData]="data.charts.ITSpendbyFunctionManagement" thickness="35" chartWidth="180" chartHeight="230"></drill-down-donut-chart>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<button type="button" class="btn btn-info btn-lg" (click)="spendPerUserDialog()" style="display:none;"></button>
+<div class="backdrop" [ngStyle]="{'display':display_spendPerUser}"></div>
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_spendPerUser}">
+	<div class="modal-dialog modal-dialog-linechart" role="document">
+		<div class="modal-content">
+			<div class="modal-header infra-popup-text-header">
+				<div class="popup-div">
+					<!-- removed "s" as per client said in "Year" -->
+					IT Spend Per User - 3 Year Trend
+				</div>
+				<button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closespendPerUserModalDialog()"></button>
+			</div>
+			<div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+				<line-chart *ngIf="showDrillDown" [chartData]="dataSourceITSpendPerUser" id="cioLineChart1" chartId="cioLineChart1"></line-chart>
+			</div>
+		</div>
+	</div>
+</div>
+
+<button type="button" class="btn btn-info btn-lg" (click)="uiexpDialog()" style="display:none;"></button>
+<div class="backdrop" [ngStyle]="{'display':display_uiexp_one}"></div>
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_uiexp_one}">
+	<div class="modal-dialog model-w modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="row" *ngIf="showExperienceScoreDrill">
+				<div class="col-lg-12">
+					<div class="modal-header infra-popup-text-header">
+						<div class="popup-div"> User Experience Score </div>
+						<button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeuiexpModalDialog()"></button>
+					</div>
+				</div>
+				<div class="col-lg-4 ui-ex-mtop-btm">
+					<div class="col-lg-12 modal-body padding0 text-center ue-min-h" >
+						<app-donut-chart id="user-exp-satisfaction-sd-donut" chartID="user-exp-satisfaction-sd-donut" fillColor="03abba" thickness="30" percentVal="{{this.data.charts.UserExperienceIndexMean[0].value/10}}" chartWidth="150" chartHeight="150" >
+							<span style="color:#494c50;font-size:16px;font-family:OpenSansRegular;" class="ui-exp-popup-text" >{{this.data.charts.UserExperienceIndexMean[0].value | number : '1.0-0'}}</span>
+						</app-donut-chart>
+					</div>
+					<div class="col-lg-12 text-center ui-ex-text">
+						<span style="text-decoration: none;">IT users score for satisfaction with Service Desk</span>
+					</div>
+				</div>
+
+				<div class="col-lg-4 ui-ex-mtop-btm">
+					<div class="col-lg-12 modal-body padding0 text-center ue-min-h" >
+						<app-donut-chart id="user-exp-satisfaction-ws-donut" chartID="user-exp-satisfaction-ws-donut" fillColor="03abba" thickness="30" percentVal="{{this.data.charts.UserExperienceIndexMean[1].value/10}}" chartWidth="150" chartHeight="150" >
+							<span style="color:#494c50;font-size:16px;font-family:OpenSansRegular;" class="ui-exp-popup-text" >{{this.data.charts.UserExperienceIndexMean[1].value | number : '1.0-0'}}</span>
+						</app-donut-chart>
+					</div>
+					<div class="col-lg-12 text-center ui-ex-text">
+						<span style="text-decoration: none;">IT users score for satisfaction with Workplace Services</span>
+					</div>
+				</div>
+
+				<div class="col-lg-4 ui-ex-mtop-btm">
+					<div class="modal-body padding0 text-center ue-min-h" >
+						<app-donut-chart id="user-exp-satisfaction-wt-donut" chartID="user-exp-satisfaction-wt-donut" fillColor="03abba" thickness="30" percentVal="{{this.data.charts.UserExperienceIndexMean[2].value/10}}" chartWidth="150" chartHeight="150" >
+							<span style="color:#494c50;font-size:16px;font-family:OpenSansRegular;" class="ui-exp-popup-text" >{{this.data.charts.UserExperienceIndexMean[2].value | number : '1.0-0'}}</span>
+						</app-donut-chart>
+					</div>
+					<div class="col-lg-12 text-center ui-ex-text">
+						<span style="text-decoration: none;">IT users score for satisfaction with Workplace Tools</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+
+<ng-template #donotshow>
+	<div class="loader-icon-container">
+		<div class="loader-icon"></div>
+	</div>
+</ng-template>

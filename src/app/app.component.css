@@ -1,0 +1,213 @@
+/***********************************************************/
+/************** © 2018 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: app.component.css                          **/
+/** Description: This is app css.                         **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10652318  Created Date: 28/09/2018        **/
+/** Update By: 10652318  Update Date: 28/09/2018          **/
+/** Developed at:                 **/
+/***********************************************************/
+
+@import '~ngx-toastr/toastr.css';
+
+.logo {
+    width: 35%;
+}
+
+.bottom-container{
+    margin-bottom: 30px;
+    display: inline-flex;
+    max-width: 100%;
+}
+
+.card{
+    width:24%;
+}
+
+.vl {
+    border-right: 1px dotted gray;
+}
+
+.kpi-label{
+    font-family: openSansRegular;
+    font-size:  16px;
+    Color:   #494c50;
+    font-style: normal;
+    text-align :  Left; 
+}
+
+.bottom-kpi-card{
+    height: 331px;
+    margin-right: 17px;
+}
+
+.it-spend-card{
+    width:23%;
+}
+
+.it-run{
+    width:33%;
+}
+
+.it-personnel{
+    width:22%;
+}
+
+.user-experience{
+    width: 267px;
+}
+
+.digital-spend{
+    width:19%;
+}
+
+.bottom-kpi-icon{
+    font: openSansRegular;
+    font-size: 30px;
+    text-align: center;
+    font-style: normal;
+}
+
+.kpi-attr-label{
+    font-family: openSansRegular;
+    color: #a0a6a7;
+    text-align: center;
+    font-style: normal;
+}
+
+.run-attr-label{
+    font-size: 14px;
+}
+
+.digital-attr-label{
+    font-size: 14px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.it-personnel-attr-label{
+    font-size: 13px;
+}
+
+.sub-attr-value{
+    font-family: openSansRegular;
+    font-size: 20px;
+    Color:   #75787b;
+    font-style: normal;
+}
+
+.sub-attr-label{
+    font-family: openSansRegular;
+    font-size: 12px;
+    Color:   #a0a6a7;
+    font-style: normal;
+    margin-bottom: 18px;
+}
+
+.left-align{
+    text-align: Left;
+}
+
+.center-align{
+    text-align: center;
+}
+
+.attr-value-color1{
+    color: #9acb3b;
+}
+
+.attr-value-color2{
+    color: #03abba;
+}
+
+.attr-value-color3{
+    color: #8b69c8;
+}
+
+.run-kpi-margin{
+    margin-bottom: 30px;
+}
+
+.run-icon-margin{
+    margin-bottom: 12px;
+}
+
+.personnel-icon-margin{
+    margin-bottom: 16px;
+}
+
+/* remove it when merge with pathik's code */
+
+.inside-kpi-0{
+    display: inline-flex;
+    color: #fcfcfc;
+    border-bottom: 1px solid #f7f7f7;
+    padding: 5px;
+}
+
+.info-icon-3 {
+    width: 18px;
+    height: 18px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: 0px -127px;
+    background-image: url("/assets/images/widget-icons.png"); 
+    margin-top: 6px;
+    cursor: pointer;
+    margin-left: 2px;
+}
+
+.drill-icon{
+    width: 22px;
+    height: 22px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: -2px -60px;
+    background-image: url("/assets/images/widget-icons.png");
+    margin-left: 44px;
+}
+
+.inside-kpi-1{
+    margin-right: 0px;
+    margin-left: 0px;
+    padding: 5px;
+    padding-top: 8px;
+}
+
+.user-experience-kpi{
+    margin-right: 0px;
+    margin-left: 0px;
+    padding: 20px;
+}
+
+.inside-card{
+    padding: 0px;
+}
+
+.vl-upper-lower{
+    border-right: 1px dotted gray;
+    height: 50px;
+}
+
+.upper-lower-kpi1{
+    margin-top: 25px;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding: 0px;
+}
+
+.upper-lower-kpi2{
+    margin-top: 25px;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-top: 17px;
+}
+
+.upper-lower-kpi3{
+    padding-left: 3px;
+    max-width: 30%;
+}

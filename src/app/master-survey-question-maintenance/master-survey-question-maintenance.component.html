@@ -1,0 +1,83 @@
+<div class="container-fluid kpi-maintenance"  *ngIf='dataLoaded;else other_content'>
+  <div class="row">
+    <div class="col-lg-12 my-2">
+      <div class="row">
+        <div class="col-6 col-md-3">
+          <h2 class="px-0 py-2 my-2">Master Question Setup</h2>
+        </div>
+        <div class="col-6 ml-auto col-md-3 col-lg-2 col-xl-1 text-right pt-2">
+          <button type="button" class="btn btn-primary save-reset-btn" (click)="saveData()">Save</button>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 pl-0 text-right pt-3">
+          <label for="Select dashboard" class="mr-2">Select Dashboard</label>
+          <select [(ngModel)]='selectedDashBoardItemId' (change)='fetchAllQuestions()'>
+            <option *ngFor='let dashboard of dashBoardList' [value]="dashboard.dashboardID">{{dashboard.dashboardName}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="productForm">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div formArrayName="masterQuestionDataForm">
+          <table class="table table-responsive table-sm table-striped" style="width:100%">
+            <thead class="thead-blue">
+              <tr>
+                <th class="col-sm-9">Description</th>
+                <!-- <th class="col-sm-2">Table Id</th> -->
+                <!-- <th class="col-sm-2"></th> -->
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+                  <tr  *ngFor="let item of masterQuestionData.controls; let pointIndex=index" [formGroupName]="pointIndex" [hidden]='rows[pointIndex].isHidden'
+                  id={{pointIndex}} [hidden]='pointIndex==0&&!noDataPresent'>
+                      <td class="col-sm-9">
+                        <input formControlName="description" type="text" id="{{rows[pointIndex].question_Id" [(ngModel)]="rows[pointIndex].description">              
+                      </td>
+                      <!-- <td class="col-sm-2">
+                          <select>
+                          <option value="NA" hidden>{{rows[pointIndex].table_Id}}</option>
+                          </select>
+                      </td> -->
+                      <!-- <td class="text-center row-actions col-sm-2">
+                          <a href="javascript:void(0)" (click)="addData()" class="add-row">
+                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                          </a>
+                          <a href="javascript:void(0)" (click)="deleteData(pointIndex)" class="delete"  *ngIf="!rows[pointIndex].isMapped">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                          </a>
+                        </td> -->
+                        <!-- <td class="d-none">
+                          <select class="common-select" [(ngModel)]='rows[pointIndex].selectedStatus' formControlName="operation">
+                            <option value="NA" hidden>Select</option>
+                            <option value="I">I</option>
+                            <option value="U">U</option>
+                            <option value="D">D</option>
+                          </select>
+                        </td> -->
+                    </tr>
+              
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center mt-1 mb-3">
+        <button type="button" class="btn btn-primary save-reset-btn" (click)="saveData()">Save</button>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+<ng-template #other_content>
+  <div class="container-fluid">
+    Data is Loading.... Please Wait ..
+  </div>
+</ng-template>

@@ -1,0 +1,215 @@
+/***********************************************************/
+/************** © 2018 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: footer.component.css                       **/
+/** Description: This is footer css.                      **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10652318  Created Date: 28/09/2018        **/
+/** Update By: 10652318  Update Date: 28/09/2018          **/
+/** Developed at:                 **/
+/***********************************************************/
+
+/*Footer section css starts here*/
+footer.bg-dark{
+    padding: 1rem 0;
+    background: #1A1B1D!important;
+    font-family: RobotoSlabRegular;
+}
+footer .footer-logo{
+    border-right: 1px solid #252729;
+    padding-right: 1rem;
+}
+address{
+    color:rgba(255, 255, 255, 0.7);
+    padding-left: 1rem;
+}
+address a{
+    color:#29497b;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: .82rem;
+}
+address h4{
+    font-size: 1.18rem;
+}
+address p{
+    font-size: 0.85rem;
+    margin-top: 20px;
+}
+.social-icons a{
+    text-align: center;
+    border:1px solid #29497b;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: block;
+}
+.social-icons a:hover{
+    border-color: #3ea6c1;
+}
+.social-icons a:hover .social-icon-clr{
+    color: #3ea6c1;
+}
+.social-icons i{
+    padding: 0.4rem;
+    font-size: 1.2em;
+}
+.fa-facebook{
+    padding: 0.5rem 0.4rem 0.4rem 0.5rem !important;
+}
+.fa-twitter{
+    padding: 0.45rem 0.4rem 0.4rem 0.6rem !important;
+}
+.fa-linkedin{
+    padding: 0.4rem 0.4rem 0.4rem 0.6rem !important;
+}
+.fa-youtube-play{
+    padding: 0.5rem 0.4rem 0.4rem 0.5rem !important;
+}
+.fa-rss{
+    padding: 0.45rem 0.4rem 0.4rem 0.6rem !important;
+}
+.social-icons ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.social-icons li{
+    vertical-align:  middle;
+    display: inline-block;
+    margin: 5px;
+}
+footer .nav .nav-link{
+    text-transform: capitalize;
+    font-size: .82rem;
+    color: #7e848b;
+    font-weight: 300;
+}
+footer .nav .nav-link:hover{
+    color: #3ea6c1;
+}
+.text-copyright{
+    text-align: right;
+    font-size: .82rem;
+    color: #7e848b;
+    font-weight: 300;
+}
+@media (max-width: 767px)
+{
+    .text-copyright{
+        text-align: center;
+    }
+    footer .justify-content-end{
+        justify-content: center!important;
+    }
+}
+/*Footer section css starts here*/
+
+
+.socials-list {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.socials-list a {
+    position: relative;
+    display: inline-block;
+    height: 35px;
+    width: 35px;
+    border: 1px solid #29497b;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.socials-list a.icon-google svg {
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+}
+
+.socials-list a.icon-facebook svg {
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+}
+
+.socials-list a.icon-twitter svg {
+    width: 22px;
+    height: 22px;
+    margin-top: -11px;
+    margin-left: -11px;
+}
+
+.socials-list a.icon-linked svg {
+    width: 15px;
+    height: 15px;
+    margin-top: -7px;
+    margin-left: -7px;
+}
+
+.socials-list a.icon-youtube svg {
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+}
+
+.socials-list a.icon-rss svg {
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    margin-left: -7px;
+}
+
+.social-network a.icoRss:hover i, .social-network a.icoFacebook:hover i, .social-network a.icoTwitter:hover i,
+.social-network a.icoGoogle:hover i, .social-network a.icoVimeo:hover i, .social-network a.icoLinkedin:hover i {
+	color: #29497b;
+}
+
+.social-icon-clr {
+    color: #29497b;
+}
+
+.location, .location:hover, .location:active, .location:focus {
+    text-decoration: none;
+    position: relative;
+}
+.location::before{
+    content: "";
+    position: absolute;
+    right: -13px;
+    height: 8px;
+    width: 2px;
+    transition: all .15s ease-in-out 0s;
+    top: 4px;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    background: #29497b !important;
+    cursor: pointer;
+}
+.location::after{
+    content: "";
+    position: absolute;
+    right: -13px;
+    height: 8px;
+    width: 2px;
+    transition: all .15s ease-in-out 0s;
+    top: 8px;
+    -webkit-transform: rotate(245deg);
+    transform: rotate(245deg);
+    background: #29497b !important;
+    cursor: pointer;
+}
+
+.location:hover{
+    color: #3ea6c1;
+}
+.location:hover:after, .location:hover:before {
+    background: #3ea6c1 !important;
+}
+

@@ -1,0 +1,153 @@
+<div class="w-100">
+  <section class="main-content">
+    <div class="card-header pl-0">
+      <h6 class="text-left text-bold mb-0 pl-0 text-center">Digital Data Validation</h6>
+    </div>
+    <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 my-3 ">
+      <div class="card custom-card">
+        <div class="card-body pb-0">
+
+          <!-- User privileges form controls starts -->
+          <div class="row m-0 mt-1">
+            <div class="col">
+              <form>
+                <div class="row">
+
+                  <div class="col-12 col-md-6">
+                    <div class="form-group col-12">
+                      <label>Dashboard</label>
+                      <div class="list-group scenarion-list ">
+                        <select class="form-control user-suggestion-container" [(ngModel)]="selectedDashBoardItem" name="dashboard" (change)='updateKpidata()'
+                          style="border: 1px solid #ced4da; padding: .300rem .75rem;">
+                          <option class="user-suggestion" *ngFor='let dashboard of dashBoardList' [ngValue]=dashboard>{{dashboard.dashboardName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div class="row m-0">
+                      <div class="col-12">
+                        <div class="form-group col-12 p-0">
+                          <label>User</label>
+                          <input type="text" class="form-control" placeholder="Search User" value="{{roleId}}" [(ngModel)]="roleId" name="roleId" (keyup)="suggestUserId(roleId, $event);"
+                            autocomplete="off" />
+                          <div class="user-suggestion-container" *ngIf="userFound">
+                            <div class="user-suggestion" *ngFor="let user of userData.staff" (click)="selectUser(user)">{{user.id}}</div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row m-0 mt-1">
+                      <div class="col-3 pr-0">
+                        <label>Email :</label>
+                      </div>
+                      <div class="col-9 p-0" *ngIf="selectedUserData != undefined && selectedUserData != null">
+                        {{selectedUserData.id}}
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-1">
+                      <div class="col-3 pr-0">
+                        <label>Type:</label>
+                      </div>
+                      <div class="col-9 p-0" *ngIf="selectedUserData != undefined && selectedUserData != null">
+                        <strong> {{selectedUserData.value}}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid kpi-maintenance" *ngIf="showSurveyData">
+      <div class="row mt-4">
+          <div class="col-lg-12">
+              <div>
+                  <table class="table table-responsive table-sm table-striped" style="width:100%">
+                      <thead class="thead-blue">
+                          <tr>
+                              <th class="t-head">Dashboard</th>
+                              <th class="t-head">Scenario Name</th>
+                              <th class="t-head">Data Status</th>
+                              <th class="t-head">Created By</th>
+                              <th class="t-head">Created Date</th>
+                              <th class="t-head">Updated By</th>
+                              <th class="t-head">Updated Date</th>
+                              
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let surveyData of allSurveyList; let ind=index">
+                              <td>
+                                  {{selectedDashBoardItem.dashboardName}}
+                              </td>
+                              <td>
+                                     
+                                      <a href="#" class="nav-link" id="dispBox" data-toggle="modal" data-backdrop="static" data-keyboard="false" (click)='goToSurveyValidate(surveyData)' data-target=".modal-validate-survey">
+                                          <span class="enter-data-icon"></span>
+                                          <span>{{surveyData.surveyName}}</span>
+                                        </a>
+                                    
+                              </td>
+                              <td>
+                                {{surveyData.dataStatus}}
+                              </td>
+                              <td>
+                                  <span *ngIf="surveyData.createdBy!=null || surveyData.createdBy!=''">
+                                      {{surveyData.createdBy}}
+                                  </span>
+                                  <span *ngIf="surveyData.createdBy==null || surveyData.createdBy==''">
+                                      NA
+                                  </span>
+                              </td>
+                              <td>
+                                  <span *ngIf="surveyData.createdDate!=null || surveyData.createdDate!=''">
+                                      {{surveyData.createdDate | date:'dd/MM/yyyy'}}
+                                  </span>
+                                  <span *ngIf="surveyData.createdDate==null || surveyData.createdDate==''">
+                                      NA
+                                  </span>
+                              </td>
+                              <td>
+                                  <span *ngIf="surveyData.updatedBy!=null || surveyData.updatedBy!=''">
+                                      {{surveyData.updatedBy}}
+                                  </span>
+                                  <span *ngIf="surveyData.updatedBy==null || surveyData.updatedBy==''">
+                                      NA
+                                  </span>
+                              </td>
+                              <td>
+                                  <span *ngIf="surveyData.updatedDate!=null || surveyData.updatedDate!=''">
+                                      {{surveyData.updatedDate | date:'dd/MM/yyyy'}}
+                                  </span>
+                                  <span *ngIf="surveyData.updatedDate==null || surveyData.updatedDate==''">
+                                      NA
+                                  </span>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+               </div>
+          </div>
+      </div>
+  </div>
+  </section>
+
+<!-- enter my data digital tower-->
+<div class="modal fade bd-example-modal-lg fullwidthmodal modal-validate-survey" *ngIf='showSurveyValidationPopup==true'
+tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="enterDataForm1" class="modal-dialog modal-lg" style="max-width: 1400px; margin-top: 0px;">
+  <div class="modal-content">
+      <app-survey-validation-admin></app-survey-validation-admin>
+     
+    </div>
+</div>
+</div>
+
+
+</div>
+

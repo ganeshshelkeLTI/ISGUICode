@@ -1,0 +1,177 @@
+/***********************************************************/
+/************** © 2018 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: user-privileges.component.css              **/
+/** Description: This is user privileges css.             **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10652318  Created Date: 28/09/2018        **/
+/** Update By: 10652318  Update Date: 28/09/2018          **/
+/** Developed at:                 **/
+/***********************************************************/
+
+.custom-card{
+    background: #f5fbfe;
+    border: 1px solid #dddddd;
+    border-radius:0.1rem;
+}
+.custom-card .card-body{
+    padding:1rem 0.25rem;
+    color:#a0a6a7;
+    font-size: 14px;
+}
+.custom-card .card-body .card-body{
+    padding:0.3rem 0rem;
+    min-width: 270px;
+}
+.btn-isg-toggle{
+    background-color: #fff;
+    border-color: #03abba;
+    color:#75787b;
+    font-size: 16px;
+    height: 36px;
+    border-radius:0px;
+}
+.btn-isg-toggle.active{
+    background-color: #03abba;
+    border-color: #03abba;
+    color:#fff;
+}
+.form-group{
+    padding: 0 15px;
+}
+.form-control{
+    border-radius: 0;
+    padding: .300rem .75rem;
+    font-size: 14px;
+}
+select.form-control {
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    background: url('/assets/images/filter-icons.png') right -128px no-repeat;
+    cursor: pointer;
+    background-color: #ffffff;
+}
+select.form-control:not([size]):not([multiple]){
+    height: calc(2.25rem + 0px);
+}
+/* Custom Checkbox */
+
+.container-checkbox {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    padding-top: 3px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: 0;
+    color: #494c50;
+}
+
+.container-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    height: 16px;
+    width: 16px;
+    background-color: #ccc;
+}
+
+.container-checkbox input:checked ~ .checkmark {
+    background-color: #03abba;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.container-checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.container-checkbox .checkmark:after {
+    left: 5px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0px 2px 2px 0px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+hr{
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.font-size-group2{
+    font-size:14px;
+}
+.btn-add{
+    background-color: #29497b;
+    border-color: #29497b;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 1px;
+}
+.btn-delete{
+    background-color: #777b7c;
+    border-color: #777b7c;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 1px;
+}
+.row-actions .add-row, .row-actions .delete {
+    display: inline-block;
+    font-size: 22px;
+    color: #333333;
+    margin-right: 10px;
+}
+.row-actions .delete {
+    margin-top: -5px;
+}
+
+.row-actions .chkbox:before {
+    content: "\f06e";
+}
+.row-actions .chkbox {
+    font: normal normal normal 14px/1 FontAwesome;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    font-size: 22px;
+    display: inline-block;
+    text-align: right;
+    color:#333333;
+    border: none;
+}
+.bg-white{
+    background: white;
+}
+
+@media (max-width:767px){
+    .main-content {
+        margin-top: 80px;
+    }
+} 
+
+@media (min-width:768px) and (max-width:991px) and (orientation:portrait){
+    .main-content {
+        margin-top: 80px;
+    }
+}

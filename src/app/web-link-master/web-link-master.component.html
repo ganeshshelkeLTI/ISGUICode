@@ -1,0 +1,135 @@
+<div class="container-fluid kpi-maintenance" *ngIf='dataLoaded;else other_content'>
+    <section class="main-content">
+        <div class="card-header pl-0">
+            <h6 class="text-left text-bold mb-0 pl-0">Admin Features</h6>
+        </div>
+        <form [formGroup]="webLinkMasterForm">
+
+            <div class="row mt-3">
+                <div class="col-lg-12">
+                    <div formArrayName="master_data" class="table-responsive">
+                        <table class="table table-sm table-striped" style="width:100%">
+                            <thead class="thead-blue">
+                                <tr>
+                                    <th class="col admin-padding">Admin Features</th>
+                                    <th class="col desc-padding">Description</th>
+                                    <th class="col data-padding text-center">Created By</th>
+                                    <th class="col text-center">Created Date</th>
+                                    <th class="col text-center">Updated By</th>
+                                    <th class="col text-center">Updated Date</th>
+                                    <th class="col text-center"></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let item of webLinkMasterPoints.controls; let pointIndex=index" [formGroupName]="pointIndex" [hidden]='rows[pointIndex].isHidden' id={{pointIndex}} [hidden]='pointIndex==0&&!noDataPresend'>
+                                    <td>
+                                        <input type="text" formControlName="masterName" class="form-control" (keyup)='updateRowStatus(pointIndex)' [ngClass]="{ 'is-invalid': submitted && item.controls.masterName.errors }" placeholder="Admin Feature" [readonly]="rows[pointIndex].readOnly">
+                                        <div *ngIf="submitted && item.controls.masterName.errors" class="invalid-feedback">
+                                            <div *ngIf="item.controls.masterName.errors.required">
+                                                Required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="display:none">
+                                        <input type="hidden" class="question-input"  formControlName="masterId" />
+                                    </td>
+                                    <td class="desc-padding desc-width">
+                                        <textarea placeholder="Description" formControlName="masterDescription" (change)='updateRowStatus(pointIndex)' [ngClass]="{ 'is-invalid': submitted && item.controls.masterDescription.errors }" class="form-control" rows="2"></textarea>
+                                        <div *ngIf="submitted && item.controls.masterDescription.errors" class="invalid-feedback">
+                                            <div *ngIf="item.controls.masterDescription.errors.required">
+                                                Required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center data-padding width-createdBy">
+                                        <span *ngIf="item.value.createdBy!=null || item.value.createdBy!=''">
+                                            {{item.value.createdBy}}
+                                        </span>
+                                        <span *ngIf="item.value.createdBy==null || item.value.createdBy==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span *ngIf="item.value.createdDate!=null || item.value.createdDate!=''">
+                                            {{item.value.createdDate | date:'dd/MM/yyyy'}}
+                                        </span>
+                                        <span *ngIf="item.value.createdDate==null || item.value.createdDate==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span *ngIf="item.value.modifiedBy!=null || item.value.modifiedBy!=''">
+                                            {{item.value.modifiedBy}}
+                                        </span>
+                                        <span *ngIf="item.value.modifiedBy==null || item.value.modifiedBy==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span *ngIf="item.value.modifiedDate!=null || item.value.modifiedDate!=''">
+                                            {{item.value.modifiedDate | date:'dd/MM/yyyy'}}
+                                        </span>
+                                        <span *ngIf="item.value.modifiedDate==null || item.value.modifiedDate==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <!-- {{webLinkMasterPoints.controls.length}} -->
+                                    <!-- {{pointIndex}} -->
+                                    <td class="text-center row-actions">
+                                        <a *ngIf="webLinkMasterPoints.controls.length == pointIndex+1" href="javascript:void(0)" (click)="addData()" class="add-row">
+                                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                                        </a>
+                                        <!-- <a *ngIf="item.value.masterId!=0" id="{{item.value.masterId}}" href="javascript:void(0)" (click)="deleteData(item.value.masterId,pointIndex)" class="delete">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a> -->
+                                        <a *ngIf="item.value.masterId!=0" id="{{item.value.masterId}}" href="javascript:void(0)" (click)="resetBtnHandler(item.value.masterId,pointIndex)" [ngClass]="[webLinkMasterPoints.controls.length != pointIndex+1 ? 'delete m-l26' : 'delete']">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                        <a *ngIf="item.value.masterId==0" id="{{item.value.masterId}}" href="javascript:void(0)" (click)="deleteData(0,pointIndex)" [ngClass]="[webLinkMasterPoints.controls.length != pointIndex+1 ? 'delete m-l26' : 'delete']">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td class="d-none">
+                                        <select class="common-select" [(ngModel)]='rows[pointIndex].selectedStatus' formControlName="operation">
+                                            <option value="NA" hidden>Select</option>
+                                            <option value="I">I</option>
+                                            <option value="U">U</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="confirm_box" [ngStyle]="{'display':display_confirmationbox}">
+                    <input id="rid" type="hidden" #rid [value]="selectedroleid"/>
+                    <input id="ind" type="hidden" #ind [value]="selectedindex"/>
+                    <div class="confirm-card">
+                        <div class="col py-3">
+                            Are you sure you want to delete?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="closeModalDialog()">No</button>
+                            <button type="button" class="btn btn-primary" (click)="resetConfirmYes(true)" >Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center mt-1 mb-3">
+                    <button type="button" [disabled]='!enableSave' class="btn btn-primary save-reset-btn" (click)="saveData()">Save</button>
+                </div>
+            </div>
+
+        </form>
+    </section>
+</div>
+<ng-template #other_content>
+    <div class="loader-icon-container">
+        <div class="loader-icon"></div>
+    </div>
+</ng-template>

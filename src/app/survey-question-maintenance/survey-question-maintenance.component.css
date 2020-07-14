@@ -1,0 +1,197 @@
+/***********************************************************/
+/************** © 2018 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: kpi-maintenance.component.css              **/
+/** Description: This is KPI maintenance css.             **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10652318  Created Date: 28/09/2018        **/
+/** Update By: 10652318  Update Date: 28/09/2018          **/
+/** Developed at:                 **/
+/***********************************************************/
+
+.kpi-maintenance h2 {
+    font-size: 16px;
+    color: #494c50;
+    padding-left: 20px;
+    font-family: OpenSansRegular;
+  }
+  
+  .kpi-maintenance .thead-blue {
+    background: #81cee3;
+  }
+  
+  .kpi-maintenance .table-sm th,
+  .kpi-maintenance .table-sm td {
+    padding: 5px;
+    vertical-align: middle;
+    font-size: 13px;
+    font-family: OpenSansRegular;
+  }
+  
+  /* New addition */
+  
+  .question-input {
+    font-family: OpenSansRegular;
+  }
+  
+  td>a {
+    color: #000;
+    margin-right: 10px;
+  }
+  
+  .table td,
+  .table th {
+    min-width: 100px;
+    position: relative;
+  }
+  
+  td>input {
+    width: 100%;
+    font-size: 12px;
+    font-family: OpenSansRegular;
+    padding-left: 5px;
+    height: 28px;
+    border: 1px solid #CAD4E1;
+  }
+  
+  td>select {
+    width: 100%;
+    font-size: 12px;
+    font-family: OpenSansRegular;
+    height: 28px;
+  }
+  
+  table {
+    table-layout: fixed;
+  }
+  
+  table th,
+  table td {
+    overflow: hidden;
+  }
+  
+  table tr th {
+    width: 10%;
+  }
+  
+  .desc-shortdesc {
+    width: auto;
+  }
+  
+  tr td {
+    padding-top: 15px !important;
+    padding-left: 10px !important;
+    padding-bottom: 15px !important;
+    padding-right: 0 !important;
+  }
+  
+  tr th {
+    padding-top: 5px !important;
+    padding-left: 10px !important;
+    padding-bottom: 5px !important;
+    padding-right: 0 !important;
+  }
+  
+  .save-reset-btn {
+    border-radius: 0;
+    padding: 0.3rem 1.2rem;
+    font-family: OpenSansRegular;
+    border-color: #29497b;
+    background: #29497b;
+  }
+  
+  .row-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .row-actions i {
+    font-size: 22px;
+  }
+  
+  
+  .kpi-maintenance tbody tr:first-child .row-actions .add-row {
+    display: inline-block;
+  }
+  
+  .kpi-maintenance .chkbox {
+    font: normal normal normal 14px/1 FontAwesome;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    font-size: 22px;
+    display: inline-block;
+    text-align: right;
+    color:#494c50;
+    border: none;
+  }
+  .kpi-maintenance label{
+    font-size: 15px;
+  }
+  
+  .kpi-maintenance .showKPI:before {
+    content: "\f06e";
+  }
+  
+  .kpi-maintenance .hideKPI:before {
+    content: "\f06e";
+    color: #cdcdcd;
+  }
+  
+  .fa.fa-trash-o {
+    margin-bottom: 5px;
+  }
+  
+  .delete {
+    margin-right: 5px !important;
+  }
+  
+  .invalid-feedback {
+    display: block;
+    position: absolute;
+    bottom: -2px;
+  }
+  
+  
+  
+  .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  select{
+    border-radius: .1rem;
+    border:1px solid #CAD4E1;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    background: url('/assets/images/ISG-filter-icons.png') right -135px no-repeat;
+    cursor: pointer;
+    max-width: 337px;
+    padding-right: 22px;
+    padding-left: 5px;
+    background-color: #ffffff;
+  }
+  select::-ms-expand {
+    display:none;
+  }
+  
+  @media only screen and (max-width:992px){
+    .kpi-maintenance{
+      margin-top: 50px;
+    }
+    
+  }

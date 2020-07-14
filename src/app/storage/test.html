@@ -1,0 +1,736 @@
+<!-- Main section starts here -->
+<section class="main-content" *ngIf="showstorageData;else donotshow">
+    <!-- <div class="card-header">
+        <span class="text-left">Unix Servers &nbsp; <a href=""><i class="info-icon"></i></a> </span>
+    </div> -->
+    <div class="container-fluid">
+        <div class="d-sm-flex flex-row flex-wrap">
+            <div class="w-100 p-2">
+                <div class="card-header px-0">
+                    <h6 class="text-left">Storage &nbsp; <a href="javascript:void(0)"><i class="info-icon"></i></a> </h6>
+                </div>
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <div class="d-sm-flex flex-row flex-wrap align-items-center">
+                            <div class="p-2">
+                                <span> Scale</span>
+                            </div>
+                            <div class="p-2 w-55">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button (click)="setScale(size.value)" type="button" class="btn mip-small btn-setRange" [ngClass]="(scaleValue==size.value) ? 'active-scale' : ''" *ngFor="let size of data.industrySize" [(ngModel)]="size.value" >{{size.label}}</button>
+                                </div>
+                            </div>
+                            <div class="p-2">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label>Region</label>
+                                        <select id="inputRegion" class="form-control mx-sm-3" name="selectedregion" [(ngModel)]='selectedregion'  (ngModelChange)='setRegion(selectedregion)'>
+                                            <option value="Grand Total" hidden>Global</option>
+                                            <option value="Total">&nbsp;Global&nbsp;</option>
+                                            <option *ngFor="let region of data.region"  value={{region.value}}> {{region.value}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Currency</label>
+                                        <select id="inputCurrency" class="form-control mx-sm-3" name="selectedcurrency" [(ngModel)]='selectedcurrency' (change)='setCurrency(selectedcurrency)'>
+                                            <option *ngFor="let currency of data.currency"  [ngValue]=currency> {{currency.currencyCode}} </option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-sm-flex flex-row flex-wrap mt-1">
+            <!--Storage Cost Allocation card starts-->
+            <div class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Storage Cost Allocation <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageData.data.TotalStorageCostAllocation.CostAllocationEmp.Number.info}}"></i></a>
+                    </div>
+                    <div class="card-body mx-auto">
+                        <!-- First row -->
+                        <div class="card custom-card p-0">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Personnel
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    <!-- 33% -->
+                                    {{storageData.data.TotalStorageCostAllocation.CostAllocationEmp.Number.value | number : '1.2-2' }}%
+                                </div>
+                                <div class="col-2 ">
+                                    <!-- <img src="/assets/images/circle.jpg"> -->
+                                    <app-donut-chart id="storage-cost-allocation-personnel" chartID="storage-cost-allocation-personnel" fillColor="03abba" percentVal="{{storageData.data.TotalStorageCostAllocation.CostAllocationEmp.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 p-0 d-inline">
+                                    <a href="javascript:void(0)" (click)="openModalDialog()"><i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Hardware
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    <!-- 16% -->
+                                    {{storageData.data.TotalStorageCostAllocation.CostAllocationHW.Number.value | number : '1.2-2' }}%
+                                </div>
+                                <div class="col-2">
+                                    <!-- <img src="/assets/images/circle.jpg"> -->
+                                    <app-donut-chart id="storage-cost-allocation-hw" chartID="storage-cost-allocation-hw" fillColor="29497b" percentVal="{{windowsData.data.TotalServerCostAllocation.CostAllocationHW.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="hardwareModalDialog()"> <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_hardware}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Third row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Software
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    <!-- 47% -->
+                                    {{storageData.data.TotalStorageCostAllocation.CostAllocationSW.Number.value | number : '1.2-2' }}%
+                                </div>
+                                <div class="col-2">
+                                    <!-- <img src="/assets/images/circle.jpg"> -->
+                                    <app-donut-chart id="storage-cost-allocation-sw" chartID="storage-cost-allocation-sw" fillColor="81cee4" percentVal="{{storageData.data.TotalStorageCostAllocation.CostAllocationSW.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="softwareModalDialog()" > <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fourth row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Outsourcing
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    <!-- 4% -->
+                                    {{storageData.data.TotalStorageCostAllocation.CostAllocationOS.Number.value | number : '1.2-2' }}%
+                                </div>
+                                <div class="col-2">
+                                    <!-- <img src="/assets/images/circle.jpg"> -->
+                                    <app-donut-chart id="storage-cost-allocation-outsource" chartID="storage-cost-allocation-outsource" fillColor="9acb3b" percentVal="{{storageData.data.TotalStorageCostAllocation.CostAllocationOS.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="outsourcingModalDialog()"> <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--Storage Cost Allocation card ends-->
+
+            <!-- Annual Cost Per OS instance card starts-->
+            <div class="p-2 w-37">
+                <div class="card custom-card min-ht320">
+                    <!-- (click)="toggle()" -->
+                    <div class="card-header" >
+                        Annual Cost Per Installed TB <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageData.data.AnnualCostPerInstalledTB.CostPerServer.NumberCY.info}}"></i></a>
+                        <a href="javascript:void(0)" class="popout" (click)="costPerInstanceDialog()"><i class="circle-arrow-icon float-right"></i></a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="border-right px-2 pb-3 newclass">
+                                <p class="m-1">Total Cost of Ownership</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="p-2">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2' }}</p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{storageData.data.AnnualCostPerInstalledTB.CostPerTB.Upper.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2' }}</p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{storageData.data.AnnualCostPerInstalledTB.CostPerTB.Lower.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2' }}</p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+
+                                        <div class="arrow-right"></div>
+                                        <div class=" minh-55">
+                                            <p class="text-info">$7302</p>
+                                            <small></small>
+                                        </div>
+                                        <div class="mt-4">
+                                            <div class="d-flex align-center arrow-img">
+                                                <img src="/assets/images/arrow-up.svg" class="img-fluid"/>
+                                                <p class="text-info">75%</p>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="p-0 pb-3 newclass">
+                                <p class="m-1">Market Price</p>
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{storageData.data.AnnualCostPerInstalledTB.PricePerTB.NumberCY.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2'}}</p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{storageData.data.AnnualCostPerInstalledTB.PricePerTB.UpperCY.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2' }}</p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{storageData.data.AnnualCostPerInstalledTB.PricePerTB.LowerCY.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2'}}</p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost Per OS instance card ends-->
+
+            <!-- Annual Cost Per core card starts-->
+            <div class="p-2 w-37">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Annual Cost Per Storage FTE <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{windowsData.data.AnnualCostPerCore.CostPerCore.Number.info}}"></i></a>
+                        <a href="javascript:void(0)" class="popout" (click)="costPerCoreDialog()"><i class="circle-arrow-icon float-right"></i></a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="border-right px-2 pb-3 newclass">
+                                <p class="m-2 text-center">Employee</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{windowsData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2'}}</p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{windowsData.data.AnnualCostPerCore.CostPerCore.Upper.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2' }}</p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{windowsData.data.AnnualCostPerCore.CostPerCore.Lower.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2' }}</p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+
+                                        <div class="arrow-right"></div>
+                                        <div class=" minh-55">
+                                            <p class="text-info">$4,436</p>
+                                            <small>Per Core</small>
+                                        </div>
+                                        <div class="mt-4">
+                                            <div class="d-flex align-center arrow-img"><img src="/assets/images/arrow-up.svg" class="img-fluid"/>
+                                                <p class="text-info">95%</p>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="p-0 pb-3 newclass">
+                                <p class="m-2 text-center">Contractor</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{windowsData.data.AnnualCostPerCore.PricePerCore.NumberCY.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2' }}</p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{windowsData.data.AnnualCostPerCore.PricePerCore.UpperCY.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2' }}</p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{windowsData.data.AnnualCostPerCore.PricePerCore.LowerCY.value * refactorVal | currency : currencyCode :'symbol-narrow' : '1.2-2' }}</p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost Per core card ends-->
+
+            <!--Storage provisioning time card starts-->
+            <!-- [ngClass]="[showDiv ? 'p-2 w-25' : 'p-2 w-17']" -->
+            <div class="p-2 w-17">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        Storage Utilization % <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageData.data.Utilization.Utilization.Number.info}}"></i></a>
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3">
+                                <div class="minh-55">
+                                    <!-- <span>
+                                        {{storageData.data.Utilization.Utilization.Number.value | number : '1.2-2' }}
+                                    </span> -->
+                                    <!-- <img src="/assets/images/circle-2.jpg" /> -->
+                                    <app-donut-chart id="windows-provising-time" chartID="windows-provising-time" fillColor="03abba" percentVal="{{storageData.data.Utilization.Utilization.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                    <p class="text-info">
+                                        {{storageData.data.Utilization.Utilization.Number.value | number : '1.2-2' }}
+                                    </p>
+                                    <p><small>(Mean)</small></p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{storageData.data.Utilization.Utilization.Upper.value | number : '1.2-2' }}%</p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{storageData.data.Utilization.Utilization.Lower.value | number : '1.2-2' }}%</p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="arrow-right"></div>
+                                <div class=" minh-55">
+                                    <img src="/assets/images/circle-2.jpg" />
+                                    <p>Seconds</p>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="d-flex align-center arrow-img"><img src="/assets/images/arrow-up.svg" class="img-fluid"/>
+                                        <p class="text-info">80%</p>
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Storage provisioning time card ends-->
+
+            <!--Storage availability % card starts-->
+            <!-- [ngClass]="[showDiv ? 'p-2 w-25' : 'p-2 w-17']" -->
+            <div class="p-2 w-17" >
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        <!-- test: {{storageData.data.Availability.Availability.Number}} -->
+                        Storage Availability % <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageData.data.Availability.Availability.Number.info}}"></i></a>
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3">
+                                <div class="minh-55">
+                                    <!-- <span>99.15%</span> -->
+                                    <!-- <img src="/assets/images/circle-2.jpg" /> -->
+
+                                    <app-donut-chart id="windows-server-avail" chartID="windows-server-avail" fillColor="03abba" percentVal="{{storageData.data.Availability.Availability.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+
+                                    <p class="text-info">{{storageData.data.Availability.Availability.Number.value | number : '1.2-2' }}%</p>
+                                    <p><small>(Mean)</small></p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{storageData.data.Availability.Availability.Upper.value | number : '1.2-2' }}%</p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{storageData.data.Availability.Availability.Lower.value | number : '1.2-2' }}%</p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="arrow-right"></div>
+                                <div class=" minh-55">
+                                    <img src="/assets/images/circle-2.jpg" />
+
+                                </div>
+                                <div class="mt-4">
+                                    <div class="d-flex align-center arrow-img"><img src="/assets/images/arrow-up.svg" class="img-fluid"/>
+                                        <p class="text-info">80%</p>
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Storage availability % card ends-->
+
+            <!-- [ngClass]="[showDiv ? 'p-2 w-25' : 'p-2 w-17']" -->
+            <div class="p-2 w-17">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        # Of Installed TBs <br> Per Storage FTE <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{windowsData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Number.info}}"></i></a>
+                    </div>
+                    <div class="card-body pt-3 pb-0">
+                        <div class="row">
+                            <div class="col p-3 mx-auto">
+                                <div class="minh-55">
+                                    <p class="text-info">{{windowsData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Number.value | number : '1.2-2' }}
+                                    </p>
+                                    <p><small>(Mean)</small></p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{windowsData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Upper.value | number : '1.2-2' }}%
+
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{windowsData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Lower.value | number : '1.2-2' }}%
+
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="arrow-right"></div>
+                                <div class=" minh-55">
+                                    <p class="text-info">160</p>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="d-flex align-center arrow-img"><img src="/assets/images/arrow-up.svg" class="img-fluid"/>
+                                        <p class="text-info">
+                                            80%
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staffing mix card starts-->
+            <!-- [ngClass]="[showDiv ? 'p-2 mb-2' : 'p-2 mb-2 w-23']" -->
+            <div class="p-2 w-23">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        Staffing mix <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{windowsData.data.StaffingMix.StaffingMixEmployee.Number.info}}"></i></a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="pb-0">
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="p-0">
+                                        <div class="d-flex flex-row flex-wrap">
+                                            <div class="p-2">
+                                                <div class="minh-55">
+                                                    <!-- <img src="/assets/images/circle-2.jpg" /> -->
+                                                    <app-donut-chart id="staffingmix-percentage-employee" chartID="staffingmix-percentage-employee" fillColor="9acb3b" percentVal="{{windowsData.data.StaffingMix.StaffingMixEmployee.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                                    <p class="text-info">{{windowsData.data.StaffingMix.StaffingMixEmployee.Number.value | number : '1.2-2' }}%</p>
+                                                    Employees <small>(Mean)</small>
+                                                </div>
+                                                <div class="my-3">
+                                                    <i class="arrow-up align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{windowsData.data.StaffingMix.StaffingMixEmployee.Upper.value | number : '1.2-2' }}%</p>
+                                                        <small>Upper</small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2">
+                                                    <i class="arrow-lower align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{windowsData.data.StaffingMix.StaffingMixEmployee.Lower.value | number : '1.2-2' }}%</p>
+                                                        <small>Lower</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2">
+                                                <div class="minh-55">
+                                                    <!-- <img src="/assets/images/circle-2.jpg" /> -->
+                                                    <app-donut-chart id="windows-staffingmix-percentage-contractor" chartID="windows-staffingmix-percentage-contractor" fillColor="03abba" percentVal="{{windowsData.data.StaffingMix.StaffingMixEmployee.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                                    <p class="text-info">{{windowsData.data.StaffingMix.StaffingMixContractor.Number.value | number : '1.2-2'}}%</p>
+                                                    Contractors <small>(Mean)</small>
+                                                </div>
+                                                <div class="my-3">
+                                                    <i class="arrow-up align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{windowsData.data.StaffingMix.StaffingMixContractor.Upper.value | number : '1.2-2'}}%</p>
+                                                        <small>Upper</small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2">
+                                                    <i class="arrow-lower align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{windowsData.data.StaffingMix.StaffingMixContractor.Lower.value | number : '1.2-2'}}%</p>
+                                                        <small>Lower</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="p-2 bg-lightblue" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+
+                                        <div class="arrow-right"></div>
+                                        <div class="d-flex flex-row flex-wrap">
+                                            <div class="p-2 mt-3">
+                                                <div class=" minh-55">
+                                                    <img src="/assets/images/circle-2.jpg" />
+                                                    <p class="text-info">76%</p>
+                                                    Employees
+                                                </div>
+                                                <div class="mt-4">
+                                                    <div class="d-flex align-center arrow-img"><img src="/assets/images/arrow-down.svg" class="img-fluid"/>
+                                                        <p class="text-info">10%</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 mt-3">
+                                                <div class=" minh-55">
+                                                    <img src="/assets/images/circle-2.jpg" />
+                                                    <p class="text-info">36%</p>
+                                                    Contractors
+                                                </div>
+                                                <div class="mt-4">
+                                                    <div class="d-flex align-center arrow-img"><img src="/assets/images/arrow-down.svg" class="img-fluid"/>
+                                                        <p class="text-info">50%</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Staffing mix card ends-->
+
+            <div class="p-2 w-17">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        Storage Type Per TB <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageData.data.Utilization.Utilization.Number.info}}"></i></a>
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3">
+                                <div class="minh-55">
+                                    <!-- <span>
+                                        {{storageData.data.Utilization.Utilization.Number.value | number : '1.2-2' }}
+                                    </span> -->
+                                    <!-- <img src="/assets/images/circle-2.jpg" /> -->
+                                    <app-donut-chart id="windows-provising-time" chartID="windows-provising-time" fillColor="03abba" percentVal="{{storageData.data.Utilization.Utilization.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                    <p class="text-info">
+                                        {{storageData.data.Utilization.Utilization.Number.value | number : '1.2-2' }}
+                                    </p>
+                                    <p><small>(Mean)</small></p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{storageData.data.Utilization.Utilization.Upper.value | number : '1.2-2' }}%</p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{storageData.data.Utilization.Utilization.Lower.value | number : '1.2-2' }}%</p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Main section ends here -->
+
+<!-- Drill-Down -->
+<div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_personnel}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="min-width: 864px;">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Storages Cost Allocation for Personnel
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0" style="min-height:360px; min-width:600px; overflow-y:scroll;">
+                <div style="position:absolute;  left:-362px">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="personnel-drilldown-windows" chartID="personnel-drilldown-windows" [chartData]="windowsData.drills.PersonnelCostAllocation"  thickness="35" chartWidth="180" chartRadius="100" chartLegendSize="19"  chartHeight="470"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_hardware}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_hardware}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="min-width: 763px;">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Storages Cost Allocation for Hardware
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0" style="min-height:340px; min-width:600px;">
+                <div style="position:absolute; top:20px; left:-370px">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="hardware-drillDown-windows" chartID="hardware-drillDown-windows" [chartData]="windowsData.drills.HardwareCostAllocation" thickness="35" chartWidth="180" chartRadius="30" chartLegendSize="19"  chartHeight="310"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_software}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="min-width: 763px;">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Storages Cost Allocation for Software
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0" style="min-height:395px; min-width:600px;">
+                <div style="position:absolute; top:20px; left:-368px">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="software-drillDown-windows" chartID="software-drillDown-windows" [chartData]="windowsData.drills.SoftwareCostAllocation"  thickness="35" chartWidth="180" chartRadius="40" chartLegendSize="19" chartHeight="350"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_outsourcing}">
+    <div class="modal-dialog" role="document" style="margin-left: 18rem;">
+        <div class="modal-content" style="min-width: 840px;">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Storages Cost Allocation for Outsourcing
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0" style="min-height:395px; min-width:600px; overflow-y:scroll;">
+                <div style="position:absolute; left:-384px">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="outsourcing-drillDown-windows" chartID="outsourcing-drillDown-windows" [chartData]="windowsData.drills.OutsourcingCostAllocation" thickness="35" chartWidth="180" chartRadius="98" chartHeight="465" chartLegendSize="23"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #donotshow>
+    <div class="loader-icon-container">
+        <div class="loader-icon"></div>
+    </div>
+</ng-template>
+
+<div class="backdrop" [ngStyle]="{'display':display_costPerInstance}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerInstance}">
+    <div class="modal-dialog modal-dialog-linechart" role="document">
+        <div class="modal-content">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Annual Cost Per OS Instance - 3 Year Trend
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeCostPerInstanceModalDialog()"></button>
+            </div>
+            <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+                <fusioncharts width= '480' height= '280' type="msline" [dataSource]="dataSourceCostPerInstance"></fusioncharts>
+                <!-- <line-chart></line-chart> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_costPerCore}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerCore}">
+    <div class="modal-dialog modal-dialog-linechart" role="document">
+        <div class="modal-content">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Annual Cost Per Core - 3 Year Trend
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeCostPerCoreModalDialog()"></button>
+            </div>
+            <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+                <fusioncharts width= '480' height= '280' type="msline" [dataSource]="dataSourceCostPerCore"></fusioncharts>
+                <!-- <line-chart></line-chart> -->
+            </div>
+        </div>
+    </div>
+</div>

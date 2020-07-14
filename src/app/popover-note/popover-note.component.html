@@ -1,0 +1,15 @@
+<div>
+    <popover-content #myPopover id="componentPopHoverId" class="NotePopupHover" placement="bottom" [closeOnClickOutside]="true" [animation]="false" [closeOnMouseOutside]="false">
+      <textarea class="form-control note-textarea" rows="5">{{componentPopHoverText}}</textarea>
+      <button type="submit" class="btn btn-note btn-Save" (click)="myPopover.hide()" >Save</button>
+      <button class="btn btn-note btn-Cancel" (click)="myPopover.hide()" >Cancel</button>
+    </popover-content>
+    <img src="assets/images/edit-icon.png" class="note-icon" 
+    [popover]="myPopover"  
+    [popoverOnHover]="false"
+    [popoverCloseOnClickOutside]="true"
+    [popoverCloseOnMouseOutside]="false"
+    [popoverDisabled]="false"
+    [popoverAnimation]="false"
+     />
+</div>

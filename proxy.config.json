@@ -1,0 +1,6 @@
+{
+  "isg_project/dashboard": {
+    "target": "https://isgintellisource.isg-one.com:8443/",
+    "secure": false
+   }
+  }

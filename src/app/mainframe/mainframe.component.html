@@ -1,0 +1,998 @@
+<!-- Main section starts here -->
+<section class="main-content" *ngIf="showMainFrameData;else donotshow">
+  <div class="card-header">
+    <span class="text-left pl-3">Mainframe &nbsp; <a href="javascript:void(0)"><i class="info-icon" placement="right" ngbTooltip="{{mainframeData.tower.id}}"></i></a> </span>
+    
+  </div>
+  <div class="container-fluid">
+    <div class="d-sm-flex flex-row flex-wrap">
+      <div class="w-100 p-2">
+        <div class="card custom-card">
+          <div class="card-body">
+            <div class="d-sm-flex flex-row flex-wrap align-items-center">
+              <div class="p-2">
+                <span class="text-left"> <p>Scale</p> (Configured MIPS)</span>
+              </div>
+              <div class="p-2 mr-auto">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button (click)="setScale(size)" type="button" class="btn mip-small btn-setRange scale-button" [ngClass]="(scaleValue==size.value) ? 'active-scale' : ''" *ngFor="let size of data.industrySize">{{size.key}}</button>
+                </div>
+              </div>
+              <div class="p-2">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <label>Region</label>
+                    <select id="inputRegion" class="form-control mx-sm-3" name="selectedregion" [(ngModel)]='selectedregion'  (ngModelChange)='setRegion(selectedregion)'>
+                      <option value="Grand Total" hidden>Global</option>
+                      <option value="Total">&nbsp;Global&nbsp;</option>
+                      <option *ngFor="let region of data.region"  [ngValue]=region> {{region.value}} </option>
+                    </select>
+                  </div>
+                 
+                  <div class="form-group">
+                    <label>Currency</label>
+                    <select id="inputCurrency" class="form-control mx-sm-3" name="selectedcurrency" [(ngModel)]='selectedcurrency' (change)='setCurrency(selectedcurrency)'>
+                      <option *ngFor="let currency of data.currency"  [ngValue]=currency> {{currency.value}} </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                      <label>Compare Scenario</label>
+                      <select id="inputScenarios" class="form-control mx-sm-3" name="selectedscenario" [(ngModel)]='selectedscenario' (ngModelChange)='getScenarioDataById(selectedscenario)'>
+                          <option value="N/A" hidden>N/A</option>    
+                        <option *ngFor='let scenario of selectedScenarioName' [ngValue]=scenario>{{scenario.label}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Custom Reference</label>
+                        <select id="inputCRG" class="form-control mx-sm-3" name="selectedcustomRef" [(ngModel)]='selectedcustomRef' (ngModelChange)='getScenarioDataByCustomRef(selectedcustomRef)'>
+                            <option *ngFor='let crg of selectedCRGName' [ngValue]=crg>{{crg.customName}}</option>
+                        </select>
+                        <a href="javascript:void(0)" *ngIf="selectedcustomRef.customId != '-9999'">
+                            <i class="info-icon" placement="top"ngbTooltip="{{selectedcustomRef.definition}}" ></i>
+                        </a>
+                      </div>
+
+                </form>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-sm-flex flex-row flex-wrap">
+      <!-- <div class="d-sm-flex flex-row flex-wrap"> -->
+        <div class="p-2">
+          <!-- Mainframe Cost Allocation card starts-->
+          <div class="card custom-card min-ht320">
+            <div class="card-header">
+              Mainframe Cost Allocation <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{mainframeDefinitionData.mainframeproductioncontrolpersonnel.defination}}" class="info-icon"></i></a>
+            </div>
+            <div class="card-body mx-auto">
+              <!-- First row -->
+              <div class="card custom-card p-0">
+                <div class="row card-body m-0">
+                  <div class="col-5 align-items-center d-inline-flex text-grey">
+                    Personnel
+                  </div>
+                  <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                    {{mainframeData.data.TotalMainframeCostAllocation.HighLevel.CostAllocationEmp_Number.value | number : '1.1-1' }}%
+                  </div>
+                  <div class="col-2 ">
+                    <app-donut-chart id="main-frame-cost-allocation-personnel" chartID="main-frame-cost-allocation-personnel" fillColor="03abba" percentVal="{{mainframeData.data.TotalMainframeCostAllocation.HighLevel.CostAllocationEmp_Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                  </div>
+                  <div class="col-2 p-0 d-inline">
+                    <a (click)="openModalDialog()" href="javascript:void(0)"><i class="circle-arrow-icon float-right"></i></a>
+                    <div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Second row -->
+              <div class="card custom-card mt-2">
+                <div class="row card-body m-0">
+                  <div class="col-5 align-items-center d-inline-flex text-grey">
+                    Hardware
+                  </div>
+                  <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                    {{mainframeData.data.TotalMainframeCostAllocation.HighLevel.CostAllocationHW_Number.value | number : '1.1-1' }}%
+                  </div>
+                  <div class="col-2 ">
+                    <app-donut-chart id="main-frame-cost-allocation-hardware" chartID="main-frame-cost-allocation-hardware" fillColor="29497b" percentVal="{{mainframeData.data.TotalMainframeCostAllocation.HighLevel.CostAllocationHW_Number.value/10 }}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                  </div>
+                  <div class="col-2 d-inline p-0">
+                    <a (click)="hardwareModalDialog()" href="javascript:void(0)"> <i class="circle-arrow-icon float-right"></i></a>
+                    <div class="backdrop" [ngStyle]="{'display':display_hardware}"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Third row -->
+              <div class="card custom-card mt-2">
+                <div class="row card-body m-0">
+                  <div class="col-5 align-items-center d-inline-flex text-grey">
+                    Software
+                  </div>
+                  <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                    {{mainframeData.data.TotalMainframeCostAllocation.HighLevel.CostAllocationSW_Number.value | number : '1.1-1' }}%
+                  </div>
+                  <div class="col-2 ">
+                    <app-donut-chart id="main-frame-cost-allocation-software" chartID="main-frame-cost-allocation-software" fillColor="81cee4" percentVal="{{mainframeData.data.TotalMainframeCostAllocation.HighLevel.CostAllocationSW_Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                  </div>
+                  <div class="col-2 d-inline p-0">
+                    <a (click)="softwareModalDialog()" href="javascript:void(0)"><i class="circle-arrow-icon float-right"></i></a>
+                    <div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fourth row -->
+              <div class="card custom-card mt-2">
+                <div class="row card-body m-0">
+                  <div class="col-5 align-items-center d-inline-flex text-grey">
+                    Outsourcing
+                  </div>
+                  <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                    {{mainframeData.data.TotalMainframeCostAllocation.HighLevel.CostAllocationOS_Number.value | number : '1.1-1' }}%
+                  </div>
+                  <div class="col-2">
+                    <app-donut-chart id="main-frame-cost-allocation-outsourcing" chartID="main-frame-cost-allocation-outsourcing" fillColor="9acb3b" percentVal="{{mainframeData.data.TotalMainframeCostAllocation.HighLevel.CostAllocationOS_Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                  </div>
+                  <div class="col-2 d-inline p-0">
+                    <a (click)="outsourcingModalDialog()" href="javascript:void(0)"> <i class="circle-arrow-icon float-right"></i></a>
+                    <div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Mainframe Cost Allocation card ends-->
+
+        <!-- Annual Cost Per OS instance card starts-->
+        <div class="p-2 w-37">
+          <div class="card custom-card min-ht320">
+            <div class="card-header">
+              Annual Cost Per Configured MIPS <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{mainframeDefinitionData.pricepermips_uppercy.defination}}" class="info-icon"></i></a>
+              <a href="javascript:void(0)" class="popout" (click)="costPerUserDialog()" *ngIf="!isLineChartDisabled" >
+                <i class="circle-arrow-icon float-right"></i>
+              </a>
+            </div>
+            <div class="card-body px-1 pb-0">
+              <div class="d-flex flex-row flex-wrap">
+                <!-- border-right px-2 newclass -->
+                <div class="col px-2 newclass">
+                  <p class="m-2">Total Cost of Ownership</p>
+                  <div class="d-flex flex-row flex-wrap m-0">
+                    <div class="p-2 mx-auto">
+                      <div class="minh-55">
+                        <p class="text-info">
+                          {{currencySymbol}}{{mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal | number : '1.0-0' }}
+                        </p>
+                        <small>(Mean)</small>
+                      </div>
+                      <div class="my-3">
+                        <i class="arrow-up align-top"></i>
+                        <div class="d-inline-block text-left">
+                          <p class="text-muted">{{currencySymbol}}{{mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel.CostPerMIPS_UpperCY.value * refactorVal | number : '1.0-0' }}</p>
+                          <small>Upper</small>
+                        </div>
+                      </div>
+
+                      <div class="mt-2 ">
+                        <i class="arrow-lower align-top"></i>
+                        <div class="d-inline-block text-left">
+                          <p class="text-muted">{{currencySymbol}}{{mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel.CostPerMIPS_LowerCY.value * refactorVal | number : '1.0-0' }}</p>
+                          <small>Lower</small>
+                        </div>
+                      </div>
+                    </div>
+
+                      <div class="col py-2 bg-lightblue text-center" *ngIf="(enterMyData.annualMainframeCost)>=0" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]" style="min-height: 219px;">
+
+                        <p *ngIf="!MainFrameOneEquality" class="text-info">{{currencySymbol}}{{enterMyData.annualMainframeCost  | number : '1.0-0' }}</p>
+                        <p *ngIf="MainFrameOneEquality" class="same-value-tco">
+                          {{currencySymbol}}{{enterMyData.annualMainframeCost  | number : '1.0-0' }}
+                        </p>
+
+                        <div class="mt-4">
+
+                          <!-- up arrow -->
+                          <div *ngIf="!MainFrameOneEquality && (enterMyData.annualMainframeCost > mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal)" class="arrow-img">
+                            <svg id="annualcostPerConfigMIPSSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                              <defs>
+                                <linearGradient id="progressSVGannual1" x1="0" y1="1" x2="0" y2="0">
+                                  <stop id="stop4000" [attr.offset]="makePositiveValue((((mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal)-enterMyData.annualMainframeCost)/(mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal))*100) + '%'" stop-color="#02ABBA" />
+                                  <stop id="stop4001" [attr.offset]="makePositiveValue((((mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal)-enterMyData.annualMainframeCost)/(mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal))*100) + '%'" stop-color="#e1edf3" />
+                                </linearGradient>
+                              </defs>
+                              <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                              h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                            </svg>
+                            <!-- *ngIf="enterMyData.annualMainframeCost!=mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal" -->
+                            <p class="remained-percentage remained-perc-font">
+                              {{ makePositiveValue((((mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal)- enterMyData.annualMainframeCost)/(mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal))*100) | number : '1.0-0' }}%
+                            </p>
+                          </div>
+
+                          <!-- down arrow-->
+                          <div *ngIf="!MainFrameOneEquality && (enterMyData.annualMainframeCost<mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal)" class=" arrow-img">
+                            <svg id="annualcostPerConfigMIPSSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                              <defs>
+                                <linearGradient id="progressSVGannual1" x1="0" y1="1" x2="0" y2="0">
+                                  <stop id="stop4000" [attr.offset]="makePositiveValue((((mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal)-enterMyData.annualMainframeCost)/(mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal))*100) + '%'" stop-color="#02ABBA" />
+                                  <stop id="stop4001" [attr.offset]="makePositiveValue((((mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal)-enterMyData.annualMainframeCost)/(mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal))*100) + '%'" stop-color="#e1edf3" />
+                                </linearGradient>
+                              </defs>
+                              <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                              h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                            </svg>
+                            <!-- *ngIf="enterMyData.annualMainframeCost!=mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal" -->
+                            <p class="remained-percentage remained-perc-font">
+                              {{ makePositiveValue((((mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal)- enterMyData.annualMainframeCost)/(mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.CostPerMIPS_NumberCY.value * refactorVal))*100) | number : '1.0-0' }}%
+                            </p>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <!-- empty box -->
+                      <div *ngIf="(enterMyData.annualMainframeCost)<0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]" style="min-height: 219px;" >
+                        <div class="align-self-center">
+                          <span class="bord-top"></span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <span class="border-right"></span>
+                  <!-- p-0 pb-3 newclass -->
+                  <div class="col maxw45 p-0 pb-3 newclass">
+                    <p class="m-2">Market Price</p>
+                    <div class="d-flex flex-row flex-wrap">
+                      <div class="p-2 mx-auto">
+                        <div class="minh-55">
+                          <p class="text-info">{{currencySymbol}}{{mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel_DrillDown.PricePerMIPS_NumberCY.value * refactorVal | number : '1.0-0' }}</p>
+                          <small>(Mean)</small>
+                        </div>
+                        <div class="my-3">
+                          <i class="arrow-up align-top"></i>
+                          <div class="d-inline-block text-left">
+                            <p class="text-muted">{{currencySymbol}}{{mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel.PricePerMIPS_UpperCY.value * refactorVal | number : '1.0-0' }}</p>
+                            <small>Upper</small>
+                          </div>
+                        </div>
+
+                        <div class="mt-2">
+                          <i class="arrow-lower align-top"></i>
+                          <div class="d-inline-block text-left">
+                            <p class="text-muted">{{currencySymbol}}{{mainframeData.data.AnnualCostPerConfiguredMIPS.HighLevel.PricePerMIPS_LowerCY.value * refactorVal | number : '1.0-0' }}</p>
+                            <small>Lower</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Annual Cost Per OS instance card ends-->
+
+          <!-- Annual Cost Per core card starts-->
+          <div class="p-2 w-37 kpi-width-all">
+            <div class="card custom-card min-ht320">
+              <div class="card-header">
+                Annual Cost Per Mainframe FTE <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{mainframeDefinitionData.costpercontractor_upper.defination}}" class="info-icon"></i></a>
+              </div>
+              <div class="card-body px-1 pb-0">
+                <div class="row">
+                  <div class="col border-right pb-3 newclass">
+                    <p class="m-2 text-center">Employee <small>(Mean)</small></p>
+                    <div class="d-flex flex-row flex-wrap m-0">
+                      <div class="p-2 mx-auto">
+                        <div class="minh-55">
+                          <p class="text-info">{{currencySymbol}}{{mainframeData.data.AnnualCostPerMainframeFTE.HighLevel.CostPerEmployee_Number.value * refactorVal | number : '1.0-0' }}</p>
+                          <small>(Mean)</small>
+                        </div>
+                        <div class="my-3">
+                          <i class="arrow-up align-top"></i>
+                          <div class="d-inline-block text-left">
+                            <p class="text-muted">{{currencySymbol}}{{mainframeData.data.AnnualCostPerMainframeFTE.HighLevel.CostPerEmployee_Upper.value * refactorVal | number : '1.0-0' }}</p>
+                            <small>Upper</small>
+                          </div>
+                        </div>
+
+                        <div class="mt-2 ">
+                          <i class="arrow-lower align-top"></i>
+                          <div class="d-inline-block text-left">
+                            <p class="text-muted">{{currencySymbol}}{{mainframeData.data.AnnualCostPerMainframeFTE.HighLevel.CostPerEmployee_Lower.value * refactorVal | number : '1.0-0' }}</p>
+                            <small>Lower</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col pb-3 newclass">
+                    <p class="m-2 text-center">Contractor <small>(Mean)</small></p>
+                    <div class="d-flex flex-row flex-wrap m-0">
+                      <div class="p-2 mx-auto">
+                        <div class="minh-55">
+                          <p class="text-info">{{currencySymbol}}{{mainframeData.data.AnnualCostPerMainframeFTE.HighLevel.CostPerContractor_Number.value * refactorVal | number : '1.0-0' }}</p>
+                          <small>(Mean)</small>
+                        </div>
+                        <div class="my-3">
+                          <i class="arrow-up align-top"></i>
+                          <div class="d-inline-block text-left">
+                            <p class="text-muted">{{currencySymbol}}{{mainframeData.data.AnnualCostPerMainframeFTE.HighLevel.CostPerContractor_Upper.value * refactorVal | number : '1.0-0' }}</p>
+                            <small>Upper</small>
+                          </div>
+                        </div>
+
+                        <div class="mt-2 ">
+                          <i class="arrow-lower align-top"></i>
+                          <div class="d-inline-block text-left">
+                            <p class="text-muted">{{currencySymbol}}{{mainframeData.data.AnnualCostPerMainframeFTE.HighLevel.CostPerContractor_Lower.value * refactorVal | number : '1.0-0' }}</p>
+                            <small>Lower</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Annual Cost Per core card ends-->
+
+          <!-- Utilization card starts-->
+          <div [ngClass]="[showDiv ? 'p-2 w-33 w-md-45' : 'p-2 w-25 w-md-45']">
+            <div class="card custom-card min-ht325">
+              <div class="card-header">
+                Mainframe Utilization % <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{mainframeData.data.Utilization.HighLevel.Utilization_Number.info}}" class="info-icon"></i></a>
+              </div>
+              <div class="card-body pt-3 pb-0">
+                <div class="row">
+                  <div class="col p-3 align-self-center">
+                    <app-donut-chart id="utilization-percentage" chartID="utilization-percentage" fillColor="8B69C8" percentVal="{{mainframeData.data.Utilization.HighLevel.Utilization_Number.value/10}}" chartWidth="80" chartHeight="80" ></app-donut-chart>
+                  </div>
+                  <div class="col p-2 pb-3">
+                    <div class="row">
+                      <div class="col p-0 mx-auto">
+                        <div class="minh-55">
+                          <p class="text-info">{{mainframeData.data.Utilization.HighLevel.Utilization_Number.value | number : '1.1-1' }}%</p>
+                          <small>(Mean)</small>
+                        </div>
+                        <div class="my-3">
+                          <i class="arrow-up align-top"></i>
+                          <div class="d-inline-block text-left">
+                            <p class="text-muted">{{mainframeData.data.Utilization.HighLevel.Utilization_Upper.value | number : '1.1-1' }}%</p>
+                            <small>Upper</small>
+                          </div>
+                        </div>
+
+                        <div class="mt-2">
+                          <i class="arrow-lower align-top"></i>
+                          <div class="d-inline-block text-left">
+                            <p class="text-muted">{{mainframeData.data.Utilization.HighLevel.Utilization_Lower.value | number : '1.1-1' }}%</p>
+                            <small>Lower</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col p-2 bg-lightblue text-center" *ngIf="(enterMyData.utilizationPercentage >= 0 && (enterMyData.utilizationPercentage | number : '1.1-1')!=(mainframeData.data.Utilization.HighLevel.Utilization_Number.value | number : '1.1-1'))" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                     
+                    <p class="text-info">{{enterMyData.utilizationPercentage | number : '1.1-1' }}%</p>
+                    <div class="mt-4">
+
+                      <!-- up arrow-->
+                      <div *ngIf="enterMyData.utilizationPercentage >= mainframeData.data.Utilization.HighLevel.Utilization_Number.value" class="arrow-img">
+                        <svg version="1.1" id="utilizationSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" >
+                        <defs>
+                          <linearGradient id="progressSVGannual26" x1="0" y1="1" x2="0" y2="0">
+                            <stop id="stop4003" [attr.offset]="(makePositiveValue ( ( ( ((mainframeData.data.Utilization.HighLevel.Utilization_Number.value - enterMyData.utilizationPercentage)) / (mainframeData.data.Utilization.HighLevel.Utilization_Number.value) ) * 100) )  | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                            <stop id="stop4004" [attr.offset]="(makePositiveValue ( ( ( ((mainframeData.data.Utilization.HighLevel.Utilization_Number.value - enterMyData.utilizationPercentage)) / (mainframeData.data.Utilization.HighLevel.Utilization_Number.value) ) * 100) )  | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                          </linearGradient>
+                        </defs>
+                        <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual26)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                        h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                      </svg>
+                      <p class="remained-percentage remained-perc-font">
+                        {{ makePositiveValue ( ( ( ((mainframeData.data.Utilization.HighLevel.Utilization_Number.value - enterMyData.utilizationPercentage)) / (mainframeData.data.Utilization.HighLevel.Utilization_Number.value) ) * 100) )  | number : '1.1-1' }}%
+                      </p>
+                    </div>
+
+                    <!-- down arrow-->
+                    <div *ngIf="enterMyData.utilizationPercentage < mainframeData.data.Utilization.HighLevel.Utilization_Number.value" class=" arrow-img">
+                      <svg version="1.1" id="utilizationSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                      width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                      <defs>
+                        <linearGradient id="progressSVGannual26" x1="0" y1="1" x2="0" y2="0">
+                          <stop id="stop4003" [attr.offset]="(makePositiveValue ( ( ( ((mainframeData.data.Utilization.HighLevel.Utilization_Number.value - enterMyData.utilizationPercentage)) / (mainframeData.data.Utilization.HighLevel.Utilization_Number.value) ) * 100) )  | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                          <stop id="stop4004" [attr.offset]="(makePositiveValue ( ( ( ((mainframeData.data.Utilization.HighLevel.Utilization_Number.value - enterMyData.utilizationPercentage)) / (mainframeData.data.Utilization.HighLevel.Utilization_Number.value) ) * 100) )  | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                        </linearGradient>
+                      </defs>
+                      <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual26)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                      h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                    </svg>
+                    <p class="remained-percentage remained-perc-font">
+                      {{ makePositiveValue ( ( ( ((mainframeData.data.Utilization.HighLevel.Utilization_Number.value - enterMyData.utilizationPercentage)) / (mainframeData.data.Utilization.HighLevel.Utilization_Number.value) ) * 100) )  | number : '1.1-1' }}%
+                    </p>
+                  </div>
+
+                </div>
+              </div>
+
+              
+
+              <!-- empty box-->
+              <div *ngIf="(enterMyData.utilizationPercentage<0)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                <div class="align-self-center">
+                  <span class="bord-top"></span>
+                </div>
+              </div>
+
+              <div *ngIf="((enterMyData.utilizationPercentage | number : '1.1-1')==(mainframeData.data.Utilization.HighLevel.Utilization_Number.value | number : '1.1-1'))" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                <div class="align-self-center">
+                  <p class="same-value">
+                    {{enterMyData.utilizationPercentage | number : '1.1-1' }}%
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Utilization card ends-->
+
+      <!-- Mainframe Availability card starts-->
+      <div [ngClass]="[showDiv ? 'p-2 w-33' : 'p-2 w-25']">
+        <div class="card custom-card min-ht325">
+          <div class="card-header">
+            Mainframe Availability % <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{mainframeData.data.Availability.HighLevel.Availability_Number.info}}" class="info-icon"></i></a>
+          </div>
+          <div class="card-body pt-3 pb-0">
+            <div class="row">
+              <div class="col p-3 align-self-center">
+                <!-- <app-donut-chart id="availability-percentage" chartID="availability-percentage" fillColor="03abba" percentVal="{{mainframeData.data.Availability.HighLevel.Availability_Number.value/10}}" chartWidth="80" chartHeight="80" ></app-donut-chart> -->
+
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="75px" height="110px" viewBox="0 0 75 110" enable-background="new 0 0 75 110" xml:space="preserve">
+                <rect x="42.483" y="29.57" fill="none" width="8.459" height="71.012"/>
+                <defs>
+                  <linearGradient id="progress78" x1="0" y1="1" x2="0" y2="0">
+                    <stop id="stop79" [attr.offset]="(mainframeData.data.Availability.HighLevel.Availability_Number.value/100)" stop-color="#03abba"/>
+                    <stop id="stop80" [attr.offset]="(mainframeData.data.Availability.HighLevel.Availability_Number.value/100)" stop-color="#e1edf3"/>
+                  </linearGradient>
+                </defs>
+                <g>
+                  <rect x="0.492" y="6.262" fill="url(#progress78)" width="8.459" height="101.752"/>
+                  <rect x="66.049" y="6.262" fill="url(#progress78)" width="8.459" height="101.752"/>
+                  <path fill="url(#progress78)" d="M13.181,108.014h48.639V1.987H13.181V108.014z M42.483,29.57h8.459v71.012h-8.459V29.57z"/>
+                </g>
+              </svg>
+            </div>
+            <div class="col p-2 pb-3">
+              <div class="row">
+                <div class="col p-0 mx-auto">
+                  <div class="minh-55">
+                    <p class="text-info">{{mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2' }}%</p>
+                    <small>(Mean)</small>
+                  </div>
+                  <div class="my-3">
+                    <i class="arrow-up align-top"></i>
+                    <div class="d-inline-block text-left">
+                      <p class="text-muted">{{mainframeData.data.Availability.HighLevel.Availability_Upper.value | number : '1.2-2' }}%</p>
+                      <small>Upper</small>
+                    </div>
+                  </div>
+
+                  <div class="mt-2">
+                    <i class="arrow-lower align-top"></i>
+                    <div class="d-inline-block text-left">
+                      <p class="text-muted">{{mainframeData.data.Availability.HighLevel.Availability_Lower.value | number : '1.2-2' }}%</p>
+                      <small>Lower</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col p-2 bg-lightblue text-center" *ngIf="(enterMyData.availablityPercentage >= 0 && (enterMyData.availablityPercentage!=(mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2')))" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+              <p class="text-info">{{enterMyData.availablityPercentage | number : '1.2-2' }}%</p>
+              <div class="mt-4">
+                <!-- up arrow-->
+                <div *ngIf="enterMyData.availablityPercentage >= mainframeData.data.Availability.HighLevel.Availability_Number.value" class="arrow-img">
+                  <svg version="1.1" id="availabilitySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                  <defs>
+                    <linearGradient id="progressSVGannual35" x1="0" y1="1" x2="0" y2="0">
+                      <stop id="stop4005" [attr.offset]="makePositiveValue ( ( ( ((mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') - (enterMyData.availablityPercentage | number : '1.2-2')) / (mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') ) * 100 | number : '1.0-2') ) + '%'" stop-color="#02ABBA" />
+                      <stop id="stop4006" [attr.offset]="makePositiveValue ( ( ( ((mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') - (enterMyData.availablityPercentage | number : '1.2-2')) / (mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') ) * 100 | number : '1.0-2') ) + '%'" stop-color="#e1edf3" />
+                    </linearGradient>
+                  </defs>
+                  <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual35)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                  h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                </svg>
+                <p class="remained-percentage remained-perc-font">
+
+                  {{ makePositiveValue ( ( ( ((mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') - (enterMyData.availablityPercentage | number : '1.2-2')) / (mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') ) * 100 | number : '1.2-2') ) }}%
+                </p>
+              </div>
+              <!-- down arrow-->
+              <div *ngIf="enterMyData.availablityPercentage < mainframeData.data.Availability.HighLevel.Availability_Number.value" class="arrow-img">
+                <svg version="1.1" id="availabilitySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                  <defs>
+                    <linearGradient id="progressSVGannual35" x1="0" y1="1" x2="0" y2="0">
+                      <stop id="stop4005" [attr.offset]="makePositiveValue ( ( ( ((mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') - (enterMyData.availablityPercentage | number : '1.2-2')) / (mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') ) * 100 | number : '1.0-2') ) + '%'" stop-color="#02ABBA" />
+                      <stop id="stop4006" [attr.offset]="makePositiveValue ( ( ( ((mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') - (enterMyData.availablityPercentage | number : '1.2-2')) / (mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') ) * 100 | number : '1.0-2') ) + '%'" stop-color="#e1edf3" />
+                    </linearGradient>
+                  </defs>
+                  <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual35)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                  h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                </svg>
+                <p class="remained-percentage remained-perc-font">
+
+                  {{ makePositiveValue ( ( ( ((mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') - (enterMyData.availablityPercentage | number : '1.2-2')) / (mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2') ) * 100 | number : '1.2-2') ) }}%
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <!--empty box -->
+          <div *ngIf="(enterMyData.availablityPercentage<0)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+            <div class="align-self-center">
+              <span class="bord-top"></span>
+            </div>
+          </div>
+
+          <div *ngIf="(enterMyData.availablityPercentage==(mainframeData.data.Availability.HighLevel.Availability_Number.value | number : '1.2-2'))" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+            <div class="align-self-center">
+              <p class="same-value">
+                {{enterMyData.availablityPercentage | number : '1.2-2' }}%
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Mainframe availability card ends-->
+
+  <!-- No. Of Configured MIPS Per FTE card starts-->
+  <div [ngClass]="[showDiv ? 'p-2 w-33' : 'p-2 w-25']">
+    <div class="card custom-card min-ht325">
+      <div class="card-header" style="text-transform: none;">
+        # of Configured MIPS Per FTE  <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{mainframeDefinitionData.mipsperfte_number.defination}}" class="info-icon"></i></a>
+      </div>
+      <div class="card-body pt-3 pb-0">
+        <div class="row">
+          <div class="col p-2 pb-3">
+            <div class="row">
+              <div class="col p-0 mx-auto">
+                <div class="minh-55">
+                  <p class="text-info">{{mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value | number : '1.0-0' }}</p>
+                  <small>(Mean)</small>
+                </div>
+                <div class="my-3">
+                  <i class="arrow-up align-top"></i>
+                  <div class="d-inline-block text-left">
+                    <p class="text-muted">
+                      {{mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Upper.value | number : '1.0-0' }}</p>
+                      <small>Upper</small>
+                    </div>
+                  </div>
+
+                  <div class="mt-2">
+                    <i class="arrow-lower align-top"></i>
+                    <div class="d-inline-block text-left">
+                      <p class="text-muted">{{mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Lower.value | number : '1.0-0' }}</p>
+                      <small>Lower</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- {{mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value}} -->
+            <!-- *ngIf="((enterMyData.noOfConfiguredMIPS | number : '1.0-0')>0)&&(enterMyData.noOfConfiguredMIPS | number : '1.0-0')!=(mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value | number : '1.0-0')" -->
+            
+            <div class="col p-2 bg-lightblue text-center" *ngIf="(enterMyData.noOfConfiguredMIPS>=0)" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+              <!-- <p class="text-info">{{enterMyData.noOfConfiguredMIPS | number : '1.0-0' }}</p> -->
+
+              <p *ngIf="!MainFrameFTEEquality" class="text-info">
+                {{enterMyData.noOfConfiguredMIPS | number : '1.0-0'}}
+              </p>
+              <p *ngIf="MainFrameFTEEquality" class="same-value-mips-configured">
+                {{enterMyData.noOfConfiguredMIPS | number : '1.0-0'}}
+              </p>
+
+              <div class="mt-4">
+                <!-- up arrow-->
+                <div *ngIf="!MainFrameFTEEquality&&(enterMyData.noOfConfiguredMIPS>=mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value)" class="arrow-img">
+                  <svg version="1.1" id="noOfConfiguredMipsSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                    <defs>
+                      <linearGradient id="progressSVGannual4" x1="0" y1="1" x2="0" y2="0">
+                        <stop id="stop4005" [attr.offset]="makePositiveValue ( (((enterMyData.noOfConfiguredMIPS - mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value) / mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value) * 100) ) + '%'" stop-color="#02ABBA" />
+                        <stop id="stop4006" [attr.offset]="makePositiveValue ( (((enterMyData.noOfConfiguredMIPS - mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value) / mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value) * 100) ) + '%'" stop-color="#e1edf3" />
+                      </linearGradient>
+                    </defs>
+                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual4)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                  </svg>
+                  <p class="remained-percentage remained-perc-font">
+                    {{ makePositiveValue(((mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value - enterMyData.noOfConfiguredMIPS) / mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value)) * 100 | number : '1.0-0' }}%
+                  </p>
+                </div>
+
+                <!-- down arrow-->
+                <div *ngIf="!MainFrameFTEEquality&&(enterMyData.noOfConfiguredMIPS<mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value)" class="arrow-img">
+                  <svg version="1.1" id="noOfConfiguredMipsSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                    <defs>
+                      <linearGradient id="progressSVGannual4" x1="0" y1="1" x2="0" y2="0">
+                        <stop id="stop4005" [attr.offset]="makePositiveValue ( (((enterMyData.noOfConfiguredMIPS - mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value) / mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value) * 100) ) + '%'" stop-color="#02ABBA" />
+                        <stop id="stop4006" [attr.offset]="makePositiveValue ( (((enterMyData.noOfConfiguredMIPS - mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value) / mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value) * 100) ) + '%'" stop-color="#e1edf3" />
+                      </linearGradient>
+                    </defs>
+                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual4)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                  </svg>
+
+                  <p class="remained-percentage remained-perc-font">
+                    {{ makePositiveValue(((mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value - enterMyData.noOfConfiguredMIPS) / mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value)) * 100 | number : '1.0-0' }}%
+                  </p>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- empty box -->
+            <div *ngIf="(enterMyData.noOfConfiguredMIPS<0) " class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+              <div class="align-self-center">
+                <span class="bord-top"></span>
+              </div>
+            </div>
+
+            <!-- both values are equal -->
+            <!-- <div *ngIf="(enterMyData.noOfConfiguredMIPS | number : '1.0-0')==(mainframeData.data.NumberofConfiguredMIPSPerFTE.HighLevel.MIPSPerFTE_Number.value | number : '1.0-0')" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+              <div class="align-self-center">
+                <p class="same-value-mips-configured">{{enterMyData.noOfConfiguredMIPS | number : '1.0-0'}}</p>
+              </div>
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- No. Of Configured MIPS Per FTE card ends-->
+
+
+    <!-- Staffing mix card starts-->
+    <div [ngClass]="[showDiv ? 'p-2 mb-2' : 'p-2 mb-2 w-25']">
+      <div class="card custom-card min-ht325">
+        <div class="card-header">
+          Staffing mix <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{mainframeDefinitionData.staffingmixemployee_lower.defination}}" class="info-icon"></i></a>
+        </div>
+        <div class="card-body px-1 pb-0">
+          <div class="d-flex flex-row flex-wrap">
+            <div class="pb-0 mx-auto">
+              <div class="d-flex flex-row flex-wrap">
+                <div class="p-0">
+                  <div class="d-flex flex-row flex-wrap">
+                    <div class="p-2">
+                      <div class="minh-55">
+                        <app-donut-chart id="staffingmix-percentage-employee" chartID="staffingmix-percentage-employee"  fillColor="9acb3b" percentVal="{{mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value/10}}" chartWidth="80" chartHeight="80" ></app-donut-chart>
+                        <p class="text-info">
+                          {{mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value | number : '1.1-1' }}%
+                        </p>
+                        Employees <small>(Mean)</small>
+                      </div>
+                      <div class="my-3">
+                        <i class="arrow-up align-top"></i>
+                        <div class="d-inline-block text-left">
+                          <p class="text-muted">
+                            {{mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Upper.value | number : '1.1-1' }}%
+                          </p>
+                          <small>Upper</small>
+                        </div>
+                      </div>
+
+                      <div class="mt-2">
+                        <i class="arrow-lower align-top"></i>
+                        <div class="d-inline-block text-left">
+                          <p class="text-muted">
+                            {{mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Lower.value | number : '1.1-1' }}%
+                          </p>
+                          <small>Lower</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="p-2">
+                      <div class="minh-55">
+                        <app-donut-chart id="staffingmix-percentage-contractor" chartID="staffingmix-percentage-contractor" fillColor="03abba" percentVal="{{mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value/10}}" chartWidth="80" chartHeight="80" ></app-donut-chart>
+                        <p class="text-info">
+                          {{mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value | number : '1.1-1' }}%
+                        </p>
+                        Contractors <small>(Mean)</small>
+                      </div>
+                      <div class="my-3">
+                        <i class="arrow-up align-top"></i>
+                        <div class="d-inline-block text-left">
+                          <p class="text-muted">
+                            {{mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Upper.value | number : '1.1-1' }}%
+                          </p>
+                          <small>Upper</small>
+                        </div>
+                      </div>
+
+                      <div class="mt-2">
+                        <i class="arrow-lower align-top"></i>
+                        <div class="d-inline-block text-left">
+                          <p class="text-muted">
+                            {{mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Lower.value | number : '1.1-1' }}%</p>
+                            <small>Lower</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-lightblue" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]" *ngIf="(enterMyData.staffingmixEmployee*100<0 && enterMyData.staffingmixContract*100<0)">
+                    <div class="align-self-center p-5 mt-3">
+                      <span class="bord-top-both-empty"></span>
+                    </div>
+                  </div>
+
+                  <div *ngIf="(enterMyData.staffingmixEmployee*100>=0 || enterMyData.staffingmixContract*100>=0)" class="p-2 bg-lightblue" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+
+                    <div class="d-flex flex-row flex-wrap">
+
+                      <div *ngIf="enterMyData.staffingmixEmployee*100>=0" class="d-flex flex-row flex-wrap">
+                        <div class="p-2 mt-3">
+
+                          <div *ngIf="!staffingEmployeeEquality" class=" minh-55">
+                            <p class="text-info">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                            Employees
+                          </div>
+
+                          <div *ngIf="staffingEmployeeEquality" class=" minh-55">
+                            <p class="text-info">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                            Employees
+                          </div>
+
+                          <div *ngIf="!staffingEmployeeEquality && ((enterMyData.staffingmixEmployee*100) > mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value)" class="mt-4">
+                            <div class=" arrow-img">
+                              <svg  id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                <defs>
+                                  <linearGradient id="progressSVGannual5" x1="0" y1="1" x2="0" y2="0">
+                                    <stop id="stop4010" [attr.offset]=" makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value - (enterMyData.staffingmixEmployee*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                    <stop id="stop4009" [attr.offset]=" makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value - (enterMyData.staffingmixEmployee*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                  </linearGradient>
+                                </defs>
+                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                              </svg>
+                              <p *ngIf="enterMyData.staffingmixEmployee*100!=mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value" class="remained-percentage remained-perc-font">
+                                {{ makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value - (enterMyData.staffingmixEmployee*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value) * 100) | number : '1.1-1' }}%
+
+                              </p>
+                            </div>
+                          </div>
+
+                          <div *ngIf="!staffingEmployeeEquality && ((enterMyData.staffingmixEmployee*100) < mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value)" class="mt-4">
+                            <div class=" arrow-img">
+                              <svg  id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                <defs>
+                                  <linearGradient id="progressSVGannual5785" x1="0" y1="1" x2="0" y2="0">
+                                    <stop id="stop401120" [attr.offset]=" makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value - (enterMyData.staffingmixEmployee*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                    <stop id="stop402309" [attr.offset]=" makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value - (enterMyData.staffingmixEmployee*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                  </linearGradient>
+                                </defs>
+                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5785)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                              </svg>
+                              <p *ngIf="enterMyData.staffingmixEmployee*100!=mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value" class="remained-percentage remained-perc-font">
+
+                                {{ makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value - (enterMyData.staffingmixEmployee*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixEmployee_Number.value) * 100) | number : '1.1-1' }}%
+
+                              </p>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div *ngIf="enterMyData.staffingmixEmployee*100<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                        <div class="align-self-center">
+                          <span class="bord-top"></span>
+                        </div>
+                      </div>
+
+                      <div *ngIf="enterMyData.staffingmixContract*100>=0" class="d-flex flex-row flex-wrap ">
+                        <div class="p-2 mt-3">
+
+                          <div *ngIf="!contractEquality" class=" minh-55">
+                            <p class="text-info">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                            Contractors
+                          </div>
+                          <div *ngIf="contractEquality" class=" minh-55">
+                            <p class="text-info">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                            Contractors
+                          </div>
+
+                          <div *ngIf="!contractEquality &&(enterMyData.staffingmixContract*100)>mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value" class="mt-4">
+                            <div class=" arrow-img">
+                              <svg  id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                <defs>
+                                  <linearGradient id="progressSVGannual65" x1="0" y1="1" x2="0" y2="0">
+                                    <stop id="stop4011" [attr.offset]="makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value - (enterMyData.staffingmixContract*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                    <stop id="stop4012" [attr.offset]="makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value - (enterMyData.staffingmixContract*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                  </linearGradient>
+                                </defs>
+                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                              </svg>
+                              <p *ngIf="enterMyData.staffingmixContract*100!=mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value" class="remained-percentage remained-perc-font">
+
+                                {{ makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value - (enterMyData.staffingmixContract*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value) * 100) | number : '1.1-1' }}%
+
+                              </p>
+                            </div>
+                          </div>
+
+                          <div *ngIf="!contractEquality &&(enterMyData.staffingmixContract*100)<mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value" class="mt-4">
+                            <div class=" arrow-img">
+                              <svg  id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                <defs>
+                                  <linearGradient id="progressSVGannual65451" x1="0" y1="1" x2="0" y2="0">
+                                    <stop id="stop401112" [attr.offset]="makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value - (enterMyData.staffingmixContract*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                    <stop id="stop402312" [attr.offset]="makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value - (enterMyData.staffingmixContract*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                  </linearGradient>
+                                </defs>
+                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65451)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                              </svg>
+                              <p *ngIf="enterMyData.staffingmixContract*100!=mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value" class="remained-percentage remained-perc-font">
+
+                                {{ makePositiveValue(((mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value - (enterMyData.staffingmixContract*100)) / mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value) * 100) | number : '1.1-1' }}%
+
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="enterMyData.staffingmixContract*100<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                        <div class="align-self-center">
+                          <span class="bord-top"></span>
+                        </div>
+                      </div>
+
+                      <!-- <div *ngIf="(enterMyData.staffingmixContract*100 == mainframeData.data.StaffingMix.HighLevel.StaffingMixContractor_Number.value)" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                        <div class="align-self-center">
+                          <p class="same-value">{{ enterMyData.staffingmixContract * 100 | number : '1.0-1' }}%</p>
+                        </div>
+                      </div> -->
+
+                    </div>
+
+                  </div>
+
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Staffing mix card ends-->
+    </div>
+  </div>
+</section>
+
+<ng-template #donotshow>
+  <div class="loader-icon-container">
+    <div class="loader-icon"></div>
+  </div>
+</ng-template>
+
+<div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_personnel}">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content drilldown-modal-width">
+      <div class="modal-header infra-popup-text-header">
+        <div class="popup-div">
+          Mainframe Cost Allocation for Personnel
+        </div>
+        <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+      </div>
+      <div class="modal-body padding0 drilldown-modal-body" style="min-height: 400px;">
+        <div class="drilldown-chart">
+          <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="personnel-drillDown" chartID="personnel-drillDown" [chartData]="mainframeData.drills.PersonnelCostAllocation"  thickness="35" chartWidth="180" chartRadius="40" chartLegendSize="19"  chartHeight="340"></mainframe-drill-down-donut-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_hardware}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_hardware}">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content drilldown-modal-width">
+      <div class="modal-header infra-popup-text-header">
+        <div class="popup-div">
+          Mainframe Cost Allocation for Hardware
+        </div>
+        <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+      </div>
+      <div class="modal-body padding0 drilldown-modal-body">
+        <div class="drilldown-chart">
+          <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="hardware-drillDown" chartID="hardware-drillDown" [chartData]="mainframeData.drills.HardwareCostAllocation" thickness="35" chartWidth="180" chartRadius="30" chartLegendSize="19"  chartHeight="310"></mainframe-drill-down-donut-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_software}">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content drilldown-modal-width">
+      <div class="modal-header infra-popup-text-header">
+        <div class="popup-div">
+          Mainframe Cost Allocation for Software
+        </div>
+        <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+      </div>
+      <div class="modal-body padding0 software-drilldown-modal-body">
+        <div class="drilldown-chart">
+          <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="software-drillDown" chartID="software-drillDown" [chartData]="mainframeData.drills.SoftwareCostAllocation"  thickness="35" chartWidth="180" chartRadius="50" chartLegendSize="19" chartHeight="400" rotateTextFlg=true></mainframe-drill-down-donut-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_outsourcing}">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content outsourcing-drilldown-modal-width">
+      <div class="modal-header infra-popup-text-header">
+        <div class="popup-div">
+          Mainframe Cost Allocation for Outsourcing
+        </div>
+        <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+      </div>
+      <div class="modal-body padding0 outsourcing-drilldown-modal-body">
+        <div class="outsourcing-drilldown-chart">
+          <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="outsourcing-drillDown" chartID="outsourcing-drillDown" [chartData]="mainframeData.drills.OutsourcingCostAllocation" thickness="35" chartWidth="180" chartRadius="100" chartHeight="470" chartLegendSize="23" rotateTextFlg=true></mainframe-drill-down-donut-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="backdrop" [ngStyle]="{'display':display_costPerUser}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerUser}">
+  <div class="modal-dialog  modal-dialog-centered modal-dialog-linechart" role="document">
+    <div class="modal-content">
+      <div class="modal-header infra-popup-text-header">
+        <div class="popup-div">
+          Annual Cost Per Configured MIPS - 3 Year Trend
+        </div>
+        <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeCostPerUserModalDialog()"></button>
+      </div>
+      <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+        <line-chart *ngIf="showDrillDown" [chartData]="dataSourceCostPerUser" id="mainframeChart" chartId="mainframeChart"></line-chart>
+      </div>
+    </div>
+  </div>
+</div>

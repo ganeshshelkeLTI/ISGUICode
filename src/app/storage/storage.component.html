@@ -1,0 +1,1342 @@
+<!-- Main section starts here -->
+<section class="main-content" *ngIf="showStorageData;else donotshow">
+    <div class="container-fluid">
+        <div class="d-sm-flex flex-row flex-wrap">
+            <div class="w-100 p-2">
+                <div class="card-header px-0">
+                    <h6 class="text-left">Storage &nbsp; <a href="javascript:void(0)"><i class="info-icon" placement="right" ngbTooltip="{{storageData.tower.id}}"></i></a> </h6>
+                </div>
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <div class="d-sm-flex flex-row flex-wrap align-items-center">
+                            <div class="p-2">
+                                <span> Scale (Installed TBs)
+                                </span>
+                            </div>
+                            <div class="p-2 mr-auto">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    
+                                    <button (click)="setScale(size)" type="button" class="btn mip-small btn-setRange scale-button" [ngClass]="[(scaleValue==size.value) ? 'active-scale' : 'btn mip-small btn-setRange']" *ngFor="let size of data.industrySize">{{size.key}}</button>
+                                </div>
+                            </div>
+                            <div class="p-2">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label>Region</label>
+                                        <select id="inputRegion" class="form-control mx-sm-3" name="selectedregion" [(ngModel)]='selectedregion'  (change)='setRegion(selectedregion)'>
+                                            <option value="Grand Total" hidden>Global</option>
+                                            <option value="Total">&nbsp;Global&nbsp;</option>
+                                            <option *ngFor="let region of data.region"  [ngValue]=region> {{region.value}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Currency</label>
+                                        <select id="inputCurrency" class="form-control mx-sm-3" name="selectedcurrency" [(ngModel)]='selectedcurrency' (change)='setCurrency(selectedcurrency)'>
+                                            <option *ngFor="let currency of data.currency"  [ngValue]=currency> {{currency.value}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Compare Scenario</label>
+                                            <select id="inputScenarios" class="form-control mx-sm-3" name="selectedscenario" [(ngModel)]='selectedscenario' (ngModelChange)='getScenarioDataById(selectedscenario)'>
+                                            <option value="N/A" hidden>N/A</option>
+                                            <option *ngFor='let scenario of selectedScenarioName' [ngValue]=scenario>{{scenario.label}}</option>
+                                            </select>
+                                          </div>
+                                          <div class="form-group">
+                                                <label>Custom Reference</label>
+                                            <select id="inputCRG" class="form-control mx-sm-3" name="selectedcustomRef" [(ngModel)]='selectedcustomRef' (ngModelChange)='getScenarioDataByCustomRef(selectedcustomRef)'>
+                                                <option *ngFor='let crg of selectedCRGName' [ngValue]=crg>{{crg.customName}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" *ngIf="selectedcustomRef.customId != '-9999'">
+                                                    <i class="info-icon" placement="top"ngbTooltip="{{selectedcustomRef.definition}}" ></i>
+                                            </a>
+                                          </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-sm-flex flex-row flex-wrap">
+
+            <!-- Storage Cost Allocation card starts-->
+            <div class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Storage Cost Allocation <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageDefinitionData.storagearchitecturehardware.defination}}"></i></a>
+                    </div>
+                    <div class="card-body mx-auto">
+
+                        <!-- First row -->
+                        <div class="card custom-card p-0">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Personnel
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{storageData.data.TotalStorageCostAllocation.CostAllocationEmp.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2 ">
+                                    <app-donut-chart id="storage-cost-allocation-personnel" chartID="storage-cost-allocation-personnel" fillColor="03abba" percentVal="{{storageData.data.TotalStorageCostAllocation.CostAllocationEmp.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 p-0 d-inline">
+                                    <a href="javascript:void(0)" (click)="openModalDialog()"><i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Hardware
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{storageData.data.TotalStorageCostAllocation.CostAllocationHW.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+                                    <app-donut-chart id="storage-cost-allocation-hw" chartID="storage-cost-allocation-hw" fillColor="29497b" percentVal="{{storageData.data.TotalStorageCostAllocation.CostAllocationHW.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="hardwareModalDialog()"> <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_hardware}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Third row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Software
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{storageData.data.TotalStorageCostAllocation.CostAllocationSW.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+                                    <app-donut-chart id="windows-cost-allocation-sw" chartID="windows-cost-allocation-sw" fillColor="81cee4" percentVal="{{storageData.data.TotalStorageCostAllocation.CostAllocationSW.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="softwareModalDialog()" > <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fourth row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Outsourcing
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{storageData.data.TotalStorageCostAllocation.CostAllocationOS.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+                                    <app-donut-chart id="storage-cost-allocation-outsource" chartID="storage-cost-allocation-outsource" fillColor="9acb3b" percentVal="{{storageData.data.TotalStorageCostAllocation.CostAllocationOS.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="outsourcingModalDialog()"> <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Storage Cost Allocation card ends-->
+
+            <!-- Annual Cost Per Installed TB card starts-->
+            <div [ngClass]="[showDiv ? 'w-md-100 w-37' : 'w-37']" class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Annual Cost Per Installed TB 
+                        <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageDefinitionData.costpertb_upper.defination}}"></i></a>
+                        <a *ngIf="isLineChartDisabled==false" href="javascript:void(0)" class="popout" (click)="costPerUserDialog()"><i class="circle-arrow-icon float-right"></i></a>
+                        <div class="backdrop" [ngStyle]="{'display':display_costPerUser}"></div>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col border-right px-2 newclass">
+                                <p class="m-1">Total Cost of Ownership</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{currencySymbol}}{{storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal | number : '1.0-0' }}</p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{storageData.data.AnnualCostPerInstalledTB.CostPerTB.Upper.value * refactorVal | number : '1.0-0' }}</p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{storageData.data.AnnualCostPerInstalledTB.CostPerTB.Lower.value * refactorVal | number : '1.0-0' }}</p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col py-2 bg-lightblue text-center" *ngIf="(enterMyData.annualTCOCostPerInstalledTB)>=0" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]" style="min-height: 228px;">
+
+                                        <!-- <p class="text-info">{{currencySymbol}}{{enterMyData.annualTCOCostPerInstalledTB  | number : '1.0-0' }}</p> -->
+
+                                        <p *ngIf="!storageOneEquality" class="text-info">
+                                            {{currencySymbol}}{{enterMyData.annualTCOCostPerInstalledTB  | number : '1.0-0' }}
+                                        </p>
+                                        <p *ngIf="storageOneEquality" class="same-value-tco">
+                                            {{currencySymbol}}{{enterMyData.annualTCOCostPerInstalledTB  | number : '1.0-0' }}
+                                        </p>
+
+                                        <div *ngIf="!storageOneEquality && (enterMyData.annualTCOCostPerInstalledTB>storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal)" class="mt-3">
+                                            <div class="arrow-img">
+                                                <svg  id="annualTCOCostPerInstalledTBSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGannual1" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop4000" [attr.offset]="(makePositiveValue((((storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal)-enterMyData.annualTCOCostPerInstalledTB)/(storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal))*100) ) + '%'" stop-color="#02ABBA" />
+                                                            <stop id="stop4001" [attr.offset]="(makePositiveValue((((storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal)-enterMyData.annualTCOCostPerInstalledTB)/(storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal))*100) ) + '%'" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font">
+                                                    {{ makePositiveValue((((storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal)-enterMyData.annualTCOCostPerInstalledTB)/(storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal))*100) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="!storageOneEquality &&(enterMyData.annualTCOCostPerInstalledTB<storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal)" class="mt-3">
+                                            <div class="arrow-img">
+                                                <svg  id="annualTCOCostPerInstalledTBSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGannual178520" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop4032320" [attr.offset]="(makePositiveValue((((storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal)-enterMyData.annualTCOCostPerInstalledTB)/(storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal))*100) ) + '%'" stop-color="#02ABBA" />
+                                                            <stop id="stop232301" [attr.offset]="(makePositiveValue((((storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal)-enterMyData.annualTCOCostPerInstalledTB)/(storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal))*100) ) + '%'" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual178520)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font">
+                                                    {{ makePositiveValue((((storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal)-enterMyData.annualTCOCostPerInstalledTB)/(storageData.data.AnnualCostPerInstalledTB.CostPerTB.Number.value * refactorVal))*100) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- empty box -->
+                                    <div *ngIf="(enterMyData.annualTCOCostPerInstalledTB)<0" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]" style="min-height: 219px;" >
+                                        <div class="align-self-center">
+                                            <span class="bord-top"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- col p-0 pb-3 newclass -->
+                            <div class="col maxw45 p-0 pb-3 newclass ">
+                                <p class="m-1">Market Price</p>
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{currencySymbol}}{{storageData.data.AnnualCostPerInstalledTB.PricePerTB.NumberCY.value * refactorVal | number : '1.0-0'}}</p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{storageData.data.AnnualCostPerInstalledTB.PricePerTB.UpperCY.value * refactorVal | number : '1.0-0' }}</p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{storageData.data.AnnualCostPerInstalledTB.PricePerTB.LowerCY.value * refactorVal | number : '1.0-0'}}</p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- this added -->
+                                    <!-- <div class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                        <div class="align-self-center">
+                                            <span class="bord-top"></span>
+                                        </div>
+                                    </div> -->
+                                    <!-- this added -->
+
+                                    <!-- <div class="col py-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                        <p class="text-info">{{currencySymbol}}{{enterMyData.annualTCOCostPerInstalledTB  | number : '1.2-2' }}</p>
+
+                                        <div class="mt-3">
+                                            <div class="arrow-img">
+                                                <svg id="marketPricePerInstalledTBSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGannual458" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop4074" [attr.offset]="(((storageData.data.AnnualCostPerInstalledTB.PricePerTB.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerInstalledTB)/(storageData.data.AnnualCostPerInstalledTB.PricePerTB.NumberCY.value * refactorVal))*100 + '%'" stop-color="#02ABBA" />
+                                                            <stop id="stop4078" [attr.offset]="(((storageData.data.AnnualCostPerInstalledTB.PricePerTB.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerInstalledTB)/(storageData.data.AnnualCostPerInstalledTB.PricePerTB.NumberCY.value * refactorVal))*100 + '%'" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual458)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font">
+                                                    {{ makePositiveValue((((storageData.data.AnnualCostPerInstalledTB.PricePerTB.NumberCY.value * refactorVal)-enterMyData.annualTCOCostPerInstalledTB)/(storageData.data.AnnualCostPerInstalledTB.PricePerTB.NumberCY.value * refactorVal))*100 | number : '1.2-2') | number : '1.2-2' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost Per Installed TB card ends-->
+
+            <!-- Annual Cost Per Storage FTE card starts-->
+            <div [ngClass]="[showDiv ? 'w-md-100 w-37' : 'w-37']" class="p-2 kpi-width-all">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Annual Cost Per Storage FTE <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageDefinitionData.costpercontractor_lower.defination}}"></i></a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col border-right px-2 pb-3 newclass">
+                                <p class="m-2 text-center">Employee</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{currencySymbol}}{{storageData.data.AnnualCostPerStorageFTE.CostPerEmployee.Number.value * refactorVal | number : '1.0-0'}}</p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{storageData.data.AnnualCostPerStorageFTE.CostPerEmployee.Upper.value * refactorVal | number : '1.0-0' }}</p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{storageData.data.AnnualCostPerStorageFTE.CostPerEmployee.Lower.value * refactorVal | number : '1.0-0' }}</p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- p-0 pb-3 newclass -->
+                            <div class="col maxw45 p-0 pb-3 newclass">
+                                <p class="m-2 text-center">Contractor</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">{{currencySymbol}}{{storageData.data.AnnualCostPerStorageFTE.CostPerContractor.Number.value * refactorVal | number : '1.0-0' }}</p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{storageData.data.AnnualCostPerStorageFTE.CostPerContractor.Upper.value * refactorVal | number : '1.0-0' }}</p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">{{currencySymbol}}{{storageData.data.AnnualCostPerStorageFTE.CostPerContractor.Lower.value * refactorVal | number : '1.0-0' }}</p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost Per Storage FTE card ends-->
+
+            <!-- Storage Utilization card starts-->
+            <div [ngClass]="[showDiv ? ' w-33' : ' w-17']" class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Storage Utilization %
+                        <!-- Utilization % -->
+                        <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageDefinitionData.utilization_lower.defination}}"></i></a>
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3 storage-utilization-padding">
+                                <div class="minh-55">
+                                    <app-donut-chart id="storage-utilization" chartID="storage-utilization" fillColor="03abba" percentVal="{{storageData.data.Utilization.Utilization.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                    <p class="text-info">
+                                        {{storageData.data.Utilization.Utilization.Number.value | number : '1.1-1' }}%
+                                    </p>
+                                    <p><small>(Mean)</small></p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{storageData.data.Utilization.Utilization.Upper.value | number : '1.1-1' }}%
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{storageData.data.Utilization.Utilization.Lower.value | number : '1.1-1' }}%
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.utilizationPercentage>=0)&&((enterMyData.utilizationPercentage | number : '1.0-1')!=(storageData.data.Utilization.Utilization.Number.value | number : '1.0-1'))" class="col p-2 bg-lightblue text-center storage-utilization-lightblue" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <p class="text-info">{{enterMyData.utilizationPercentage | number : '1.1-1' }}%</p>
+
+                                <div *ngIf="enterMyData.utilizationPercentage>=storageData.data.Utilization.Utilization.Number.value" class="mt-4">
+                                    <div class="arrow-img">
+                                        <svg version="1.1" id="utilizationSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="progressSVGutility410" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4045" [attr.offset]="makePositiveValue (((storageData.data.Utilization.Utilization.Number.value - enterMyData.utilizationPercentage) / storageData.data.Utilization.Utilization.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop4046" [attr.offset]="makePositiveValue (((storageData.data.Utilization.Utilization.Number.value - enterMyData.utilizationPercentage) / storageData.data.Utilization.Utilization.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGutility410)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{
+                                                makePositiveValue (((storageData.data.Utilization.Utilization.Number.value - enterMyData.utilizationPercentage) / storageData.data.Utilization.Utilization.Number.value) * 100) | number : '1.1-1'
+                                            }}%
+                                        </p>
+
+                                    </div>
+                                </div>
+
+                                <div *ngIf="enterMyData.utilizationPercentage<storageData.data.Utilization.Utilization.Number.value" class="mt-4">
+                                    <div class="arrow-img">
+                                        <svg version="1.1" id="utilizationSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="progressSVGutility41045" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4049" [attr.offset]="makePositiveValue (((storageData.data.Utilization.Utilization.Number.value - enterMyData.utilizationPercentage) / storageData.data.Utilization.Utilization.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop404452" [attr.offset]="makePositiveValue (((storageData.data.Utilization.Utilization.Number.value - enterMyData.utilizationPercentage) / storageData.data.Utilization.Utilization.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGutility41045)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+
+                                        <p class="remained-percentage remained-perc-font">
+
+                                            {{
+                                                makePositiveValue (((storageData.data.Utilization.Utilization.Number.value - enterMyData.utilizationPercentage) / storageData.data.Utilization.Utilization.Number.value) * 100) | number : '1.1-1'
+                                            }}%
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.utilizationPercentage<0)" class="col p-2 bg-lightblue text-center storage-utilization-lightblue" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="((enterMyData.utilizationPercentage | number : '1.0-1')==(storageData.data.Utilization.Utilization.Number.value | number : '1.0-1'))" class="col p-2 bg-lightblue text-center storage-utilization-lightblue" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <p class="same-value">
+                                        {{enterMyData.utilizationPercentage | number : '1.0-1' }}%
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Storage Utilization card ends-->
+
+            <!-- Storage Availability % card starts-->
+            <div  class="p-2" [ngClass]="[showDiv ? 'w-33' : 'w-17']">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Storage Availability % <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageDefinitionData.availability_upper.defination}}"></i></a>
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3" style="padding: 0rem !important;">
+                                <div class="minh-55">
+                                    <!-- <app-donut-chart id="storage-availability" chartID="storage-availability" fillColor="03abba" percentVal="{{storageData.data.Availability.Availability.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart> -->
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="88px" height="110px" viewBox="0 0 88 110" enable-background="new 0 0 88 110" xml:space="preserve">
+                                        <defs>
+                                            <linearGradient id="progress78" x1="0" y1="1" x2="0" y2="0">
+                                                <stop id="stop79" [attr.offset]="(storageData.data.Availability.Availability.Number.value/100)" stop-color="#03abba"/>
+                                                <stop id="stop80" [attr.offset]="(storageData.data.Availability.Availability.Number.value/100)" stop-color="#e1edf3"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <g>
+                                            <path fill="url(#progress78)" d="M43.998,44.671c13.906-0.161,36.818-1.255,42.395-5.082c0.039-8.849,0.078-17.478,0.117-26.327
+                                            c-4.451,4.232-31.229,4.961-42.399,5.135c-10.383-0.136-40.295-0.716-42.619-5.461c0.037,8.958,0.075,17.696,0.113,26.653
+                                            C9.043,44.226,32.116,44.51,43.998,44.671z"/>
+                                            <ellipse fill="url(#progress78)" cx="43.998" cy="7.504" rx="42.507" ry="5.518"/>
+                                            <path fill="url(#progress78)" d="M1.491,44.428c0.038,8.958,0.075,17.696,0.113,26.653c7.439,4.637,30.512,4.921,42.394,5.082
+                                            c13.906-0.161,36.818-1.254,42.395-5.082c0.039-8.849,0.078-17.478,0.117-26.327c-4.451,4.232-31.229,4.962-42.399,5.135
+                                            C33.727,49.754,3.815,49.174,1.491,44.428z"/>
+                                            <path fill="url(#progress78)" d="M1.491,76.278c0.038,8.957,0.075,17.695,0.113,26.653c7.439,4.637,30.512,4.921,42.394,5.082
+                                            c13.906-0.161,36.818-1.255,42.395-5.082c0.039-8.849,0.078-17.479,0.117-26.327c-4.451,4.231-31.229,4.961-42.399,5.135
+                                            C33.727,81.603,3.815,81.023,1.491,76.278z"/>
+                                        </g>
+                                    </svg>
+
+                                    <p class="text-info">
+                                        {{storageData.data.Availability.Availability.Number.value | number : '1.2-2' }}%
+                                    </p>
+                                    <p><small>(Mean)</small></p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{storageData.data.Availability.Availability.Upper.value | number : '1.2-2' }}%
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{storageData.data.Availability.Availability.Lower.value | number : '1.2-2' }}%
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.availablityPercentage>=0)&&(enterMyData.availablityPercentage!=(storageData.data.Availability.Availability.Number.value | number : '1.2-2'))" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" style="min-height: 274px;">
+
+                                <p class="text-info">{{enterMyData.availablityPercentage | number : '1.2-2' }}%</p>
+
+                                <div class="mt-4">
+                                    <!-- condition for up arrow -->
+                                    <div *ngIf="enterMyData.availablityPercentage>=storageData.data.Availability.Availability.Number.value" class=" arrow-img">
+                                        <svg version="1.1" id="availabilitySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="progressSVGannua4520" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4005" [attr.offset]="makePositiveValue (((storageData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage) / storageData.data.Availability.Availability.Number.value) * 100 | number : '1.2-2') + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop4006" [attr.offset]="makePositiveValue (((storageData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage) / storageData.data.Availability.Availability.Number.value) * 100 | number : '1.2-2') + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannua4520)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{
+                                                makePositiveValue (((storageData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage) / storageData.data.Availability.Availability.Number.value) * 100 | number : '1.2-2')
+                                            }}%
+                                        </p>
+                                    </div>
+
+                                    <!-- condition for down arrow -->
+                                    <div *ngIf="enterMyData.availablityPercentage<storageData.data.Availability.Availability.Number.value" class=" arrow-img">
+                                        <svg version="1.1" id="availabilitySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="progressSVGannua45274" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop400512" [attr.offset]="makePositiveValue (((storageData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage) / storageData.data.Availability.Availability.Number.value) * 100 | number : '1.2-2') + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop400621" [attr.offset]="makePositiveValue (((storageData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage) / storageData.data.Availability.Availability.Number.value) * 100 | number : '1.2-2') + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannua45274)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{
+                                                makePositiveValue (((storageData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage) / storageData.data.Availability.Availability.Number.value) * 100 | number : '1.2-2')
+                                            }}%
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.availablityPercentage<0)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" style="min-height: 274px;">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.availablityPercentage==(storageData.data.Availability.Availability.Number.value | number : '1.2-2'))" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" style="min-height: 274px;">
+                                <div class="align-self-center">
+                                    <p class="same-value">
+                                        {{enterMyData.availablityPercentage | number : '1.2-2' }}%
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Storage availability % card ends-->
+
+            <div [ngClass]="[showDiv ? 'w-33' : 'w-17']" class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header" style="text-transform: none;">
+                        # of Storage TBs Per FTE <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageDefinitionData.tbsperfte_lower.defination}}"></i></a>
+                    </div>
+                    <div class="card-body pt-0 pb-0">
+                        <div class="row">
+                            <div class="col p-2 mx-auto">
+                                <div class="minh-55">
+                                    <p class="text-info">{{storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value | number : '1.0-0' }}</p>
+                                    <p><small>(Mean)</small></p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Upper.value | number : '1.0-0' }}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Lower.value | number : '1.0-0' }}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.noOfInstalledTBsPerStorageFTE>=0)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]" style="min-height: 274px;">
+
+                                <p *ngIf="!storageFTEEquality" class="text-info">
+                                    {{enterMyData.noOfInstalledTBsPerStorageFTE | number : '1.0-0'}}
+                                </p>
+                                <p *ngIf="storageFTEEquality" class="same-value-fte">
+                                    {{enterMyData.noOfInstalledTBsPerStorageFTE | number : '1.0-0'}}
+                                </p>
+
+                                <div *ngIf="!storageFTEEquality&&(enterMyData.noOfInstalledTBsPerStorageFTE>storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value)" class="mt-4">
+                                    <div class="arrow-img">
+                                        <svg version="1.1"  id="noOfStorageFTESVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="progressSVGannua520" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop4452" [attr.offset]="makePositiveValue ( (((enterMyData.noOfInstalledTBsPerStorageFTE-storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value) / storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value) * 100 | number : '1.0-0') ) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop4569" [attr.offset]="makePositiveValue ( (((enterMyData.noOfInstalledTBsPerStorageFTE-storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value) / storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value) * 100 | number : '1.0-0') ) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannua520)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <!-- *ngIf="enterMyData.noOfInstalledTBsPerStorageFTE!=storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value"  -->
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue(((storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value - enterMyData.noOfInstalledTBsPerStorageFTE) / storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value)) * 100 | number : '1.0-0' }}%
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!storageFTEEquality&&(enterMyData.noOfInstalledTBsPerStorageFTE<storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value)" class="mt-4">
+                                    <div class="arrow-img">
+                                        <svg version="1.1"  id="noOfStorageFTESVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="progressSVGannua520745" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop445234" [attr.offset]="makePositiveValue ( (((enterMyData.noOfInstalledTBsPerStorageFTE-storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value) / storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value) * 100 | number : '1.0-0') ) + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop456923" [attr.offset]="makePositiveValue ( (((enterMyData.noOfInstalledTBsPerStorageFTE-storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value) / storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value) * 100 | number : '1.0-0') ) + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannua520745)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <!-- *ngIf="enterMyData.noOfInstalledTBsPerStorageFTE!=storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value" -->
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue(((storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value - enterMyData.noOfInstalledTBsPerStorageFTE) / storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value) * 100) | number : '1.0-0' }}%
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- empty box -->
+                            <div *ngIf="(enterMyData.noOfInstalledTBsPerStorageFTE<0)" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]" style="min-height: 274px;">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                            <!-- both values are equal -->
+                            <!-- <div *ngIf="(enterMyData.noOfInstalledTBsPerStorageFTE | number : '1.0-0')==(storageData.data.NumberofStorageTBsPerFTE.TBsPerFTE.Number.value | number : '1.0-0')" class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <p class="same-value-mips-configured">{{enterMyData.noOfInstalledTBsPerStorageFTE | number : '1.0-0'}}</p>
+                                </div>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div [ngClass]="[showDiv ? 'w-35' : 'w-24']" class="p-2" >
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Storage By Type <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageDefinitionData.san.defination}}"></i></a>
+                    </div>
+                    <div class="card-body mx-auto py-2">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="p-0">
+                                <div class="row card-body m-0">
+                                    <div class="col-7 align-items-center d-inline-flex text-grey">
+                                        SAN
+                                    </div>
+                                    <div class="col-4 text-right num-grey">
+                                        {{storageData.data.StoragebyType.SAN.SAN.value | number : '1.1-1' }}%
+                                    </div>
+                                </div>
+
+                                <div class="row card-body m-0">
+                                    <div class="col-7 align-items-center d-inline-flex text-grey">
+                                        NAS
+                                    </div>
+                                    <div class="col-4 text-right num-grey">
+                                        {{storageData.data.StoragebyType.NAS.NAS.value | number : '1.1-1' }}%
+                                    </div>
+                                </div>
+
+                                <div class="row card-body m-0">
+                                    <div class="col-7 align-items-center d-inline-flex text-grey">
+                                        <!-- Other disk -->
+                                        Backup & Archive
+                                    </div>
+                                    <div class="col-4 text-right num-grey">
+                                        {{storageData.data.StoragebyType.Backup.Backup.value | number : '1.1-1' }}%
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pr-0 mx-auto exp-background" [ngClass]="[showDiv ? '!displayDiv enter-my-data-background' : 'displayDiv']">
+                                <div class="right-side pr-0">
+
+                                    <div *ngIf="(enterMyData.sanPercentage<0)" class="col p-3 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" style="min-height:40px;">
+                                        <div class="align-self-center">
+                                            <span class="empty-bord-top"></span>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf=" (enterMyData.sanPercentage==storageData.data.StoragebyType.SAN.SAN.value)" class="col bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv p-half' : 'p-3 displayDiv' ]" style="min-height:35px;">
+                                        <div class="align-self-center">
+                                            <!-- <span class="empty-bord-top"></span> -->
+                                            {{enterMyData.sanPercentage | number : '1.1-1'}}%
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="enterMyData.sanPercentage>=0&&(enterMyData.sanPercentage>storageData.data.StoragebyType.SAN.SAN.value)&&enterMyData.sanPercentage!=storageData.data.StoragebyType.SAN.SAN.value" class="row expendi personnal num-grey mt-1">
+                                        <div class="col-6 p-0 align-items-center d-inline-flex">
+                                            {{enterMyData.sanPercentage | number : '1.1-1'}}%
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <span>
+                                                <svg version="1.1" id="sanSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progress1025" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop1007" offset="1" stop-color="#02ABBA" />
+                                                            <stop id="stop2007" offset="1" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path *ngIf="!comparePersonnel" fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1025)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                    <path *ngIf="comparePersonnel" clip-rule="evenodd" d="M15.507,1.351v58.005H1.81
+                                                    L30,90.649l28.189-31.294H44.492V1.351H15.507z" fill="url(#progress1025)" fill-rule="evenodd" stroke="#02ABBA" stroke-miterlimit="10"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="enterMyData.sanPercentage>=0&&(enterMyData.sanPercentage<storageData.data.StoragebyType.SAN.SAN.value)&&enterMyData.sanPercentage!=storageData.data.StoragebyType.SAN.SAN.value" class="row expendi personnal num-grey mt-1">
+                                        <div class="col-6 p-0 align-items-center d-inline-flex">
+                                            {{enterMyData.sanPercentage | number : '1.1-1'}}%
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <span>
+                                                <svg version="1.1" id="sanSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                    <defs>
+                                                        <linearGradient id="progress1025" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop1007" offset="1" stop-color="#02ABBA" />
+                                                            <stop id="stop2007" offset="1" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path *ngIf="!comparePersonnel" fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1025)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                    <path *ngIf="comparePersonnel" clip-rule="evenodd" d="M15.507,1.351v58.005H1.81
+                                                    L30,90.649l28.189-31.294H44.492V1.351H15.507z" fill="url(#progress1025)" fill-rule="evenodd" stroke="#02ABBA" stroke-miterlimit="10"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Finished SAN -->
+
+                                    <div *ngIf="(enterMyData.nasPercentage<0)" class="col p-3 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" style="min-height:40px;">
+                                        <div class="align-self-center">
+                                            <span class="empty-bord-top"></span>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="(enterMyData.nasPercentage==storageData.data.StoragebyType.NAS.NAS.value)" class="col bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv p-half' : 'p-3 displayDiv' ]" style="min-height:35px;">
+                                        <div class="align-self-center">
+                                            <!-- <span class="empty-bord-top"></span> -->
+                                            {{enterMyData.nasPercentage | number : '1.1-1'}}%
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="enterMyData.nasPercentage>=0&&(enterMyData.nasPercentage>storageData.data.StoragebyType.NAS.NAS.value)&&enterMyData.nasPercentage!=storageData.data.StoragebyType.NAS.NAS.value" class="row expendi hardware num-grey  mt-2">
+                                        <div class="col-6 p-0 align-items-center d-inline-flex">
+                                            {{enterMyData.nasPercentage | number : '1.1-1'}}%
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <span>
+                                                <svg version="1.1" id="nasSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progress1026" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop1008" offset="1" stop-color="#02ABBA" />
+                                                            <stop id="stop2008" offset="1" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+
+                                                    <path *ngIf="!compareHardware" fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1026)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                    <path *ngIf="compareHardware" clip-rule="evenodd" d="M15.507,1.351v58.005H1.81
+                                                    L30,90.649l28.189-31.294H44.492V1.351H15.507z" fill="url(#progress1026)" fill-rule="evenodd" stroke="#02ABBA" stroke-miterlimit="10"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="enterMyData.nasPercentage>=0&&(enterMyData.nasPercentage<storageData.data.StoragebyType.NAS.NAS.value)&&enterMyData.nasPercentage!=storageData.data.StoragebyType.NAS.NAS.value" class="row expendi hardware num-grey  mt-2">
+                                        <div class="col-6 p-0 align-items-center d-inline-flex">
+                                            {{enterMyData.nasPercentage | number : '1.1-1'}}%
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <span>
+                                                <svg version="1.1" id="nasSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="22px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" transform="rotate(90) rotate(90)" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progress1026" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop1008" offset="1" stop-color="#02ABBA" />
+                                                            <stop id="stop2008" offset="1" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+
+                                                    <path *ngIf="!compareHardware" fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1026)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                    <path *ngIf="compareHardware" clip-rule="evenodd" d="M15.507,1.351v58.005H1.81
+                                                    L30,90.649l28.189-31.294H44.492V1.351H15.507z" fill="url(#progress1026)" fill-rule="evenodd" stroke="#02ABBA" stroke-miterlimit="10"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Finished NAS -->
+
+                                    <div *ngIf="(enterMyData.backupandarchivePercentage<0)" class="col p-3 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" style="min-height:40px;">
+                                        <div class="align-self-center">
+                                            <span class="empty-bord-top"></span>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="(enterMyData.backupandarchivePercentage==storageData.data.StoragebyType.Backup.Backup.value)" class="col p-3 bg-lightblue text-center" [ngClass]="[showDiv ? 'p-half !displayDiv' : 'p-3 displayDiv' ]" style="min-height:35px;">
+                                        <div class="align-self-center">
+                                            <!-- <span class="empty-bord-top"></span> -->
+                                            {{enterMyData.backupandarchivePercentage | number : '1.1-1'}}%
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="enterMyData.backupandarchivePercentage>=0&&(enterMyData.backupandarchivePercentage>storageData.data.StoragebyType.Backup.Backup.value)&&enterMyData.backupandarchivePercentage!=storageData.data.StoragebyType.Backup.Backup.value" class="row expendi softwear num-grey  mt-2">
+                                        <div class="col-6 p-0 align-items-center d-inline-flex">
+                                            {{enterMyData.backupandarchivePercentage | number : '1.1-1'}}%
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <span>
+                                                <svg xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 60 92" height="22px" id="backuparchiveSVG" version="1.1" viewBox="0 0 60 92" width="40px" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
+                                                    <defs>
+                                                        <linearGradient id="progress1027" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop1009" offset="1" stop-color="#02ABBA" />
+                                                            <stop id="stop2009" offset="1" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path *ngIf="!compareSoftware" fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1027)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                    <path *ngIf="compareSoftware" clip-rule="evenodd" d="M15.507,1.351v58.005H1.81
+                                                    L30,90.649l28.189-31.294H44.492V1.351H15.507z" fill="url(#progress1027)" fill-rule="evenodd" stroke="#02ABBA" stroke-miterlimit="10"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="enterMyData.backupandarchivePercentage>=0&&(enterMyData.backupandarchivePercentage<storageData.data.StoragebyType.Backup.Backup.value)&&enterMyData.backupandarchivePercentage!=storageData.data.StoragebyType.Backup.Backup.value" class="row expendi softwear num-grey  mt-2">
+                                        <div class="col-6 p-0 align-items-center d-inline-flex">
+                                            {{enterMyData.backupandarchivePercentage | number : '1.1-1'}}%
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <span>
+                                                <svg xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 60 92" height="22px" id="backuparchiveSVG" version="1.1" viewBox="0 0 60 92" width="40px" x="0px" transform="rotate(90) rotate(90)" xmlns="http://www.w3.org/2000/svg" y="0px">
+                                                    <defs>
+                                                        <linearGradient id="progress1027" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop1009" offset="1" stop-color="#02ABBA" />
+                                                            <stop id="stop2009" offset="1" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path *ngIf="!compareSoftware" fill-rule="evenodd" clip-rule="evenodd" fill="url(#progress1027)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                    <path *ngIf="compareSoftware" clip-rule="evenodd" d="M15.507,1.351v58.005H1.81
+                                                    L30,90.649l28.189-31.294H44.492V1.351H15.507z" fill="url(#progress1027)" fill-rule="evenodd" stroke="#02ABBA" stroke-miterlimit="10"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staffing mix card starts-->
+            <!-- [showDiv ? 'w-md-100' : ''] -->
+            <div [ngClass]="[showDiv ? 'w-40' : 'w-24']" class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Staffing mix <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{storageDefinitionData.staffingmixcontractor_lower.defination}}"></i></a>
+                    </div>
+                    <div class="card-body px-1 pb-0 staffing-mix-padding">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="pb-0">
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="p-0 mx-auto">
+                                        <div class="d-flex flex-row flex-wrap">
+                                            <div class="p-2 mx-auto">
+                                                <div class="minh-55">
+                                                    <app-donut-chart id="storage-employee-staffing-mix" chartID="storage-employee-staffing-mix" fillColor="9acb3b" percentVal="{{storageData.data.StaffingMix.StaffingMixEmployee.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                                    <p class="text-info">{{storageData.data.StaffingMix.StaffingMixEmployee.Number.value | number : '1.1-1' }}%</p>
+                                                    Employees <small>(Mean)</small>
+                                                </div>
+                                                <div class="my-3">
+                                                    <i class="arrow-up align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{storageData.data.StaffingMix.StaffingMixEmployee.Upper.value | number : '1.1-1' }}%</p>
+                                                        <small>Upper</small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2">
+                                                    <i class="arrow-lower align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{storageData.data.StaffingMix.StaffingMixEmployee.Lower.value | number : '1.1-1' }}%</p>
+                                                        <small>Lower</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 mx-auto">
+                                                <div class="minh-55">
+                                                    <app-donut-chart id="storage-contractor-staffing-mix" chartID="storage-contractor-staffing-mix" fillColor="03abba" percentVal="{{storageData.data.StaffingMix.StaffingMixContractor.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                                    <p class="text-info">{{storageData.data.StaffingMix.StaffingMixContractor.Number.value | number : '1.1-1'}}%</p>
+                                                    Contractors <small>(Mean)</small>
+                                                </div>
+                                                <div class="my-3">
+                                                    <i class="arrow-up align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{storageData.data.StaffingMix.StaffingMixContractor.Upper.value | number : '1.1-1'}}%</p>
+                                                        <small>Upper</small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2">
+                                                    <i class="arrow-lower align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">{{storageData.data.StaffingMix.StaffingMixContractor.Lower.value | number : '1.1-1'}}%</p>
+                                                        <small>Lower</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 bg-lightblue storage-staffing-mix-lighblue" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]" *ngIf="(enterMyData.staffingmixEmployee*100<0 && enterMyData.staffingmixContract*100<0)">
+                                        <div class="align-self-center p-5 mt-3">
+                                            <span class="bord-top-both-empty"></span>
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div *ngIf="(enterMyData.staffingmixEmployee*100>=0 || enterMyData.staffingmixContract*100>=0)" class="p-2 bg-lightblue storage-staffing-mix-lighblue" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]">
+
+                                        <div class="d-flex flex-row flex-wrap">
+
+                                            <div *ngIf="enterMyData.staffingmixEmployee*100>=0" class="d-flex flex-row flex-wrap">
+                                                <div class="p-2 mt-3">
+
+                                                    <div *ngIf="!staffingEmployeeEquality" class=" minh-55">
+                                                        <p class="text-info">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                        Employees
+                                                    </div>
+
+                                                    <div *ngIf="staffingEmployeeEquality" class=" minh-55">
+                                                        <p class="text-info equality-center-aligned-staffingmix">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                        Employees
+                                                    </div>
+
+                                                    <div *ngIf="!staffingEmployeeEquality && ((enterMyData.staffingmixEmployee*100) > storageData.data.StaffingMix.StaffingMixEmployee.Number.value)" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg  id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual5" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop4010" [attr.offset]=" makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                                                        <stop id="stop4009" [attr.offset]=" makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+                                                                {{ makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngIf="!staffingEmployeeEquality && ((enterMyData.staffingmixEmployee*100) < storageData.data.StaffingMix.StaffingMixEmployee.Number.value)" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg  id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual5785" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop401120" [attr.offset]=" makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                                                        <stop id="stop402309" [attr.offset]=" makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5785)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="enterMyData.staffingmixEmployee*100<0" class="col p-5 bg-lightblue text-center storage-staffing-mix-lighblue" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]">
+                                                <div class="align-self-center">
+                                                    <span class="bord-top"></span>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="enterMyData.staffingmixContract*100>=0" class="d-flex flex-row flex-wrap ">
+                                                <div class="p-2 mt-3">
+                                                    <div *ngIf="!contractEquality" class=" minh-55">
+                                                        <p class="text-info">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                        Contractors
+                                                    </div>
+                                                    <div *ngIf="contractEquality" class=" minh-55">
+                                                        <p class="text-info equality-center-aligned-staffingmix">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                        Contractors
+                                                    </div>
+
+                                                    <div *ngIf="!contractEquality &&(enterMyData.staffingmixContract*100)>storageData.data.StaffingMix.StaffingMixContractor.Number.value" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg  id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual65" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop4011" [attr.offset]="makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                                        <stop id="stop4012" [attr.offset]="makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngIf="!contractEquality &&(enterMyData.staffingmixContract*100)<storageData.data.StaffingMix.StaffingMixContractor.Number.value" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg  id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual65451" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop401112" [attr.offset]="makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                                        <stop id="stop402312" [attr.offset]="makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65451)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="enterMyData.staffingmixContract*100<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]">
+                                                <div class="align-self-center">
+                                                    <span class="bord-top"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <!-- <div *ngIf="enterMyData.staffingmixEmployee*100>0" class="d-flex flex-row flex-wrap">
+                                            <div class="p-2 mt-3">
+                                                <div class=" minh-55">
+                                                    <p class="text-info">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                    Employees
+                                                </div>
+
+                                                <div *ngIf="((enterMyData.staffingmixEmployee*100) > storageData.data.StaffingMix.StaffingMixEmployee.Number.value)" class="mt-4">
+                                                    <div class=" arrow-img">
+                                                        <svg  id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                            <defs>
+                                                                <linearGradient id="progressSVGannual5" x1="0" y1="1" x2="0" y2="0">
+                                                                    <stop id="stop4010" [attr.offset]=" makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                                                    <stop id="stop4009" [attr.offset]=" makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                        </svg>
+                                                        <p class="remained-percentage remained-perc-font">
+                                                            {{ makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div *ngIf="((enterMyData.staffingmixEmployee*100) < storageData.data.StaffingMix.StaffingMixEmployee.Number.value)" class="mt-4">
+                                                    <div class=" arrow-img">
+                                                        <svg  id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                            <defs>
+                                                                <linearGradient id="progressSVGannual5785" x1="0" y1="1" x2="0" y2="0">
+                                                                    <stop id="stop401120" [attr.offset]=" makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                                                    <stop id="stop402309" [attr.offset]=" makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5785)" stroke="#9acb3b" stroke-miterlimit="10" d="M15.507,1.351v58.005H1.81
+                                                            L30,90.649l28.189-31.294H44.492V1.351H15.507z"/>
+                                                        </svg>
+                                                        <p class="remained-percentage remained-perc-font">
+
+                                                            {{ makePositiveValue(((storageData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / storageData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div> -->
+
+                                        <!-- <div *ngIf="enterMyData.staffingmixContract*100>0" class="d-flex flex-row flex-wrap ">
+                                            <div class="p-2 mt-3">
+
+                                                <div class="p-2 mt-3 minh-55">
+                                                    <p class="text-info">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                    Contractors
+                                                </div>
+                                                <div *ngIf="(enterMyData.staffingmixContract*100)>storageData.data.StaffingMix.StaffingMixContractor.Number.value" class="mt-4">
+                                                    <div class=" arrow-img">
+                                                        <svg  id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                            <defs>
+                                                                <linearGradient id="progressSVGannual65" x1="0" y1="1" x2="0" y2="0">
+                                                                    <stop id="stop4011" [attr.offset]="makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                                    <stop id="stop4012" [attr.offset]="makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                        </svg>
+                                                        <p class="remained-percentage remained-perc-font">
+
+
+                                                            {{ makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div *ngIf="(enterMyData.staffingmixContract*100)<storageData.data.StaffingMix.StaffingMixContractor.Number.value" class="mt-4">
+                                                    <div class=" arrow-img">
+                                                        <svg  id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                            <defs>
+                                                                <linearGradient id="progressSVGannual65451" x1="0" y1="1" x2="0" y2="0">
+                                                                    <stop id="stop401112" [attr.offset]="makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                                    <stop id="stop402312" [attr.offset]="makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65451)" stroke="#02ABBA" stroke-miterlimit="10" d="M15.507,1.351v58.005H1.81
+                                                            L30,90.649l28.189-31.294H44.492V1.351H15.507z"/>
+                                                        </svg>
+                                                        <p class="remained-percentage remained-perc-font">
+
+                                                            {{ makePositiveValue(((storageData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / storageData.data.StaffingMix.StaffingMixContractor.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Staffing mix card ends-->
+
+
+        </div>
+    </div>
+</section>
+<!-- Main section ends here -->
+
+<!-- Drill-Down -->
+<div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_personnel}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content drilldown-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Storage Cost Allocation for Personnel
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 drilldown-modal-body">
+                <div class="drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="personnel-drillDown" chartID="personnel-drillDown" [chartData]="storageData.drills.PersonnelCostAllocation"  thickness="35" chartWidth="180" chartRadius="40" chartLegendSize="19"  chartHeight="340"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_hardware}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_hardware}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content drilldown-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Storage Cost Allocation for Hardware
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 drilldown-modal-body">
+                <div class="drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="hardware-drillDown" chartID="hardware-drillDown" [chartData]="storageData.drills.HardwareCostAllocation" thickness="35" chartWidth="180" chartRadius="70" chartLegendSize="19"  chartHeight="360" rotateTextFlg=true></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_software}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content drilldown-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Storage Cost Allocation for Software
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 software-drilldown-modal-body">
+                <div class="drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="software-drillDown" chartID="software-drillDown" [chartData]="storageData.drills.SoftwareCostAllocation"  thickness="35" chartWidth="180" chartRadius="50" chartLegendSize="19" chartHeight="378"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_outsourcing}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content outsourcing-drilldown-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Storage Cost Allocation for Outsourcing
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 outsourcing-drilldown-modal-body">
+                <div class="outsourcing-drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="outsourcing-drillDown" chartID="outsourcing-drillDown" [chartData]="storageData.drills.OutsourcingCostAllocation" thickness="35" chartWidth="180" chartRadius="100" chartHeight="470" chartLegendSize="23"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_costPerUser}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerUser}">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-linechart" role="document">
+        <div class="modal-content">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Annual Cost Per Installed TB - 3 Year Trend
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeCostPerUserModalDialog()"></button>
+            </div>
+            <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+                <!--<fusioncharts width= '480' height= '280' type="msline" [dataSource]="dataSourceCostPerUser"></fusioncharts>-->
+                <!-- <line-chart></line-chart> -->
+                <line-chart *ngIf="showDrillDown" [chartData]="dataSourceCostPerUser" id="storageLineChart1" chartId="storageLineChart1"></line-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #donotshow>
+    <div class="loader-icon-container">
+        <div class="loader-icon"></div>
+    </div>
+</ng-template>

@@ -1,0 +1,220 @@
+<div class="w-100">
+    <section class="main-content">
+        <div class="card-header pl-0">
+            <h6 class="text-left text-bold mb-0 pl-0 text-center">Role User Mapping</h6>
+        </div>
+        <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 my-3 ">
+            <div class="card custom-card">
+                <div class="card-body pb-0">
+
+                    <!-- User privileges form controls starts -->
+                    <div class="row m-0 mt-1">
+                        <div class="col">
+                            <form>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="row m-0">
+                                            <div class="col-12">
+                                                <div class="form-group col-12 p-0">
+                                                    <label>User</label>
+                                                    <input type="text" class="form-control" placeholder="Search User" value="{{roleId}}" [(ngModel)]="roleId" [ngModelOptions]="{standalone: true}" (keyup)="suggestUserId(roleId, $event);" autocomplete="off" />
+                                                    <div class="user-suggestion-container" *ngIf="userFound">
+                                                        <div class="user-suggestion" *ngFor="let user of userData.staff" (click)="selectUser(user)">{{user.id}}</div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row m-0 mt-1">
+                                            <div class="col-3 pr-0">
+                                                <label>Email :</label>
+                                            </div>
+                                            <div class="col-9 p-0">
+                                                {{selectedUserData.id}}
+                                            </div>
+                                        </div>
+                                        <div class="row m-0 mt-1">
+                                            <div class="col-3 pr-0">
+                                                <label>Type:</label>
+                                            </div>
+                                            <div class="col-9 p-0">
+                                                <strong> {{selectedUserData.value}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group col-12">
+                                            <label>Role</label>
+                                            <div class="list-group scenarion-list add-card">
+                                                <label class="container-checkbox font-size-group2" *ngFor="let role of roleObject">
+                                                    <div>{{role.roleName}}</div>
+                                                    <!-- [checked]="role.checked" -->
+                                                    <!-- value="{{role.roleName}}" -->
+                                                    <input [(ngModel)]="role.checked" [ngModelOptions]="{standalone: true}" type="checkbox" (change)="validateUserRole(role, $event,role.roleName)" >
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row mt-2">
+                                    <div class="form-group col-12 col-sm-6 start-date-container">
+                                        <label>Start Date</label>
+                                        <input id="start-date-picker" class="form-control" type="text" placeholder="" [(ngModel)]="selectedStartDate" [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                                        <i class="fa fa-calendar"></i>
+
+                                    </div>
+                                    <div class="form-group col-12 col-sm-6 end-date-container">
+                                        <label>End Date</label>
+                                        <input id="end-date-picker" class="form-control" type="text" placeholder="" [(ngModel)]="selectedEndDate" [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <div class="form-row">
+                                    <div class="form-group col-9 col-md-5 col-lg-4 col-xl-4 mx-auto px-0 save-role-btn-container">
+
+                                        <button [disabled]="" class="btn btn-primary btn-add mx-2" [ngClass]="isSaveDisabled? 'disabled':'' " (click)="saveUserDetails();">Save</button>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- User privileges form controls ends -->
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="container-fluid kpi-maintenance" *ngIf="displayRole" >
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <div>
+                        <table class="table table-responsive table-sm table-striped" style="width:100%">
+                            <thead class="thead-blue">
+                                <tr>
+                                    <th>Assigned Role</th>
+                                    <th>Created By</th>
+                                    <th>Created Date</th>
+                                    <th>Updated By</th>
+                                    <th>Updated Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let uRole of userSelectedRoles[0].roleList; let ind=index">
+
+                                    <td>
+                                        {{uRole.value}}
+                                    </td>
+                                    <td>
+                                        <span *ngIf="createdBy!=null || createdBy!=''">
+                                            {{createdBy}}
+                                        </span>
+                                        <span *ngIf="createdBy==null || createdBy==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="createdDate!=null || createdDate!=''">
+                                            {{createdDate | date:'dd/MM/yyyy'}}
+                                        </span>
+                                        <span *ngIf="createdDate==null || createdDate==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="modifiedBy!=null || modifiedBy!=''">
+                                            {{modifiedBy}}
+                                        </span>
+                                        <span *ngIf="modifiedBy==null || modifiedBy==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="modifiedDate!=null || modifiedDate!=''">
+                                            {{modifiedDate | date:'dd/MM/yyyy'}}
+                                        </span>
+                                        <span *ngIf="modifiedDate==null || modifiedDate==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td class="float-right row-actions">
+                                        <a id={{uRole.key}} href="javascript:void(0)" (click)="resetBtnHandler(uRole.key);" class="delete">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid kpi-maintenance" *ngIf="isTabularData">
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <div>
+                        <table class="table table-responsive table-sm table-striped" style="width:100%">
+                            <thead class="thead-blue">
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Project</th>
+                                    <th>Region</th>
+                                    <th>Country</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody-height">
+                                <tr *ngFor=" let userRow of UserTabularData">
+                                    <td>
+                                        {{userRow.client}}
+                                    </td>
+                                    <td>
+                                        {{userRow.project}}
+                                    </td>
+                                    <td>
+                                        {{userRow.region}}
+                                    </td>
+                                    <td>
+                                        {{userRow.country}}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                        <div class="confirm_box" [ngStyle]="{'display':display_confirmationbox}">
+                            <input id="rid" type="hidden" #rid [value]="selectedroleid"/>
+                            <div class="confirm-card">
+                                <div class="col py-3">
+                                    Are you sure you want to delete?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" (click)="closeModalDialog()">No</button>
+                                    <button type="button" class="btn btn-primary" (click)="resetConfirmYes(true)" >Yes</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </section>
+</div>
+<ng-template #other_content>
+    <div class="loader-icon-container">
+        <div class="loader-icon"></div>
+    </div>
+</ng-template>

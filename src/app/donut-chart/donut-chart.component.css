@@ -1,0 +1,50 @@
+/***********************************************************/
+/************** © 2018 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: donut-chart.component.css                  **/
+/** Description: This is donut chart css.                 **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10652318  Created Date: 28/09/2018        **/
+/** Update By: 10652318  Update Date: 28/09/2018          **/
+/** Developed at:                 **/
+/***********************************************************/
+
+p {
+  font-family: Lato;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  font-family: Lora, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #fff;
+  background-color: #000;
+}
+
+path.color0 {
+  fill: #fff;
+}
+
+path.color1 {
+  fill: rgba(255, 255, 255, .3);
+}
+
+text {
+  font-size: 7em;
+  font-weight: 400;
+  line-height: 16em;
+  fill: #fff;
+  display:none;
+}
+
+.chart-container{
+  padding:25px;
+}
+
+.donutchart{
+  position: relative;
+  top: 60px;
+}

@@ -1,0 +1,1085 @@
+<!--
+  /******************************************* ***********/
+  /************** © 2018 ISG - All Rights Reserved     ***********/
+  /******************************************************/
+
+  /*******************************************************/
+  /** File Name:cio-dashboard.component.ts **/
+  /** Description: This file is created to save, update, validate and retrieve data on input my data form **/
+  /** Created By: 10651227, 10641888, 10650615 Created Date: 28/09/2018 **/
+  /** Update By:  10650919  Update Date:  01/10/2018 **/
+  /** Developed at:  **/
+  /*******************************************************/
+-->
+
+<div class="modal-header">
+  <h6 class="modal-title" id="exampleModalLabel">Input My Data</h6>
+  <button type="button" class="close" aria-label="Close" (click)="closeEnterDataModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <!-- Enter my data section starts  -->
+  <section class="main-data-section" style="overflow-y: scroll;height: auto; max-height: 480px;">
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-12 col-sm-6 mt-2">
+          <div class="float-left" style="cursor:pointer;" lastState="0" (click)="expandEnterDataForm(this)">
+            <span class="icon-circle-plus">Expand/Collapse</span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 mt-2">
+          <div class="float-right">
+            Overall Completed:
+            <font size="4" id="overall-percentage" #overallPer>0%</font> of 100
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Accordian starts  -->
+      <div class="row">
+        <div class="container-fluid" id="accordion">
+          <div id="general-card" class="card mt-2">
+            <div class="card-header" id="heading1" (click)="setScrollPosition(0)">
+              <a id="adm-collapse-link1" class="btn btn-link collapseHeader" data-toggle="collapse" data-target="#adm-collapse1" aria-expanded="true"
+                aria-controls="adm-collapse1">
+                <div class="row container-fluid">
+                  <span class="icon-circle-minus pl-4 col-12 col-sm-6">General Information</span>
+                  <div class="text-right col-12 col-sm-6 p-0">Completed:
+                    <font size="4" id="general-percentage" #generalPer>0%</font> of 100</div>
+                </div>
+              </a>
+            </div>
+
+            <div id="adm-collapse1" class="collapse collapseBody show" aria-labelledby="heading1" data-parent="#accordion">
+              <div class="card-body">
+                <form class="general-section" *ngIf='dataLoaded'>
+
+                  <div class="form-row ">
+                    <div class="form-group col-12 col-sm-4 mb-2">
+                      <label>Scenario ID</label>
+                      <select [(ngModel)]='selectedScanrio' name="Scanrio" class="form-control" (ngModelChange)="getScenarioDataById()">
+                        <option value=0>New Scenario</option>
+                        <option *ngFor='let scanrio of scenarios' value={{scanrio.key}}>{{scanrio.value}}</option>
+                      </select>
+                    </div>
+                    <!-- <div class="form-group col-12 col-sm-4">
+                        <label for="scenarioID">Scenario Name:</label>
+                        <input type="text" class="form-control" id="scenarioName" placeholder="Scenario" [(ngModel)]="scenarioNameText" (change)='activateShowBox(true)' name="scenarioName" />
+                    </div> -->
+                    
+                    <div class="form-group col-12 col-sm-4" *ngFor="let generalInfo of myData.GENERALINFORMATION.NA;let i=index">
+                      <label>{{generalInfo.desc}}</label>
+                      <select class="form-control" [(ngModel)]="generalInfo.src_code_value" (ngModelChange)='interceptGeneralTabChange(generalInfo.src_code)'
+                        name="{{generalInfo.desc}}" [ngClass]="[disabledStatus[i].disabled ? 'disabledColor' : '']" (ngModelChange)="interceptGeneralTabChanges(generalInfo.src_code)"
+                        *ngIf="generalInfo.input_type == 'Drop Down'">
+                        <option *ngFor="let currency of generalInfo.dropDown;trackBy: trackByFn" [value]="currency.key">{{currency.value}}</option>
+                      </select>
+                      <input type="text" class="form-control" *ngIf="generalInfo.input_type == 'Manual' || generalInfo.input_type == 'Manual or Drop Down'"
+                        [(ngModel)]="generalInfo.src_code_value" (ngModelChange)='interceptGeneralTabChange(generalInfo.src_code)'
+                        name={{generalInfo.desc}} />
+                    </div>
+
+                  </div>
+                  <div class="form-row" *ngIf="myData.GENERALINFORMATION == undefined ">
+                    Data Not Available
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- application Dev and main card start-->
+          <div class="card mt-2" id="headcount-card">
+            <div class="card-header" id="heading2" (click)="setScrollPosition(10)">
+              <a class="btn btn-link collapsed collapseHeader" data-toggle="collapse" data-target="#adm-collapse2" aria-expanded="false" aria-controls="adm-collapse2">
+                <div class="row container-fluid">
+                  <span class="icon-circle-minus pl-4 col-12 col-sm-6">Application Development and Maintenance
+
+                  </span>
+                  <div class="text-right col-12 col-sm-6 p-0">Completed:
+                    <font size="4" id="headcount-percentage" #ADMPer>0%</font> of 100</div>
+                </div>
+              </a>
+            </div>
+            <div id="adm-collapse2" class="collapse collapseBody" aria-labelledby="heading2" data-parent="#accordion">
+              <div class="card-body" *ngIf="myData.ApplicationDevelopmentandMaintenanceInput != undefined">
+                <form class="legend-warning-container legend-finance-breakdown" *ngIf="!ADMOcnditionsFulfilled">
+                  <div class="form-row legend-message-row">
+
+                    <div class="col-12 col-md-9 col-sm-9 col-lg-9 headcount-breakdown">
+                      <p [ngClass]="(ADMWarningMessage? 'legend-message-black mb-0 validation-message-font':'legend-message mb-0 validation-message-font')">
+                        {{errorMessageADM}}</p>
+                    </div>
+                  </div>
+                </form>
+
+
+
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset" [ngClass]="{
+                        'it-operation-fieldset':ADMOcnditionsFulfilled,
+                        'it-operation-fieldset-warning':ADMWarningMessage,
+                        'it-operation-fieldset-error':!ADMWarningMessage && !ADMOcnditionsFulfilled
+                      }">
+                    <legend class="it-operation-legend"> Application Development and Maintenance
+
+                      <span *ngIf="!ADMOcnditionsFulfilled || !ADMWarningMessage">&nbsp;</span>
+                      <span class="legend-warning-img-desktop" *ngIf="!ADMWarningMessage && !ADMOcnditionsFulfilled"></span>
+                      <span class="legend-img-desktop" *ngIf="ADMWarningMessage"></span>
+
+                    </legend>
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationDevelopmentandMaintenanceInput.NA; let idx = index">
+                        <div class="form-row m-0 note-vertical-center-align">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                  <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">
+                            <select class="form-control form-group dropDown" [(ngModel)]="companyFinancialInfo.src_code_value" (change)="onADMDataChange($event)" name="{{companyFinancialInfo.desc}}"
+                              *ngIf="companyFinancialInfo.input_type == 'Drop Down'">
+                              <option *ngFor="let dropdownval of dropdownvalues" [ngValue]=dropdownval>{{dropdownval}}</option>
+                            </select>
+                            <!-- for disabled ADM cost filed and showing calculated value -->
+                            
+                            <input *ngIf="companyFinancialInfo.input_type != 'Drop Down' && (companyFinancialInfo.src_code == 'AMR110' || companyFinancialInfo.src_code == 'EXA010' || companyFinancialInfo.src_code == 'EXA020' || companyFinancialInfo.src_code == 'EXA030')" 
+                               placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}" (ngModelChange)="onADMDataChange($event);activateShowBox(true)"
+                              (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [disabled]=true [textMask]="{mask: decimalNumberMask}"/>
+                             <!-- end ADM cost field--> 
+                             
+                            <input *ngIf="companyFinancialInfo.input_type != 'Drop Down' && companyFinancialInfo.src_code != 'AMR110' && companyFinancialInfo.src_code != 'EXA010' && companyFinancialInfo.src_code != 'EXA020' && companyFinancialInfo.src_code != 'EXA030'" 
+                               placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}" (ngModelChange)="onADMDataChange($event);activateShowBox(true)"
+                              (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+              </div>
+              <div class="card-body" *ngIf="myData.ApplicationDevelopmentandMaintenanceInput == undefined ">
+                <form>
+                  <div class="form-row">
+                    Data Not Available
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- application Dev and main card end-->
+
+          <!-- application Dev card start-->
+          <div class="card mt-2" id="comapny-finance-card">
+            <div class="card-header" id="heading2" (click)="setScrollPosition(10)">
+              <a class="btn btn-link collapsed collapseHeader" data-toggle="collapse" data-target="#adm-collapse4" aria-expanded="false" aria-controls="adm-collapse4">
+                <div class="row container-fluid">
+                  <span class="icon-circle-minus pl-4 col-12 col-sm-6">Application Development
+                  </span>
+                  <div class="text-right col-12 col-sm-6 p-0">Completed:
+                    <font size="4" id="fiancial-percentage" #ADPer>0%</font> of 100</div>
+                </div>
+              </a>
+            </div>
+            <div id="adm-collapse4" class="collapse collapseBody" aria-labelledby="heading2" data-parent="#accordion">
+              <div class="card-body" *ngIf="myData.ApplicationDevelopmentInput != undefined">
+
+
+               
+
+                <!-- AD ApplicationDevelopmentCosts -->
+                
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset" [ngClass]="{
+                              'it-operation-fieldset':ADConditionsFulfilled,
+                               'it-operation-fieldset-warning':isADBlack && !ADConditionsFulfilled,
+                              'it-operation-fieldset-error':!isADBlack && !ADConditionsFulfilled
+                            }">
+
+                    <legend class="it-operation-legend"> Application Development Costs
+
+                      <span *ngIf="!ADConditionsFulfilled">&nbsp;</span>
+                      <span class="legend-warning-img-desktop" *ngIf="!ADConditionsFulfilled && !isADBlack"></span>
+                      <span class="legend-img-desktop" *ngIf="isADBlack && !ADConditionsFulfilled"></span>
+
+                    </legend>
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationDevelopmentInput.ApplicationDevelopmentCosts; let idx = index">
+                        <div class="form-row m-0 note-vertical-center-align">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                  <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">
+                            
+                            <input (change)="onADMCostChange($event, companyFinancialInfo);activateShowBox(true)"
+                               placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}"
+                              (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+                <!-- AD ApplicationDevelopmentFTEs -->
+                <!-- <form class="legend-warning-container legend-finance-breakdown" *ngIf="!ADConditionsFulfilled">
+                  <div class="form-row legend-message-row">
+
+                    <div class="col-12 col-md-8 col-sm-8 col-lg-8 headcount-breakdown">
+                      <p [ngClass]="(isADBlack ? 'legend-message-black mb-0':'legend-message mb-0')">
+                        {{errorMessageAD}}</p>
+                    </div>
+                  </div>
+                </form> -->
+
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset" [ngClass]="{
+                              'it-operation-fieldset':ADConditionsFulfilled,
+                               'it-operation-fieldset-warning':isADBlack && !ADConditionsFulfilled,
+                              'it-operation-fieldset-error':!isADBlack && !ADConditionsFulfilled
+                            }">
+
+                    <legend class="it-operation-legend"> Application Development FTEs
+
+                      <span *ngIf="!ADConditionsFulfilled">&nbsp;</span>
+                      <span class="legend-warning-img-desktop" *ngIf="!ADConditionsFulfilled && !isADBlack"></span>
+                      <span class="legend-img-desktop" *ngIf="isADBlack && !ADConditionsFulfilled"></span>
+
+                    </legend>
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationDevelopmentInput.ApplicationDevelopmentFTEs; let idx = index">
+                        <div class="form-row m-0 note-vertical-center-align">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                  <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">
+                            
+                            <input  (change)="onADMFTEChange($event, companyFinancialInfo);activateShowBox(true)"
+                              placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}"
+                              (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+
+               
+                <!-- <form class="legend-warning-container legend-finance-breakdown" *ngIf="!ADConditionsFulfilled">
+                  <div class="form-row legend-message-row">
+
+                    <div class="col-12 col-md-8 col-sm-8 col-lg-8 headcount-breakdown">
+                      <p [ngClass]="(isADBlack ? 'legend-message-black mb-0':'legend-message mb-0')">
+                        {{errorMessageAD}}</p>
+                    </div>
+                  </div>
+                </form> -->
+
+              
+
+                <!-- AD subsection Application Development Hours-->
+                <form class="legend-warning-container legend-finance-breakdown" *ngIf="!ADDevHoursConditionsFulfilled">
+                  <div class="form-row legend-message-row">
+
+                    <div class="col-12 col-md-9 col-sm-9 col-lg-9 headcount-breakdown">
+                      <p [ngClass]="(isADDevHourssBlack ? 'legend-message-black mb-0 validation-message-font':'legend-message mb-0 validation-message-font')">
+                        {{errorMessageADDevHours}}</p>
+                    </div>
+                  </div>
+                </form>
+
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset" [ngClass]="{
+                                              'it-operation-fieldset':ADDevHoursConditionsFulfilled,
+                                              'it-operation-fieldset-warning':isADDevHourssBlack,
+                                              'it-operation-fieldset-error':!isADDevHourssBlack && !ADDevHoursConditionsFulfilled
+                                            }">
+                    <legend class="it-operation-legend"> Application Development Hours
+
+                      <span *ngIf="!ADDevHoursConditionsFulfilled || !isADDevHourssBlack">&nbsp;</span>
+                      <span class="legend-warning-img-desktop" *ngIf="!isADDevHourssBlack && !ADDevHoursConditionsFulfilled"></span>
+                      <span class="legend-img-desktop" *ngIf="isADDevHourssBlack"></span>
+
+                    </legend>
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationDevelopmentInput.Applicationdevelopmenthours; let idx = index">
+                        <div class="form-row m-0 note-vertical-center-align">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                  <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">
+                              <input placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" (ngModelChange)="OnADHoursChange($event, companyFinancialInfo);activateShowBox(true)" name="{{companyFinancialInfo.desc}}"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+                <!-- volume error-->
+                <form class="legend-warning-container legend-finance-breakdown" *ngIf="!ADConditionsFulfilled">
+                    <div class="form-row legend-message-row">
+  
+                      <div class="col-12 col-md-8 col-sm-8 col-lg-8 headcount-breakdown">
+                        <p [ngClass]="(isADBlack ? 'legend-message-black mb-0':'legend-message mb-0')">
+                          {{errorMessageAD}}</p>
+                      </div>
+                    </div>
+                  </form>
+  
+                 <!-- AD ApplicationDevelopmentVolumes -->
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset" [ngClass]="{
+                              'it-operation-fieldset':ADConditionsFulfilled,
+                               'it-operation-fieldset-warning':isADBlack && !ADConditionsFulfilled,
+                              'it-operation-fieldset-error':!isADBlack && !ADConditionsFulfilled
+                            }">
+
+                    <legend class="it-operation-legend"> Application Development Volumes
+
+                      <span *ngIf="!ADConditionsFulfilled">&nbsp;</span>
+                      <span class="legend-warning-img-desktop" *ngIf="!ADConditionsFulfilled && !isADBlack"></span>
+                      <span class="legend-img-desktop" *ngIf="isADBlack && !ADConditionsFulfilled"></span>
+
+                    </legend>
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" [hidden]="companyFinancialInfo.src_code!='ADR300'" *ngFor="let companyFinancialInfo of myData.ApplicationDevelopmentInput.ApplicationDevelopmentVolumes; let idx = index">
+                        
+                        <div class="form-row m-0 note-vertical-center-align">
+                            <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                              <p class="m-0">
+                               {{companyFinancialInfo.desc}} &nbsp;
+                                <span style="cursor:pointer;">
+                                  <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                                </span>
+                              </p>
+                            </div>
+                            <div class="form-group col-2 col-sm-1">
+  
+                              <div>
+                                <ng-template #popContent>
+                                  <div>
+                                    <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                      name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                    <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                    <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                    <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                  </div>
+                                </ng-template>
+                                <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                              </div>
+                            </div>
+                            <div class="form-group col-10 col-sm-4">
+                              
+                                
+                              <input (change)="OnADOtherDataChange($event, companyFinancialInfo);activateShowBox(true)"
+                                placeholder="{{companyFinancialInfo.value_format}}"
+                                type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}"
+                                (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                                (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}"/>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="col-12 col-sm-6" [hidden]="companyFinancialInfo.src_code=='ADR300'" *ngFor="let companyFinancialInfo of myData.ApplicationDevelopmentInput.ApplicationDevelopmentVolumes; let idx = index">
+                        
+                          <div class="form-row m-0 note-vertical-center-align">
+                              <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                                <p class="m-0">
+                                 {{companyFinancialInfo.desc}} &nbsp;
+                                  <span style="cursor:pointer;">
+                                    <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                                  </span>
+                                </p>
+                              </div>
+                              <div class="form-group col-2 col-sm-1">
+    
+                                <div>
+                                  <ng-template #popContent>
+                                    <div>
+                                      <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                        name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                      <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                      <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                      <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                    </div>
+                                  </ng-template>
+                                  <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                                </div>
+                              </div>
+                              <div class="form-group col-10 col-sm-4">
+                                
+                                <input (change)="OnADOtherDataChange($event, companyFinancialInfo);activateShowBox(true)"
+                                   placeholder="{{companyFinancialInfo.value_format}}"
+                                  type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}"
+                                  (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                                  (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}"/>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+                <form class="legend-warning-container legend-finance-breakdown" *ngIf="!ADEffortsConditionsFulfilled">
+                    <div class="form-row legend-message-row">
+  
+                      <div class="col-12 col-md-9 col-sm-9 col-lg-9 headcount-breakdown">
+                        <p [ngClass]="(isADEffortsBlack ? 'legend-message-black mb-0 validation-message-font':'legend-message mb-0 validation-message-font')">
+                          {{errorMessageADEfforts}}</p>
+                      </div>
+                    </div>
+                  </form>
+                <!-- AD subsection project efforts allocation-->
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset" [ngClass]="{
+                      'it-operation-fieldset':ADEffortsConditionsFulfilled,
+                      'it-operation-fieldset-warning':isADEffortsBlack,
+                      'it-operation-fieldset-error':!isADEffortsBlack && !ADEffortsConditionsFulfilled
+                      }">
+                    <legend class="it-operation-legend"> Annual Project Effort Allocation
+
+                      <span *ngIf="!ADEffortsConditionsFulfilled || !isADEffortsBlack">&nbsp;</span>
+                      <span class="legend-warning-img-desktop" *ngIf="!isADEffortsBlack && !ADEffortsConditionsFulfilled"></span>
+                      <span class="legend-img-desktop" *ngIf="isADEffortsBlack"></span>
+
+                    </legend>
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationDevelopmentInput.Projecteffortsallocation; let idx = index">
+                        <div class="form-row m-0 note-vertical-center-align">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                  <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">
+                            
+                            
+                            <input placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" (ngModelChange)="OnADDataEffortsChnage($event, companyFinancialInfo);activateShowBox(true)" name="{{companyFinancialInfo.desc}}"
+                              (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+                <!-- AD others -->
+                <!-- <form class="legend-warning-container legend-finance-breakdown" *ngIf="!ADConditionsFulfilled">
+                    <div class="form-row legend-message-row">
+  
+                      <div class="col-12 col-md-8 col-sm-8 col-lg-8 headcount-breakdown">
+                        <p [ngClass]="(isADBlack ? 'legend-message-black mb-0':'legend-message mb-0')">
+                          {{errorMessageAD}}</p>
+                      </div>
+                    </div>
+                  </form>
+  
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset" [ngClass]="{
+                              'it-operation-fieldset':ADConditionsFulfilled,
+                               'it-operation-fieldset-warning':isADBlack && !ADConditionsFulfilled,
+                              'it-operation-fieldset-error':!isADBlack && !ADConditionsFulfilled
+                            }">
+
+                    <legend class="it-operation-legend"> Others
+
+                      <span *ngIf="!ADConditionsFulfilled">&nbsp;</span>
+                      <span class="legend-warning-img-desktop" *ngIf="!ADConditionsFulfilled && !isADBlack"></span>
+                      <span class="legend-img-desktop" *ngIf="isADBlack && !ADConditionsFulfilled"></span>
+
+                    </legend>
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationDevelopmentInput.NA; let idx = index">
+                        <div class="form-row m-0">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">
+                            
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form> -->
+
+              </div>
+              <div class="card-body" *ngIf="myData.ApplicationDevelopmentInput == undefined ">
+                <form>
+                  <div class="form-row">
+                    Data Not Available
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- application Dev card end-->
+
+          <!-- application Maintenance card start-->
+          <div class="card mt-2" id="itspending-card">
+            <div class="card-header" id="heading2" (click)="setScrollPosition(10)">
+              <a class="btn btn-link collapsed collapseHeader" data-toggle="collapse" data-target="#adm-collapse3" aria-expanded="false" aria-controls="adm-collapse3">
+                <div class="row container-fluid">
+                  <span class="icon-circle-minus pl-4 col-12 col-sm-6">Application Maintenance
+
+                  </span>
+                  <div class="text-right col-12 col-sm-6 p-0">Completed:
+                    <font size="4" id="itspending-percentage" #AMPer>0%</font> of 100</div>
+                </div>
+              </a>
+            </div>
+            <div id="adm-collapse3" class="collapse collapseBody" aria-labelledby="heading2" data-parent="#accordion">
+              <div class="card-body" *ngIf="myData.ApplicationMaintenanceandSupportInput != undefined">
+
+
+                <!-- AM ApplicationMaintenanceCosts-->
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset">
+                    <legend class="it-operation-legend"> Application Maintenance Costs</legend>
+
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationMaintenanceandSupportInput.ApplicationMaintenanceCosts; let idx = index">
+                        <div class="form-row m-0 note-vertical-center-align">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                  <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">
+                            
+                            <input  placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}"
+                              (change)="onADMCostChange($event, companyFinancialInfo)" (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+                <!-- AM ApplicationMaintenanceFtes-->
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset">
+                    <legend class="it-operation-legend"> Application Maintenance FTEs</legend>
+
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationMaintenanceandSupportInput.ApplicationMaintenanceFTEs; let idx = index">
+                        <div class="form-row m-0 note-vertical-center-align">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                  <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">                        
+                            
+                            <input placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}"
+                              (ngModelChange)="onADMFTEChange($event, companyFinancialInfo)" (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+
+                <!-- AM Maintanance hours-->
+                <form class="legend-warning-container legend-finance-breakdown" *ngIf="!AMHoursConditionsFulfilled">
+                  <div class="form-row legend-message-row">
+
+                    <div class="col-12 col-md-9 col-sm-9 col-lg-9 headcount-breakdown">
+                      <p [ngClass]="(AMHoursWarningMessage ? 'legend-message-black mb-0 validation-message-font':'legend-message mb-0 validation-message-font')">
+                        {{errorMessageAM}}</p>
+                    </div>
+                  </div>
+                </form>
+
+
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset" [ngClass]="{
+                    'it-operation-fieldset':AMHoursConditionsFulfilled,
+               'it-operation-fieldset-warning':AMHoursWarningMessage && !AMHoursConditionsFulfilled,
+              'it-operation-fieldset-error':!AMHoursWarningMessage && !AMHoursConditionsFulfilled
+                  }">
+                    <legend class="it-operation-legend"> Application Maintenance Hours
+
+                      <span *ngIf="!AMHoursConditionsFulfilled">&nbsp;</span>
+                      <span class="legend-warning-img-desktop" *ngIf="!AMHoursConditionsFulfilled && !AMHoursWarningMessage"></span>
+                      <span class="legend-img-desktop" *ngIf="AMHoursWarningMessage && !AMHoursConditionsFulfilled"></span>
+
+                    </legend>
+
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationMaintenanceandSupportInput.applicationmaintenancehours; let idx = index">
+                        <div class="form-row m-0 note-vertical-center-align">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                  <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">
+                            
+                            <input placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}"
+                              (ngModelChange)="OnAMHoursDataChange($event, companyFinancialInfo)" (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+
+                <!-- AM ApplicationMaintenanceVolumes-->
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset">
+                    <legend class="it-operation-legend">Application Maintenance Volumes</legend>
+
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationMaintenanceandSupportInput.ApplicationMaintenanceVolumes; let idx = index">
+                        <div class="form-row m-0 note-vertical-center-align">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                  <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">
+                            
+                            <input placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}"
+                              (ngModelChange)="OnAMDataChangeChnage($event, companyFinancialInfo)" (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+
+
+                <!-- Defect Severity Type-->
+                <form class="legend-warning-container legend-finance-breakdown" *ngIf="!AMDefectsConditionsFulfilled">
+                  <div class="form-row legend-message-row">
+
+                    <div class="col-12 col-md-9 col-sm-9 col-lg-9 headcount-breakdown">
+                      <p [ngClass]="(AMDefectsWarningMessage ? 'legend-message-black mb-0 validation-message-font':'legend-message mb-0 validation-message-font')">
+                        {{errorMessageDefectSeverity}}</p>
+                    </div>
+                  </div>
+                </form>
+
+                <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset" [ngClass]="{
+                                        'it-operation-fieldset':AMDefectsConditionsFulfilled,
+                                   'it-operation-fieldset-warning':AMDefectsWarningMessage && !AMDefectsConditionsFulfilled,
+                                  'it-operation-fieldset-error':!AMDefectsWarningMessage && !AMDefectsConditionsFulfilled
+                                      }">
+                    <legend class="it-operation-legend"> Defect Severity Type
+
+                      <span *ngIf="!AMDefectsConditionsFulfilled">&nbsp;</span>
+                      <span class="legend-warning-img-desktop" *ngIf="!AMDefectsConditionsFulfilled && !AMDefectsWarningMessage"></span>
+                      <span class="legend-img-desktop" *ngIf="AMDefectsWarningMessage && !AMDefectsConditionsFulfilled"></span>
+
+                    </legend>
+
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationMaintenanceandSupportInput.Defectseveritytype; let idx = index">
+                        <div class="form-row m-0 note-vertical-center-align">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <!-- <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button> -->
+                                  <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">
+                            
+                            <input placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="12" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}"
+                              (ngModelChange)="OnAMDefectsDataChangeChnage($event, companyFinancialInfo)" (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" [textMask]="{mask: decimalNumberMask}"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+                <!-- AM Others-->
+                <!-- <form class="content-section it-operation-content pt-2">
+                  <fieldset class="it-operation-fieldset">
+                    <legend class="it-operation-legend"> Others</legend>
+
+
+                    <div class="form-row light-grey-row testclass">
+                      <div class="col-12 col-sm-6" *ngFor="let companyFinancialInfo of myData.ApplicationMaintenanceandSupportInput.NA; let idx = index">
+                        <div class="form-row m-0">
+                          <div class="form-group col-12" [ngClass]=" (idx % 2 == 0 )?'col-sm-7':'col-sm-6'  ">
+                            <p class="m-0">
+                              {{companyFinancialInfo.desc}} &nbsp;
+                              <span style="cursor:pointer;">
+                                <i placement="right" ngbTooltip="{{companyFinancialInfo.short_desc}}" container="body" class="info-icon"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="form-group col-2 col-sm-1">
+
+                            <div>
+                              <ng-template #popContent>
+                                <div>
+                                  <textarea style="width: 200px;padding: 0;margin: 5px;" class="form-control note-textarea" rows="5" [(ngModel)]="companyFinancialInfo.notes"
+                                    name="{{companyFinancialInfo.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                  <button class="btn btn-note btn-Cancel" (click)="companyFinancialInfo.notes=''; p.close();">Cancel</button>
+                                  <button class="btn btn-note btn-Save" (click)="p.close()">Save</button>
+                                </div>
+                              </ng-template>
+                              <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="'outside'" placement="bottom-left" [ngClass]="(companyFinancialInfo.notes == undefined || companyFinancialInfo.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-10 col-sm-4">
+                            
+                            <input NumbersOnly [allowDecimals]="true" [allowSign]="false" placeholder="{{companyFinancialInfo.value_format}}"
+                              type="text" maxlength="10" [(ngModel)]="companyFinancialInfo.src_code_value" name="{{companyFinancialInfo.desc}}"
+                              (change)="OnAMDataChangeChnage($event, companyFinancialInfo)" (keyup)="validateCompFinNumberThresholds(companyFinancialInfo.src_code_value, companyFinancialInfo.value_format, $event, companyFinancialInfo)"
+                              (paste)="onPaste(companyFinancialInfo,$event);activateShowBox(true)" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form> -->
+
+              </div>
+              <div class="card-body" *ngIf="myData.ApplicationMaintenanceandSupportInput == undefined ">
+                <form>
+                  <div class="form-row">
+                    Data Not Available
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- application Maintenance card end-->
+
+
+        </div>
+      </div>
+      <!-- Accordian ends  -->
+    </div>
+  </section>
+  <!-- Enter my data section ends  -->
+
+
+</div>
+
+<!-- <div class="error-message-compare-enter-data per-four mx-3 my-3" *ngIf="!isFormValid">
+  Please enter valid info
+</div> -->
+<div class="modal-footer enter-my-data-save-button-panel">
+  <div class="mx-auto">
+    <span *ngIf="enableSaveAndCompareButton">
+
+      <button type="button" class="btn btn-blue mt-2 enter-my-data-btn" [disabled]="temperoryDisable" data-dismiss="modal" (click)="saveAndCompare($event)"
+        *ngIf="isFormValid&&privilegesObject.saveScenario">Save & Display</button>
+      <button type="button" [disabled]="temperoryDisable" class="btn btn-blue mt-2 enter-my-data-btn disabled" *ngIf="!isFormValid&&privilegesObject.saveScenario">Save & Display</button>
+    </span>
+
+    <button type="button" class="btn btn-primary btn-blue mt-2 enter-my-data-btn" (click)="saveEnteredScenarion()" *ngIf="isFormValid&&privilegesObject.saveScenario"
+      [disabled]="temperoryDisable">Save</button>
+    <button type="button" class="btn btn-primary btn-blue mt-2 enter-my-data-btn disabled" *ngIf="!isFormValid&&privilegesObject.saveScenario"
+      [disabled]="temperoryDisable">Save</button>
+      <button type="button" [disabled]="!isCopyEnabled" class="btn btn-blue mt-2 enter-my-data-btn" (click)="createSceCopy()">Copy</button>
+      <button type="button" class="btn btn-primary btn-blue mt-2 enter-my-data-btn" (click)="deleteScenario()" 
+    *ngIf="privilegesObject.deleteScenario" [disabled]="!isDeleteAllowed">Delete</button>
+    
+    <!-- <button type="button" class="btn btn-blue mt-2 enter-my-data-btn" (click)='resetBtnHandler()'>Reset</button>
+                            -->
+  </div>
+</div>
+
+<div class="confirm_box" *ngIf="confirmBoxResetFlag">
+  <div class="confirm-card">
+    <div class="col py-3">
+      All input data will be deleted. Do you wish to continue?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="resetConfirmYes(false);">No</button>
+      <button type="button" class="btn btn-primary" (click)="resetConfirmYes(true);">Yes</button>
+    </div>
+  </div>
+</div>
+
+<div class="confirm_box" *ngIf="confirmBoxCloseFlag">
+  <div class="confirm-card">
+    <div class="col py-3">
+      All unsaved data will be lost. Do you wish to continue?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeConfirmYes(false);">No</button>
+      <button type="button" class="btn btn-primary" (click)="closeConfirmYes(true);">Yes</button>
+    </div>
+  </div>
+</div>
+
+<div class="confirm_box" *ngIf="confirmBoxDeleteFlag">
+  <div class="confirm-card">
+    <div class="col py-3">
+      Selected scenario will be deleted.  Do you wish to continue?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="deleteConfirmYes(false);">No</button>
+      <button type="button" class="btn btn-primary" (click)="deleteConfirmYes(true);">Yes</button>
+    </div>
+  </div>
+</div>

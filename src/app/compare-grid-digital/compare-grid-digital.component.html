@@ -1,0 +1,2250 @@
+<div class="container-fluid compare-grid" style="padding:0px;" [ngClass]="(iconShow==true)?'maximize':'minimize'" *ngIf="true">
+
+  <div class="compare-header py-3">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="mb-0 row" style="margin-left:10px;">Digital Tower </div>
+        <!-- <div class="row" *ngIf="mapdata != undefined" style="margin-left:10px;font-size:14px;">Scenario : {{scenarioNametoCompare}}</div> -->
+      </div>
+      <div class="col-lg-6 text-right d-flex align-items-right">
+        <ul class="mb-0 d-flex align-items-center">
+          <li class="mx-3" *ngIf="privilegesObject.pdf">
+            <a href="javascript:void(0)" class="pdf" (click)="generatePDF()">pdf</a>
+          </li>
+          <li class="mx-3">
+            <a href="javascript:void(0)" (click)="closeEditGridView()" data-toggle="modal" data-target=".compare-towers-digital" class="edit"
+              data-dismiss="modal">Edit Selection</a>
+          </li>
+          <li class="mx-3">
+            <div class="resizeIconMinMax fa fa-expand" (click)="popupResize()" *ngIf="iconShow"></div>
+            <div class="resizeIconMinMax fa fa-compress" (click)="popupMinimize()" *ngIf="!iconShow"></div>
+          </li>
+          <li class="mx-3">
+            <button (click)="closeGridView()" type="button" style="color:#fff;" class="close" data-dismiss="modal">&times;</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="accordion-option" *ngIf="true" >
+    <table class="table table-sm mb-0">
+      <tbody>
+        <tr>
+          <td align="left" width="40%">
+            <a href="javascript:void(0)" (click)="triggerCollapse(this)" class="toggle-accordion active toggle-all" accordion-id="#accordion"></a>
+          </td>
+          
+          <td align="center" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+            <span align="center">{{survey}}</span>
+          </td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="panel-group gridDataScroll compare-grid-tower-scroll" id="accordion" role="tablist" aria-multiselectable="true" *ngIf="true">
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            Digital Spend as a % of Revenue
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{ItSRevenueDefinition}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelITSpendAnnualRev}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of ITSpendAnnualRev">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveyITSpendAnnualRev">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingTwo">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Digital Spend by Category
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{digiCostBreakDown}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigitalSpendByCategoryPersonnel}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digitalSpendByCategoryPersonnel">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigitalSpendByCategoryPersonnel">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigitalSpendByCategoryHardware}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digitalSpendByCategoryHardware">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigitalSpendByCategoryHardware">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigitalSpendByCategorySoftware}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digitalSpendByCategorySoftware">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigitalSpendByCategorySoftware">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigitalSpendByCategoryServices}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digitalSpendByCategoryServices">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigitalSpendByCategoryServices">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigitalSpendByCategoryOther}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digitalSpendByCategoryOther">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigitalSpendByCategoryOther">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingThree">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Digital Spend as a % of IT Spend
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{ItSpendDefinition}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigitalSpendasaofITSpend}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digitalSpendasaofITSpend">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigitalSpendasaofITSpend">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingFour">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            Digital Spend Per Employee
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{digiSpendPerEmployeeDefinition}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigitalSpendperemployee}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digitalSpendperemployee">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">${{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigitalSpendperemployee">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">${{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingFive">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            Digital Employees as a % of Company Employees
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{digiSpendCompanyEmpDefinitn}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigitalEmployeesasofCompanyEmployees}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digitalEmployeesasofCompanyEmployees">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigitalEmployeesasofCompanyEmployees">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingSix">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+            Employees Dedicated To Digital
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{empDedicatedToDigiDefinitn}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseSix" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSix">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelemployeesDedicatedToDigitalFullTime}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of employeesDedicatedToDigitalFullTime">{{dataValue | number : '1.1-1'}}</td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveyemployeesDedicatedToDigitalFullTime">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelemployeesDedicatedToDigitalContracted}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of employeesDedicatedToDigitalContracted">{{dataValue | number : '1.1-1'}}</td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveyemployeesDedicatedToDigitalContracted">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingSev">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeve" aria-expanded="false" aria-controls="collapseSeve">
+            Where Companies Have CoEs
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{CoesDefinitn}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseSeve" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSev">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelwhereCompaniesHaveCOEsAI}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsAI">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveywhereCompaniesHaveCOEsAI">
+                  
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelwhereCompaniesHaveCOEsVirtualReality}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsVirtualReality">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveywhereCompaniesHaveCOEsVirtualReality">
+                  <!-- <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}</span> -->
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+                  <!-- <span align="center">{{dashSymbol}}</span> -->
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelwhereCompaniesHaveCOEsBlockchain}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsBlockchain">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveywhereCompaniesHaveCOEsBlockchain">
+                  <!-- <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}</span> -->
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+                  <!-- <span align="center">{{dashSymbol}}</span> -->
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelwhereCompaniesHaveCOEsDigitalMarketing}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsDigitalMarketing">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveywhereCompaniesHaveCOEsDigitalMarketing">
+                  <!-- <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}</span> -->
+                  <!-- <span align="center">{{dashSymbol}}</span> -->
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelwhereCompaniesHaveCOEsEnterpriseAgility}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsEnterpriseAgility">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveywhereCompaniesHaveCOEsEnterpriseAgility">
+                  <!-- <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}</span> -->
+                  <!-- <span align="center">{{dashSymbol}}</span> -->
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelwhereCompaniesHaveCOEsInternetOfThings}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsInternetOfThings">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveywhereCompaniesHaveCOEsInternetOfThings">
+                  <!-- <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}</span> -->
+                  <!-- <span align="center">{{dashSymbol}}</span> -->
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelwhereCompaniesHaveCOEsRPA}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsRPA">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveywhereCompaniesHaveCOEsRPA">
+                  <!-- <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}</span> -->
+                  <!-- <span align="center">{{dashSymbol}}</span> -->
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingEight">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+            Benefits of Digital Initiatives
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{benefitsOfDigiDefinitn}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseEight" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingEight">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbenefitsofDigitalinitiativesRevInc}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesRevInc">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybenefitsofDigitalinitiativesRevInc">
+                  <span align="center" *ngIf=" ((tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey) &&( tdValue != 1.0 && tdValue != 0 ))">{{dashSymbol}}</span>
+                  <span align="center" *ngIf=" (tdValue == 1.0 )">Yes</span>
+                  <span align="center" *ngIf=" (tdValue == 0.0 )">No</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbenefitsofDigitalinitiativesRevIncInTwoYrs}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesRevIncInTwoYrs">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybenefitsofDigitalinitiativesRevIncInTwoYrs">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey) ">{{ tdValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey) ">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbenefitsofDigitalinitiativesCustRetentn}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesCustRetentn">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybenefitsofDigitalinitiativesCustRetentn">
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined &&( tdValue != 1.0 || tdValue != 0 ))">{{dashSymbol}}</span>
+                  <span align="center" *ngIf=" (tdValue == 1.0 )">Yes</span>
+                  <span align="center" *ngIf=" (tdValue == 0.0 )">No</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbenefitsofDigitalinitiativesCustRetentnInTwoYrs}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesCustRetentnInTwoYrs">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybenefitsofDigitalinitiativesCustRetentnInTwoYrs">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined )">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbenefitsofDigitalinitiativesOpExp}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesOpExp">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybenefitsofDigitalinitiativesOpExp">
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined &&( tdValue != 1.0 || tdValue != 0 ))">{{dashSymbol}}</span>
+                  <span align="center" *ngIf=" (tdValue == 1.0 )">Yes</span>
+                  <span align="center" *ngIf=" (tdValue == 0.0 )">No</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbenefitsofDigitalinitiativesOpExpInTwoYrs}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesOpExpInTwoYrs">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybenefitsofDigitalinitiativesOpExpInTwoYrs">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}%</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined )">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingNine">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+            Business Model Innovation
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{businessInnovatnDefinitn}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseNine" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingNine">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbusinessInnovationTwinModels}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of businessInnovationTwinModels">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybusinessInnovationTwinModels">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbusinessInnovationLeveraging}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of businessInnovationLeveraging">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybusinessInnovationLeveraging">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbusinessInnovationSalesChannels}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of businessInnovationSalesChannels">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybusinessInnovationSalesChannels">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbusinessInnovationPurchaseHistory}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of businessInnovationPurchaseHistory">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybusinessInnovationPurchaseHistory">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbusinessInnovationCustomersNeed}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of businessInnovationCustomersNeed">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybusinessInnovationCustomersNeed">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelbusinessInnovationProductsAndServices}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of businessInnovationProductsAndServices">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveybusinessInnovationProductsAndServices">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingTen">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+            Digital Backbone
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{digiBackboneDefinitn}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseTen" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTen">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiBackboneCommonTech}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiBackboneCommonTech">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiBackboneCommonTech">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiBackboneMicroservices}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiBackboneMicroservices">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiBackboneMicroservices">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiBackboneInfrastructure}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiBackboneInfrastructure">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiBackboneInfrastructure">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiBackboneSelfservice}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiBackboneSelfservice">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiBackboneSelfservice">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiBackboneEvaluatingRecord}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiBackboneEvaluatingRecord">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiBackboneEvaluatingRecord">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiBackboneWorkforce}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiBackboneWorkforce">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiBackboneWorkforce">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiBackboneBusValue}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiBackboneBusValue">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiBackboneBusValue">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiBackbonePersonalizedContent}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiBackbonePersonalizedContent">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiBackbonePersonalizedContent">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiBackboneLocation}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiBackboneLocation">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiBackboneLocation">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiBackboneRPA}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiBackboneRPA">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiBackboneRPA">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiBackboneIoTdata}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiBackboneIoTdata">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiBackboneIoTdata">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingEleven">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+            Digital Ecosystems
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{digiEcosystemDefinitn}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseEleven" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingEleven">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiEcosysCocreating}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiEcosysCocreating">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiEcosysCocreating">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiEcosysCrowdsourcing}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiEcosysCrowdsourcing">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiEcosysCrowdsourcing">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingTwelve">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+            Enterprise Agility
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{digiOMDefinitn}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseTwelve" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwelve">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiOpModelBusInitiative}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiOpModelBusInitiative">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiOpModelBusInitiative">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiOpModelInnovatnFunding}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiOpModelInnovatnFunding">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiOpModelInnovatnFunding">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiOpModelChangeMgmtProgram}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiOpModelChangeMgmtProgram">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiOpModelChangeMgmtProgram">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiOpModelBusInnovatn}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiOpModelBusInnovatn">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiOpModelBusInnovatn">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiOpModelImpactOfAutoMatn}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiOpModelImpactOfAutoMatn">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiOpModelImpactOfAutoMatn">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labeldigiOpModelBacklog}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of digiOpModelBacklog">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveydigiOpModelBacklog">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingThirteen">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThirteen" aria-expanded="false" aria-controls="collapseThirteen">
+            Insights
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{insightsDefinitn}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseThirteen" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThirteen">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelinsightsDataLake}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of insightsDataLake">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveyinsightsDataLake">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != -9999.0)">{{ tdValue| number : '1.0-0'  }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == -9999.0)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelinsightsMasterDataMgmt}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of insightsMasterDataMgmt">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveyinsightsMasterDataMgmt">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelinsightsIdentifyingCustomers}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of insightsIdentifyingCustomers">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveyinsightsIdentifyingCustomers">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingFourteen">
+        <h4 class="panel-title py-2">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFourteen" aria-expanded="false" aria-controls="collapseFourteen">
+            Technologies@Scale
+          </a>
+          <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip={{smartTechDefinitn}}>info</a>
+        </h4>
+      </div>
+      <div id="collapseFourteen" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFourteen">
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelsmartTechAutomating}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of smartTechAutomating">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveysmartTechAutomating">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelsmartTechLedgerTech}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of smartTechLedgerTech">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveysmartTechLedgerTech">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelsmartTechunstructuredData}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of smartTechunstructuredData">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveysmartTechunstructuredData">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelsmartTechChatbots}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of smartTechChatbots">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveysmartTechChatbots">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelsmartTechDataScience}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of smartTechDataScience">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveysmartTechDataScience">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelsmartTechVirtualReality}} </span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of smartTechVirtualReality">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveysmartTechVirtualReality">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelsmartTechPersonalizingServices}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of smartTechPersonalizingServices">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveysmartTechPersonalizingServices">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" width="40%">
+                  <span class="float-left mr-1">{{labelsmartTechAugmentedReality}}</span>
+                </td>
+                <td align="center" width="20%" *ngFor="let dataValue of smartTechAugmentedReality">
+                  <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+                </td>
+                <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let tdValue of surveysmartTechAugmentedReality">
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+                  <span align="center" *ngIf=" (tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <div id="pdftable" style="display: none;">
+
+    <table id="Table_header1">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Digital Tower </td>
+      </tr>
+    </table>
+    <table id="Table_Data1" style="display: none;">
+      <tr></tr>
+    </table>
+    <table id="Table_header2">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+    </table>
+    <table id="Table_Data2" style="display: none;">
+      <tr></tr>
+    </table>
+    <table id="Table_selected_industry_region" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue }}</td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+
+      </tr>
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+    </table>
+
+    <table id="Table_header3">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%">Digital Spend as a % of Revenue
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data3" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of ITSpendAnnualRev"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelITSpendAnnualRev}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of ITSpendAnnualRev">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveyITSpendAnnualRev" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}% </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+    </table>
+
+    <table id="Table_header4">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Digital Spend by Category
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data4" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalSpendByCategoryHardware"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigitalSpendByCategoryHardware}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalSpendByCategoryHardware">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigitalSpendByCategoryHardware" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}% </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigitalSpendByCategorySoftware}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalSpendByCategorySoftware">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigitalSpendByCategorySoftware" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}% </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigitalSpendByCategoryPersonnel}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalSpendByCategoryPersonnel">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigitalSpendByCategoryPersonnel" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}% </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigitalSpendByCategoryServices}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalSpendByCategoryServices">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigitalSpendByCategoryServices" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}% </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigitalSpendByCategoryOther}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalSpendByCategoryOther">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigitalSpendByCategoryOther" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}% </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+    </table>
+
+    <table id="Table_header5">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%">Digital Spend as a % of IT Spend
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data5" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalSpendasaofITSpend"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigitalSpendasaofITSpend}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalSpendasaofITSpend">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigitalSpendasaofITSpend" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}% </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+    </table>
+
+    <table id="Table_header6">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Digital Spend Per Employee
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data6" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalSpendperemployee"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigitalSpendperemployee}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalSpendperemployee">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">USD&nbsp;{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigitalSpendperemployee" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">USD&nbsp;{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+    </table>
+
+    <table id="Table_header7">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%">Digital Employees as a % of Company Employees
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data7" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalEmployeesasofCompanyEmployees"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigitalEmployeesasofCompanyEmployees}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digitalEmployeesasofCompanyEmployees">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigitalEmployeesasofCompanyEmployees" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}% </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+    </table>
+
+    <table id="Table_header8">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Employees Dedicated To Digital
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data8" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of employeesDedicatedToDigitalContracted"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelemployeesDedicatedToDigitalFullTime}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of employeesDedicatedToDigitalFullTime">{{dataValue | number : '1.1-1'}}</td>
+        <td *ngFor="let tdValue of surveyemployeesDedicatedToDigitalFullTime" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelemployeesDedicatedToDigitalContracted}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of employeesDedicatedToDigitalContracted">{{dataValue | number : '1.1-1'}}</td>
+        <td *ngFor="let tdValue of surveyemployeesDedicatedToDigitalContracted" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+    </table>
+
+    <table id="Table_header9">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Where Companies Have CoEs
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data9" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsRPA"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelwhereCompaniesHaveCOEsAI}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsAI">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveywhereCompaniesHaveCOEsAI" align="center" width="20%" style="color: #03abba;">
+          <!-- <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }} </span> -->
+          <!-- <span align="center">{{dashSymbol}}</span> -->
+          <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+          <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelwhereCompaniesHaveCOEsVirtualReality}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsVirtualReality">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveywhereCompaniesHaveCOEsVirtualReality" align="center" width="20%" style="color: #03abba;">
+          <!-- <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }} </span> -->
+          <!-- <span align="center">{{dashSymbol}}</span> -->
+          <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelwhereCompaniesHaveCOEsBlockchain}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsBlockchain">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveywhereCompaniesHaveCOEsBlockchain" align="center" width="20%" style="color: #03abba;">
+          <!-- <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }} </span> -->
+          <!-- <span align="center">{{dashSymbol}}</span> -->
+          <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelwhereCompaniesHaveCOEsDigitalMarketing}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsDigitalMarketing">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveywhereCompaniesHaveCOEsDigitalMarketing" align="center" width="20%" style="color: #03abba;">
+          <!-- <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }} </span> -->
+          <!-- <span align="center">{{dashSymbol}}</span> -->
+          <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelwhereCompaniesHaveCOEsEnterpriseAgility}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsEnterpriseAgility">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveywhereCompaniesHaveCOEsEnterpriseAgility" align="center" width="20%" style="color: #03abba;">
+          <!-- <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }} </span> -->
+          <!-- <span align="center">{{dashSymbol}}</span> -->
+          <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelwhereCompaniesHaveCOEsInternetOfThings}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsInternetOfThings">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveywhereCompaniesHaveCOEsInternetOfThings" align="center" width="20%" style="color: #03abba;">
+          <!-- <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }} </span> -->
+          <!-- <span align="center">{{dashSymbol}}</span> -->
+          <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelwhereCompaniesHaveCOEsRPA}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of whereCompaniesHaveCOEsRPA">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveywhereCompaniesHaveCOEsRPA" align="center" width="20%" style="color: #03abba;">
+          <!-- <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }} </span> -->
+          <!-- <span align="center">{{dashSymbol}}</span> -->
+          <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue != defaultValueForSurvey) && (tdValue==1))">Yes</span>
+                  <span align="center" *ngIf=" ((tdValue != null || tdValue != undefined) && (tdValue == defaultValueForSurvey))">No</span>
+        </td>
+      </tr>
+    </table>
+
+    <table id="Table_header10">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Benefits of Digital Initiatives
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data10" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesRevInc"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelbenefitsofDigitalinitiativesRevInc}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesRevInc">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybenefitsofDigitalinitiativesRevInc" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+          <span align="center" *ngIf=" (tdValue == 1.0 )">Yes</span>
+          <span align="center" *ngIf=" (tdValue == 0.0 )">No</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelbenefitsofDigitalinitiativesRevIncInTwoYrs}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesRevIncInTwoYrs">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybenefitsofDigitalinitiativesRevIncInTwoYrs" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}% </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelbenefitsofDigitalinitiativesCustRetentn}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesCustRetentn">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybenefitsofDigitalinitiativesCustRetentn" align="center" width="20%" style="color: #03abba;">
+            <span align="center" *ngIf=" (tdValue == 1.0 )">Yes</span>
+            <span align="center" *ngIf=" (tdValue == 0.0 )">No</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelbenefitsofDigitalinitiativesCustRetentnInTwoYrs}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesCustRetentnInTwoYrs">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybenefitsofDigitalinitiativesCustRetentnInTwoYrs" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}% </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelbenefitsofDigitalinitiativesOpExp}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesOpExp">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybenefitsofDigitalinitiativesOpExp" align="center" width="20%" style="color: #03abba;">
+            <span align="center" *ngIf=" (tdValue == 1.0 )">Yes</span>
+            <span align="center" *ngIf=" (tdValue == 0.0 )">No</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelbenefitsofDigitalinitiativesOpExpInTwoYrs}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of benefitsofDigitalinitiativesOpExpInTwoYrs">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.1-1' }}%</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybenefitsofDigitalinitiativesOpExpInTwoYrs" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.1-1' }}% </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+    </table>
+
+    <table id="Table_header11">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Business Model Innovation
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data11" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of businessInnovationTwinModels"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelbusinessInnovationTwinModels}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of businessInnovationTwinModels">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybusinessInnovationTwinModels" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>         
+        </td>
+      </tr>
+
+
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelbusinessInnovationLeveraging}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of businessInnovationLeveraging">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybusinessInnovationLeveraging" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelbusinessInnovationSalesChannels}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of businessInnovationSalesChannels">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybusinessInnovationSalesChannels" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelbusinessInnovationPurchaseHistory}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of businessInnovationPurchaseHistory">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybusinessInnovationPurchaseHistory" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelbusinessInnovationCustomersNeed}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of businessInnovationCustomersNeed">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybusinessInnovationCustomersNeed" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelbusinessInnovationProductsAndServices}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of businessInnovationProductsAndServices">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveybusinessInnovationProductsAndServices" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+    </table>
+
+    <table id="Table_header12">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Digital Backbone
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data12" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackbonePersonalizedContent"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiBackboneCommonTech}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackboneCommonTech">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiBackboneCommonTech" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiBackboneMicroservices}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackboneMicroservices">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiBackboneMicroservices" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiBackboneInfrastructure}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackboneInfrastructure">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiBackboneInfrastructure" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiBackboneSelfservice}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackboneSelfservice">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiBackboneSelfservice" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiBackboneEvaluatingRecord}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackboneEvaluatingRecord">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiBackboneEvaluatingRecord" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiBackboneWorkforce}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackboneWorkforce">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiBackboneWorkforce" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiBackboneBusValue}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackboneBusValue">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiBackboneBusValue" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiBackbonePersonalizedContent}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackbonePersonalizedContent">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiBackbonePersonalizedContent" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiBackboneLocation}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackboneLocation">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiBackboneLocation" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiBackboneRPA}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackboneRPA">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiBackboneRPA" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiBackboneIoTdata}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiBackboneIoTdata">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiBackboneIoTdata" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+
+
+
+    </table>
+
+    <table id="Table_header13">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Digital Ecosystems
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data13" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiEcosysCrowdsourcing"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiEcosysCocreating}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiEcosysCocreating">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiEcosysCocreating" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiEcosysCrowdsourcing}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiEcosysCrowdsourcing">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiEcosysCrowdsourcing" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+    </table>
+
+    <table id="Table_header14">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Enterprise Agility
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data14" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiOpModelBusInnovatn"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiOpModelBusInitiative}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiOpModelBusInitiative">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiOpModelBusInitiative" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiOpModelInnovatnFunding}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiOpModelInnovatnFunding">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiOpModelInnovatnFunding" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiOpModelChangeMgmtProgram}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiOpModelChangeMgmtProgram">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiOpModelChangeMgmtProgram" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiOpModelBusInnovatn}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiOpModelBusInnovatn">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiOpModelBusInnovatn" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiOpModelImpactOfAutoMatn}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiOpModelImpactOfAutoMatn">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiOpModelImpactOfAutoMatn" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labeldigiOpModelBacklog}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of digiOpModelBacklog">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveydigiOpModelBacklog" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+
+    </table>
+
+    <table id="Table_header15">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Insights
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data15" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of insightsDataLake"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelinsightsDataLake}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of insightsDataLake">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveyinsightsDataLake" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelinsightsMasterDataMgmt}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of insightsMasterDataMgmt">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveyinsightsMasterDataMgmt" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" width="40%">
+          {{labelinsightsIdentifyingCustomers}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of insightsIdentifyingCustomers">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveyinsightsIdentifyingCustomers" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+    </table>
+
+    <table id="Table_header16">
+      <tr>
+        <th width="90%"></th>
+      </tr>
+      <tr>
+        <td align="left" width="40%"> Technologies@Scale
+        </td>
+      </tr>
+    </table>
+    <table id="Table_Data16" style="display: none;">
+      <tr>
+        <td></td>
+        <td align="left" width="20%" *ngFor="let dataValue of smartTechunstructuredData"></td>
+        <td align="center" style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let survey of selectedSurveyNameToDisplay">
+          <span align="center">{{survey}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelsmartTechAutomating}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of smartTechAutomating">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveysmartTechAutomating" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelsmartTechLedgerTech}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of smartTechLedgerTech">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveysmartTechLedgerTech" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelsmartTechunstructuredData}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of smartTechunstructuredData">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveysmartTechunstructuredData" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelsmartTechChatbots}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of smartTechChatbots">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveysmartTechChatbots" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelsmartTechDataScience}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of smartTechDataScience">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveysmartTechDataScience" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelsmartTechVirtualReality}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of smartTechVirtualReality">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveysmartTechVirtualReality" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+      <tr>
+          <td align="left" width="40%">
+            {{labelsmartTechPersonalizingServices}}
+          </td>
+          <td align="left" width="20%" *ngFor="let dataValue of smartTechPersonalizingServices">
+            <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+            <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+          </td>
+          <td *ngFor="let tdValue of surveysmartTechPersonalizingServices" align="center" width="20%" style="color: #03abba;">
+            <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+            <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+          </td>
+        </tr>
+      <tr>
+        <td align="left" width="40%">
+          {{labelsmartTechAugmentedReality}}
+        </td>
+        <td align="left" width="20%" *ngFor="let dataValue of smartTechAugmentedReality">
+          <span align="center" *ngIf=" (dataValue != null || dataValue != undefined)">{{ dataValue | number : '1.0-0' }}</span>
+          <span align="center" *ngIf=" (dataValue == null || dataValue == undefined)">{{dashSymbol}}</span>
+        </td>
+        <td *ngFor="let tdValue of surveysmartTechAugmentedReality" align="center" width="20%" style="color: #03abba;">
+          <span align="center" *ngIf="((tdValue != null || tdValue != undefined) && tdValue != defaultValueForSurvey)">{{ tdValue | number : '1.0-0' }} </span>
+          <span align="center" *ngIf="(tdValue == null || tdValue == undefined || tdValue == defaultValueForSurvey)">{{dashSymbol}}</span>
+        </td>
+      </tr>
+
+     
+
+
+    </table>
+
+  </div>
+</div>

@@ -1,0 +1,31 @@
+/*******************************************************************/
+/************** © 2018 ISG - All Rights Reserved *******************/
+/*******************************************************************/
+
+/*******************************************************************/
+/** File Name: mainframe-drill-down-donut-chart.component.css     **/
+/** Description: This is mainframe drill down donut chart css.    **/
+/**                                                               **/
+/**                                                               **/
+/** Created By: 10652318  Created Date: 28/09/2018                **/
+/** Update By: 10652318  Update Date: 28/09/2018                  **/
+/** Developed at:                         **/
+/*******************************************************************/
+
+.arc text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+.title {
+  fill: teal;
+  font-weight: bold;
+}
+
+.drilldown-charts{
+  margin-top: -13px ;
+}

@@ -1,0 +1,49 @@
+.heading_align{
+    margin-left: 45%;
+    font-weight: 600;
+    font-size: 18px;
+}
+.info_align{
+    margin-left: 20%;
+    font-size: smaller;
+}
+.mail_align{
+    font-size: 14px;
+    margin-left: 28%;
+}
+.mail_div_align{
+    display: block;
+    margin-left: 10%;
+}
+.mail_id_div{
+    font-weight: bold;
+    font-size: 14px;
+}
+.button_card{
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2%;
+    margin-left: 3%;
+}
+
+@media (min-width: 320px) and (max-width:425px){
+    .heading_align{
+        margin-left: 40%;
+        font-weight: 600;
+        font-size: 18px;
+    }
+    .info_align{
+        margin-left: 0%;
+        font-size: smaller;
+    }
+    .mail_align{
+        font-size: 14px;
+        margin-left: 0%;
+    }
+    .mail_div_align{
+        display: block;
+        margin-left: 0%;
+        margin-bottom: 5%;
+    }
+}

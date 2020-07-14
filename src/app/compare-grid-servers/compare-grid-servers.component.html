@@ -1,0 +1,728 @@
+<div class="container-fluid compare-grid" style="padding:0px;" [ngClass]="(iconShow==true)?'maximize':'minimize'" *ngIf="showCompareGridChild">
+
+    <div class="compare-header py-3">
+      <div class="row">
+        <div class="col-lg-6">
+              <div class="mb-0 row" style="margin-left:10px;">{{selectedServerLables[0].towerName}} Tower </div>
+              <!-- <div class="row" *ngIf="mapdata != undefined" style="margin-left:10px;font-size:14px;">Scenario : {{scenarioNametoCompare}}</div> -->
+        </div>
+        <div class="col-lg-6 text-right d-flex align-items-right">
+          <ul class="mb-0 d-flex align-items-center">
+            <li class="mx-3" *ngIf="privilegesObject.pdf">
+              <a href="javascript:void(0)" class="pdf" (click)="generatePDF()">pdf</a>
+            </li>
+            <li class="mx-3">
+
+              <a href="javascript:void(0)" (click)="closeEditGridView()" data-toggle="modal" data-target=".compare-towers-modal" class="edit" data-dismiss="modal">Edit Selection</a>
+            </li>
+            <li class="mx-3">
+              <div class="resizeIconMinMax fa fa-expand" (click)="popupResize()" *ngIf="iconShow"></div>
+              <div class="resizeIconMinMax fa fa-compress" (click)="popupMinimize()" *ngIf="!iconShow"></div>
+            </li>
+            <li class="mx-3">
+                <button (click)="closeGridView()" type="button" style="color:#fff;" class="close" data-dismiss="modal">&times;</button>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-6">
+            <div class="mb-0 row" style="margin-left:10px; font-size: 14px;" *ngIf="compareSequence">{{sectionService.getScaleTitle()}} :&nbsp;<span>{{sectionService.getScale()}}</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-option" *ngIf="showCompareGridChild" >
+      <table class="table table-sm mb-0">
+        <tbody>
+          <tr>
+            <td align="left" width="40%">
+              <a href="javascript:void(0)" (click)="triggerCollapse(this)" class="toggle-accordion active toggle-all" accordion-id="#accordion"></a>
+            </td>
+            <td align="center"  width="20%"  *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+            <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+              <span align="center" *ngIf="mapdata != undefined">{{scenarioName}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="clearfix"></div>
+
+
+    <!-- server section start -->
+  <div class="panel-group gridDataScroll compare-grid-tower-scroll" id="accordion" role="tablist" aria-multiselectable="true" *ngIf="showCompareGridChild">
+
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title py-2">
+              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    {{selectedServerLables[0].costAllocation}}
+              </a>
+              <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{costallocationTooltip}}">info</a>
+            </h4>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td align="left" width="40%">
+                      <span class="float-left mr-1">Personnel</span>
+                      <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverPersonnelTooltip}}">info</a> -->
+                    </td>
+                    <td align="center" width="20%" *ngFor="let dataValue of serverPersonnelCostAllocation">{{dataValue | number : '1.1-1'}}%</td>
+                    <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+                      <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <td align="left" width="40%">
+                      <span class="float-left mr-1">Hardware</span>
+                      <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverHardwareTooltip}}">info</a> -->
+                    </td>
+                    <td align="center" width="20%" *ngFor="let dataValue of serverHardwareCostAllocation">{{dataValue | number : '1.1-1'}}%</td>
+                    <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+                      <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <td align="left" width="40%">
+                      <span class="float-left mr-1">Software</span>
+                      <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverSoftwareTooltip}}">info</a> -->
+                    </td>
+                    <td align="center" width="20%"  *ngFor="let dataValue of serverSoftwareCostAllocation">{{dataValue | number : '1.1-1'}}%</td>
+                    <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+                      <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+                    </td>
+                  </tr>
+                  <tr>
+                        <td align="left" width="40%">
+                          <span class="float-left mr-1">Outsourcing</span>
+                          <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverOutsourcingTooltip}}">info</a> -->
+                        </td>
+                        <td align="center" width="20%"  *ngFor="let dataValue of serverOutsourcingCostAllocation">{{dataValue | number : '1.1-1'}}%</td>
+                        <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+                          <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+                        </td>
+                      </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 class="panel-title py-2">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+                        {{selectedServerLables[0].annualCostOSInstance}}
+
+                    </a>
+                    <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{annualCostPerInst}}">info</a>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td align="left" width="40%">
+                            <span class="float-left mr-1">Total Cost of Ownership <span class="text-secondary">(Mean)</span></span>
+                            <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverTCOPerConfigTooltip}}">info</a> -->
+                          </td>
+                          <td align="center" width="20%" *ngFor="let dataValue of serverTCOAnnualCostAllocation">{{currencySymbol}}{{dataValue * defaultRefactorValue[0] | number : '1.0-0'}}</td>
+                          <td *ngFor="let tdValue of serverMyDataTCOMIP; let i=index" align="center" width="20%"  style="color: #03abba;">
+                            <span align="center"  *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{currencySymbol}}{{ tdValue * refactorVal[i] | number : '1.0-0' }}</span>
+                            <span align="center"  *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td align="left" width="40%">
+                            <span class="float-left mr-1">Market Price <span class="text-secondary">(Mean)</span></span>
+                            <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverTCOMarketTooltip}}">info</a> -->
+                          </td>
+                          <td align="center" width="20%" *ngFor="let dataValue of serverTCOMarketCostAllocation">{{currencySymbol}}{{dataValue * defaultRefactorValue[0] | number : '1.0-0'}}</td>
+                          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+                          <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+                        </td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title py-2">
+                      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseOne">
+                          {{selectedServerLables[0].annualCostPerCore}}
+
+                      </a>
+                      <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{annualCostPerCore}}">info</a>
+                    </h4>
+                  </div>
+                  <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td align="left" width="40%">
+                              <span class="float-left mr-1">Total Cost of Ownership <span class="text-secondary">(Mean)</span></span>
+                              <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverCoreAnnualCostAllocationTooltip}}">info</a> -->
+                            </td>
+                            <td align="center" width="20%" *ngFor="let dataValue of serverCoreAnnualCostAllocation">{{currencySymbol}}{{dataValue * defaultRefactorValue[0] | number : '1.0-0'}}</td>
+                            <td *ngFor="let tdValue of serverCoreForm;let i=index" align="center" width="20%"  style="color: #03abba;">
+                              <span align="center"  *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{currencySymbol}}{{ tdValue * refactorVal[i] | number : '1.0-0' }}</span>
+                              <span align="center"  *ngIf="mapdata != undefined && (tdValue < 0 || tdValue ==infinity)">{{dashSymbol}}</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="left" width="40%">
+                              <span class="float-left mr-1">Market Price <span class="text-secondary">(Mean)</span></span>
+                              <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverCoreMarketCostAllocationTooltip}}">info</a> -->
+                            </td>
+                            <td align="center" width="20%" *ngFor="let dataValue of serverCoreMarketCostAllocation">{{currencySymbol}}{{dataValue * defaultRefactorValue[0] | number : '1.0-0'}}</td>
+                            <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+                              <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+                            </td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+
+              <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                      <h4 class="panel-title py-2">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseOne">
+                                {{selectedServerLables[0].annualCostFTE}}
+                        </a>
+                        <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{annualCostPerMainframeFTE}}">info</a>
+                      </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                      <div class="panel-body">
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <td align="left" width="40%">
+                                <span class="float-left mr-1">Employee <span class="text-secondary">(Mean)</span></span>
+                                <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverFTEEmployeeTooltip}}">info</a> -->
+                              </td>
+                              <td align="center" width="20%" *ngFor="let dataValue of serverEmpFTECostAllocation">{{currencySymbol}}{{dataValue * defaultRefactorValue[0] | number : '1.0-0'}}</td>
+                              <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+                                <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+                              </td>
+
+                            </tr>
+                            <tr>
+                              <td align="left" width="40%">
+                                <span class="float-left mr-1">Contractor <span class="text-secondary">(Mean)</span></span>
+                                <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverFTEContractorTooltip}}">info</a> -->
+                              </td>
+                              <td align="center" width="20%" *ngFor="let dataValue of servercontractorFTECostAllocation">{{currencySymbol}}{{dataValue * defaultRefactorValue[0] | number : '1.0-0'}}</td>
+                              <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+                                <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+                              </td>
+
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="panel-footer panel-body">
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <td align="left" width="40%">
+                                <span class="float-left mr-1">{{selectedServerLables[0].serverProvisionTime}} <span class="text-secondary"> (Mean)</span></span>
+                                <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverProvisionTolltip}}">info</a>
+                                <span placement="top" ngbTooltip="Info Here" class="infrastructure-info-icon common-cur"> </span>
+                              </td>
+                              <td align="center" width="20%" *ngFor="let dataValue of serverProvisionTime">{{dataValue | number : '1.1-1'}}</td>
+                              <td *ngFor="let tdValue of serverMyDataProvision" align="center" width="20%"  style="color: #03abba;">
+                                <span align="center"   *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{ tdValue | number : '1.1-1' }}</span>
+                                <span align="center"  *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div class="panel-footer panel-body">
+                            <table class="table">
+                              <tbody>
+                                <tr>
+                                  <td align="left" width="40%">
+                                    <span class="float-left mr-1">{{selectedServerLables[0].serverAvailability}} 
+                                            <span class="text-secondary">(Mean)</span></span>
+                                            <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverAvailTooltip}}">info</a>
+                                    <span placement="top" ngbTooltip="Info Here" class="infrastructure-info-icon common-cur"> </span>
+                                  </td>
+                                  <td align="center" width="20%" *ngFor="let dataValue of serverMainframeAvailabality">{{dataValue | number : '1.2-2'}}%</td>
+                                  <td *ngFor="let tdValue of serverMyDataAvail" align="center" width="20%"  style="color: #03abba;">
+                                    <span align="center" *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{ tdValue | number : '1.2-2' }}%</span>
+                                    <span align="center" *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+                                  </td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                          </div>
+
+                          <div class="panel-footer panel-body">
+                                <table class="table">
+                                  <tbody>
+                                    <tr>
+                                      <td align="left" width="40%">
+                                        <span class="float-left mr-1"> {{selectedServerLables[0].osInstancePerFTE}} 
+                                                <span class="text-secondary">(Mean)</span></span>
+                                                <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverConfMIPTooltip}}">info</a>
+                                        <span placement="top" ngbTooltip="Info Here" class="infrastructure-info-icon common-cur"> </span>
+                                      </td>
+                                      <td align="center" width="20%" *ngFor="let dataValue of serverNumberMIPFTE">{{dataValue | number : '1.0-0'}}</td>
+                                      <td *ngFor="let tdValue of serverMyDataFTENum" align="center" width="20%"  style="color: #03abba;">
+                                        <span align="center" *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{ tdValue | number : '1.0-0' }}</span>
+                                        <span align="center" *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+                                      </td>
+                                      </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+
+
+                              <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingFour">
+                                      <h4 class="panel-title py-2">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseOne">
+                                            {{selectedServerLables[0].staffingMix}}
+                                        </a>
+                                        <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{staffingMixTool}}">info</a>
+                                      </h4>
+                                    </div>
+                                    <div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+                                      <div class="panel-body">
+                                        <table class="table">
+                                          <tbody>
+                                            <tr>
+                                              <td align="left" width="40%">
+                                                <span class="float-left mr-1">Employees <span class="text-secondary">(Mean)</span></span>
+                                                <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverStaffingEmpTooltip}}">info</a> -->
+                                              </td>
+                                              <td align="center" width="20%" *ngFor="let dataValue of serverStaffingEmployees">{{dataValue | number : '1.1-1'}}%</td>
+                                              <td *ngFor="let tdValue of staffingmixEmp" align="center" width="20%"  style="color: #03abba;">
+                                                <span align="center" *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{ tdValue | number : '1.1-1' }}%</span>
+                                                <span align="center" *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td align="left" width="40%">
+                                                <span class="float-left mr-1">Contractors <span class="text-secondary">(Mean)</span></span>
+                                                <!-- <a href="javascript:void(0)" class="info float-left" placement="top" ngbTooltip="{{serverStaffingContractorTooltip}}">info</a> -->
+                                              </td>
+                                              <td align="center" width="20%" *ngFor="let dataValue of serverStaffingContractors">{{dataValue | number : '1.1-1'}}%</td>
+                                              <td *ngFor="let tdValue of staffingmixContract" align="center" width="20%"  style="color: #03abba;">
+                                                <span align="center" *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{ tdValue | number : '1.1-1' }}%</span>
+                                                <span align="center" *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+
+    </div>
+
+    <div id="pdftable" style="display: none;">
+
+        <table id="Table_header1">
+            <tr>
+              <th width="90%"></th>
+            </tr>
+            <tr>
+              <td align="left" width="40%">{{selectedServerLables[0].towerName}} Tower</td>
+            </tr>
+          </table>
+          <table id="Table_Data1" style="display: none;">
+              <tr></tr>
+          </table>
+          <table id="Table_header2">
+            <tr>
+              <th width="90%"></th>
+            </tr>
+            <!-- <tr>
+              <td align="left" width="40%" *ngIf="mapdata != undefined" style="font-size:14px;">  Scenario : {{scenarioNametoCompare}}</td>
+            </tr> -->
+            <tr *ngIf="compareSequence" >
+                <td align="left" width="40%" style="font-size:14px;">{{sectionService.getScaleTitle()}} : {{sectionService.getScale()}}</td>
+            </tr>
+          </table>
+          <table id="Table_Data2" style="display: none;">
+              <tr></tr>
+          </table>
+          <table id="Table_selected_industry_region" style="display: none;">
+              <tr>
+                <td></td>
+                <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue }}</td>
+                <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+                  <span align="center" *ngIf="mapdata != undefined">{{scenarioName}}</span>
+                </td>
+
+              </tr>
+              <tr>
+                <td></td>
+                <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+                <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+                  <span align="center" *ngIf="mapdata != undefined">{{scenarioName}}</span>
+                </td>
+              </tr>
+            </table>
+      <table id="Table_header3">
+        <tr>
+          <th width="90%"></th>
+        </tr>
+        <tr>
+          <td align="left" width="40%"> {{selectedServerLables[0].costAllocation}}</td>
+        </tr>
+      </table>
+      <table id="Table_Data3" style="display: none;">
+        <tr>
+          <td></td>
+          <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" *ngIf="mapdata != undefined">{{scenarioName}}</span>
+          </td>
+        </tr>
+        <!-- <tr>
+          <td></td>
+          <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td align="left" width="20%" *ngIf="mapdata != undefined">My Data</td>
+        </tr> -->
+        <tr>
+          <td align="left" width="40%">
+            Personnel
+          </td>
+          <td align="left" width="20%" *ngFor="let dataValue of serverPersonnelCostAllocation">{{dataValue | number : '1.1-1'}}%</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+          </td>
+
+        </tr>
+        <tr>
+          <td align="left" width="40%">
+            Hardware
+          </td>
+          <td align="left" width="20%" *ngFor="let dataValue of serverHardwareCostAllocation">{{dataValue | number : '1.1-1'}}%</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+          </td>
+
+        </tr>
+        <tr>
+          <td align="left" width="40%">
+            Software
+          </td>
+          <td align="left" width="20%" *ngFor="let dataValue of serverSoftwareCostAllocation">{{dataValue | number : '1.1-1'}}%</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+          </td>
+
+        </tr>
+        <tr>
+          <td align="left" width="40%">
+            Outsourcing
+          </td>
+          <td align="left" width="20%" *ngFor="let dataValue of serverOutsourcingCostAllocation">{{dataValue | number : '1.1-1'}}%</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" width="20%"  style="color: #03abba;" *ngIf="mapdata != undefined">-</span>
+          </td>
+
+        </tr>
+      </table>
+      <table id="Table_header4">
+        <tr>
+          <th width="90%"></th>
+        </tr>
+        <tr>
+          <td align="left" width="40%"> {{selectedServerLables[0].annualCostOSInstance}}</td>
+        </tr>
+      </table>
+      <table id="Table_Data4" style="display: none;">
+        <tr>
+          <td></td>
+          <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" *ngIf="mapdata != undefined">{{scenarioName}}</span>
+          </td>
+
+        </tr>
+        <!-- <tr>
+          <td></td>
+          <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td align="left" width="20%" *ngIf="mapdata != undefined">My Data</td>
+
+        </tr> -->
+        <tr>
+          <td align="left" width="40%">
+            Total Cost of Ownership <span class="text-secondary">(Mean)</span>
+          </td>
+          <td align="left" width="20%"  *ngFor="let dataValue of serverTCOAnnualCostAllocation">{{pdfCurrencySymbol}}&nbsp;{{dataValue * defaultRefactorValue[0]| number : '1.0-0'}}</td>
+          <td *ngFor="let tdValue of serverMyDataTCOMIP; let i=index" align="center" width="20%"  style="color: #03abba;">
+            <span align="center"  *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{pdfCurrencySymbol}}&nbsp;{{ tdValue * refactorVal[i] | number : '1.0-0' }}</span>
+            <span align="center"  *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" width="40%">
+            Market Price <span class="text-secondary">(Mean)</span>
+          </td>
+          <td align="left" width="20%"  *ngFor="let dataValue of serverTCOMarketCostAllocation">{{pdfCurrencySymbol}}&nbsp;{{dataValue * defaultRefactorValue[0] | number : '1.0-0'}}</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" *ngIf="mapdata != undefined">-</span>
+          </td>
+
+        </tr>
+
+
+      </table>
+
+      <table id="Table_header5">
+        <tr>
+          <th width="90%"></th>
+        </tr>
+        <tr>
+          <td align="left" width="40%">  {{selectedServerLables[0].annualCostPerCore}}</td>
+        </tr>
+      </table>
+      <table id="Table_Data5" style="display: none;">
+        <tr>
+          <td></td>
+          <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" *ngIf="mapdata != undefined">{{scenarioName}}</span>
+          </td>
+
+        </tr>
+        <!-- <tr>
+          <td></td>
+          <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td align="left" width="20%" *ngIf="mapdata != undefined">My Data</td>
+
+
+        </tr> -->
+
+        <tr>
+          <td align="left" width="40%">
+            Total Cost of Ownership <span class="text-secondary">(Mean)</span>
+          </td>
+          <td align="left" width="20%" *ngFor="let dataValue of serverCoreAnnualCostAllocation">{{pdfCurrencySymbol}}&nbsp;{{dataValue * defaultRefactorValue[0] | number : '1.0-0'}}</td>
+          <td *ngFor="let tdValue of serverCoreForm;let i=index" align="center" width="20%"  style="color: #03abba;">
+            <span align="center"  *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{pdfCurrencySymbol}}&nbsp;{{ tdValue * refactorVal[i] | number : '1.0-0' }}</span>
+            <span align="center"  *ngIf="mapdata != undefined && (tdValue < 0 || tdValue ==infinity)">{{dashSymbol}}</span>
+          </td>
+
+        </tr>
+        <tr>
+          <td align="left" width="40%"> Market Price <span class="text-secondary">(Mean)</span></td>
+          <td align="left" width="20%"  *ngFor="let dataValue of serverCoreMarketCostAllocation">{{pdfCurrencySymbol}}&nbsp;{{dataValue * defaultRefactorValue[0] | number : '1.0-0'}}</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" *ngIf="mapdata != undefined">-</span>
+          </td>
+
+        </tr>
+      </table>
+
+      <table id="Table_header6">
+        <tr>
+          <th></th>
+        </tr>
+        <tr>
+          <td align="left" width="40%">{{selectedServerLables[0].annualCostFTE}}</td>
+        </tr>
+      </table>
+      <table id="Table_Data6" class="table table-striped">
+        <tr>
+          <td></td>
+          <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" *ngIf="mapdata != undefined">{{scenarioName}}</span>
+          </td>
+        </tr>
+        <!-- <tr>
+          <td></td>
+          <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td align="left" width="20%" *ngIf="mapdata != undefined">My Data</td>
+        </tr> -->
+        <tr>
+          <td align="left" width="40%"> Employee <span class="text-secondary">(Mean)</span></td>
+          <td align="left" width="20%"  *ngFor="let dataValue of serverEmpFTECostAllocation">{{pdfCurrencySymbol}}&nbsp;{{dataValue * defaultRefactorValue[0] | number : '1.0-0'}}</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" *ngIf="mapdata != undefined">-</span>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" width="40%"> Contractor <span class="text-secondary">(Mean)</span></td>
+          <td align="left" width="20%"  *ngFor="let dataValue of servercontractorFTECostAllocation">{{pdfCurrencySymbol}}&nbsp;{{dataValue * defaultRefactorValue[0] | number : '1.0-0'}}</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" *ngIf="mapdata != undefined">-</span>
+          </td>
+        </tr>
+      </table>
+      <table id="Table_header7">
+        <tr>
+          <th></th>
+        </tr>
+        <tr>
+          <td align="left" width="40%"> {{selectedServerLables[0].serverProvisionTime}}</td>
+        </tr>
+      </table>
+      <table id="Table_Data7" class="table table-striped">
+        <tr>
+          <td></td>
+          <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" *ngIf="mapdata != undefined">{{scenarioName}}</span>
+          </td>
+
+        </tr>
+        <!-- <tr>
+          <td></td>
+          <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td align="left" width="20%" *ngIf="mapdata != undefined">My Data</td>
+
+        </tr> -->
+        <tr>
+          <td align="left" width="40%">{{selectedServerLables[0].serverProvisionTime}} <span class="text-secondary"> (Mean)</span></td>
+          <td align="left" width="20%"  *ngFor="let dataValue of serverProvisionTime">{{dataValue | number : '1.1-1'}}</td>
+          <td *ngFor="let tdValue of serverMyDataProvision" align="center" width="20%"  style="color: #03abba;">
+            <span align="center"   *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{ tdValue | number : '1.1-1' }}</span>
+            <span align="center"  *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+          </td>
+        </tr>
+      </table>
+
+      <table id="Table_header8">
+          <tr>
+            <th width="90%"></th>
+          </tr>
+          <tr>
+            <td align="left" width="40%"> {{selectedServerLables[0].serverAvailability}}</td>
+          </tr>
+        </table>
+        <table id="Table_Data8" style="display: none;">
+          <tr>
+            <td></td>
+            <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}%</td>
+            <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+              <span align="center" *ngIf="mapdata != undefined">{{scenarioName}}</span>
+            </td>
+
+          </tr>
+          <!-- <tr>
+            <td></td>
+            <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+            <td align="left" width="20%" *ngIf="mapdata != undefined">My Data</td>
+
+          </tr> -->
+          <tr>
+            <td align="left" width="40%">{{selectedServerLables[0].serverAvailability}}</td>
+            <td align="left" width="20%"  *ngFor="let dataValue of serverMainframeAvailabality">{{dataValue | number : '1.2-2'}}%</td>
+            <td *ngFor="let tdValue of serverMyDataAvail" align="center" width="20%"  style="color: #03abba;">
+              <span align="center" *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{ tdValue | number : '1.2-2' }}%</span>
+              <span align="center" *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+            </td>
+
+          </tr>
+
+        </table>
+        <table id="Table_header9">
+          <tr>
+            <th width="90%"></th>
+          </tr>
+          <tr>
+            <td align="left" width="40%"> {{selectedServerLables[0].osInstancePerFTE}}</td>
+          </tr>
+        </table>
+        <table id="Table_Data9" style="display: none;">
+          <tr>
+            <td></td>
+            <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+            <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+              <span align="center" *ngIf="mapdata != undefined">{{scenarioName}}</span>
+            </td>
+
+          </tr>
+          <!-- <tr>
+            <td></td>
+            <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+            <td align="left" width="20%" *ngIf="mapdata != undefined">My Data</td>
+
+          </tr> -->
+          <tr>
+            <td align="left" width="40%"># of OS Instances Per FTE </td>
+            <td align="left" width="20%"  *ngFor="let dataValue of serverNumberMIPFTE">{{dataValue | number : '1.0-0'}}</td>
+            <td *ngFor="let tdValue of serverMyDataFTENum" align="center" width="20%"  style="color: #03abba;">
+              <span align="center" *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{ tdValue | number : '1.0-0' }}</span>
+              <span align="center" *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+            </td>
+          </tr>
+
+        </table>
+      <table id="Table_header10">
+        <tr>
+          <th></th>
+        </tr>
+        <tr>
+          <td align="left" width="40%">{{selectedServerLables[0].staffingMix}}</td>
+        </tr>
+      </table>
+      <table id="Table_Data10" class="table table-striped">
+        <tr>
+          <td></td>
+          <td align="left" width="20%" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td  align="center"  style="color: #03abba; font-weight: bold;" width="20%" *ngFor="let scenarioName of scenarioNametoCompare">
+            <span align="center" *ngIf="mapdata != undefined">{{scenarioName}}</span>
+          </td>
+
+        </tr>
+        <!-- <tr>
+          <td></td>
+          <td align="left" width="20%" class="float-left mr-1" *ngFor="let dataValue of compareSequence">{{dataValue}}</td>
+          <td align="left" width="20%" *ngIf="mapdata != undefined">My Data</td>
+
+        </tr> -->
+        <tr>
+          <td align="left" width="40%">
+            Employees <span class="text-secondary">(Mean)</span>
+          </td>
+          <td align="left" width="20%"  *ngFor="let dataValue of serverStaffingEmployees">{{dataValue | number : '1.1-1'}}%</td>
+          <td *ngFor="let tdValue of staffingmixEmp" align="center" width="20%"  style="color: #03abba;">
+            <span align="center" *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{ tdValue | number : '1.1-1' }}%</span>
+            <span align="center" *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" width="40%">
+            Contractors <span class="text-secondary">(Mean)</span>
+          </td>
+          <td align="left" width="20%"  *ngFor="let dataValue of serverStaffingContractors">{{dataValue | number : '1.1-1'}}%</td>
+          <td *ngFor="let tdValue of staffingmixContract" align="center" width="20%"  style="color: #03abba;">
+            <span align="center" *ngIf="mapdata != undefined && (tdValue >= 0 && tdValue < infinity)">{{ tdValue | number : '1.1-1' }}%</span>
+            <span align="center" *ngIf="mapdata != undefined && (tdValue < 0 || tdValue == infinity)">{{dashSymbol}}</span>
+          </td>
+        </tr>
+
+      </table>
+
+    </div>
+  </div>
+

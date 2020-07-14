@@ -1,0 +1,10 @@
+<div>
+  <ng-template #popContent>
+      <div>
+        <textarea class="form-control note-textarea" rows="5" style="width: 200px;padding: 0;margin: 5px;"  ></textarea>
+        <button class="btn btn-note btn-Cancel" (click)="p.close()" >Cancel</button>
+        <button class="btn btn-note btn-Save" (click)="p.close()" >Save</button>    
+      </div>
+  </ng-template>
+  <img src="assets/images/edit-icon.png" class="note-icon" [ngbPopover]="popContent" #p="ngbPopover" [autoClose]="false" placement="bottom-right"/>
+</div>

@@ -1,0 +1,115 @@
+<div class="modal-header">
+  <h6 *ngIf="showSelectedOptionFlg" class="modal-title" id="exampleModalLabel">Select to Compare</h6>
+  <h6 class="modal-title" id="exampleModalLabel">Enter My Data</h6>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeEnterDataModal()">
+      <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <section class="main-data-section mt-3">
+      <!-- Accordian starts  -->
+      <div class="row">
+          <div class="container-fluid">
+              <div id="general-card" class="card mt-2">
+                  <!-- <div class="card-header" id="heading1">
+                      <a class="btn btn-link" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                          <div class="row container">
+                              <span class="icon-circle-minus pl-4 col-12 col-sm-6" >General</span>
+                              <div class="text-right col-12 col-sm-6 p-0">Completed: <font id="general-percentage" size="4"></font> of 100</div>
+                          </div>
+                      </a>
+                  </div> -->
+
+                  <div id="" class="collapse show tower-card-body">
+                      <div class="card-body">
+                          <form>
+                              <fieldset class="it-operation-fieldset">
+                                  <legend class="it-operation-legend">General Information</legend>
+                                  <div class="form-row" *ngIf='dataLoaded'>
+                                      <div class="form-group col-12 col-sm-4">
+                                          <label for="companyName">Scenario ID:</label>
+                                          <!-- <select id="reportingCurrency" class="form-control">
+                                              <option vlaue="USD" selected>1</option>
+                                              <option value="INR">2</option>
+                                          </select> -->
+                                          <select [(ngModel)]='selectedScanrio' name="Scanrio" class="form-control" (ngModelChange)="getScenarioDataById()">
+                                              <option value=0>New Scenario</option>
+                                              <option *ngFor='let scenario of scenarios' value={{scenario.key}}>{{scenario.value}}</option>
+                                          </select>
+                                      </div>
+                                      <div class="form-group col-12 col-sm-4">
+                                          <label for="scenarioID">Scenario Name:</label>
+                                          <input type="text" class="form-control" id="scenarioName" placeholder="Scenario" [(ngModel)]="scenarioNameText" name="scenarioName" />
+                                      </div>
+
+                                      <div class="form-group col-12 col-sm-4"  *ngFor="let generalInfo of inputData.GeneralInformation.NA">
+                                          <label>{{generalInfo.desc}}</label>
+
+
+                                          <select class="form-control" [(ngModel)]="generalInfo.src_code_value" name="{{generalInfo.desc}}"
+                                          *ngIf="generalInfo.input_type == 'Drop Down'" >
+
+                                          <option *ngFor="let currency of generalInfo.dropDown;trackBy: trackByFn" [value]="currency.key">{{currency.value}}</option>
+                                      </select>
+
+                                  </div>
+
+
+
+
+                              </div>
+                          </fieldset>
+                      </form>
+
+                      <!-- <form class="legend-warning-container second-section" *ngIf="validateAvailabilityPercentage">
+                          <div class="form-row legend-message-row">
+                              <div class="col-12 col-md-4 col-sm-4">
+                              </div>
+                              <div class="col-12 col-md-8 col-sm-8">
+                                  <div class="legend-warning-img"></div>
+                                  <div>
+                                      <p class="legend-message">Percentage cannot be greater than 100.</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </form> -->
+
+                      <form class="second-section" name="myForm">
+                          <!-- <fieldset class="it-operation-fieldset" [ngClass]="{
+                              'it-operation-fieldset':validateAvailabilityPercentage=='false',
+                              'it-operation-fieldset-warning':validateAvailabilityPercentage == 'true'
+                          }"> -->
+                          <!-- <fieldset class="it-operation-fieldset" [ngClass]="[validateAvailabilityPercentage ? 'it-operation-fieldset-warning' : 'it-operation-fieldset' , validateHash ? 'it-operation-fieldset-warning' : 'it-operation-fieldset' , validateDollar ? 'it-operation-fieldset-warning' : 'it-operation-fieldset']"> -->
+                              <fieldset class="it-operation-fieldset">
+                                  <legend class="it-operation-legend">Mainframe Information</legend>
+                                  <div class="form-row" *ngIf='dataLoaded'>
+                                      <div *ngFor="let label of inputData.MainframeInput.NA" class="form-group col-12 col-sm-4">
+                                          <label for="inputEmail4">
+                                              {{label.desc}}<span *ngIf='label.indicator=="R"'>*</span> :
+                                          </label>
+                                          <!-- (ngModelChange)="checkValidation(label.src_code)" -->
+                                          <!-- (change)="checkValidation(label.src_code_value)" -->
+                                          <input required type="number" placeholder="{{label.value_format}}" name="{{label.desc}}" [(ngModel)]="label.src_code_value"
+                                          class="form-control numer-only">
+                                      </div>
+                                  </div>
+                              </fieldset>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+</div>
+
+<!-- <div class="legend-message" *ngIf="!isFormValid">
+  Please enter valid info
+</div> -->
+
+<div class="modal-footer tower-enterdata-footer">
+  <div class="mx-auto">
+      <button (click)="saveAndCompare()" type="button" data-dismiss="modal" class="btn btn-blue mt-2 btn-text-color">Save & Compare</button>
+      <button type="button" class="btn btn-blue mt-2 enter-my-data-btn" (click)='resetAll()'>Reset</button>
+  </div>
+</div>

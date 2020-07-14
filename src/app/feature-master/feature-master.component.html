@@ -1,0 +1,135 @@
+<div class="container-fluid kpi-maintenance" *ngIf='dataLoaded;else other_content'>
+    <section class="main-content">
+
+        <div class="card-header pl-0">
+            <h6 class="text-left text-bold mb-0">Feature Master</h6>
+        </div>
+
+        <form [formGroup]="featureMasterForm">
+
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <div formArrayName="feature_master_data" class="table-responsive">
+                        <table class="table table-sm table-striped" style="width:100%">
+                            <thead class="thead-blue">
+                                <tr>
+                                    <th class="col">Feature</th>
+                                    <th class="col" style="width:250px">Description</th>
+                                    <th class="col">Created By</th>
+                                    <th class="col">Created Date</th>
+                                    <th class="col">Updated By</th>
+                                    <th class="col">Updated Date</th>
+                                    <th class="col"></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let item of featureMasterPoints.controls; let pointIndex=index" [formGroupName]="pointIndex" [hidden]='rows[pointIndex].isHidden' id={{pointIndex}} [hidden]='pointIndex==0&&!noDataPresend'>
+                                    <td>
+                                        <input type="text" formControlName="featureName" class="form-control" (keyup)='updateRowStatus(pointIndex)' [ngClass]="{ 'is-invalid': submitted && item.controls.featureName.errors }" placeholder="Feature Name">
+                                        <div *ngIf="submitted && item.controls.featureName.errors" class="invalid-feedback">
+                                            <div *ngIf="item.controls.featureName.errors.required">
+                                                Required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="display:none">
+                                        <input type="hidden" class="question-input"  formControlName="featureId" />
+                                    </td>
+                                    <td style="width:250px">
+                                        <textarea placeholder="Description" formControlName="description" (change)='updateRowStatus(pointIndex)' [ngClass]="{ 'is-invalid': submitted && item.controls.description.errors }" class="form-control" rows="2"></textarea>
+                                        <div *ngIf="submitted && item.controls.description.errors" class="invalid-feedback">
+                                            <div *ngIf="item.controls.description.errors.required">
+                                                Required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="item.value.createdBy!=null || item.value.createdBy!=''">
+                                            {{item.value.createdBy}}
+                                        </span>
+                                        <span *ngIf="item.value.createdBy==null || item.value.createdBy==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="item.value.createdDate!=null || item.value.createdDate!=''">
+                                            {{item.value.createdDate | date:'dd/MM/yyyy'}}
+                                        </span>
+                                        <span *ngIf="item.value.createdDate==null || item.value.createdDate==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="item.value.modifiedBy!=null || item.value.modifiedBy!=''">
+                                            {{item.value.modifiedBy}}
+                                        </span>
+                                        <span *ngIf="item.value.modifiedBy==null || item.value.modifiedBy==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="item.value.modifiedDate!=null || item.value.modifiedDate!=''">
+                                            {{item.value.modifiedDate | date:'dd/MM/yyyy'}}
+                                        </span>
+                                        <span *ngIf="item.value.modifiedDate==null || item.value.modifiedDate==''">
+                                            NA
+                                        </span>
+                                    </td>
+                                    <td class="float-right row-actions">
+                                        <a href="javascript:void(0)" (click)="addData()" class="add-row">
+                                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                                        </a>
+                                        <!-- <a *ngIf="item.value.featureId!=0" id="{{item.value.featureId}}" href="javascript:void(0)" (click)="deleteData(item.value.featureId,pointIndex)" class="delete">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a> -->
+                                        <a *ngIf="item.value.featureId!=0" id="{{item.value.featureId}}" href="javascript:void(0)" (click)="resetBtnHandler(item.value.featureId,pointIndex);" class="delete">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                        <a *ngIf="item.value.featureId==0" id="{{item.value.featureId}}" href="javascript:void(0)" (click)="deleteData(0,pointIndex)" class="delete">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td class="d-none">
+                                        <select class="common-select" [(ngModel)]='rows[pointIndex].selectedStatus' formControlName="operation">
+                                            <option value="NA" hidden>Select</option>
+                                            <option value="I">I</option>
+                                            <option value="U">U</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="confirm_box" [ngStyle]="{'display':display_confirmationbox}">
+                    <input id="rid" type="hidden" #rid [value]="selectedroleid"/>
+                    <input id="ind" type="hidden" #ind [value]="selectedindex"/>
+                    <div class="confirm-card">
+                        <div class="col py-3">
+                            Are you sure you want to delete?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="closeModalDialog()">No</button>
+                            <button type="button" class="btn btn-primary" (click)="resetConfirmYes(true)" >Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center mt-1 mb-3">
+                    <button type="button" [disabled]='!enableSave' class="btn btn-primary save-reset-btn" (click)="saveData()">Save</button>
+                </div>
+            </div>
+
+        </form>
+    </section>
+</div>
+<ng-template #other_content>
+    <div class="loader-icon-container">
+        <div class="loader-icon"></div>
+    </div>
+</ng-template>

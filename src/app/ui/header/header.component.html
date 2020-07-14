@@ -1,0 +1,155 @@
+  <div class="row col-lg-12 padding0 margin0 border-btm padding6px main-menu-bg">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-9 padding0">
+      <div class="topnav" id="myTopnav">
+        <a href="javascript:void(0)">Who We Are</a>
+        <a href="javascript:void(0)">Industries</a>
+        <a href="javascript:void(0)">Investors</a>
+        <a href="javascript:void(0)">Careers</a>
+        <a href="javascript:void(0)">Contact Us</a>
+        <!-- <a href="javascript:void(0)">Preferences</a> -->
+        <!-- <a href="javascript:void(0)"><i class="fa fa-search"></i></a> -->
+        <a href="javascript:void(0)" class="icon" (click)="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <nav class="navbar navbar-expand-lg navbar-light header-bg-clr header-height">
+    <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="row col-lg-8 col-12">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">
+              <img class="header-logo" src="{{ ISGLogo }}" alt="ISG"/>
+            </a>
+          </li>
+          <li class="nav-item mtop18 active ">
+            <a class="nav-link active-bottom-border" href="#">
+              CIO DASHBOARD
+            </a>
+          </li>
+          <li class="nav-item mtop18 not-active-padding-left not-active">
+            <a class="nav-link " href="#">
+              INFRASTRUCTURE KPIS
+            </a>
+          </li>        
+        </ul>
+      </div>
+      
+      <div class="row col-lg-4 col-4 padding0">
+        
+        <div class="col-lg-5 col-5"></div>
+        
+        <div class="row col-lg-7 col-7 padding0">
+          <div class="col-lg-3 col-3 padding0 text-center mtop5px">
+            <a class="search" href="javascript:void(0)">
+              <span class="serach-icon common-cur"></span>
+            </a>
+          </div>
+          <div class="col-lg-7 col-7">
+            <nav id="primary_nav_wrap">
+              <ul>
+                <li>
+                  <a href="#" class="username">John Smith <i class="fa fa-caret-down" aria-hidden="true"></i>
+                  </a>
+                  <ul>
+                    <li><a href="#">Sub Menu 1</a></li>
+                    <li><a href="#">Sub Menu 2</a></li>
+                    <li><a href="#">Sub Menu 3</a></li>              
+                    <li><a href="#">Sub Menu 5</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>  
+          <div class="col-lg-1 col-1 padding0 text-center mtop5px">
+            <span class="help-icon common-cur"></span>
+          </div>        
+          <div class="col-lg-1 col-1 padding0 text-center mtop5px">
+            <span class="dot-icon common-cur"></span>
+            <!-- <i class="fa fa-ellipsis-v fa-2 common-cur question-mark-dot" aria-hidden="true"></i> -->
+          </div>        
+        </div>
+      </div> 
+      
+    </div>
+  </nav>
+  
+  <div class="row col-lg-12 col-12 padding0 margin0 padding6px drop-menu-bg sub-header-padding sub-h-height">
+    <div class="row col-lg-9 col-12 xspaddingright0">     
+      <div class="form-group filter-select-div col-lg-3 col-6 padding-right-0">
+        <label class="sub-header-text paddingr-5px ptop8px">Industry</label>
+        <select class="selectpicker filter-select cio-select-text form-control" data-live-search="true">
+          <!-- <option *ngFor="let option of observableOptions | async" value={{option.id}}> {{option.value}} </option> -->
+          <option>All Industries</option>
+          <option>Energy</option>
+          <option>Retail</option>
+          <option>Financial Services</option>
+          <option>Media and Telecom</option>
+        </select> 
+      </div>
+      <div class="form-group filter-select-div col-lg-3 col-6 padding-right-0">
+        <label class="sub-header-text paddingr-5px ptop8px" >Region</label>
+        <select class="selectpicker filter-select cio-select-text form-control" data-live-search="true">
+          <option>Global</option>
+          <option>North America</option>
+          <option>Latin America</option>
+          <option>Europe (EMEA)</option>
+          <option>Asia Pecific</option>
+        </select> 
+      </div>
+      <div class="form-group filter-select-div col-lg-3 col-6 padding-right-0">
+        <label class="sub-header-text paddingr-5px ptop8px" >Size</label>
+        <select class="selectpicker filter-select cio-select-text form-control" data-live-search="true">
+          <option>All Sizes</option>
+          <option>Less than $500 Millon</option>
+          <option>$500 Millon - $1 Billion</option>
+          <option>$1 Billion - $10 Billion</option>
+          <option>Greater than $10 Billion</option>
+        </select> 
+      </div>
+      
+      <div class="form-group filter-select-div col-lg-3 col-6 padding-right-0">
+        <label class="sub-header-text paddingr-5px ptop8px" >Currency</label>
+        <select class="selectpicker filter-select cio-select-text form-control" data-live-search="true">
+          <option>USD</option>
+          <option>EUR</option>
+          <option>GBP</option>
+          <option>AUD</option>
+        </select> 
+      </div>
+    </div>
+    <div class="row col-lg-3 col-12 text-right sub-header-text paddingr-5px ptop5px input-compare">      
+      <div class="form-group col-lg-7 col-6 col-lg-offset-1 margin0 ">
+        <div class="my-data-icon common-cur"></div>
+        <div class="common-cur flotright">Input My Data</div>
+      </div> 
+      <div class="form-group col-lg-5 col-5 margin0 ">
+        <div class="compare-icon common-cur"></div>
+        <span class="common-cur flotright">Compare</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- <div class="row col-lg-12 navbar navbar-expand-sm bg-dark navbar-dark margin0">
+    <div class="row col-lg-6">
+      <a class="navbar-brand" href="#">
+        <img class="logo" src="{{ ISGLogo }}" alt="ISG"/>
+      </a>
+      <ul class="navbar-nav">
+        <li class="nav-item active active-bottom-border">
+          <a class="nav-link " href="#">CIO DASHBOARD</a>
+        </li>
+        <li class="nav-item pleft25px">
+          <a class="nav-link" href="#">INFRASTRUCTURE KPIS</a>
+        </li>
+      </ul>
+    </div>
+  </div> -->

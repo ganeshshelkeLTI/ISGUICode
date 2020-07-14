@@ -1,0 +1,153 @@
+<div class="modal-header">
+    <h6 *ngIf="showSelectedOptionFlg" class="modal-title" id="exampleModalLabel">Select to Compare</h6>
+    <h6 class="modal-title" id="exampleModalLabel">Input My Data</h6>
+    <button type="button" class="close" aria-label="Close" (click)="closeEnterDataModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <section class="main-data-section mt-3">
+        <!-- Accordian starts  -->
+        <div class="row">
+            <div class="container-fluid">
+                <div id="general-card" class="card mt-2">
+
+                    <div id="" class="collapse show tower-card-body">
+                        <div class="card-body">
+                            <form>
+                                <fieldset class="it-operation-fieldset">
+                                    <legend class="it-operation-legend">General Information</legend>
+                                    <div class="form-row" *ngIf='dataLoaded'>
+                                        <div class="form-group col-12 col-sm-4">
+                                            <label for="companyName">Scenario ID:</label>
+
+                                            <select [(ngModel)]='selectedScanrio' name="Scanrio" class="form-control"
+                                                (ngModelChange)="getScenarioDataById()">
+                                                <option value=0>New Scenario</option>
+                                                <option *ngFor='let scenario of scenarios' value={{scenario.key}}>{{scenario.value}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-12 col-sm-4">
+                                            <label for="scenarioID">Scenario Name:</label>
+                                            <input type="text" class="form-control" id="scenarioName" placeholder="Scenario"
+                                                [(ngModel)]="scenarioNameText" (change)='activateShowBox(true)' name="scenarioName" />
+                                        </div>
+
+                                        <div class="form-group col-12 col-sm-4" *ngFor="let generalInfo of windowsData.GeneralInformation.NA; let i=index">
+                                            <label>{{generalInfo.desc}}</label>
+                                            <select class="form-control" [(ngModel)]="generalInfo.src_code_value" name="{{generalInfo.desc}}"
+                                                (ngModelChange)="interceptGeneralTabChanges(generalInfo.src_code)"
+                                                [disabled]=disabledStatus[i].disabled [ngClass]="[disabledStatus[i].disabled ? 'disabledColor' : '']"
+                                                *ngIf="generalInfo.input_type == 'Drop Down'">
+                                                <option *ngFor="let currency of generalInfo.dropDown;trackBy: trackByFn"
+                                                    [value]="currency.key">{{currency.value}}</option>
+                                            </select>
+                                            <input type="text" class="form-control" *ngIf="generalInfo.input_type == 'Manual'"
+                                                [(ngModel)]="generalInfo.src_code_value" name={{generalInfo.desc}} />
+
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+
+                            <form class="second-section" name="myForm">
+                                <p class="legend-message">{{errorMessage}}</p>
+                                <fieldset class="it-operation-fieldset" [ngClass]="[isFormValid ? 'it-operation-fieldset':'it-operation-fieldset-warning']">
+                                    <legend class="it-operation-legend">Windows Information</legend>
+                                    <div class="form-row" *ngIf='dataLoaded'>
+                                        <div *ngFor="let label of windowsData.WindowsServersInput.NA;let i=index" class="form-group col-12 col-sm-4">
+                                            <label for="inputEmail4">
+                                                {{label.desc}}:<span *ngIf='label.indicator=="R"'>*</span> &nbsp;<span
+                                                    class="defcursor"><i placement="top" ngbTooltip="{{label.short_desc}}"
+                                                        container="body" class="info-icon"></i></span>
+                                            </label>
+
+                                            <div class="row note-vertical-center-align" style="width:80%">
+                                               
+
+                                                <div class="form-group note-icon-align col-10 col-sm-10 col-md-10">
+                                                    <input required type="text" maxlength="12" placeholder="{{label.value_format}}"
+                                                        name="{{label.desc}}" [(ngModel)]="label.src_code_value"
+                                                        (ngModelChange)="checkValidation()" class="form-control numer-only"
+                                                        (paste)="onPaste(label,$event)" [textMask]="{mask: decimalNumberMask}" style="width:100%">
+                                                </div>
+                                                <div class="form-group note-icon-align col-2 col-sm-1 col-md-1">
+
+                                                    <ng-template #popContent>
+                                                        <div>
+                                                            <textarea style="width: 200px;padding: 0;margin: 5px;"
+                                                                class="form-control note-textarea" rows="5" [(ngModel)]="label.notes"
+                                                                name="{{label.src_code}}" (keyup)='activateShowBox(true)'></textarea>
+                                                            <button class="btn btn-note btn-Cancel" (click)="p.close();">Cancel</button>
+                                                            <button class="btn btn-note btn-Save" (click)="p.close();">Save</button>
+                                                        </div>
+                                                    </ng-template>
+                                                    <div class="note-icon" [ngbPopover]="popContent" #p="ngbPopover"
+                                                        [autoClose]="'outside'" placement="bottom-left" [ngClass]="(label.notes == undefined || label.notes == '' ) ? 'note_blank' : 'note_save' "></div>
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal-footer tower-enterdata-footer enter-my-data-save-button-panel">
+    <div class="mandatory-note">
+        * Mandatory Fields
+    </div>
+    <div class="mx-auto">
+        <button  *ngIf="privilegesObject.saveScenario" (click)="saveAndCompare(false)" type="button" data-dismiss="modal" class="btn btn-blue mt-2 btn-text-color" [disabled]="disableSaveAndCompare">Save & Display</button>
+        <button  *ngIf="privilegesObject.saveScenario" (click)="saveAndCompare(true)" type="button"  class="btn btn-blue mt-2 btn-text-color" [disabled]="disableSaveAndCompare">Save</button>
+      <!-- <button type="button" class="btn btn-blue mt-2 enter-my-data-btn" (click)='resetBtnHandler()'>Reset</button> -->
+      <button type="button" [disabled]="!isCopyEnabled" class="btn btn-blue mt-2 enter-my-data-btn" (click)="createSceCopy()">Copy</button>
+      <button type="button" class="btn btn-primary btn-blue mt-2 enter-my-data-btn" (click)="deleteScenario()" 
+      *ngIf="privilegesObject.deleteScenario" [disabled]="!isDeleteAllowed">Delete</button>
+      
+    </div>
+</div>
+<div class="confirm_box" *ngIf="confirmBoxResetFlag">
+    <div class="confirm-card">
+        <div class="col py-3">
+            All input data will be deleted. Do you wish to continue?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="resetConfirmYes(false);">No</button>
+            <button type="button" class="btn btn-primary" (click)="resetConfirmYes(true);">Yes</button>
+        </div>
+    </div>
+</div>
+
+<div class="confirm_box" *ngIf="confirmBoxCloseFlag">
+    <div class="confirm-card" *ngIf="showRestBox">
+        <div class="col py-3">
+            All unsaved data will be lost. Do you wish to continue?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeConfirmYes(false);">No</button>
+            <button type="button" class="btn btn-primary" (click)="closeConfirmYes(true);">Yes</button>
+        </div>
+    </div>
+</div>
+
+<div class="confirm_box" *ngIf="confirmBoxDeleteFlag">
+    <div class="confirm-card">
+        <div class="col py-3">
+            Selected scenario will be deleted. Do you wish to continue?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="deleteConfirmYes(false);">No</button>
+            <button type="button" class="btn btn-primary" (click)="deleteConfirmYes(true);">Yes</button>
+        </div>
+    </div>
+</div>

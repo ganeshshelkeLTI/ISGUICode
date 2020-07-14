@@ -1,0 +1,211 @@
+<div class="container-fluid kpi-maintenance">
+  <section class="main-content">
+    <div class="card-header pl-0">
+      <h6 class="text-left text-bold mb-0 pl-0">Role Dashboard Mapping</h6>
+    </div>
+    <!-- User privileges form controls starts -->
+    <div class="row mt-2">
+      <div class="col">
+
+        <div class="form-row my-2">
+          <div class="col-12 offset-md-4 col-md-1">
+            <label>Role</label>
+          </div>
+          <div class="col-12 col-md-3">
+            <select name="Role" class="form-control"  [(ngModel)] = 'selectedRoleId' (ngModelChange) = 'getRoleTowerFeatureMapping()'>
+              <option *ngFor='let role of allRoles' [value]="role.roleId" >{{role.roleName}}</option>
+            </select>
+          </div>
+        </div>
+
+        <form class="mt-3"  *ngIf="dataLoaded">
+          <div>
+            <table class="table table-responsive table-sm table-striped dashboard-table" style="width:100%">
+
+              <thead class="thead-blue">
+                <tr>
+                  <th class="col text-left">Dashboard</th>
+                  <th  style="width:100px" *ngFor='let feature of allFeaturesData'>{{feature.featureName}}</th>
+                  <th class="col">Created By</th>
+                  <th class="col">Created Date</th>
+                  <th class="col">Updated By</th>
+                  <th class="col">Updated Date</th>
+                  <th class="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- let mappedFeatures of  dashboardFeatureMappingPoints.controls;-->
+
+                <tr *ngFor="let rowindex=index; let dashboard of allTowersData">
+                  <td class="text-left">
+                    <span>{{dashboard.dashBoardName}}</span>
+                  </td>
+                  <td *ngFor='let feature of allFeaturesData' style="width:100px">
+
+                    <label class="container-checkbox font-size-group2">
+
+                      <!-- [disabled]=rows[pointIndex][towerFeature.isNotAllow] -->
+                      <!--[checked]=rows[pointIndex][feature.featureName]-->
+                      <!-- {{rows[rowindex][allFeaturesData.featureName]}}
+                      -->
+                      <input id="" type="checkbox" name="{{rowindex+feature}}" [checked]="rows[rowindex][feature.featureName].isChecked" [disabled]="rows[rowindex][feature.featureName].isDisabled" (change)="checkBoxValue(rows[rowindex], $event.target.checked,feature.featureName)">
+                      <span class="checkmark"></span>
+                    </label>
+                  </td>
+
+                  <td class="p-l-38">
+                    <span *ngIf="rows[rowindex].createdRow!=undefined">
+                      {{rows[rowindex].createdRow.createdBy}}
+                    </span>
+                    <span *ngIf="rows[rowindex].createdRow==undefined">
+                      NA
+                    </span>
+                  </td>
+                  <td class="p-l-38">
+                    <span *ngIf="rows[rowindex].createdRow!=undefined">
+                      {{rows[rowindex].createdRow.createdDate | date:'dd/MM/yyyy'}}
+                    </span>
+                    <span *ngIf="rows[rowindex].createdRow==undefined">
+                      NA
+                    </span>
+                  </td>
+                  <td class="p-l-38">
+                    <span *ngIf="rows[rowindex].createdRow!=undefined">
+                      {{rows[rowindex].createdRow.modifiedBy}}
+                    </span>
+                    <span *ngIf="rows[rowindex].createdRow==undefined">
+                      NA
+                    </span>
+                  </td>
+                  <td class="p-l-38">
+                    <span *ngIf="rows[rowindex].createdRow!=undefined">
+                      {{rows[rowindex].createdRow.modifiedDate | date:'dd/MM/yyyy'}}
+                    </span>
+                    <span *ngIf="rows[rowindex].createdRow==undefined">
+                      NA
+                    </span>
+                  </td>
+
+                  <td class="text-center delete-icon">
+                    <!--<a href="javascript:void(0)"  (click)="addData()" class="add-row">
+                      <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                    </a>-->
+                    <a href="javascript:void(0)" class="delete" (click)="resetRow(rows[rowindex])">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
+                  </td>
+
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <div class="row">
+            <div class="col-12 d-inline scenarion-list">
+              <div class="container-checkbox chk-bx font-size-group2">
+                <div>Admin Features</div>
+                <input type="checkbox" class="admin-panel-checkbox" [checked]="adminChecked" [disabled]="nonAdminUser" (change)="showHideAdminPanel($event.target.checked)">
+                <span class="checkmark"></span>
+              </div>
+              <!-- <div class="container-checkbox chk-bx font-size-group2">
+                <div>External URLs</div>
+                <input type="checkbox">
+                <span class="checkmark"></span>
+              </div>
+              <div class="container-checkbox chk-bx font-size-group2">
+                <div>Glossary PDF</div>
+                <input type="checkbox">
+                <span class="checkmark"></span>
+              </div> -->
+            </div>
+          </div>
+          <table class="table table-responsive table-sm table-striped admin-dashboard-table" style="width:100%; margin-top: 10px;" *ngIf="adminPanelVisible && !nonAdminUser">
+
+            <thead class="thead-blue">
+              <tr>
+
+                <!-- <th  style="width:100px" *ngFor="let page of allAdminPages.master_data">{{page.masterName}}</th> -->
+                <th class="col text-left" style="width: 145px;">Dashboard</th>
+                <th class="col text-left">Admin Rights</th>
+                <th class="col text-left" style="width: 148px;">Created By</th>
+                <th class="col text-left" style="width: 124px;">Created Date</th>
+                <th class="col text-left" style="width: 120px;">Updated By</th>
+                <th class="col text-left" style="width: 108px;">Updated Date</th>
+                <th class="col text-left"></th>
+              </tr>
+            </thead>
+            <tbody>
+
+
+              <tr  *ngFor='let rowindex=index; let admin of allAdminPages.master_data'>
+
+                <td class="text-left">
+                  <span>{{admin.masterName}}</span>
+                </td>
+
+                <td>
+                  <label class="container-checkbox font-size-group2 checkbox-label">
+                    <input id="" type="checkbox" name="{{admin.masterName}}" [checked]="adminRows[rowindex][admin.masterName].isChecked" [disabled]="adminRows[rowindex][admin.masterName].isDisabled" (change)="updateAdminCheckbox(rowindex, adminRows[rowindex], $event.target.checked,admin.masterName)">
+                    <span class="checkmark"></span>
+                  </label>
+                </td>
+
+                <td>
+                  <span *ngIf="adminRows[rowindex][admin.masterName].createdBy!=undefined && adminRows[rowindex][admin.masterName].createdBy!=null && adminRows[rowindex][admin.masterName].createdBy!=''">
+                    {{adminRows[rowindex][admin.masterName].createdBy}}
+                  </span>
+                  <span *ngIf="adminRows[rowindex][admin.masterName].createdBy==undefined || adminRows[rowindex][admin.masterName].createdBy==null || adminRows[rowindex][admin.masterName].createdBy==''">
+                    NA
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="adminRows[rowindex][admin.masterName].createdDate!=undefined  && adminRows[rowindex][admin.masterName].createdDate!=null && adminRows[rowindex][admin.masterName].createdDate!=''">
+                    {{adminRows[rowindex][admin.masterName].createdDate | date:'dd/MM/yyyy' }}
+                  </span>
+                  <span *ngIf="adminRows[rowindex][admin.masterName].createdDate==undefined || adminRows[rowindex][admin.masterName].createdDate==null || adminRows[rowindex][admin.masterName].createdDate==''">
+                    NA
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="adminRows[rowindex][admin.masterName].modifiedBy!=undefined && adminRows[rowindex][admin.masterName].modifiedBy!=null && adminRows[rowindex][admin.masterName].modifiedBy!=''">
+                    {{adminRows[rowindex][admin.masterName].modifiedBy}}
+                  </span>
+                  <span *ngIf="adminRows[rowindex][admin.masterName].modifiedBy==undefined || adminRows[rowindex][admin.masterName].modifiedBy==null || adminRows[rowindex][admin.masterName].modifiedBy==''">
+                    NA
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="adminRows[rowindex][admin.masterName].modifiedDate!=undefined && adminRows[rowindex][admin.masterName].modifiedDate!=null && adminRows[rowindex][admin.masterName].modifiedDate!=''">
+                    {{adminRows[rowindex][admin.masterName].modifiedDate | date:'dd/MM/yyyy'}}
+                  </span>
+                  <span *ngIf="adminRows[rowindex][admin.masterName].modifiedDate==undefined || adminRows[rowindex][admin.masterName].modifiedDate==null || adminRows[rowindex][admin.masterName].modifiedDate==''">
+                    NA
+                  </span>
+                </td>
+
+
+                <td class="text-center delete-icon">
+
+                  <a href="javascript:void(0)" class="delete" (click)="resetAdminPanelRow(rowindex, adminRows[rowindex], admin.masterName)">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </a>
+                </td>
+
+              </tr>
+
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="col-lg-12 text-center mt-1 mb-3">
+              <button type="button" class="btn btn-primary btn-add" (click) = "saveData()">Save</button>
+            </div>
+          </div>
+
+
+        </form>
+      </div>
+    </div>
+
+  </section>
+</div>

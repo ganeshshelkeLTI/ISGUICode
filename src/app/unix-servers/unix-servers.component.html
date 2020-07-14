@@ -1,0 +1,1326 @@
+<!-- Main section starts here -->
+<section class="main-content" *ngIf="showUnixData;else donotshow">
+    <div class="container-fluid">
+        <div class="d-sm-flex flex-row flex-wrap">
+            <div class="w-100 p-2">
+                <div class="card-header px-0">
+                    <h6 class="text-left">Unix Server &nbsp;
+                        <a href="">
+                            <i class="info-icon" placement="right" ngbTooltip="{{unixServerData.tower.id}}"></i>
+                        </a>
+                    </h6>
+                </div>
+
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <div class="d-sm-flex flex-row flex-wrap align-items-center">
+                            <div class="p-2 text-left">
+                                <span>
+                                    Scale
+                                    <br/>(Logical Servers /
+                                    <br/> Processor Cores)
+
+                                </span>
+                            </div>
+                            <div class="p-2 w-55">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button (click)="setScale(size)" type="button" class="btn mip-small btn-setRange scale-button" [ngClass]="(scaleValue==size.value) ? 'active-scale' : ''"
+                                        *ngFor="let size of data.industrySize">{{size.key}}</button>
+                                </div>
+                            </div>
+                            <div class="p-2">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label>Region</label>
+                                        <select id="inputRegion" class="form-control mx-sm-3" name="selectedregion" [(ngModel)]='selectedregion'  (change)='setRegion(selectedregion)'>
+                                            <option value="Grand Total" hidden>Global</option>
+                                            <option value="Total">&nbsp;Global&nbsp;</option>
+                                                <option *ngFor="let region of data.region"  [ngValue]=region> {{region.value}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Currency</label>
+                                        <select id="inputCurrency" class="form-control mx-sm-3" name="selectedcurrency" [(ngModel)]='selectedcurrency' (change)='setCurrency(selectedcurrency)'>
+                                            <option *ngFor="let currency of data.currency"  [ngValue]=currency> {{currency.value}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Compare Scenario</label>
+                                        <select id="inputScenarios" class="form-control mx-sm-3" name="selectedscenario" [(ngModel)]='selectedscenario' (ngModelChange)='getScenarioDataById(selectedscenario)'>
+                                            <option value="N/A" hidden>N/A</option>
+                                            <option *ngFor='let scenario of selectedScenarioName' [ngValue]=scenario>{{scenario.label}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Custom Reference</label>
+                                        <select id="inputCRG" class="form-control mx-sm-3" name="selectedcustomRef" [(ngModel)]='selectedcustomRef' (ngModelChange)='getScenarioDataByCustomRef(selectedcustomRef)'>
+                                            <option *ngFor='let crg of selectedCRGName' [ngValue]=crg>{{crg.customName}}</option>
+                                        </select>
+                                        <a href="javascript:void(0)" *ngIf="selectedcustomRef.customId != '-9999'">
+                                                <i class="info-icon" placement="top"ngbTooltip="{{selectedcustomRef.definition}}" ></i>
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-sm-flex flex-row flex-wrap">
+
+            <!-- Unix server Cost Allocation card starts-->
+            <div class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Server Cost Allocation
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{unixDefinitionData.serverhardwaremaintenancepersonnel.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body mx-auto">
+
+                        <!-- First row -->
+                        <div class="card custom-card p-0">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Personnel
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{unixServerData.data.TotalServerCostAllocation.CostAllocationEmp.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+                                    <app-donut-chart id="windows-cost-allocation-personnel" chartID="windows-cost-allocation-personnel" fillColor="03abba" percentVal="{{unixServerData.data.TotalServerCostAllocation.CostAllocationEmp.Number.value/10}}"
+                                        chartWidth="35" chartHeight="35"></app-donut-chart>
+                                </div>
+                                <div class="col-2 p-0 d-inline">
+                                    <a href="javascript:void(0)" (click)="openModalDialog()">
+                                        <i class="circle-arrow-icon float-right"></i>
+                                    </a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Hardware
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{unixServerData.data.TotalServerCostAllocation.CostAllocationHW.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+                                    <app-donut-chart id="windows-cost-allocation-hw" chartID="windows-cost-allocation-hw" fillColor="29497b" percentVal="{{unixServerData.data.TotalServerCostAllocation.CostAllocationHW.Number.value/10}}"
+                                        chartWidth="35" chartHeight="35"></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="hardwareModalDialog()">
+                                        <i class="circle-arrow-icon float-right"></i>
+                                    </a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_hardware}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Third row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Software
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{unixServerData.data.TotalServerCostAllocation.CostAllocationSW.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+                                    <app-donut-chart id="windows-cost-allocation-sw" chartID="windows-cost-allocation-sw" fillColor="81cee4" percentVal="{{unixServerData.data.TotalServerCostAllocation.CostAllocationSW.Number.value/10}}"
+                                        chartWidth="35" chartHeight="35"></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="softwareModalDialog()">
+                                        <i class="circle-arrow-icon float-right"></i>
+                                    </a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fourth row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Outsourcing
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{unixServerData.data.TotalServerCostAllocation.CostAllocationOS.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+                                    <app-donut-chart id="windows-cost-allocation-outsource" chartID="windows-cost-allocation-outsource" fillColor="9acb3b" percentVal="{{unixServerData.data.TotalServerCostAllocation.CostAllocationOS.Number.value/10}}"
+                                        chartWidth="35" chartHeight="35"></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="outsourcingModalDialog()">
+                                        <i class="circle-arrow-icon float-right"></i>
+                                    </a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Unix server Cost Allocation card ends-->
+
+            <!-- Annual Cost Per OS instance card starts-->
+            <div [ngClass]="[showDiv ? 'w-md-100 w-37 annual-cost-instance-2700' : 'w-37']" class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Annual Cost Per OS Instance
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{unixDefinitionData.priceperserver_numbercy.defination}}"></i>
+                        </a>
+                        <a *ngIf="isLineChartDisabled==false" href="javascript:void(0)" class="popout" (click)="costPerInstanceDialog()">
+                            <i class="circle-arrow-icon float-right"></i>
+                        </a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col border-right px-2 newclass">
+                                <!-- <p class="m-1">Annual TCO Cost <br> Per OS instance</p> -->
+                                <p class="m-1">Total Cost of Ownership</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">
+                                                {{currencySymbol}}{{unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal | number : '1.0-0'
+                                                }}
+                                            </p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{unixServerData.data.AnnualCostPerOSInstance.CostPerServer.UpperCY.value * refactorVal | number : '1.0-0'
+                                                    }}
+                                                </p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{unixServerData.data.AnnualCostPerOSInstance.CostPerServer.LowerCY.value * refactorVal | number : '1.0-0'
+                                                    }}
+                                                </p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="py-2 col bg-lightblue text-center" *ngIf="!isannualCostPerOSInstanceEqual && enterMyData.annualTCOCostPerOSInstance >=0"
+                                        [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]" style="min-height: 228px;">
+                                        <p class="text-info">{{currencySymbol}}{{enterMyData.annualTCOCostPerOSInstance | number : '1.0-0'}}</p>
+
+                                        <div class="mt-4 pt-2">
+                                            <!--up arrow -->
+                                            <div class="arrow-img" *ngIf="enterMyData.annualTCOCostPerOSInstance >= (unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal)">
+                                                <svg id="annualTCOcostPerOSInstanceSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                                    xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGunix15410" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop500012" [attr.offset]="(makePositiveValue((((unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal) - enterMyData.annualTCOCostPerOSInstance)/(unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal))*100)) + '%'"
+                                                                stop-color="#02ABBA" />
+                                                            <stop id="stop500121" [attr.offset]="(makePositiveValue((((unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal) - enterMyData.annualTCOCostPerOSInstance)/(unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal))*100)) + '%'"
+                                                                stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGunix15410)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font">
+                                                    {{ makePositiveValue((((unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal) - enterMyData.annualTCOCostPerOSInstance)/(unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value
+                                                    * refactorVal))*100) | number : '1.0-0'}}%
+                                                </p>
+                                            </div>
+                                            <!-- down arrow -->
+                                            <div class="arrow-img" *ngIf="enterMyData.annualTCOCostPerOSInstance < (unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal)">
+                                                <svg id="annualTCOcostPerOSInstanceSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                                    xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGunix11020" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop5000211" [attr.offset]="(makePositiveValue((((unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal) - enterMyData.annualTCOCostPerOSInstance)/(unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal))*100)) + '%'"
+                                                                stop-color="#02ABBA" />
+                                                            <stop id="stop5001212" [attr.offset]="(makePositiveValue((((unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal) - enterMyData.annualTCOCostPerOSInstance)/(unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal))*100)) + '%'"
+                                                                stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGunix11020)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font">
+                                                    {{ makePositiveValue((((unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value * refactorVal) - enterMyData.annualTCOCostPerOSInstance)/(unixServerData.data.AnnualCostPerOSInstance.CostPerServer.NumberCY.value
+                                                    * refactorVal))*100) | number : '1.0-0'}}%
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- empty box-->
+                                    <div *ngIf="enterMyData.annualTCOCostPerOSInstance <0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]"
+                                        style="min-height: 228px;">
+                                        <div class="align-self-center">
+                                            <span class="bord-top"></span>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="isannualCostPerOSInstanceEqual" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]"
+                                        style="min-height: 228px;">
+                                        <div class="align-self-center">
+                                            <p class="same-value-os">{{currencySymbol}}{{enterMyData.annualTCOCostPerOSInstance | number : '1.0-0'}}</p>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <!-- p-0 pb-3 newclass -->
+                            <div class="col maxw45 p-0 pb-3 newclass">
+                                <!-- <p class="m-1">Annual Market Price <br> Per OS Instance</p> -->
+                                <p class="m-1">Market Price</p>
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">
+                                                {{currencySymbol}}{{unixServerData.data.AnnualCostPerOSInstance.PricePerServer.NumberCY.value * refactorVal | number : '1.0-0'
+                                                }}
+                                            </p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{unixServerData.data.AnnualCostPerOSInstance.PricePerServer.UpperCY.value * refactorVal | number : '1.0-0'}}
+                                                </p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{unixServerData.data.AnnualCostPerOSInstance.PricePerServer.LowerCY.value * refactorVal | number : '1.0-0'
+                                                    }}
+                                                </p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost Per OS instance card ends-->
+
+            <!-- Annual Cost Per core card starts-->
+            <div class="p-2 w-37 w-md-100 kpi-width-all annual-cost-core-2700">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Annual Cost Per Core
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{unixDefinitionData.pricepercore_numbercy.defination}}"></i>
+                        </a>
+                        <a *ngIf="isLineChartDisabled==false" href="javascript:void(0)" class="popout" (click)="costPerCoreDialog()">
+                            <i class="circle-arrow-icon float-right"></i>
+                        </a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col border-right px-2 newclass">
+                                <!-- <p class="m-2 text-center">Annual TCO Cost Per Core</p> -->
+                                <p class="m-1">Total Cost of Ownership</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">
+                                                {{currencySymbol}}{{unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal | number : '1.0-0' }}
+                                            </p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{unixServerData.data.AnnualCostPerCore.CostPerCore.Upper.value * refactorVal | number : '1.0-0' }}
+                                                </p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{unixServerData.data.AnnualCostPerCore.CostPerCore.Lower.value * refactorVal | number : '1.0-0' }}
+                                                </p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="py-2 col bg-lightblue text-center" *ngIf="!isAnnualTCOCostPerCoreEqual && enterMyData.annualTCOCostPerCore >= 0"
+                                        [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]" style="min-height: 228px;">
+                                        <div class=" minh-55">
+                                            <p class="text-info">{{currencySymbol}}{{enterMyData.annualTCOCostPerCore | number : '1.0-0'}}</p>
+                                            <small>Per Core</small>
+                                        </div>
+                                        <div class="mt-0">
+                                            <!-- up arrow-->
+                                            <div class="arrow-img" *ngIf="enterMyData.annualTCOCostPerCore >= (unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal)">
+                                                <svg id="annualTCOcostPerCoreSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                                    xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGunix2" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop5002" [attr.offset]="makePositiveValue((((unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal)-enterMyData.annualTCOCostPerCore)/(unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal))*100) + '%'"
+                                                                stop-color="#02ABBA" />
+                                                            <stop id="stop5003" [attr.offset]="makePositiveValue((((unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal)-enterMyData.annualTCOCostPerCore)/(unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal))*100) + '%'"
+                                                                stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGunix2)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font">
+                                                    {{ makePositiveValue((((unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal) - enterMyData.annualTCOCostPerCore)/(unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value
+                                                    * refactorVal))*100) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+                                            <!-- down arrow-->
+                                            <div class="arrow-img" *ngIf="enterMyData.annualTCOCostPerCore < (unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal)">
+                                                <svg id="annualTCOcostPerCoreSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                                    xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGunix2" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop5002" [attr.offset]="makePositiveValue((((unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal)-enterMyData.annualTCOCostPerCore)/(unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal))*100) + '%'"
+                                                                stop-color="#02ABBA" />
+                                                            <stop id="stop5003" [attr.offset]="makePositiveValue((((unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal)-enterMyData.annualTCOCostPerCore)/(unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal))*100) + '%'"
+                                                                stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGunix2)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font">
+                                                    {{ makePositiveValue((((unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value * refactorVal) - enterMyData.annualTCOCostPerCore)/(unixServerData.data.AnnualCostPerCore.CostPerCore.Number.value
+                                                    * refactorVal))*100) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="enterMyData.annualTCOCostPerCore <0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]"
+                                        style="min-height: 228px;">
+                                        <div class="align-self-center">
+                                            <span class="bord-top"></span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="isAnnualTCOCostPerCoreEqual" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]"
+                                        style="min-height: 228px;">
+                                        <div class="align-self-center">
+                                            <p class="same-value-core">{{currencySymbol}}{{enterMyData.annualTCOCostPerCore | number : '1.0-0'}}</p>
+                                            <p class="same-value-core-label">
+                                                <small>Per Core</small>
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <!-- p-0 pb-3 newclass -->
+                            <div class="col maxw45 p-0 pb-3 newclass ">
+                                <!-- <p class="m-2 text-center">Annual Market Price <br> Per Core</p> -->
+                                <p class="m-1">Market Price</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">
+                                                {{currencySymbol}}{{unixServerData.data.AnnualCostPerCore.PricePerCore.NumberCY.value * refactorVal | number : '1.0-0' }}
+                                            </p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{unixServerData.data.AnnualCostPerCore.PricePerCore.UpperCY.value * refactorVal | number : '1.0-0' }}
+                                                </p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{unixServerData.data.AnnualCostPerCore.PricePerCore.LowerCY.value * refactorVal | number : '1.0-0' }}
+                                                </p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost Per core card ends-->
+
+            <!-- Annual Cost Per Unix server FTE card starts-->
+            <div class="p-2 w-27">
+                <div class="card custom-card min-ht340 min-height-320">
+                    <div class="card-header">
+                        Annual Cost Per Unix Server FTE
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{unixDefinitionData.costpercontractor_lower.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="p-2 mx-auto align-self-center">
+                                <p class="m-2 text-center">Employee
+                                    <small>(Mean)</small>
+                                </p>
+                                <div class="minh-55">
+                                    <p class="text-info">
+                                        {{currencySymbol}}{{unixServerData.data.AnnualCostPerServerFTE.CostPerEmployee.Number.value * refactorVal |number : '1.0-0'
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{currencySymbol}}{{unixServerData.data.AnnualCostPerServerFTE.CostPerEmployee.Upper.value * refactorVal |number : '1.0-0'
+                                            }}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{currencySymbol}}{{unixServerData.data.AnnualCostPerServerFTE.CostPerEmployee.Lower.value * refactorVal |number : '1.0-0'
+                                            }}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-2 mx-auto">
+                                <p class="m-2 text-center ml-xl-0">Contractor
+                                    <small>(Mean)</small>
+                                </p>
+                                <div class="minh-55">
+                                    <p class="text-info">
+                                        {{currencySymbol}}{{unixServerData.data.AnnualCostPerServerFTE.CostPerContractor.Number.value * refactorVal |number : '1.0-0'
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{currencySymbol}}{{unixServerData.data.AnnualCostPerServerFTE.CostPerContractor.Upper.value * refactorVal |number : '1.0-0'
+                                            }}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{currencySymbol}}{{unixServerData.data.AnnualCostPerServerFTE.CostPerContractor.Lower.value * refactorVal |number : '1.0-0'
+                                            }}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost Per Unix server FTE card ends-->
+
+            <!-- Unix server provisioning time card starts-->
+            <div [ngClass]="[showDiv ? 'p-2 w-24' : 'p-2 w-17']">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        Unix server provisioning time
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{unixDefinitionData.provisioningtime_lower.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body p-0 pb-0 pt-3">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3">
+                                <div class="minh-55">
+                                    <app-donut-chart id="windows-provising-time" chartID="windows-provising-time" fillColor="03abba" percentVal="{{unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value/10}}"
+                                        chartWidth="90" chartHeight="90"></app-donut-chart>
+                                    <p class="text-info">{{unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value | number : '1.1-1'
+                                        }}</p>
+                                    <p>Days
+                                        <small>(Mean)</small>
+                                    </p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{unixServerData.data.ProvisioningTime.ProvisioningTime.Upper.value | number : '1.1-1' }}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{unixServerData.data.ProvisioningTime.ProvisioningTime.Lower.value | number : '1.1-1' }}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col p-2 bg-lightblue text-center" *ngIf="!isAverageTimeEqual && (enterMyData.averageProvisioningTime >=0)" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class=" minh-55">
+                                    <p class="text-info">{{enterMyData.averageProvisioningTime | number : '1.1-1'}}</p>
+                                    <p>Days</p>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="arrow-img" *ngIf="enterMyData.averageProvisioningTime >= unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value">
+                                        <svg id="avgProvisioningTimeSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="progressSVGunix3" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop5004" [attr.offset]="(makePositiveValue(((unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value - enterMyData.averageProvisioningTime)/unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value)*100)) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop5005" [attr.offset]="(makePositiveValue(((unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value - enterMyData.averageProvisioningTime)/unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value)*100)) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGunix3)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue(((unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value - enterMyData.averageProvisioningTime)/unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value)*100)
+                                            | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+                                    <!-- down -->
+                                    <div class="arrow-img" *ngIf="enterMyData.averageProvisioningTime < unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value">
+                                        <svg id="avgProvisioningTimeSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="progressSVGunix3" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop5004" [attr.offset]="(makePositiveValue(((unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value - enterMyData.averageProvisioningTime)/unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value)*100)) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop5005" [attr.offset]="(makePositiveValue(((unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value - enterMyData.averageProvisioningTime)/unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value)*100)) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGunix3)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            <!-- {{ makePositiveValue((unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value - enterMyData.averageProvisioningTime)) | number : '1.1-1' }}% -->
+                                            {{ makePositiveValue(((unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value - enterMyData.averageProvisioningTime)/unixServerData.data.ProvisioningTime.ProvisioningTime.Number.value)*100)
+                                            | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.averageProvisioningTime <0)" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+                            <div *ngIf="isAverageTimeEqual" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <p class="same-value-time">{{enterMyData.averageProvisioningTime | number : '1.1-1'}}</p>
+                                    <p class="same-value-time-label">Days</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Unix server provisioning time card ends-->
+
+            <!-- Unix server availability % card starts-->
+            <div [ngClass]="[showDiv ? 'p-2 w-24 unix-serv-avail-2700' : 'p-2 w-17']">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        Unix server availability %
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{unixDefinitionData.availability_upper.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body p-0 pb-0 pt-3">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3">
+                                <div class="minh-55">
+                                    <!-- <app-donut-chart id="windows-availability-percentage" chartID="windows-availability-percentage" fillColor="03abba" percentVal="{{unixServerData.data.Availability.Availability.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart> -->
+                                    <div>
+                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            width="110px" height="84px" viewBox="0 0 110 84" enable-background="new 0 0 110 84"
+                                            xml:space="preserve">
+                                            <rect x="95.05" y="63.042" fill="none" width="4.24" height="14.753" />
+                                            <rect x="51.809" y="34.624" fill="none" width="4.24" height="14.752" />
+                                            <rect x="62.619" y="34.624" fill="none" width="4.24" height="14.752" />
+                                            <rect x="84.239" y="63.042" fill="none" width="4.24" height="14.753" />
+                                            <rect x="73.43" y="63.042" fill="none" width="4.24" height="14.753" />
+                                            <ellipse fill="none" cx="16.822" cy="70.418" rx="6.361" ry="6.323" />
+                                            <rect x="73.43" y="34.624" fill="none" width="4.24" height="14.752" />
+                                            <rect x="51.809" y="63.042" fill="none" width="4.24" height="14.753" />
+                                            <rect x="62.619" y="63.042" fill="none" width="4.24" height="14.753" />
+                                            <ellipse fill="none" cx="16.822" cy="42" rx="6.361" ry="6.323" />
+                                            <rect x="84.239" y="6.205" fill="none" width="4.24" height="14.752" />
+                                            <rect x="62.619" y="6.205" fill="none" width="4.24" height="14.752" />
+                                            <rect x="73.43" y="6.205" fill="none" width="4.24" height="14.752" />
+                                            <rect x="84.239" y="34.624" fill="none" width="4.24" height="14.752" />
+                                            <rect x="95.05" y="6.205" fill="none" width="4.24" height="14.752" />
+                                            <rect x="95.05" y="34.624" fill="none" width="4.24" height="14.752" />
+                                            <ellipse fill="none" cx="16.822" cy="13.581" rx="6.361" ry="6.323" />
+                                            <rect x="51.809" y="6.205" fill="none" width="4.24" height="14.752" />
+                                            <defs>
+                                                <linearGradient id="progress78" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop79" [attr.offset]="(unixServerData.data.Availability.Availability.Number.value/100)" stop-color="#03abba" />
+                                                    <stop id="stop80" [attr.offset]="(unixServerData.data.Availability.Availability.Number.value/100)" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <g>
+                                                <path fill="url(#progress78)" d="M104.883,1.99H5.117c-1.728,0-3.128,1.393-3.128,3.11v16.963c0,1.718,1.4,3.11,3.128,3.11h99.766
+                                            c1.728,0,3.129-1.392,3.129-3.11V5.1C108.012,3.382,106.61,1.99,104.883,1.99z M16.822,19.904c-3.513,0-6.361-2.831-6.361-6.323
+                                            s2.848-6.323,6.361-6.323s6.361,2.831,6.361,6.323S20.335,19.904,16.822,19.904z M56.049,20.958h-4.24V6.205h4.24V20.958z
+                                            M66.859,20.958h-4.24V6.205h4.24V20.958z M77.67,20.958h-4.24V6.205h4.24V20.958z M88.479,20.958h-4.24V6.205h4.24V20.958z
+                                            M99.29,20.958h-4.24V6.205h4.24V20.958z" />
+                                                <path fill="url(#progress78)" d="M104.883,30.408H5.117c-1.728,0-3.128,1.393-3.128,3.11v16.963c0,1.717,1.4,3.109,3.128,3.109h99.766
+                                            c1.728,0,3.129-1.393,3.129-3.109V33.519C108.012,31.801,106.61,30.408,104.883,30.408z M16.822,48.323
+                                            c-3.513,0-6.361-2.831-6.361-6.323c0-3.493,2.848-6.323,6.361-6.323s6.361,2.831,6.361,6.323
+                                            C23.183,45.492,20.335,48.323,16.822,48.323z M56.049,49.376h-4.24V34.624h4.24V49.376z M66.859,49.376h-4.24V34.624h4.24V49.376z
+                                            M77.67,49.376h-4.24V34.624h4.24V49.376z M88.479,49.376h-4.24V34.624h4.24V49.376z M99.29,49.376h-4.24V34.624h4.24V49.376z"
+                                                />
+                                                <path fill="url(#progress78)" d="M104.883,58.827H5.117c-1.728,0-3.128,1.393-3.128,3.109v16.963c0,1.718,1.4,3.11,3.128,3.11h99.766
+                                            c1.728,0,3.129-1.393,3.129-3.11V61.937C108.012,60.22,106.61,58.827,104.883,58.827z M16.822,76.741
+                                            c-3.513,0-6.361-2.831-6.361-6.323s2.848-6.323,6.361-6.323s6.361,2.831,6.361,6.323S20.335,76.741,16.822,76.741z M56.049,77.795
+                                            h-4.24V63.042h4.24V77.795z M66.859,77.795h-4.24V63.042h4.24V77.795z M77.67,77.795h-4.24V63.042h4.24V77.795z M88.479,77.795
+                                            h-4.24V63.042h4.24V77.795z M99.29,77.795h-4.24V63.042h4.24V77.795z" />
+                                            </g>
+                                        </svg>
+
+                                    </div>
+                                    <p class="text-info">{{unixServerData.data.Availability.Availability.Number.value | number : '1.2-2' }}%</p>
+                                    <p>
+                                        <small>(Mean)</small>
+                                    </p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{unixServerData.data.Availability.Availability.Upper.value | number : '1.2-2' }}%
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{unixServerData.data.Availability.Availability.Lower.value | number : '1.2-2' }}%
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col p-2 bg-lightblue text-center" *ngIf="!isAvailabilityPerEqual&&(enterMyData.availablityPercentage >=0)" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class=" minh-55">
+                                    <p class="text-info">{{enterMyData.availablityPercentage | number : '1.2-2'}}%</p>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="arrow-img" *ngIf="enterMyData.availablityPercentage >= unixServerData.data.Availability.Availability.Number.value">
+                                        <svg id="unixAvailabilitySVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="progressSVGunix4" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop5006" [attr.offset]="(makePositiveValue(((unixServerData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage)/unixServerData.data.Availability.Availability.Number.value)*100 | number : '1.2-2')) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop5007" [attr.offset]="(makePositiveValue(((unixServerData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage)/unixServerData.data.Availability.Availability.Number.value)*100 | number : '1.2-2')) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGunix4)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                        h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue(((unixServerData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage)/unixServerData.data.Availability.Availability.Number.value)*100
+                                            | number : '1.2-2') }}%
+                                        </p>
+                                    </div>
+
+                                    <!-- down-->
+                                    <div class="arrow-img" *ngIf="enterMyData.availablityPercentage < unixServerData.data.Availability.Availability.Number.value">
+                                        <svg id="unixAvailabilitySVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="progressSVGunix4" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop5006" [attr.offset]="(makePositiveValue(((unixServerData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage)/unixServerData.data.Availability.Availability.Number.value)*100 | number : '1.2-2')) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop5007" [attr.offset]="(makePositiveValue(((unixServerData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage)/unixServerData.data.Availability.Availability.Number.value)*100 | number : '1.2-2')) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGunix4)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                        h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            <!-- {{ makePositiveValue((unixServerData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage) | number : '1.2-2') }}% -->
+                                            {{ makePositiveValue(((unixServerData.data.Availability.Availability.Number.value - enterMyData.availablityPercentage)/unixServerData.data.Availability.Availability.Number.value)*100
+                                            | number : '1.2-2') }}%
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.availablityPercentage <0)" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+                            <div *ngIf="isAvailabilityPerEqual" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <p class="same-value-availabilty">{{enterMyData.availablityPercentage | number : '1.2-2'}}%</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Unix server availability % card ends-->
+
+            <div [ngClass]="[showDiv ? 'p-2 w-24 no-os-instance-2700' : 'p-2 w-17']">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header" style="text-transform: none;">
+                        # of OS Instances Per FTE
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{unixDefinitionData.serversperfte_lower.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body pt-3 pb-0">
+                        <div class="row">
+                            <div class="col p-3 mx-auto">
+                                <div class="minh-55">
+                                    <p class="text-info">
+                                        {{unixServerData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Number.value | number : '1.0-0' }}
+                                    </p>
+                                    <p>
+                                        <small>(Mean)</small>
+                                    </p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{unixServerData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Upper.value | number : '1.0-0' }}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+                                            {{unixServerData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Lower.value | number : '1.0-0' }}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col p-2 bg-lightblue text-center" *ngIf="!isOSPerFTEEqual && enterMyData.noOfOSInstancesPerFTE >=0" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                                <div class=" minh-55">
+                                    <p class="text-info">{{enterMyData.noOfOSInstancesPerFTE | number : '1.0-0'}}</p>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="arrow-img" *ngIf="enterMyData.noOfOSInstancesPerFTE >= unixServerData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Number.value">
+                                        <svg id="noOfOSInstancesPerFTESVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="progressSVGunix5" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop5008" [attr.offset]="makePositiveValue((unixServerData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Number.value | number : '1.2-2') -+ (enterMyData.noOfOSInstancesPerFTE | number : '1.2-2')) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop5009" [attr.offset]="makePositiveValue((unixServerData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Number.value | number : '1.2-2') -+ (enterMyData.noOfOSInstancesPerFTE | number : '1.2-2')) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGunix5)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                        h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue((unixServerData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Number.value | number : '1.2-2') -+ (enterMyData.noOfOSInstancesPerFTE
+                                            | number : '1.0-0')) | number : '1.0-0' }}%
+                                        </p>
+                                    </div>
+
+                                    <div class="arrow-img" *ngIf="enterMyData.noOfOSInstancesPerFTE < unixServerData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Number.value">
+                                        <svg id="noOfOSInstancesPerFTESVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92"
+                                            xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="progressSVGunix5" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop5008" [attr.offset]="makePositiveValue((unixServerData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Number.value | number : '1.2-2') -+ (enterMyData.noOfOSInstancesPerFTE | number : '1.2-2')) + '%'"
+                                                        stop-color="#02ABBA" />
+                                                    <stop id="stop5009" [attr.offset]="makePositiveValue((unixServerData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Number.value | number : '1.2-2') -+ (enterMyData.noOfOSInstancesPerFTE | number : '1.2-2')) + '%'"
+                                                        stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGunix5)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                        h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue((unixServerData.data.NumberofOSInstancesPerFTE.ServersPerFTE.Number.value | number : '1.2-2') -+ (enterMyData.noOfOSInstancesPerFTE
+                                            | number : '1.0-0')) | number : '1.0-0' }}%
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div *ngIf="enterMyData.noOfOSInstancesPerFTE <0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+                            <div *ngIf="isOSPerFTEEqual" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv mright' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <p class="same-value-os-instance">{{enterMyData.noOfOSInstancesPerFTE | number : '1.0-0'}}</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Staffing mix card starts-->
+            <div [ngClass]="[showDiv ? 'p-2 mb-2' : 'p-2 mb-2 w-23']">
+                <div class="card custom-card min-ht340">
+                    <div class="card-header">
+                        Staffing mix
+                        <a href="javascript:void(0)">
+                            <i class="info-icon" placement="top" ngbTooltip="{{unixDefinitionData.staffingmixemployee_lower.defination}}"></i>
+                        </a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="pb-0 mx-auto">
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="p-0">
+                                        <div class="d-flex flex-row flex-wrap">
+                                            <div class="p-2 mx-auto">
+                                                <div class="minh-55">
+                                                    <app-donut-chart id="staffingmix-percentage-employee" chartID="staffingmix-percentage-employee" fillColor="9acb3b" percentVal="{{unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value/10}}"
+                                                        chartWidth="90" chartHeight="90"></app-donut-chart>
+                                                    <p class="text-info">
+                                                        {{unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value | number : '1.1-1' }}%
+                                                    </p>
+                                                    Employees
+                                                    <small>(Mean)</small>
+                                                </div>
+                                                <div class="my-3">
+                                                    <i class="arrow-up align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">
+                                                            {{unixServerData.data.StaffingMix.StaffingMixEmployee.Upper.value | number : '1.1-1' }}%
+                                                        </p>
+                                                        <small>Upper</small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2">
+                                                    <i class="arrow-lower align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">
+                                                            {{unixServerData.data.StaffingMix.StaffingMixEmployee.Lower.value | number : '1.1-1' }}%
+                                                        </p>
+                                                        <small>Lower</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 mx-auto">
+                                                <div class="minh-55">
+                                                    <app-donut-chart id="staffingmix-percentage-contractor-data" chartID="staffingmix-percentage-contractor-data" fillColor="03abba"
+                                                        percentVal="{{unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value/10}}"
+                                                        chartWidth="90" chartHeight="90"></app-donut-chart>
+                                                    <p class="text-info">
+                                                        {{unixServerData.data.StaffingMix.StaffingMixContractor.Number.value | number : '1.1-1'}}%
+                                                    </p>
+                                                    Contractors
+                                                    <small>(Mean)</small>
+                                                </div>
+                                                <div class="my-3">
+                                                    <i class="arrow-up align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">
+                                                            {{unixServerData.data.StaffingMix.StaffingMixContractor.Upper.value | number : '1.1-1'}}%
+                                                        </p>
+                                                        <small>Upper</small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2">
+                                                    <i class="arrow-lower align-top"></i>
+                                                    <div class="d-inline-block text-left">
+                                                        <p class="text-muted">
+                                                            {{unixServerData.data.StaffingMix.StaffingMixContractor.Lower.value | number : '1.1-1'}}%
+                                                        </p>
+                                                        <small>Lower</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 bg-lightblue" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]" *ngIf="(enterMyData.staffingmixEmployee*100<0 && enterMyData.staffingmixContract*100<0)">
+                                        <div class="align-self-center p-5 mt-3">
+                                            <span class="bord-top-both-empty"></span>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="(enterMyData.staffingmixEmployee*100>=0 || enterMyData.staffingmixContract*100>=0)" class="p-2 mx-auto bg-lightblue"
+                                        [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]">
+
+                                        <div class="d-flex flex-row flex-wrap">
+
+                                            <div *ngIf="!isStaffingMixEmpEqual && enterMyData.staffingmixEmployee*100>=0" class="d-flex flex-row flex-wrap">
+                                                <div class="p-2 mt-3">
+                                                    <div class=" minh-55">
+                                                        <p class="text-info">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                        Employees
+                                                    </div>
+
+                                                    <div *ngIf="((enterMyData.staffingmixEmployee*100) > unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value)" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92"
+                                                                enable-background="new 0 0 60 92" xml:space="preserve">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual5" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop4010" [attr.offset]=" makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'"
+                                                                            stop-color="#9acb3b" />
+                                                                        <stop id="stop4009" [attr.offset]=" makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'"
+                                                                            stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+                                                                {{ makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100))
+                                                                / unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value)
+                                                                * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngIf="((enterMyData.staffingmixEmployee*100) < unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value)" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92"
+                                                                enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual5785" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop401120" [attr.offset]=" makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'"
+                                                                            stop-color="#9acb3b" />
+                                                                        <stop id="stop402309" [attr.offset]=" makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'"
+                                                                            stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5785)" stroke="#9acb3b" stroke-miterlimit="10"
+                                                                    d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100))
+                                                                / unixServerData.data.StaffingMix.StaffingMixEmployee.Number.value)
+                                                                * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="enterMyData.staffingmixEmployee*100<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]">
+                                                <div class="align-self-center">
+                                                    <span class="bord-top"></span>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="isStaffingMixEmpEqual" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]">
+                                                <div class="align-self-center">
+                                                    <p class="same-value-staffing-mix">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                    <p class="same-value-staffingMix-label">Employees</p>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="!isStaffingMixContrEqual && enterMyData.staffingmixContract*100>=0" class="d-flex flex-row flex-wrap ">
+                                                <div class="p-2 mt-3">
+
+                                                    <div class=" minh-55">
+                                                        <p class="text-info">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                        Contractors
+                                                    </div>
+                                                    <div *ngIf="(enterMyData.staffingmixContract*100)>unixServerData.data.StaffingMix.StaffingMixContractor.Number.value" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92"
+                                                                enable-background="new 0 0 60 92" xml:space="preserve">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual65" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop4011" [attr.offset]="makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / unixServerData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'"
+                                                                            stop-color="#02ABBA" />
+                                                                        <stop id="stop4012" [attr.offset]="makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / unixServerData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'"
+                                                                            stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100))
+                                                                / unixServerData.data.StaffingMix.StaffingMixContractor.Number.value)
+                                                                * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngIf="(enterMyData.staffingmixContract*100)<unixServerData.data.StaffingMix.StaffingMixContractor.Number.value" class="mt-4">
+                                                        <div class=" arrow-img">
+                                                            <svg id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92"
+                                                                enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                                <defs>
+                                                                    <linearGradient id="progressSVGannual65451" x1="0" y1="1" x2="0" y2="0">
+                                                                        <stop id="stop401112" [attr.offset]="makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / unixServerData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'"
+                                                                            stop-color="#02ABBA" />
+                                                                        <stop id="stop402312" [attr.offset]="makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / unixServerData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'"
+                                                                            stop-color="#e1edf3" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65451)" stroke="#02ABBA" stroke-miterlimit="10"
+                                                                    d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z" />
+                                                            </svg>
+                                                            <p class="remained-percentage remained-perc-font">
+
+                                                                {{ makePositiveValue(((unixServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100))
+                                                                / unixServerData.data.StaffingMix.StaffingMixContractor.Number.value)
+                                                                * 100) | number : '1.1-1' }}%
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="enterMyData.staffingmixContract*100<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]">
+                                                <div class="align-self-center">
+                                                    <span class="bord-top"></span>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="isStaffingMixContrEqual" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]">
+                                                <div class="align-self-center">
+                                                    <p class="same-value-staffing-mix">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                    <p class="same-value-staffingMix-label">Contractors</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Staffing mix card ends-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Drill-Down -->
+
+<div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_personnel}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content unix-personnel-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Unix Server Cost Allocation for Personnel
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 unix-personnel-modal-body">
+                <div class="unix-personnel-drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="personnel-drillDown-unix" chartID="personnel-drillDown-unix"
+                        [chartData]="unixServerData.drills.PersonnelCostAllocation" thickness="35" chartWidth="180" chartRadius="80"
+                        chartLegendSize="19" chartHeight="430"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_hardware}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_hardware}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content drilldown-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Unix Server Cost Allocation for Hardware
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 drilldown-modal-body">
+                <div class="drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="hardware-drillDown-unix" chartID="hardware-drillDown-unix" [chartData]="unixServerData.drills.HardwareCostAllocation"
+                        thickness="35" chartWidth="180" chartRadius="30" chartLegendSize="19" chartHeight="310"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_software}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_software}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content drilldown-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Unix Server Cost Allocation for Software
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 software-drilldown-modal-body">
+                <div class="drilldown-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="software-drillDown-unix" chartID="software-drillDown-unix" [chartData]="unixServerData.drills.SoftwareCostAllocation"
+                        thickness="35" chartWidth="180" chartRadius="40" chartLegendSize="19" chartHeight="350"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_outsourcing}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content unix-outsourcing-modal-width">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Unix Server Cost Allocation for Outsourcing
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+            </div>
+            <div class="modal-body padding0 unix-outsourcing-modal-body">
+                <div class="drilldown-chart unix-outsourcing-chart">
+                    <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="outsourcing-drillDown-unix" chartID="outsourcing-drillDown-unix"
+                        [chartData]="unixServerData.drills.OutsourcingCostAllocation" thickness="35" chartWidth="180" chartRadius="90"
+                        chartHeight="450" chartLegendSize="23"></mainframe-drill-down-donut-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #donotshow>
+    <div class="loader-icon-container">
+        <div class="loader-icon"></div>
+    </div>
+</ng-template>
+
+<div class="backdrop" [ngStyle]="{'display':display_costPerInstance}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerInstance}">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-linechart" role="document">
+        <div class="modal-content">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Annual Cost Per OS Instance - 3 Year Trend
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeCostPerInstanceModalDialog()"></button>
+            </div>
+            <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+                <line-chart *ngIf="showDrillDown" [chartData]="dataSourceCostPerInstance" id="unixLineChart1" chartId="unixLineChart1"></line-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display_costPerCore}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerCore}">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-linechart" role="document">
+        <div class="modal-content">
+            <div class="modal-header infra-popup-text-header">
+                <div class="popup-div">
+                    Annual Cost Per Core - 3 Year Trend
+                </div>
+                <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeCostPerCoreModalDialog()"></button>
+            </div>
+            <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+                <line-chart *ngIf="showDrillDown" [chartData]="dataSourceCostPerCore" id="unixLineChart2" chartId="unixLineChart2"></line-chart>
+            </div>
+        </div>
+    </div>
+</div>

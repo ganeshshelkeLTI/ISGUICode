@@ -1,0 +1,315 @@
+/***********************************************************/
+/************** © 2018 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: user-privileges.component.css              **/
+/** Description: This is user privileges css.             **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10652318  Created Date: 28/09/2018        **/
+/** Update By: 10652318  Update Date: 28/09/2018          **/
+/** Developed at:                 **/
+/***********************************************************/
+
+.m-l26{
+    margin-left: 26px;
+}
+.pl-20{
+    padding-left: 20px !important;
+}
+.pl-40{
+    padding-left: 30px !important;
+}
+.dashboard-padding{
+    padding-left: 12px !important;
+}
+.desc-padding{
+    padding-left: 20px !important;
+}
+.card-header {
+    background: #f5fbfe;
+    border-bottom: 1px solid #F7F7F7;
+    text-transform: capitalize;
+    color: #494c50;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.confirm_box{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left:0;
+    top:0;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 10;
+}
+.confirm-card{
+    background: white;
+    padding: 10px;
+    position: relative;
+    top: 30%;
+    max-width: 500px;
+    margin: 1.75rem auto;
+}
+
+.form-row textarea{
+    resize: none;
+}
+.custom-card{
+    background: #f5fbfe;
+    border: 1px solid #dddddd;
+    border-radius:0.1rem;
+}
+.custom-card .card-body{
+    padding:1rem 0.25rem;
+    color:#a0a6a7;
+    font-size: 14px;
+}
+.custom-card .card-body .card-body{
+    padding:0.3rem 0rem;
+    min-width: 270px;
+}
+.btn-isg-toggle{
+    background-color: #fff;
+    border-color: #03abba;
+    color:#75787b;
+    font-size: 16px;
+    height: 36px;
+    border-radius:0px;
+}
+.btn-isg-toggle.active{
+    background-color: #03abba;
+    border-color: #03abba;
+    color:#fff;
+}
+.card-body label{
+    color: #75787b;
+    font-size: 15px;
+}
+.form-group{
+    padding: 0 15px;
+}
+.form-control{
+    border-radius: 0;
+    padding: .300rem .75rem;
+    font-size: 14px;
+}
+select.form-control {
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    background: url('/assets/images/filter-icons.png') right -128px no-repeat;
+    cursor: pointer;
+    background-color: #ffffff;
+}
+select.form-control:not([size]):not([multiple]){
+    height: calc(2.25rem + 0px);
+}
+
+
+hr{
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.font-size-group2{
+    font-size:14px;
+}
+.btn-add{
+    background-color: #29497b;
+    border-color: #29497b;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 1px;
+}
+.btn-delete{
+    background-color: #777b7c;
+    border-color: #777b7c;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 1px;
+}
+
+.row-actions .delete {
+    margin-top: -5px;
+} */
+.row-actions {
+    /* display: flex; */
+    align-items: center;
+}
+
+.row-actions i {
+    font-size: 22px;
+}
+
+
+.kpi-maintenance tbody tr:first-child .row-actions .add-row {
+    display: inline-block;
+}
+
+.kpi-maintenance .chkbox {
+    font: normal normal normal 14px/1 FontAwesome;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    font-size: 22px;
+    display: inline-block;
+    text-align: right;
+    color:#494c50;
+    border: none;
+}
+.kpi-maintenance .showKPI:before {
+    content: "\f06e";
+}
+
+.kpi-maintenance .hideKPI:before {
+    content: "\f06e";
+    color: #cdcdcd;
+}
+
+.row-actions .chkbox:before {
+    content: "\f06e";
+}
+.row-actions .chkbox {
+    font: normal normal normal 14px/1 FontAwesome;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    font-size: 22px;
+    display: inline-block;
+    text-align: right;
+    color:#333333;
+    border: none;
+}
+.bg-white{
+    background: white;
+}
+.kpi-maintenance .thead-blue {
+    background: #81cee3;
+}
+
+.kpi-maintenance .table-sm th,
+.kpi-maintenance .table-sm td {
+    padding: 5px;
+    vertical-align: top;
+    font-size: 13px;
+    font-family: OpenSansRegular;
+}
+
+/* New addition */
+
+.question-input {
+    font-family: OpenSansRegular;
+}
+
+
+
+.desc-shortdesc {
+    width: auto;
+}
+
+
+
+.save-reset-btn {
+    border-radius: 0;
+    padding: 0.3rem 1.2rem;
+    font-family: OpenSansRegular;
+    border-color: #29497b;
+    background: #29497b;
+}
+.fa.fa-trash-o {
+    margin-bottom: 5px;
+}
+
+.delete {
+    margin-right: 10px !important;
+}
+
+textarea{
+    resize: none;
+}
+tr td {
+    padding-top: 10px !important;
+    padding-left: 10px ;
+    padding-bottom: 10px !important;
+    padding-right: 0 !important;
+}
+
+tr th {
+    padding-top: 5px !important;
+    padding-left: 20px ;
+    padding-bottom: 5px !important;
+    padding-right: 0 !important;
+}
+td a{
+    color: #000;
+    margin-right: 10px;
+}
+
+
+tbody::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    /* border-radius:10px; */
+}
+
+tbody::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+tbody::-webkit-scrollbar-thumb
+{
+    background-color: #29497B;
+    /* border-radius:10px; */
+}
+@media (max-width:767px){
+    .main-content {
+        margin-top: 80px;
+    }
+    input.form-control{
+        min-width: 100px;
+    }
+    textarea.form-control{
+        min-width: 150px;
+    }
+    .table-responsive{
+        height: 300px;
+    }
+}
+
+@media (min-width:768px) and (max-width:991px) and (orientation:portrait){
+    .main-content {
+        margin-top: 80px;
+    }
+}
+@media (min-width:768px) and (max-width:1024px){
+
+    tbody {
+        display:block;
+        height:350px;
+        overflow:auto;
+    }
+    thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;
+    }
+}
+@media (min-width:1200px){
+    tbody {
+        display:block;
+        height:350px;
+        overflow:auto;
+    }
+    thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;
+    }
+}

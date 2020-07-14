@@ -1,0 +1,1089 @@
+<!-- Main section starts here -->
+<section class="main-content">
+    <div class="container-fluid">
+        <div class="d-sm-flex flex-row flex-wrap">
+            <div class="w-100 p-2">
+                <div class="card-header px-0">
+                    <h6 class="text-left">WAN &nbsp; <a href=""><i class="info-icon" placement="right" ngbTooltip="{{wanServerData.tower.id}}"></i></a> </h6>
+                </div>
+
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <div class="d-sm-flex flex-row flex-wrap align-items-center">
+                            <div class="p-2">
+                                <span class="text-left">
+                                    <p>Scale</p>
+                                    (WAN Locations)
+                                </span>
+                            </div>
+                            <div class="p-2 mr-auto">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button (click)="setScale(size)" type="button" class="btn mip-small btn-setRange scale-button" [ngClass]="[(scaleValue==size.value) ? 'active-scale' : 'btn mip-small btn-setRange']" *ngFor="let size of data.industrySize">{{size.key}}</button>
+                                </div>
+                            </div>
+                            <div class="p-2">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label>Region</label>
+                                        <select id="inputRegion" class="form-control mx-sm-3" name="selectedregion" [(ngModel)]='selectedregion'  (change)='setRegion(selectedregion)'>
+                                            <option value="Grand Total" hidden>Global</option>
+                                            <option value="Total">&nbsp;Global&nbsp;</option>
+                                            <option *ngFor="let region of data.region"  [ngValue]=region> {{region.value}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Currency</label>
+                                        <select id="inputCurrency" class="form-control mx-sm-3" name="selectedcurrency" [(ngModel)]='selectedcurrency' (change)='setCurrency(selectedcurrency)'>
+                                            <option *ngFor="let currency of data.currency"  [ngValue]=currency> {{currency.value}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Compare Scenario</label>
+                                            <select id="inputScenarios" class="form-control mx-sm-3" name="selectedscenario" [(ngModel)]='selectedscenario' (ngModelChange)='getScenarioDataById(selectedscenario)'>
+                                            <option value="N/A" hidden>N/A</option>
+                                            <option *ngFor='let scenario of selectedScenarioName' [ngValue]=scenario>{{scenario.label}}</option>
+                                            </select>
+                                          </div>
+
+                                          <div class="form-group">
+                                                <label>Custom Reference</label>
+                                                <select id="inputCRG" class="form-control mx-sm-3" [ngModelOptions]="{standalone: true}" [(ngModel)]='selectedcustomRef' (ngModelChange)='getScenarioDataByCustomRef(selectedcustomRef)'>
+                                                    <option *ngFor='let crg of selectedCRGName' [ngValue]=crg>{{crg.customName}}</option>
+                                                </select>
+                                                <a href="javascript:void(0)" *ngIf="selectedcustomRef.customId != '-9999'">
+                                                        <i class="info-icon" placement="top"ngbTooltip="{{selectedcustomRef.definition}}" ></i>
+                                                    </a>
+                                        </div>
+    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-sm-flex flex-row flex-wrap">
+            <!-- WAN card starts -->
+            <div class="p-2 w-29">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        WAN Cost Allocation <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{wanDefinitionData.wanoperationsoutsourcing.defination}}"></i></a>
+                    </div>
+                    <div class="card-body mx-auto">
+                        <!-- First row -->
+                        <div class="card custom-card p-0">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Personnel
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{wanServerData.data.TotalWANCostAllocation.CostAllocationEmp.Number.value | number : '1.1-1'}}%
+                                </div>
+                                <div class="col-2">
+                                    <app-donut-chart id="wan-cost-allocation-personnel" chartID="wan-cost-allocation-personnel" fillColor="03abba" percentVal="{{wanServerData.data.TotalWANCostAllocation.CostAllocationEmp.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 p-0 d-inline">
+                                    <a href="javascript:void(0)" (click)="openModalDialog()"><i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey text-left">
+                                    Hardware & Software
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{wanServerData.data.TotalWANCostAllocation.CostAllocationHWSW.Number.value | number : '1.1-1'}}%
+                                </div>
+                                <div class="col-2">
+                                    <app-donut-chart id="wan-cost-allocation-hwsw" chartID="wan-cost-allocation-hwsw" fillColor="29497b" percentVal="{{wanServerData.data.TotalWANCostAllocation.CostAllocationHWSW.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="openHardwareSoftwareModalDialog()"> <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_hardwareSoftware}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Third row -->
+                        <div class="card custom-card mt-2">
+                            <div class="row card-body m-0">
+                                <div class="col-5 align-items-center d-inline-flex text-grey">
+                                    Outsourcing
+                                </div>
+                                <div class="col-3 align-items-center d-inline-flex num-grey p-0">
+                                    {{wanServerData.data.TotalWANCostAllocation.CostAllocationOS.Number.value | number : '1.1-1' }}%
+                                </div>
+                                <div class="col-2">
+                                    <app-donut-chart id="wan-cost-allocation-outsource" chartID="wan-cost-allocation-outsource" fillColor="9acb3b" percentVal="{{wanServerData.data.TotalWANCostAllocation.CostAllocationOS.Number.value/10}}" chartWidth="35" chartHeight="35" ></app-donut-chart>
+                                </div>
+                                <div class="col-2 d-inline p-0">
+                                    <a href="javascript:void(0)" (click)="openOutsourcingModalDialog()"> <i class="circle-arrow-icon float-right"></i></a>
+                                    <div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- WAN card ends -->
+
+            <!-- Annual Cost of WAN Per Active Port card starts-->
+            <div [ngClass]="[showDiv ? 'w-md-100 w-43' : 'w-37']" class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        <!-- Annual Cost of WAN per Location -->
+                        Annual Cost Per WAN Location 
+                        <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{wanDefinitionData.wancostperlocation_number.defination}}"></i></a>
+                        <a *ngIf="isLineChartDisabled==false" href="javascript:void(0)" class="popout" (click)="openActivePortModalDialog()"><i class="circle-arrow-icon float-right"></i></a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <!-- col added -->
+                            <div class="col px-2 newclass" style="padding-right: 0em !important;">
+                                <p class="m-1">Total Cost of Ownership</p>
+                                <div class="d-flex flex-row flex-wrap m-0">
+                                    <div class="col p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">
+                                                {{currencySymbol}}{{wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal | number : '1.0-0' }}
+                                            </p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Upper.value  * refactorVal | number : '1.0-0'  }}
+                                                </p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Lower.value * refactorVal | number : '1.0-0' }}
+                                                </p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col p-2 bg-lightblue text-center" *ngIf="enterMyData.annualTCOPerActiveWANPort>=0" [ngClass]="[showDiv ? '!displayDiv mrminus8' : 'displayDiv' ]" style="min-height: 230px;">
+
+
+                                        <p *ngIf="!tcPortEquality" class="text-info">{{currencySymbol}}{{enterMyData.annualTCOPerActiveWANPort | number : '1.0-0' }}</p>
+                                        <p *ngIf="tcPortEquality" class="text-info equality-center-aligned">{{currencySymbol}}{{enterMyData.annualTCOPerActiveWANPort | number : '1.0-0' }}</p>
+
+                                        <div class="mt-3" *ngIf="!tcPortEquality && (enterMyData.annualTCOPerActiveWANPort>(wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal))">
+                                            <div class=" arrow-img">
+                                                <svg id="wanTCOActiveportSVG1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGlan152" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop7000123" [attr.offset]="makePositiveValue((((wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal)-enterMyData.annualTCOPerActiveWANPort)/(wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal))*100) + '%'" stop-color="#02ABBA" />
+                                                            <stop id="stop7001321" [attr.offset]="makePositiveValue((((wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal)-enterMyData.annualTCOPerActiveWANPort)/(wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal))*100) + '%'" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGlan152)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font">
+                                                    {{ makePositiveValue((((wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal) - enterMyData.annualTCOPerActiveWANPort)/(wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal))*100 ) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3" *ngIf="!tcPortEquality && (enterMyData.annualTCOPerActiveWANPort<(wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal))">
+                                            <div class=" arrow-img">
+                                                <svg id="wanTCOActiveportSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                    <defs>
+                                                        <linearGradient id="progressSVGlan1" x1="0" y1="1" x2="0" y2="0">
+                                                            <stop id="stop7000" [attr.offset]="makePositiveValue((((wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal)-enterMyData.annualTCOPerActiveWANPort)/(wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal))*100) + '%'" stop-color="#02ABBA" />
+                                                            <stop id="stop7001" [attr.offset]="makePositiveValue((((wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal)-enterMyData.annualTCOPerActiveWANPort)/(wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal))*100) + '%'" stop-color="#e1edf3" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGlan1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                </svg>
+                                                <p class="remained-percentage remained-perc-font">
+                                                    {{ makePositiveValue((((wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal) - enterMyData.annualTCOPerActiveWANPort)/(wanServerData.data.AnnualCostPerWANLocation.WANCostPerLocation.Number.value * refactorVal))*100 ) | number : '1.0-0' }}%
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div *ngIf="(enterMyData.annualTCOPerActiveWANPort <0)" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" style="padding: 0rem !important; min-height: 230px;">
+                                            <div class="align-self-center">
+                                                <span class="bord-top"></span>
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
+                            <span class="border-right"></span>
+                            <!-- p-0 pb-3 newclass -->
+                            <div class="col maxw45 p-0 pb-3 newclass">
+                                <p class="m-1">Market Price </p>
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="p-2 mx-auto">
+                                        <div class="minh-55">
+                                            <p class="text-info">
+                                                {{currencySymbol}}{{wanServerData.data.AnnualCostPerWANLocation.WANPricePerLocation.Number.value * refactorVal | number : '1.0-0' }}
+                                            </p>
+                                            <small>(Mean)</small>
+                                        </div>
+                                        <div class="my-3">
+                                            <i class="arrow-up align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{wanServerData.data.AnnualCostPerWANLocation.WANPricePerLocation.Upper.value * refactorVal | number : '1.0-0'}}
+                                                </p>
+                                                <small>Upper</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <i class="arrow-lower align-top"></i>
+                                            <div class="d-inline-block text-left">
+                                                <p class="text-muted">
+                                                    {{currencySymbol}}{{wanServerData.data.AnnualCostPerWANLocation.WANPricePerLocation.Lower.value * refactorVal | number : '1.0-0' }}
+                                                </p>
+                                                <small>Lower</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost of WAN Per Active Port card ends-->
+
+            <!-- Annual Cost Per Network FTE starts-->
+            <div [ngClass]="[showDiv ? 'w-28' : 'w-33-60']" class="p-2">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        Annual Cost Per Network FTE <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{wanDefinitionData.costperemployee_lower.defination}}"></i></a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="p-2 mx-auto">
+                                <p class="m-2 text-center m-t-0">Employee <small>(Mean)</small>
+                                </p>
+                                <div class="minh-55 m-t-13">
+                                    <p class="text-info">{{currencySymbol}}{{wanServerData.data.AnnualCostPerNetworkFTE.CostPerEmployee.Number.value * refactorVal | number : '1.0-0' }}</p>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{currencySymbol}}{{wanServerData.data.AnnualCostPerNetworkFTE.CostPerEmployee.Upper.value * refactorVal | number : '1.0-0' }}</p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{currencySymbol}}{{wanServerData.data.AnnualCostPerNetworkFTE.CostPerEmployee.Lower.value * refactorVal | number : '1.0-0' }}</p>
+
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="border-right"></span>
+                            <div class="p-2 mx-auto">
+                                <p class="m-2 text-center ml-xl-0 m-t-0">Contractor <small>(Mean)</small>
+                                </p>
+                                <div class="minh-55 m-t-13">
+                                    <p class="text-info">{{currencySymbol}}{{wanServerData.data.AnnualCostPerNetworkFTE.CostPerContractor.Number.value * refactorVal | number : '1.0-0' }}</p>
+
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{currencySymbol}}{{wanServerData.data.AnnualCostPerNetworkFTE.CostPerContractor.Upper.value * refactorVal | number : '1.0-0' }}</p>
+
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">{{currencySymbol}}{{wanServerData.data.AnnualCostPerNetworkFTE.CostPerContractor.Lower.value * refactorVal | number : '1.0-0' }}</p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Annual Cost Per Network FTE ends-->
+
+            <!-- WAN Port Utilization starts-->
+            <div class="p-2" [ngClass]="[showDiv ? 'w-33' : 'w-25']">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        WAN Recovery Time <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{wanDefinitionData.wanrecovery_upper.defination}}" class="info-icon"></i></a>
+
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3 wan-recovery-padding">
+                                <div class="minh-55">
+                                    <app-donut-chart id="wan-recovery-time" chartID="wan-recovery-time" fillColor="03abba" percentVal="{{wanServerData.data.RecoveryTime.WANRecovery.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                    <p class="text-info">
+
+                                        {{wanServerData.data.RecoveryTime.WANRecovery.Number.value | number : '1.1-1' }}
+                                    </p>
+                                    <small>Hours(Mean)</small>
+                                </div>
+                                <div class="my-3">
+                                    <i class="arrow-up align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+
+                                            {{wanServerData.data.RecoveryTime.WANRecovery.Upper.value | number : '1.1-1' }}
+                                        </p>
+                                        <small>Upper</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <i class="arrow-lower align-top"></i>
+                                    <div class="d-inline-block text-left">
+                                        <p class="text-muted">
+
+                                            {{wanServerData.data.RecoveryTime.WANRecovery.Lower.value | number : '1.1-1' }}
+                                        </p>
+                                        <small>Lower</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                         
+                            <div class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" *ngIf="(enterMyData.WANRecoveryTime >=0)">
+
+                                <p *ngIf="!wanRecoveryEquality" class="text-info">
+                                    {{enterMyData.WANRecoveryTime | number : '1.1-1' }}
+                                </p>
+                                <p *ngIf="wanRecoveryEquality" class="text-info equality-center-aligned-utilization">
+                                        {{enterMyData.WANRecoveryTime | number : '1.1-1' }}
+                                    </p>
+                                <div class="mt-3">
+                                    <div class="arrow-img" *ngIf="!wanRecoveryEquality && (enterMyData.WANRecoveryTime > wanServerData.data.RecoveryTime.WANRecovery.Number.value)">
+                                        <svg id="wanRecoveryTimeSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                            <defs>
+                                                <linearGradient id="progressSVGworkplace3" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop6004" [attr.offset]="makePositiveValue(((wanServerData.data.RecoveryTime.WANRecovery.Number.value - enterMyData.WANRecoveryTime)/wanServerData.data.RecoveryTime.WANRecovery.Number.value)*100 | number : '1.2-2') + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop6005" [attr.offset]="makePositiveValue(((wanServerData.data.RecoveryTime.WANRecovery.Number.value - enterMyData.WANRecoveryTime)/wanServerData.data.RecoveryTime.WANRecovery.Number.value)*100 | number : '1.2-2') + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace3)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue(((wanServerData.data.RecoveryTime.WANRecovery.Number.value - enterMyData.WANRecoveryTime)/wanServerData.data.RecoveryTime.WANRecovery.Number.value)*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+
+                                    <div class="arrow-img" *ngIf="!wanRecoveryEquality && (enterMyData.WANRecoveryTime < wanServerData.data.RecoveryTime.WANRecovery.Number.value)">
+                                        <svg id="wanRecoveryTimeSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                            <defs>
+                                                <linearGradient id="progressSVGworkplace3" x1="0" y1="1" x2="0" y2="0">
+                                                    <stop id="stop6004" [attr.offset]="makePositiveValue(((wanServerData.data.RecoveryTime.WANRecovery.Number.value - enterMyData.WANRecoveryTime)/wanServerData.data.RecoveryTime.WANRecovery.Number.value)*100 | number : '1.2-2') + '%'" stop-color="#02ABBA" />
+                                                    <stop id="stop6005" [attr.offset]="makePositiveValue(((wanServerData.data.RecoveryTime.WANRecovery.Number.value - enterMyData.WANRecoveryTime)/wanServerData.data.RecoveryTime.WANRecovery.Number.value)*100 | number : '1.2-2') + '%'" stop-color="#e1edf3" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGworkplace3)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                        </svg>
+                                        <p class="remained-percentage remained-perc-font">
+                                            {{ makePositiveValue(((wanServerData.data.RecoveryTime.WANRecovery.Number.value - enterMyData.WANRecoveryTime)/wanServerData.data.RecoveryTime.WANRecovery.Number.value)*100) | number : '1.1-1' }}%
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div *ngIf="(enterMyData.WANRecoveryTime <0)" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                <div class="align-self-center">
+                                    <span class="bord-top"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- WAN Port Utilization ends-->
+
+            <!-- Availability starts-->
+            <div class="p-2" [ngClass]="[showDiv ? 'w-33' : 'w-25']">
+                <div class="card custom-card min-ht320">
+                    <div class="card-header">
+                        WAN Availability % <a href="javascript:void(0)"><i placement="top" ngbTooltip="{{wanDefinitionData.wanavailability_upper.defination}}" class="info-icon"></i></a>
+                    </div>
+                    <div class="card-body p-0 pb-0">
+                        <div class="row m-0">
+                            <div class="col p-3 pb-3 wan-availability-padding">
+                                <div class="minh-55">
+                                    <app-donut-chart id="wan-availability" chartID="wan-availability" fillColor="03abba" percentVal="{{wanServerData.data.Availability.WANAvailability.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                    <p class="text-info">
+                                        <p class="text-info">
+                                            {{wanServerData.data.Availability.WANAvailability.Number.value | number : '1.2-2' }}%
+                                        </p>
+                                        <small>(Mean)</small>
+                                    </div>
+                                    <div class="my-3">
+                                        <i class="arrow-up align-top"></i>
+                                        <div class="d-inline-block text-left">
+                                            <p class="text-muted">
+                                                {{wanServerData.data.Availability.WANAvailability.Upper.value | number : '1.2-2' }}%
+                                            </p>
+                                            <small>Upper</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <i class="arrow-lower align-top"></i>
+                                        <div class="d-inline-block text-left">
+                                            <p class="text-muted">
+                                                {{wanServerData.data.Availability.WANAvailability.Lower.value | number : '1.2-2' }}%
+                                            </p>
+                                            <small>Lower</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col p-2 bg-lightblue text-center" *ngIf="(enterMyData.availablityPercentage >=0)" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                    <p *ngIf="!wanAvailabilityEquality" class="text-info">{{enterMyData.availablityPercentage | number : '1.2-2' }}%</p>
+                                    <p *ngIf="wanAvailabilityEquality" class="text-info equality-center-aligned-utilization" style="padding-top: 6.1rem;">{{enterMyData.availablityPercentage | number : '1.2-2' }}%</p>
+                                    <div class="mt-3">
+                                        <div class=" arrow-img" *ngIf="!wanAvailabilityEquality && (enterMyData.availablityPercentage >= wanServerData.data.Availability.WANAvailability.Number.value)">
+                                            <svg version="1.1" id="WANavailabilitySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                <defs>
+                                                    <linearGradient id="WANavailabilitySVG4102" x1="0" y1="1" x2="0" y2="0">
+                                                        <stop id="stop4005" [attr.offset]="(((wanServerData.data.Availability.WANAvailability.Number.value - enterMyData.availablityPercentage) / wanServerData.data.Availability.WANAvailability.Number.value) * 100 | number : '1.2-2') + '%'" stop-color="#02ABBA" />
+                                                        <stop id="stop4006" [attr.offset]="(((wanServerData.data.Availability.WANAvailability.Number.value - enterMyData.availablityPercentage) / wanServerData.data.Availability.WANAvailability.Number.value) * 100 | number : '1.2-2') + '%'" stop-color="#e1edf3" />
+                                                    </linearGradient>
+                                                </defs>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#WANavailabilitySVG4102)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                            </svg>
+                                            <!-- <p class="remained-percentage remained-perc-font">{{ makePositiveValue ( ((wanServerData.data.Availability.WANAvailability.Number.value | number : '1.2-2') -+ (enterMyData.availablityPercentage | number : '1.2-2') | number : '1.2-2') ) }}%</p> -->
+
+                                            <p class="remained-percentage remained-perc-font">{{ makePositiveValue ( (((wanServerData.data.Availability.WANAvailability.Number.value - enterMyData.availablityPercentage) / wanServerData.data.Availability.WANAvailability.Number.value) * 100 | number : '1.2-2') ) }}%</p>
+                                        </div>
+
+                                        <div class=" arrow-img" *ngIf="!wanAvailabilityEquality && (enterMyData.availablityPercentage < wanServerData.data.Availability.WANAvailability.Number.value)">
+                                            <svg version="1.1" id="WANavailabilitySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                <defs>
+                                                    <linearGradient id="WANavailabilitySVG4102" x1="0" y1="1" x2="0" y2="0">
+                                                        <stop id="stop4005" [attr.offset]="(((wanServerData.data.Availability.WANAvailability.Number.value - enterMyData.availablityPercentage) / wanServerData.data.Availability.WANAvailability.Number.value) * 100 | number : '1.2-2') + '%'" stop-color="#02ABBA" />
+                                                        <stop id="stop4006" [attr.offset]="(((wanServerData.data.Availability.WANAvailability.Number.value - enterMyData.availablityPercentage) / wanServerData.data.Availability.WANAvailability.Number.value) * 100 | number : '1.2-2') + '%'" stop-color="#e1edf3" />
+                                                    </linearGradient>
+                                                </defs>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#WANavailabilitySVG4102)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                            </svg>
+                                            <!-- <p class="remained-percentage remained-perc-font">{{ makePositiveValue ( ((wanServerData.data.Availability.WANAvailability.Number.value | number : '1.2-2') -+ (enterMyData.availablityPercentage | number : '1.2-2') | number : '1.2-2') ) }}%</p> -->
+
+                                            <p class="remained-percentage remained-perc-font">{{ makePositiveValue ( (((wanServerData.data.Availability.WANAvailability.Number.value - enterMyData.availablityPercentage) / wanServerData.data.Availability.WANAvailability.Number.value) * 100 | number : '1.2-2') ) }}%</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div *ngIf="(enterMyData.availablityPercentage <0)" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                    <div class="align-self-center">
+                                        <span class="bord-top"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Availability ends-->
+
+                <!--  Active Ports Per WAN FTE availability % card starts-->
+                <div class="p-2" [ngClass]="[showDiv ? 'w-33' : 'w-25']">
+                    <div class="card custom-card min-ht320">
+                        <div class="card-header"  style="text-transform: none;">
+                            # of WAN Locations Per FTE <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{wanDefinitionData.locationsperwanfte_number.defination}}"></i></a>
+                        </div>
+                        <div class="card-body p-0 pb-0">
+                            <div class="row m-0">
+                                <div class="col p-3 pb-3">
+                                    <div class="minh-55">
+
+                                        <p class="text-info">
+                                            {{wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value | number : '1.0-0' }}
+                                        </p>
+                                        <p>
+                                            <small>(Mean)</small>
+                                        </p>
+                                    </div>
+                                    <div class="my-3">
+                                        <i class="arrow-up align-top"></i>
+                                        <div class="d-inline-block text-left">
+                                            <p class="text-muted">
+                                                {{wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Upper.value | number : '1.0-0' }}
+                                            </p>
+                                            <small>Upper</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <i class="arrow-lower align-top"></i>
+                                        <div class="d-inline-block text-left">
+                                            <p class="text-muted">
+                                                {{wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Lower.value | number : '1.0-0' }}
+                                            </p>
+                                            <small>Lower</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col p-2 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" *ngIf="enterMyData.numberOfActiveWANPortsPerFTE >=0">
+                                    <p *ngIf="!portPerFTEEquality" class="text-info">{{enterMyData.numberOfActiveWANPortsPerFTE | number : '1.0-0' }}</p>
+                                    <p *ngIf="portPerFTEEquality" class="text-info equality-center-aligned-staffingmix">{{enterMyData.numberOfActiveWANPortsPerFTE | number : '1.0-0' }}</p>
+                                    <div class="mt-3">
+                                        <div class=" arrow-img" *ngIf="!portPerFTEEquality && (enterMyData.numberOfActiveWANPortsPerFTE > wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value)">
+                                            <svg id="numberofActiveWANPortsPerFTESVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                <defs>
+                                                    <linearGradient id="progressSVGwan1" x1="0" y1="1" x2="0" y2="0">
+                                                        <stop id="stop7102" [attr.offset]="makePositiveValue(((wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value-enterMyData.numberOfActiveWANPortsPerFTE)/wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value)*100) + '%'" stop-color="#02ABBA" />
+                                                        <stop id="stop7103" [attr.offset]="makePositiveValue(((wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value-enterMyData.numberOfActiveWANPortsPerFTE)/wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value)*100) + '%'" stop-color="#e1edf3" />
+                                                    </linearGradient>
+                                                </defs>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGwan1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                            </svg>
+                                            <p class="remained-percentage remained-perc-font">
+                                                {{ makePositiveValue(((wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value - enterMyData.numberOfActiveWANPortsPerFTE)/wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value)*100 ) | number : '1.0-0' }}%
+                                            </p>
+                                        </div>
+
+                                        <div class=" arrow-img" *ngIf="!portPerFTEEquality && (enterMyData.numberOfActiveWANPortsPerFTE < wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value)">
+                                            <svg id="numberofActiveWANPortsPerFTESVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                <defs>
+                                                    <linearGradient id="progressSVGwan1" x1="0" y1="1" x2="0" y2="0">
+                                                        <stop id="stop7102" [attr.offset]="makePositiveValue(((wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value-enterMyData.numberOfActiveWANPortsPerFTE)/wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value)*100) + '%'" stop-color="#02ABBA" />
+                                                        <stop id="stop7103" [attr.offset]="makePositiveValue(((wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value-enterMyData.numberOfActiveWANPortsPerFTE)/wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value)*100) + '%'" stop-color="#e1edf3" />
+                                                    </linearGradient>
+                                                </defs>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGwan1)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                            </svg>
+                                            <p class="remained-percentage remained-perc-font">
+                                                {{ makePositiveValue(((wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value - enterMyData.numberOfActiveWANPortsPerFTE)/wanServerData.data.NumberofWANLocationsPerFTE.LocationsPerWANFTE.Number.value)*100) | number : '1.0-0' }}%
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div *ngIf="enterMyData.numberOfActiveWANPortsPerFTE <0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                    <div class="align-self-center">
+                                        <span class="bord-top"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  Active Ports Per WAN FTE % card ends-->
+
+                <!-- Staffing mix card starts-->
+                <div [ngClass]="[showDiv ? 'p-2 mb-2' : 'p-2 w-25']">
+
+                    <div class="card custom-card min-ht320">
+                        <div class="card-header">
+                            Staffing Mix <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{wanDefinitionData.staffingmixcontractor_upper.defination}}"></i></a>
+                        </div>
+                        <div class="card-body px-1 py-0 mx-auto">
+                            <div class="d-flex flex-row flex-wrap">
+                                <div class="pb-0">
+                                    <div class="d-flex flex-row flex-wrap">
+                                        <div class="p-0 mx-auto">
+                                            <div class="d-flex flex-row flex-wrap">
+                                                <div class="p-2">
+                                                    <div class="minh-55">
+                                                        <app-donut-chart id="lan-percentage-employee" chartID="lan-percentage-employee" fillColor="9acb3b" percentVal="{{wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                                        <p class="text-info">
+                                                            {{wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value | number : '1.1-1' }}%
+                                                        </p>
+                                                        Employees <small>(Mean)</small>
+                                                    </div>
+                                                    <div class="my-3">
+                                                        <i class="arrow-up align-top"></i>
+                                                        <div class="d-inline-block text-left">
+                                                            <p class="text-muted">
+                                                                {{wanServerData.data.StaffingMix.StaffingMixEmployee.Upper.value | number : '1.1-1' }}%
+                                                            </p>
+                                                            <small>Upper</small>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mt-2">
+                                                        <i class="arrow-lower align-top"></i>
+                                                        <div class="d-inline-block text-left">
+                                                            <p class="text-muted">
+                                                                {{wanServerData.data.StaffingMix.StaffingMixEmployee.Lower.value | number : '1.1-1' }}%
+                                                            </p>
+                                                            <small>Lower</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="p-2">
+                                                    <div class="minh-55">
+                                                        <app-donut-chart id="lan-percentage-contractor-data" chartID="lan-percentage-contractor-data" fillColor="03abba" percentVal="{{wanServerData.data.StaffingMix.StaffingMixContractor.Number.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                                        <p class="text-info">
+                                                            {{wanServerData.data.StaffingMix.StaffingMixContractor.Number.value | number : '1.1-1'}}%
+                                                        </p>
+                                                        Contractors <small>(Mean)</small>
+                                                    </div>
+                                                    <div class="my-3">
+                                                        <i class="arrow-up align-top"></i>
+                                                        <div class="d-inline-block text-left">
+                                                            <p class="text-muted">
+                                                                {{wanServerData.data.StaffingMix.StaffingMixContractor.Upper.value | number : '1.1-1'}}%
+                                                            </p>
+                                                            <small>Upper</small>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mt-2">
+                                                        <i class="arrow-lower align-top"></i>
+                                                        <div class="d-inline-block text-left">
+                                                            <p class="text-muted">
+                                                                {{wanServerData.data.StaffingMix.StaffingMixContractor.Lower.value | number : '1.1-1'}}%
+                                                            </p>
+                                                            <small>Lower</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="p-3 bg-lightblue" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]" *ngIf="(enterMyData.staffingmixEmployee*100<0 && enterMyData.staffingmixContract*100<0)">
+                                            <div class="align-self-center p-5 mt-3">
+                                                <span class="bord-top-both-empty"></span>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="(enterMyData.staffingmixEmployee*100>=0 || enterMyData.staffingmixContract*100>=0)" class="p-2 mx-auto bg-lightblue" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]">
+
+                                            <div class="d-flex flex-row flex-wrap">
+
+                                                <div *ngIf="enterMyData.staffingmixEmployee*100>=0" class="d-flex flex-row flex-wrap">
+                                                    <div class="p-2 mt-3">
+                                                        <div *ngIf="!staffingmixEmpEquality" class=" minh-55">
+                                                            <p class="text-info">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                            Employees
+                                                        </div>
+
+                                                        <div *ngIf="staffingmixEmpEquality" class=" minh-55">
+                                                                <p class="text-info staffing-equality-center-aligned">{{ enterMyData.staffingmixEmployee * 100 | number : '1.1-1' }}%</p>
+                                                                Employees
+                                                            </div>
+
+                                                        <div *ngIf="!staffingmixEmpEquality && ((enterMyData.staffingmixEmployee*100) > wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value)" class="mt-4">
+                                                            <div class=" arrow-img">
+                                                                <svg  id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                                    <defs>
+                                                                        <linearGradient id="progressSVGannual5" x1="0" y1="1" x2="0" y2="0">
+                                                                            <stop id="stop4010" [attr.offset]=" makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                                                            <stop id="stop4009" [attr.offset]=" makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                        </linearGradient>
+                                                                    </defs>
+                                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                                </svg>
+                                                                <p class="remained-percentage remained-perc-font">
+                                                                    {{ makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div *ngIf="!staffingmixEmpEquality && ((enterMyData.staffingmixEmployee*100) < wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value)" class="mt-4">
+                                                            <div class=" arrow-img">
+                                                                <svg  id="staffingMixSVGEmployee" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                                    <defs>
+                                                                        <linearGradient id="progressSVGannual5785" x1="0" y1="1" x2="0" y2="0">
+                                                                            <stop id="stop401120" [attr.offset]=" makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                                                            <stop id="stop402309" [attr.offset]=" makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                        </linearGradient>
+                                                                    </defs>
+                                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5785)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                                </svg>
+                                                                <p class="remained-percentage remained-perc-font">
+
+                                                                    {{ makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value - (enterMyData.staffingmixEmployee*100)) / wanServerData.data.StaffingMix.StaffingMixEmployee.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div *ngIf="enterMyData.staffingmixEmployee*100<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]">
+                                                    <div class="align-self-center">
+                                                        <span class="bord-top"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div *ngIf="enterMyData.staffingmixContract*100>=0" class="d-flex flex-row flex-wrap ">
+                                                    <div class="p-2 mt-3">
+
+                                                        <div *ngIf="!staffingmixContractEquality" class=" minh-55">
+                                                            <p class="text-info">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                            Contractors
+                                                        </div>
+
+                                                        <div *ngIf="staffingmixContractEquality" class=" minh-55">
+                                                                <p class="text-info staffing-equality-center-aligned">{{ enterMyData.staffingmixContract * 100 | number : '1.1-1' }}%</p>
+                                                                Contractors
+                                                            </div>
+
+                                                        <div *ngIf="!staffingmixContractEquality &&((enterMyData.staffingmixContract*100)>wanServerData.data.StaffingMix.StaffingMixContractor.Number.value)" class="mt-4">
+                                                            <div class=" arrow-img">
+                                                                <svg  id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                                    <defs>
+                                                                        <linearGradient id="progressSVGannual65" x1="0" y1="1" x2="0" y2="0">
+                                                                            <stop id="stop4011" [attr.offset]="makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / wanServerData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                                            <stop id="stop4012" [attr.offset]="makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / wanServerData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                        </linearGradient>
+                                                                    </defs>
+                                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                                </svg>
+                                                                <p class="remained-percentage remained-perc-font">
+
+                                                                    {{ makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / wanServerData.data.StaffingMix.StaffingMixContractor.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div *ngIf="!staffingmixContractEquality && ((enterMyData.staffingmixContract*100)<wanServerData.data.StaffingMix.StaffingMixContractor.Number.value)" class="mt-4">
+                                                            <div class=" arrow-img">
+                                                                <svg  id="staffingMixSVGContractor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                                    <defs>
+                                                                        <linearGradient id="progressSVGannual65451" x1="0" y1="1" x2="0" y2="0">
+                                                                            <stop id="stop401112" [attr.offset]="makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / wanServerData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                                            <stop id="stop402312" [attr.offset]="makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / wanServerData.data.StaffingMix.StaffingMixContractor.Number.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                        </linearGradient>
+                                                                    </defs>
+                                                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual65451)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                                    h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                                </svg>
+                                                                <p class="remained-percentage remained-perc-font">
+
+                                                                    {{ makePositiveValue(((wanServerData.data.StaffingMix.StaffingMixContractor.Number.value - (enterMyData.staffingmixContract*100)) / wanServerData.data.StaffingMix.StaffingMixContractor.Number.value) * 100) | number : '1.1-1' }}%
+
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div *ngIf="enterMyData.staffingmixContract*100<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv sm-mright' : 'displayDiv' ]">
+                                                    <div class="align-self-center">
+                                                        <span class="bord-top"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Staffing mix card ends-->
+
+                <!-- Legacy WAN vs. SDWAN -->
+                <div [ngClass]="[showDiv ? 'p-2 mb-2' : 'p-2 w-25 mb-2']">
+                    <div class="card custom-card min-ht320">
+                        <div class="card-header">
+                            Legacy WAN vs. SD WAN
+                            <a href="javascript:void(0)"><i class="info-icon" placement="top" ngbTooltip="{{wanDefinitionData.wanlegacy.defination}}"></i></a>
+                        </div>
+                        <div class="card-body p-0" >
+                            <div class="d-inline-flex flex-row flex-wrap" [ngClass]="[showDiv ? 'mr-0' : '']">
+
+                                <div class="px-1 mx-auto pt-1">
+                                    <div class="d-flex flex-row flex-wrap">
+                                        <div class="p-1 it-stage it-run pr-0">
+                                            <div class=" it-stange-data pr-2">
+                                                <app-donut-chart id="pbxvsvoip-handset" chartID="pbxvsvoip-handset" fillColor="9acb3b" percentVal="{{wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                                <p class="text-info">
+                                                    {{wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value | number : '1.1-1' }}%
+                                                </p>
+                                                <small>
+                                                    Legacy WAN
+                                                </small>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="px-1 mx-auto pt-1">
+                                    <div class="d-flex flex-row flex-wrap">
+                                        <div class="p-1 it-stage it-run pr-0">
+                                            <div class=" it-stange-data pr-2">
+                                                <app-donut-chart id="pbxvsvoip-pbx" chartID="pbxvsvoip-pbx" fillColor="03abba" percentVal="{{wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value/10}}" chartWidth="90" chartHeight="90" ></app-donut-chart>
+                                                <p class="text-info">
+                                                    {{wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value | number : '1.1-1' }}%
+                                                </p>
+                                                <small>SD WAN</small>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div style="height: 242px;" class="p-3 bg-lightblue" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]" *ngIf="(enterMyData.legacyWAN<0 && enterMyData.sdWAN<0)">
+                                    <div class="align-self-center p-5 mt-3">
+                                        <span class="bord-top-both-empty-legacy"></span>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="(enterMyData.legacyWAN>=0 || enterMyData.sdWAN>=0)" class="p-2 mx-auto bg-lightblue" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+
+                                    <div class="d-flex flex-row flex-wrap">
+
+                                        <div *ngIf="enterMyData.legacyWAN>=0" class="d-flex flex-row flex-wrap">
+                                            <div class="p-2 mt-3">
+                                                <div *ngIf="!legacyWANEquality" class=" minh-55">
+                                                    <p class="text-info">{{ enterMyData.legacyWAN | number : '1.1-1' }}%</p>
+                                                    Legacy WAN
+                                                </div>
+
+                                                <div *ngIf="legacyWANEquality" class=" minh-55">
+                                                        <p class="text-info legacywan-equality-center-aligned">{{ enterMyData.legacyWAN | number : '1.1-1' }}%</p>
+                                                        Legacy WAN
+                                                    </div>
+
+                                                <div *ngIf="!legacyWANEquality && ((enterMyData.legacyWAN) > wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value)" class="mt-4">
+                                                    <div class=" arrow-img">
+                                                        <svg  id="lagacyWANSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                            <defs>
+                                                                <linearGradient id="progressSVGannual76201" x1="0" y1="1" x2="0" y2="0">
+                                                                    <stop id="stop401021234" [attr.offset]=" makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value - (enterMyData.legacyWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                                                    <stop id="stop4009098" [attr.offset]=" makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value - (enterMyData.legacyWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual76201)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                        </svg>
+                                                        <p class="remained-percentage remained-perc-font">
+                                                            {{ makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value - (enterMyData.legacyWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value) * 100) | number : '1.1-1' }}%
+
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div *ngIf="!legacyWANEquality && ((enterMyData.legacyWAN) < wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value)" class="mt-4">
+                                                    <div class=" arrow-img">
+                                                        <svg  id="lagacyWANSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                            <defs>
+                                                                <linearGradient id="progressSVGannual5785109" x1="0" y1="1" x2="0" y2="0">
+                                                                    <stop id="stop401120434" [attr.offset]=" makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value - (enterMyData.legacyWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value) * 100 | number : '1.1-1') + '%'" stop-color="#9acb3b" />
+                                                                    <stop id="stop402309580" [attr.offset]=" makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value - (enterMyData.legacyWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual5785109)" stroke="#9acb3b" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                        </svg>
+                                                        <p class="remained-percentage remained-perc-font">
+
+                                                            {{ makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value - (enterMyData.legacyWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANLegacy.WANLegacy.value) * 100) | number : '1.1-1' }}%
+
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="enterMyData.legacyWAN<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                            <div class="align-self-center">
+                                                <span class="bord-top"></span>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="enterMyData.sdWAN>=0" class="d-flex flex-row flex-wrap ">
+                                            <div class="p-2 mt-3">
+
+                                                <div *ngIf="!sdWANEquality" class=" minh-55">
+                                                    <p class="text-info">{{ enterMyData.sdWAN | number : '1.1-1' }}%</p>
+                                                    SD WAN
+                                                </div>
+
+                                                <div *ngIf="sdWANEquality" class=" minh-55">
+                                                        <p class="text-info legacywan-equality-center-aligned">{{ enterMyData.sdWAN | number : '1.1-1' }}%</p>
+                                                        SD WAN
+                                                    </div>
+
+                                                <div *ngIf="!sdWANEquality && ((enterMyData.sdWAN)>wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value)" class="mt-4">
+                                                    <div class=" arrow-img">
+                                                        <svg  id="sdWANSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve">
+                                                            <defs>
+                                                                <linearGradient id="progressSVGannual650909" x1="0" y1="1" x2="0" y2="0">
+                                                                    <stop id="stop40115478" [attr.offset]="makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value - (enterMyData.sdWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                                    <stop id="stop40124587" [attr.offset]="makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value - (enterMyData.sdWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual650909)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                        </svg>
+                                                        <p class="remained-percentage remained-perc-font">
+
+                                                            {{ makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value - (enterMyData.sdWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value) * 100) | number : '1.1-1' }}%
+
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div *ngIf="!sdWANEquality && ((enterMyData.sdWAN)<wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value)" class="mt-4">
+                                                    <div class=" arrow-img">
+                                                        <svg  id="sdWANSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="92px" viewBox="0 0 60 92" enable-background="new 0 0 60 92" xml:space="preserve" transform="rotate(90) rotate(90)">
+                                                            <defs>
+                                                                <linearGradient id="progressSVGannual876567" x1="0" y1="1" x2="0" y2="0">
+                                                                    <stop id="stop40111234554" [attr.offset]="makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value - (enterMyData.sdWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value) * 100 | number : '1.1-1') + '%'" stop-color="#02ABBA" />
+                                                                    <stop id="stop40231243342" [attr.offset]="makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value - (enterMyData.sdWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value) * 100 | number : '1.1-1') + '%'" stop-color="#e1edf3" />
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#progressSVGannual876567)" stroke="#02ABBA" stroke-miterlimit="10" d="M44.492,90.649V32.645
+                                                            h13.697L30,1.351L1.81,32.645h13.697v58.005H44.492z"/>
+                                                        </svg>
+                                                        <p class="remained-percentage remained-perc-font">
+
+                                                            {{ makePositiveValue(((wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value - (enterMyData.sdWAN)) / wanServerData.data.LegacyWANvsSDWAN.WANSDWAN.WANSDWAN.value) * 100) | number : '1.1-1' }}%
+
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="enterMyData.sdWAN<0" class="col p-5 bg-lightblue text-center" [ngClass]="[showDiv ? '!displayDiv' : 'displayDiv' ]">
+                                            <div class="align-self-center">
+                                                <span class="bord-top"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Legacy WAN vs. SDWAN -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Drill-Down -->
+
+    <div class="backdrop" [ngStyle]="{'display':display_personnel}"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_personnel}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content unix-personnel-modal-width">
+                <div class="modal-header infra-popup-text-header">
+                    <div class="popup-div">
+                        WAN Network Cost Allocation for Personnel
+                    </div>
+                    <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+                </div>
+                <div class="modal-body padding0 unix-personnel-modal-body">
+                    <div class="">
+                        <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="personnel-drillDown-unix" chartID="personnel-drillDown-unix" [chartData]="wanServerData.drills.PersonnelCostAllocation"  thickness="35" chartWidth="180" chartRadius="80" chartLegendSize="19"  chartHeight="430"></mainframe-drill-down-donut-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="backdrop" [ngStyle]="{'display':display_hardwareSoftware}"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_hardwareSoftware}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content drilldown-modal-width">
+                <div class="modal-header infra-popup-text-header">
+                    <div class="popup-div">
+                        WAN Network Cost Allocation for Hardware & Software
+                    </div>
+                    <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+                </div>
+                <div class="modal-body padding0 drilldown-modal-body">
+                    <div class="drilldown-chart">
+                        <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="hardware-drillDown-wan" chartID="hardware-drillDown-wan" [chartData]="wanServerData.drills.HardwareandSoftwareCostAllocation" thickness="35" chartWidth="180" chartRadius="30" chartLegendSize="19"  chartHeight="310"></mainframe-drill-down-donut-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="backdrop" [ngStyle]="{'display':display_outsourcing}"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_outsourcing}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content unix-outsourcing-modal-width" >
+                <div class="modal-header infra-popup-text-header">
+                    <div class="popup-div">
+                        WAN Network Cost Allocation for Outsourcing
+                    </div>
+                    <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+                </div>
+                <div class="modal-body padding0 unix-outsourcing-modal-body">
+                    <div class="drilldown-chart">
+                        <mainframe-drill-down-donut-chart *ngIf="showDrillDown" id="outsourcing-drillDown-unix" chartID="outsourcing-drillDown-unix" [chartData]="wanServerData.drills.OutsourcingCostAllocation" thickness="35" chartWidth="180" chartRadius="90" chartHeight="450" chartLegendSize="23"></mainframe-drill-down-donut-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #donotshow>
+        <div class="loader-icon-container">
+            <div class="loader-icon"></div>
+        </div>
+    </ng-template>
+
+    <div class="backdrop" [ngStyle]="{'display':display_costPerActivePort}"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display_costPerActivePort}">
+        <div class="modal-dialog modal-dialog-linechart" role="document">
+            <div class="modal-content">
+                <div class="modal-header infra-popup-text-header">
+                    <div class="popup-div">
+                        <!-- Annual Cost of WAN per Location -->
+                        Annual Cost Per WAN Location - 3 Year Trend
+                    </div>
+                    <button type="button" class="common-cur pop-up-close" aria-label="Close" (click)="closeModalDialog()"></button>
+                </div>
+                <div id="lineChartFusionBody" class="modal-body padding0" style="min-height:300px;">
+                    <line-chart *ngIf="showDrillDown" [chartData]="dataSource" id="wanLineChart1" chartId="wanLineChart1"></line-chart>
+                </div>
+            </div>
+        </div>
+    </div>

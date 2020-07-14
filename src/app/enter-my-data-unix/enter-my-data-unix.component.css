@@ -1,0 +1,900 @@
+.modal-body .main-data-section .card-body {
+    overflow-y: scroll;
+    height:auto;
+    max-height: 480px;
+}
+
+.info-icon{
+    background: url(/assets/images/ISG-widget-icons.png) -1px -152px no-repeat;
+    display: inline-block;
+    width: 15px;
+    margin-bottom: -2px;
+    height: 15px;
+}
+
+.disableButton{
+    background: black;
+    cursor: default;
+}
+
+.text-red{
+    color:red;
+}
+
+.disabledColor{
+    color: #a0a6a7; 
+}
+
+.btn-text-color {
+    color: #fff;
+}
+.modal-select-to-compare .modal-content{
+    border-radius: 0;
+}
+.modal-select-to-compare .modal-header{
+    background: #29497B;
+    border-radius: 0;
+    padding: 0.5rem 1rem;
+}
+.modal-select-to-compare .modal-title{
+    color:#ffffff;
+    font-weight: normal;
+}
+.modal-select-to-compare .close{
+    color:#ffffff;
+    opacity: 0.8;
+    font-size: 1.5rem;
+    font-weight: normal;
+    outline: none;
+    padding: 0.7rem;
+}
+.modal-select-to-compare .btn{
+    border-radius: 0.2rem;
+    padding: 0.300rem 1.5rem;
+    color:#ffffff;
+}
+
+.donutchart {
+    position: absolute;
+    top: 19px;
+    left: 38px;
+}
+
+
+
+.btn-grey{
+    background-color:#777B7C;
+}
+.btn-grey:hover, .btn-grey:focus{
+    box-shadow: 0 0 0 0.2rem rgba(119, 123, 124, 0.5);
+}
+.btn-blue{
+    background-color:#29497B;
+}
+.btn-blue:hover:not([disabled]), .btn-blue:focus:not([disabled]){
+    box-shadow: 0 0 0 0.2rem rgba(41, 73, 123, 0.5);
+}
+.compare-data-tabs .nav-tabs{
+    border-bottom: 0px;
+}
+.compare-data-tabs .nav-tabs .nav-link{
+    border:1px solid #CAD4E1;
+    border-radius: 0.1rem;
+    color:#75787B;
+    padding:.19rem 1.3rem;
+}
+.compare-data-tabs .nav-tabs .nav-link.active{
+    background: #03ABBA;
+    color:#ffffff;
+}
+.compare-data-tabs select.form-control-sm {
+    border-radius: .1rem;
+    border:1px solid #CAD4E1;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    background: url('/assets/images/filter-icons.png') right -133px no-repeat;
+    cursor: pointer;
+    max-width: 337px;
+}
+.modal-select-to-compare .modal-body{
+    padding: 0;
+}
+.main-data-section{
+    font-size:0.95rem;
+}
+.main-data-section h5{
+    font-weight: normal;
+    text-transform: capitalize;
+}
+.icon-circle-plus{
+    background: url(/assets/images/popup-icons.png) -1px 2px no-repeat;
+    display:inline-block;
+}
+.icon-circle-minus{
+    background: url(/assets/images/industry-comparison-icons.png) -1px -341px no-repeat;
+    display:inline-block;
+}
+.main-data-section #accordion .btn{
+    color:#333333;
+    padding: 0;
+}
+.main-data-section .float-left span{
+    padding-left: 24px;
+    color:#03ABBA;
+    display:inline-block;
+}
+.main-data-section #accordion .card{
+    border-radius: 0;
+    background: none;
+    color:#000000;
+    border: none;
+}
+.main-data-section #accordion .card-header{
+    padding:0;
+    background: none;
+    border-bottom: 0;
+}
+.main-data-section #accordion .card-header a{
+    display: block;
+    padding: .4rem 0.5rem;
+    text-align: left;
+    border-radius:0;
+    border:1px solid rgba(0,0,0,.125);
+    font-size: 0.94rem;
+    
+    
+}
+.main-data-section #accordion .card-header a span{
+    text-transform: capitalize;
+    font-weight: 500;
+}
+.main-data-section font{
+    font-weight: 500;
+}
+.main-data-section #accordion a[aria-expanded="true"]{
+    color:#ffffff;
+    background: #03ABBA;
+}
+.main-data-section #accordion a[aria-expanded="true"] span {
+    background: url(/assets/images/popup-icons.png) -1px -66px no-repeat;
+}
+.main-data-section #accordion .card-body{
+    border:1px solid #03ABBA;
+    padding: 1.25rem;
+}
+.main-data-section #accordion a[aria-expanded="false"] span {
+    background: url(/assets/images/popup-icons.png) -1px 2px no-repeat;
+}
+.main-data-section .form-control{
+    border-radius: 0;
+    width: 90%;
+    padding: .300rem .75rem;
+}
+.main-data-section select.form-control {
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    background: url('/assets/images/filter-icons.png') right -128px no-repeat;
+    cursor: pointer;
+}
+.main-data-section select.form-control:not([size]):not([multiple]){
+    height: calc(2.25rem + 0px);
+}
+#enterDataForm .modal-dialog{
+    margin-left: none !important;
+}
+.enter-my-data-btn{
+    margin-right:10px;
+    color:#fff;
+}
+
+/***for Internal data start****/
+.content-section
+{
+	border: 2px solid lightgrey;
+	margin-top: 3px;
+}
+
+.content-section .form-row
+{
+	padding-top: 15px;
+}
+
+.content-row
+{
+	min-height: 50px;
+	height: 50px;
+	padding-top:20px;
+    
+}
+
+.px-15-padding
+{
+	padding-left: 30px;
+}
+
+
+.px-25-padding
+{
+	padding-left: 50px;
+}
+
+.light-grey-row
+{
+	background: #f0f0f0;
+}
+
+.content-section .form-row
+{
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.it-operation-content
+{
+	border: none;
+}
+
+.it-operation-fieldset
+{
+	border: 2px solid lightgrey;
+}
+
+.it-operation-legend
+{
+	display: block;
+    width: auto;
+    max-width: 100%;
+    padding: 0;
+    margin-bottom: .5rem;
+    font-size: 1.1rem;
+    line-height: inherit;
+    color: inherit;
+    white-space: normal;
+    /* left: 25px; */
+    margin-left: 25px;
+	font-weight: bold;
+}
+
+.content-section img, .it-operation-content img
+{
+	cursor: pointer;
+}
+
+.confirm_box{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left:0;
+    top:0;
+    background-color: rgba(0,0,0,0.3);
+}
+.confirm-card{
+    background: white;
+    padding: 10px;
+    position: relative;
+    top: 30%;
+    max-width: 500px;
+    margin: 1.75rem auto;
+}
+
+@media (max-width: 767px)
+{
+    .content-section input
+    {
+        width: 80%;
+    }
+    
+    .content-section p
+    {
+        padding: 0px;
+    }
+    
+    .comp-info-title-section
+    {
+        display: none;
+    }
+}
+@media (min-width: 768px) and (max-width:991px)
+{
+	.content-section input
+    {
+        max-width: 100px;
+    }
+    
+    .content-section p
+    {
+        padding: 0px;
+    }
+    
+}
+
+/****for stop****/
+@media (max-width: 767px)
+{
+    .compare-data-tabs select.form-control-sm {
+        background: url(/assets/images/filter-icons.png) right -133px no-repeat;
+    }
+    .modal-select-to-compare .btn{
+        font-size: 0.9rem;
+        padding: 0.300rem 1.2rem;
+    }
+    .main-data-section .form-control{
+        width: 100%;
+    }
+}
+@media (min-width: 768px) and (max-width:991px)
+{
+    .compare-data-tabs .nav-tabs .nav-link{
+        padding: .19rem 1.0rem;
+    }
+    .compare-data-tabs select.form-control-sm {
+        background: url(/assets/images/filter-icons.png) right -133px no-repeat;
+    }
+    .modal-select-to-compare .modal-dialog{
+        max-width: 600px;
+    }
+}
+@media (min-width: 1200px)
+{
+    .modal-select-to-compare .modal-lg {
+        max-width: 1000px;
+    }
+}
+
+/*Ganesh styles*/
+/*styles added for company financial information widget - start*/
+.content-section
+{
+	border: 2px solid lightgrey;
+	margin-top: 3px;
+}
+
+
+.content-section .form-row
+{
+	padding-top: 15px;
+}
+
+.content-row
+{
+	min-height: 50px;
+	height: 50px;
+	padding-top:20px;
+    
+}
+
+.px-15-padding
+{
+	padding-left: 30px;
+}
+
+
+.px-25-padding
+{
+	padding-left: 50px;
+}
+
+.light-grey-row
+{
+	background: #f0f0f0;
+}
+
+.content-section .form-row
+{
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.it-operation-content
+{
+	border: none;
+}
+
+.it-operation-fieldset
+{
+	border: 2px solid lightgrey;
+}
+
+.it-operation-fieldset-warning
+{
+	border: 2px solid #29497b;
+}
+
+.legend-message-row
+{
+    height:25px;
+}
+
+.legend-message
+{
+    color: #29497b;
+    font-size: 14px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+legend p
+{
+    padding-right:15px;
+    font-size:14px;
+}
+
+/* .legend-finance-breakdown .legend-message
+{
+    padding-left:60px;
+}
+
+.legend-tower-breakdown .legend-message
+{
+    padding-left:100px;
+}
+
+.legend-cost-breakdown .legend-message
+{
+    padding-left:60px;
+}
+
+.legend-cost-breakdown .legend-message
+{
+    padding-left:60px;
+}
+
+.legend-cost-breakdown .legend-message
+{
+    padding-left:60px;
+}
+
+
+.legend-run-transform .legend-message
+{
+    padding-left:60px;
+}
+
+.legend-capital .legend-message
+{
+    padding-left:60px;
+} */
+
+
+.legend-warning-img
+{
+    position: fixed;
+    margin-top:10px;
+    background: url('/assets/images/legend-warning.PNG');
+    height: 0px;
+    width: 0px;
+    float: left;
+    display:none;
+    
+}
+
+.legend-warning-img-desktop
+{
+    
+    background: url('/assets/images/legend-warning.PNG');
+    height: 30px;
+    width: 25px;
+    float: right;
+}
+
+.it-operation-legend
+{
+	display: block;
+    width: auto;
+    max-width: 100%;
+    padding: 0;
+    margin-bottom: .5rem;
+    font-size: 1.1rem;
+    line-height: inherit;
+    color: inherit;
+    white-space: normal;
+    /* left: 25px; */
+    margin-left: 25px;
+	font-weight: bold;
+}
+
+.content-section img, .it-operation-content img
+{
+	cursor: pointer;
+}
+
+.content-section .popover
+{
+    max-width: 400px;
+}
+
+.content-section-prompt
+{
+    position: absolute;
+    top: 40px;
+	height: 160px;
+	width: 400px;
+	z-index: 1000;
+	padding: 10px;
+	border: 2px solid lightgray;
+	background: #f0f0f0;
+	display: none;
+}
+
+.content-section-prompt .propover-btn-group
+{
+	float: right !important;
+}
+
+.content-section-prompt button
+{
+	width: 100px;
+	height: 30px;
+	color: white !important;
+    background: #777B7C;
+    margin: 5px;
+    margin-top: 0px;
+}
+
+.content-section-prompt textarea
+{
+	border: 1px solid lightgray;
+	height: 80px;
+	width: 100% !important;
+}
+
+.arrow-up {
+    position: relative;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #f0f0f0;
+    top: -18px;
+}
+
+.propover-triangle {
+    position: relative;
+    top: -20px;
+    width: 0;
+    border-bottom: solid 10px lightgrey;
+    border-right: solid 10px transparent;
+    border-left: solid 10px transparent;
+}
+.propover-triangle .propover-triangle-border {
+    position: absolute;
+    left: -6px;
+    width: 0;
+    border-bottom: solid 8px #f0f0f0;
+    border-right: solid 6px transparent;
+    border-left: solid 6px transparent;
+}
+
+
+
+@media (max-width: 767px)
+{
+    .content-section input
+    {
+        width: 80%;
+    }
+    
+    .content-section p
+    {
+        padding: 0px;
+    }
+    
+    .comp-info-title-section
+    {
+        display: none;
+    }
+    .content-section-prompt
+    {
+        width: 250px;
+    }
+    
+    .legend-message-row
+    {
+        height:auto;
+    }
+    
+    .legend-message
+    {
+        margin-bottom:0px;
+        padding-left: 30px;
+    }
+    
+    .legend-warning-img
+    {
+        display: block;
+        height: 30px;
+        width: 25px;
+    }
+    
+    .legend-warning-img-desktop
+    {
+        display: none;
+    }
+}
+@media (min-width: 768px) and (max-width:991px)
+{
+	.content-section input
+    {
+        max-width: 100px;
+    }
+    
+    .content-section p
+    {
+        padding: 0px;
+    }
+    
+    .content-section-prompt
+    {
+        width: 250px;
+    }
+    .legend-message-row
+    {
+        height:auto;
+    }
+    
+    .legend-message
+    {
+        margin-bottom:0px;
+        padding-left: 30px;
+    }
+    
+    .legend-warning-img
+    {
+        display: block;
+        height: 30px;
+        width: 25px;
+    }
+    
+    .legend-warning-img-desktop
+    {
+        display: none;
+    }
+}
+
+/*styles added for company financial information widget - end*/
+
+
+/* Dashboard Entry my data CSS starts here */
+.modal-select-to-compare .modal-content{
+    border-radius: 0;
+}
+.modal-select-to-compare .modal-header{
+    background: #29497B;
+    border-radius: 0;
+    padding: 0.5rem 1rem;
+}
+.modal-select-to-compare .modal-title{
+    color:#ffffff;
+    font-weight: normal;
+}
+.modal-select-to-compare .close{
+    color:#ffffff;
+    opacity: 0.8;
+    font-size: 1.5rem;
+    font-weight: normal;
+    outline: none;
+    padding: 0.7rem;
+}
+.modal-select-to-compare .btn{
+    border-radius: 0.2rem;
+    padding: 0.300rem 1.5rem;
+    color:#ffffff;
+}
+
+.btn-grey{
+    background-color:#777B7C;
+}
+.btn-grey:hover, .btn-grey:focus{
+    box-shadow: 0 0 0 0.2rem rgba(119, 123, 124, 0.5);
+}
+.btn-blue{
+    background-color:#29497B;
+    font-weight: 600;
+}
+.btn-blue:hover:not([disabled]), .btn-blue:focus:not([disabled]){
+    box-shadow: 0 0 0 0.2rem rgba(41, 73, 123, 0.5);
+}
+.compare-data-tabs .nav-tabs{
+    border-bottom: 0px;
+}
+.compare-data-tabs .nav-tabs .nav-link{
+    border:1px solid #CAD4E1;
+    border-radius: 0.1rem;
+    color:#75787B;
+    padding:.19rem 1.3rem;
+}
+.compare-data-tabs .nav-tabs .nav-link.active{
+    background: #03ABBA;
+    color:#ffffff;
+}
+.compare-data-tabs select.form-control-sm {
+    border-radius: .1rem;
+    border:1px solid #CAD4E1;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    background: url('/assets/images/ISG-filter-icons.png') right -133px no-repeat;
+    cursor: pointer;
+    max-width: 337px;
+}
+.modal-select-to-compare .modal-body{
+    padding: 0;
+}
+.main-data-section{
+    font-size:0.95rem;
+}
+.main-data-section h5{
+    font-weight: normal;
+    text-transform: capitalize;
+}
+.icon-circle-plus{
+    background: url(/assets/images/popup-icons.png) -1px 2px no-repeat;
+    display:inline-block;
+}
+.icon-circle-minus{
+    background: url(/assets/images/industry-comparison-icons.png) -1px -341px no-repeat;
+    display:inline-block;
+}
+.main-data-section #accordion .btn{
+    color:#333333;
+    padding: 0;
+}
+.main-data-section .float-left span{
+    padding-left: 24px;
+    color:#03ABBA;
+    display:inline-block;
+}
+.main-data-section #accordion .card{
+    border-radius: 0;
+    background: none;
+    color:#000000;
+    border: none;
+}
+.main-data-section #accordion .card-header{
+    padding:0;
+    background: none;
+    border-bottom: 0;
+}
+.main-data-section #accordion .card-header a{
+    display: block;
+    padding: .4rem 0.5rem;
+    text-align: left;
+    border-radius:0;
+    border:1px solid rgba(0,0,0,.125);
+    font-size: 0.94rem;
+    
+    
+}
+.main-data-section #accordion .card-header a span{
+    text-transform: capitalize;
+    font-weight: 500;
+}
+.main-data-section font{
+    font-weight: 500;
+}
+.main-data-section #accordion a[aria-expanded="true"]{
+    color:#ffffff;
+    background: #03ABBA;
+}
+.main-data-section #accordion a[aria-expanded="true"] span {
+    background: url(/assets/images/popup-icons.png) -1px -66px no-repeat;
+}
+.main-data-section #accordion .card-body{
+    border:1px solid #03ABBA;
+}
+.main-data-section #accordion a[aria-expanded="false"] span {
+    background: url(/assets/images/popup-icons.png) -1px 2px no-repeat;
+}
+.main-data-section .form-control{
+    border-radius: 0;
+    width: 90%;
+    padding: .300rem .75rem;
+}
+.main-data-section select.form-control {
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    background: url('/assets/images/ISG-filter-icons.png') right -128px no-repeat;
+    cursor: pointer;
+}
+.main-data-section select.form-control:not([size]):not([multiple]){
+    height: calc(2.25rem + 0px);
+}
+@media (max-width: 767px)
+{
+    .compare-data-tabs select.form-control-sm {
+        background: url(/assets/images/ISG-filter-icons.png) right -133px no-repeat;
+    }
+    .modal-select-to-compare .btn{
+        font-size: 0.9rem;
+        padding: 0.300rem 1.2rem;
+    }
+    .main-data-section .form-control{
+        width: 100%;
+    }
+}
+@media (min-width: 768px) and (max-width:991px)
+{
+    .compare-data-tabs .nav-tabs .nav-link{
+        padding: .19rem 1.0rem;
+    }
+    .compare-data-tabs select.form-control-sm {
+        background: url(/assets/images/ISG-filter-icons.png) right -133px no-repeat;
+    }
+    .modal-select-to-compare .modal-dialog{
+        max-width: 600px;
+    }
+}
+@media (min-width: 1200px)
+{
+    .modal-select-to-compare .modal-lg {
+        max-width: 1000px;
+    }
+}
+
+.tower-card-body
+{
+    border: none !important;
+}
+
+#general-card .main-data-section[_ngcontent-c6] #accordion[_ngcontent-c6] .card-body[_ngcontent-c6]
+{
+    border: none !important;
+}
+
+.main-data-section
+{
+    margin-top: 0px !important;
+}
+
+.main-data-section .form-row
+{
+    padding-left: 1.25rem;
+    
+}
+
+.main-data-section .card
+{
+    border: none !important;
+}
+
+.second-section
+{
+    margin-top: 20px;
+}
+
+.tower-enterdata-footer button
+{
+    margin-left:5px;
+    margin-right:5px;
+}
+
+.main-data-section, .second-section
+{
+    font-size: 14px;
+}
+
+.note-icon-align{
+    padding-right: 0px; 
+    margin-right: 0px;
+}
+
+.btn-note{
+    padding: 5px;
+    width: 80px;
+    margin: 5px;
+    float:right;
+}
+.btn-Save{
+    background-color: #29497B;
+    color:#fff !important;
+}
+.btn-Cancel{
+    background-color: #777B7C;
+    color:#fff !important;
+}
+
+/* Dashboard Entry my data CSS ends here */
+

@@ -1,0 +1,181 @@
+<!-- test:{{dataLoaded}} -->
+<div class="w-100" *ngIf='dataLoaded;else other_content'>
+    <section class="main-content">
+        <div class="card-header pl-0">
+            <h6 class="text-left text-bold mb-0 pl-0 text-center">External User Project Mapping</h6>
+        </div>
+        <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 my-4 card-container">
+            <div class="card custom-card">
+                <div class="card-body pb-0">
+                    <!-- User privileges form controls starts -->
+                    <div class="row m-0 mt-1">
+                        <div class="col">
+                            <form>
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <div class="row m-0">
+                                            <div class="col-12">
+                                                <div class="form-group col-12 p-0 mb-0">
+                                                    <label>User ID</label>
+
+                                                    <input autofocus *ngIf="userFound==true" type="text" class="form-control" id="email" name="id" placeholder="User ID" [(ngModel)]="userEmail" #id="ngModel" (keyup)="suggestUserId(userEmail, $event);" autocomplete="off">
+
+                                                    <input autofocus *ngIf="userFound==false" type="text" class="form-control" id="email" name="id" placeholder="User ID" [(ngModel)]="userEmail" #id="ngModel" (keyup)="suggestUserId(userEmail, $event);" autocomplete="off">
+
+                                                    <div *ngIf="userFound==false && emailFlag==false" class ="alert alert-danger">
+                                                        Please enter valid email address
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="user-suggestion-container" *ngIf="userFound" >
+                                                    <div class="user-suggestion" *ngFor="let user of userData.staff" (click)="selectUser(user)">{{user.id}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row m-0 mt-1">
+                                            <div class="col-3 pr-0">
+                                                <label>Type :</label>
+                                            </div>
+                                            <div class="col-9 p-0">
+                                                <strong>External</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-8">
+                                        <div class="form-group col-12">
+                                            <nav class="navbar p-0">
+                                                <label class="project-label" for="project-suggest">Projects</label>
+                                                <span class="project-search-icon"></span>
+                                                <input id="project-suggest" class="form-control" placeholder="Search projects here..." type="text" name="search" [(ngModel)]="filter">      
+                                              </nav>
+                                            <div id="table-container" class="list-group scenarion-list" style="overflow-x: none;">
+
+                                                <table id="proj-table" class="projects-table">
+
+                                                    <tr *ngFor="let d of projectData.project | filter:filter" >
+                                                         <td style="padding-top: 0 !important; padding-bottom: 0 !important;">
+                                                                <label class="container-checkbox font-size-group2">
+                                                                        <span>{{d.value}}</span>
+                                                                        <div></div>
+
+                                                                        <input (change)="checkValue($event,d.key)" type="checkbox" [checked]="d.checked">
+                                                                        <span class="checkmark"></span>
+                                                                    </label>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="selectOneProject" class ="error">
+                                    Please select at least one project
+                                </div>
+                                <hr>
+                                <div class="form-row">
+                                    <div class="form-group col-9 col-md-5 col-lg-4 col-xl-3 mx-auto px-0">
+                                        <!-- || id.errors?.pattern -->
+                                        <!-- !enableSave -->
+                                        <button [disabled]='!emailFlag' (click)="saveData()" class="btn btn-primary btn-add mx-2">Save</button>
+
+                                        <button (click)='resetAll($event)' class="btn btn-primary btn-delete mx-2">Reset</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- User privileges form controls ends -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid kpi-maintenance" *ngIf='isTabularData'>
+            <section class="main-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div>
+                            <table class="table table-responsive table-sm table-striped" style="width:100%">
+                                <thead class="thead-blue">
+                                    <tr>
+                                        <th class="w-210px">Company</th>
+                                        <th class="w-300px">Project</th>
+                                        <th class="w-100px">Region</th>
+                                        <th class="w-100px">Country</th>
+                                        <th class="w-150px">Created By</th>
+                                        <th class="w-100px">Created Date</th>
+                                        <th class="w-150px">Updated By</th>
+                                        <th class="w-100px">Updated Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of UserTabularData; let i=index;">
+                                        <td class="w-210px">
+                                            {{data.client}}
+                                        </td>
+                                        <td class="w-300px">
+                                            {{data.project}}
+                                        </td>
+                                        <td class="w-100px">
+                                            {{data.region}}
+                                        </td>
+                                        <td class="w-100px">
+                                            {{data.country}}
+                                        </td>
+                                        <td class="w-150px">
+                                            {{data.createdBy}}
+                                        </td>
+                                        <td class="w-100px">
+                                            <span *ngIf="data.createdDate!=null || data.createdDate!=''">
+                                                {{data.createdDate | date:'dd/MM/yyyy'}}
+                                            </span>
+                                            <span *ngIf="data.createdDate==null || data.createdDate==''">
+                                                NA
+                                            </span>
+                                        </td>
+                                        <td class="w-150px">
+                                            {{data.modifiedBy}}
+                                        </td>
+                                        <td class="w-100px">
+                                            <span *ngIf="data.modifiedDate!=null || data.modifiedDate!=''">
+                                                {{data.modifiedDate | date:'dd/MM/yyyy'}}
+                                            </span>
+                                            <span *ngIf="data.modifiedDate==null || data.modifiedDate==''">
+                                                NA
+                                            </span>
+                                        </td>
+                                        <td class="row-actions text-center">
+                                            <a href="javascript:void(0)" (click)="deletePopup(data.id)" class="delete">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="confirm_box" [ngStyle]="{'display':display_confirmationbox}">
+                        <input id="pid" type="hidden" #pid [value]="selectedExternalPid"/>
+                        <div class="confirm-card">
+                            <div class="col py-3">
+                                Are you sure you want to delete?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" (click)="closeModalDialog()">No</button>
+                                <button type="button" class="btn btn-primary" (click)="deleteRow();" >Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </section>
+</div>
+<ng-template #other_content>
+    <div class="loader-icon-container">
+        <div class="loader-icon"></div>
+    </div>
+</ng-template>

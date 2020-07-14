@@ -1,0 +1,263 @@
+/***********************************************************/
+/************** © 2018 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: compare.component.css                      **/
+/** Description: This is compare css.                     **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10652318  Created Date: 28/09/2018        **/
+/** Update By: 10652318  Update Date: 28/09/2018          **/
+/** Developed at:                 **/
+/***********************************************************/
+
+#myModalCompare .checkbarmenu{
+    height:24px;
+    background-color:lightgrey;
+}
+#myModalCompare .font-size-group2{
+    font-size:14px;
+}
+#myModalCompare .font-size-footer{
+    font-size:11px;
+    
+}
+#myModalCompare .text-left{
+    margin-left:-100%;
+}
+#myModalCompare .bgcolor{
+    background-color:  #75787b;
+    color:white;
+}
+#myModalCompare .modal-footer {
+    justify-content: flex-start;
+}
+#myModalCompare .btn-wtd{
+    width:105%;
+}
+.btn-positive-isg{
+    background-color: #29497b;
+    border-color: #29497b;
+    color:#fff;
+    font-size: 14px;
+    height: 36px;
+    border-radius:1px;
+}
+.btn-negative-isg{
+    background-color: #777b7c;
+    border-color: #777b7c;
+    color:#fff;
+    font-size: 14px;
+    height: 36px;
+    border-radius:1px;
+}
+.btn-isg-toggle{
+    background-color: #fff;
+    border-color: #03abba;
+    color:#75787b;
+    font-size: 16px;
+    height: 55px;
+    border-radius:0px;
+}
+.btn-isg-toggle.active{
+    background-color: #03abba;
+    border-color: #03abba;
+    color:#fff;
+}
+
+.isg-industry-toggle
+{
+    padding-top: 0.8rem;
+}
+
+#enterNewScenarioBtn{
+    background-color: #fff;
+    border: 2px solid #03abba;
+    color: #03abba;
+    font-size: 14px;
+    height: 35px;
+    border-radius: 0px;
+    width: 155px;
+    padding-left: 4px;
+    margin-left: 0px;
+    font-family: OpenSansSemiBold;
+}
+#editScenarioBtn{
+    background-color: #fff;
+    border: 2px solid #03abba;
+    color: #03abba;
+    font-size: 14px;
+    height: 35px;
+    border-radius: 0px;
+    width: 120px;
+    padding-left: 5px;
+    margin-left: 10px;
+    font-family: OpenSansSemiBold;
+}
+#deleteScenarioBtn{
+    background-color: #fff;
+    border: 2px solid #03abba;
+    color: #03abba;
+    font-size: 14px;
+    height: 35px;
+    border-radius: 0px;
+    width: 155px;
+    padding-left: 4px;
+    margin-left: 0px;
+    font-family: OpenSansSemiBold;
+}
+.compare-option-container{
+    font-size: 14px;
+    color: #75787b;
+}
+.compare-option-note{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    font-size: 12px;
+    color:#75787b;
+}
+.compare-option-body{
+    padding-bottom: 0px !important;
+    min-height: 300px;
+}
+.scenarion-list li{
+    padding: 0px;
+}
+
+/* Custom Checkbox */
+
+.container-checkbox {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    padding-top: 3px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: 0;
+    color: #494c50;
+}
+
+.container-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    height: 16px;
+    width: 16px;
+    background-color: #ccc;
+}
+
+.container-checkbox input:checked ~ .checkmark {
+    background-color: #03abba;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.container-checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.container-checkbox .checkmark:after {
+    left: 5px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0px 2px 2px 0px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.my-data-w {
+    width: 120px;
+    color: #75787b;
+    font-size: 16px;
+    margin-top: -5px;
+}
+
+.error {
+    color: red;
+}
+.select_scenario {
+    position: static !important;
+    opacity: inherit !important;
+    float:left;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+/* Custom Checkbox */
+.container-checkbox .info a{
+    padding: 0px 10px;
+    transition: all 0.2s ease;
+    background-position: 0px -151px;
+    background-repeat: no-repeat;
+    background-image: url(/assets/images/ISG-widget-icons.png);
+}
+
+.currency-dropdown{ 
+    width: max-content;
+}
+
+.currency-section{
+    margin-left: 30%;
+}
+
+.my-data-currency{
+    width: 80px;
+    color: #75787b;
+    font-size: 16px;
+    margin-top: -5px;
+}
+
+.my-data-label{
+    padding-left: 0px; 
+    margin-left: -22px;
+}
+@media (max-width: 568px){
+    .currency-section{
+        margin-left: -55%;
+    }
+}
+
+.confirm_box{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left:0;
+    top:0;
+    background-color: rgba(0,0,0,0.3);
+}
+.confirm-card{
+    background: white;
+    padding: 10px;
+    position: relative;
+    top: 30%;
+    max-width: 500px;
+    margin: 1.75rem auto;
+}
+
+.enter-my-data-btn{
+    margin-right:10px;
+    color:#fff;
+}
+.btn-blue{
+    background-color:#29497B;
+}
+.btn-blue:hover:not([disabled]), .btn-blue:focus:not([disabled]){
+    box-shadow: 0 0 0 0.2rem rgba(41, 73, 123, 0.5);
+}

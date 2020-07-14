@@ -1,0 +1,70 @@
+/***********************************************************/
+/************** © 2019 ISG - All Rights Reserved ***********/
+/***********************************************************/
+
+/***********************************************************/
+/** File Name: authentication-failure.component.css                        **/
+/** Description: This is authentication css.                       **/
+/**                                                       **/
+/**                                                       **/
+/** Created By: 10651227 Created Date: 18/01/201o        **/
+/** Update By: 10651227  Update Date: 18/01/2019          **/
+/** Developed at:                 **/
+/***********************************************************/
+
+.bg-blue{
+    background: #29497B;
+}
+.navbar-brand{
+    background: url("/assets/logo.png") center no-repeat;
+    width:217px;
+    /* height: 37px; */
+    /* height: 47px; */
+    height: 75px;
+    /* margin: 24px 0; */
+    margin: 12px 0;
+    background-size: contain;
+}
+.loginform label{
+    font-size: 13px;
+}
+.loginform .form-control{
+    font-size: 14px;
+    border-radius: 0;
+}
+.loginform .input-group-text{
+    background: #03abba;
+    border-radius: 0;
+}
+.btn-login{
+    background: #29497B;
+    color:#ffffff;
+    border-radius: 0;
+    padding: 0.3rem 1.5rem;
+    border: none;
+    font-size: 14px;
+}
+.mtb-100{
+    margin: 100px 0;
+}
+
+/* Custom Checkbox */
+
+/*iPhone 6, 7, & 8 in portrait & landscape*/
+@media only screen and (min-device-width : 375px) and (max-device-width : 667px){
+    .mtb-100{
+        margin: 70px 0;
+    }
+}
+/* iPhone 5 & 5S in portrait & landscape */
+@media only screen and (min-device-width : 320px) and (max-device-width : 568px) and (-webkit-device-pixel-ratio : 2){
+    footer{
+        position: inherit;
+    }
+}
+
+.loginErrorMessage{
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-top: 10%;
+}

@@ -1,0 +1,152 @@
+var express=require('express')
+var app=express();
+var cors=require('cors');;
+app.use(cors());
+
+app.get('/',function(req,res){
+
+let data={
+	"itspendrev":{
+				"info":"Hover info here",
+				"mean":9,
+				"lower":51.2,
+				"upper":100,
+				"infrastructure":{
+					"info":"Hover info here",
+					"value":35,
+					"charts":{
+					"data": [
+							  {
+								"label": "Workplace Services",
+								"value": "24",
+								"color": "#81cee3"
+							  }, {
+								"label": "Service Desk",
+								"value": "3",
+								"color": "#29497b"
+							  }, {
+								"label": "Data center",
+								"value": "21",
+								"color": "#9acb3b"
+							  }, {
+								"label": "Network",
+								"value": "33",
+								"color": "#03abb9"
+							  }, {
+								"label": "Telecomunications",
+								"color": "#8b69c8",
+								"value": "19"
+							  }
+							]
+					},
+				"applications":{
+					"info":"Hover info here",
+					"value":51,
+					"charts":[
+								{
+									"label": "Application Development",
+									"value": "60",
+									"color": "#81cee3"
+								}, 
+								{
+									"label": "Application Maintanance & Support",
+									"value": "40",
+									"color": "#29497b"
+								}
+							]
+						},
+				"management":{
+					"info":"Hover info here",
+					"value":14,
+					"charts":[
+							  {
+								"label": "IT Service Management",
+							   "value": "28",
+								"color": "#81cee3"
+							  }, {
+								"label": "IT Security Management",
+								"value": "49",
+								"color": "#29497b"
+							  }, {
+								"label": "Other",
+								"value": "23",
+								"color": "#8b69c8"
+							  }
+							]
+					}
+				},
+	"itspendperuser":{
+				"info":"Hover info here",
+				"lower":17760,
+				"upper":8329,
+				"mean":3522,
+				"charts":[
+					{"label":"2005","value":"89.45"},
+					{"label":"2006","value":"89.87"},
+					{"label":"2007","value":"89.64"}
+				]
+			},
+	"itspendbyexpenditure":{
+				"info":"Hover info here",
+				"itspendpersonnel":27,
+				"itspendhardware":23,
+				"itspendsoftware":21,
+				"itspendoutsourced":19,
+				"itspendother":10
+			},
+	"itspendoutsourced":{
+				"info":"Hover info here",
+				"outsourcedmean":35,
+				"outsourcedupper":10,
+				"outsourcedlower":19
+			},
+	"capexvsopex":{
+				"info":"Hover info here",
+				"capexmean":10,
+				"opexmean":12
+			},
+	"itrunvschangevstransform":{
+				"info":"Hover info here",
+				"runmean":55,
+				"runupper":57,
+				"runlower":52,
+				"changemean":45,
+				"changeupper":48,
+				"changelower":43,
+				"transformmean":40,
+				"transformupper":55,
+				"transformlower":40
+			},
+	"itpersonnel":{
+			"info":"Hover info here",
+			"contractorpercent":18,
+			"totalemployeepercent":5,
+			"onshorepercent":18,
+			"offshorepercent":22,
+			"attritionmean":2
+		},
+	"userexperienceindex":{
+			"info":"Hover info here",
+			"userexperiencemean":87,
+			"userexperienceupper":100,
+			"userexperiencelower":80,
+			"charts":{
+					"Pie1":{"label":"% of IT users that are satisfied with the Service Desk","value":67},
+					"Pie2":{"label":"% of IT users that are satisfied with Workplace Services","value":67},
+					"Pie3":{"label":"% of IT users that are satisfied with Workplace Tools","value":67}
+				}
+		},
+	"digitalspend":{
+			"info":"Hover info here",
+			"digitalmean":30,
+			"digitalupper":100,
+			"digitallower":30
+		}
+	}};
+res.send(data);
+
+})
+
+app.listen(3000,function(){
+console.log('server running on 3000');
+})
