@@ -36,7 +36,7 @@
     "core-js": "^2.5.4",
     "currency-symbol-map": "^4.0.4",
     "d3": "^5.5.0",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "font-awesome": "^4.7.0",
     "fusioncharts": "^3.13.1",
     "gulp": "^3.9.1",
